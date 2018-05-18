@@ -23,3 +23,6 @@ src/test/resources/extract
 src/test/resources/failed
 src/test/resources/generated
 src/test/resources/passed
+
+# MRT custom plugin directory
+src/main/resources/custom
