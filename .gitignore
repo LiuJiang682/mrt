@@ -17,3 +17,9 @@ build/
 # MRT log file
 logging.log*
 output.txt
+
+# MRT test data directories
+src/test/resources/extract
+src/test/resources/failed
+src/test/resources/generated
+src/test/resources/passed
