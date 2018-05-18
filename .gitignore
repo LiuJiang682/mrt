@@ -25,4 +25,4 @@ src/test/resources/generated
 src/test/resources/passed
 
 # MRT custom plugin directory
-src/main/resources/custom
+src/main/resources/template/custom
