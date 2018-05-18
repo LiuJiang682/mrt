@@ -1,0 +1,64 @@
+H0002	Version	4									
+H0003	Date_generated	13-Mar-17									
+H0004	Reporting_period_end_date										
+H0005	State	VIC									
+H0100	Tenement_no/Combind_report_no	EL4556									
+H0101	Tenement_holder	Stavely Minerals Ltd									
+H0102	Project_name	Mt Stavely									
+H0106	Tenement_operator	Stavely Minerals Ltd									
+H0150	Map_sheet_number 250K	Ballarat; SJ54-8									
+H0151	Map_sheet_number 100K	7423; Ararat									
+H0152	50K_map_sheet_number										
+H0153	25K_map_sheet_number										
+H0200	Start_date_of_data_acquisition										
+H0201	End_date_of_data_acquisition										
+H0202	Data_format	DL4									
+H0203	Number_of_data_records	10									
+H0204	Date_of_metadata_update	13-Mar-17									
+H0300	Related_data_file										
+H0301	Location_data_file	MtStavely_201703_01_Collar.txt									
+H0302	Lithology_data_file	MtStavely_201703_02_Lith.txt									
+H0303	Assay_data_file										
+H0304	Survey_data_file	MtStavely_201703_03_Survey.txt									
+H0305	SurfGeochem_Data_File										
+H0307	Lithology_code_file	SVY_logging_codes.txt									
+H0308	File verification List										
+H0310	Water_data_file										
+H0311	Water data incl in lithology file	No									
+H0313	Alteration_data_file	MtStavely_201703_04_Alt.txt									
+H0314	Magsusc_data_file	MtStavely_201703_05_MagSus.txt									
+H0315	Vein_data_file	MtStavely_201703_06_Vein.txt									
+H0316	Recovery_data_file										
+H0317	Weathering_data_file										
+H0320	Other event_data_file	MtStavely_201703_07_Struct.txt									
+H0321	Other event_data_file	MtStavely_201703_08_Mins.txt									
+H0322	Other event_data_file	MtStavely_201703_09_Geotech.txt									
+H0400	Drill_code	DD									
+H0401	Drill_contractor	Titeline Drilling									
+H0402	Description	Diamond Drilling									
+H0500	Feature_located	Drillhole_collar									
+H0501	Geodetic_datum	GDA94									
+H0502	Vertical_datum	AHD									
+H0503	Projection	Map Grid of Australia (MGA)									
+H0508	Local Grid Name										
+H0530	Coordinate_system	Projected									
+H0531	Projection_zone	54									
+H0532	Surface_Location_Survey_Instrument	GPS									
+H0533	Surface_Location_Survey_Company	Stavely Minerals Ltd									
+H0534	Downhole_Direction_Survey_Instrument	SS:Single Shot	CO:Compass								
+H0535	Downhole_Direction_Survey_Company	TTL:Titeline Drilling	SVY:Stavely Minerals								
+H0900	Remarks										
+H1000	Hole_ID	Depth_from	Survey_instrument	Dip	Orig_Grid_ID	Orig_Azimuth	NAT_Grid_ID	NAT_Azimuth	Azimuth_MAG	Date_Surveyed	DHSurvey_Company
+H1001	NA	metres	NA	Degrees	NA	NA	NA	Degrees	Degrees	Date	NA
+H1004	0	1	0	0.1	0	0.1	0	0.1	0.1	0	0
+D	STD001	0	CO	-60	MAG	63	MGA94_54	73.4	63	12-Feb-17	SVY DD
+D	SMD009	60	SS	-60.2	MAG	63.2	MGA94_54	73.6	63.2	14-Feb-17	TTL
+D	SMD009	90	SS	-60.1	MAG	63.4	MGA94_54	73.8	63.4	16-Feb-17	TTL
+D	SMD009	120	SS	-60.1	MAG	63	MGA94_54	73.4	63	16-Feb-17	TTL DD
+D	SMD009	174	SS	-60.4	MAG	63.4	MGA94_54	73.8	63.4	17-Feb-17	TTL
+D	SMD009	207	SS	-60.4	MAG	63.2	MGA94_54	73.6	63.2	18-Feb-17	TTL
+D	SMD009	234	SS	-60.3	MAG	63.3	MGA94_54	73.7	63.3	19-Feb-17	TTL
+D	SMD009	255	SS	-60.4	MAG	63.2	MGA94_54	73.6	63.2	19-Feb-17	TTL
+D	SMD009	285	SS	-60.3	MAG	63.2	MGA94_54	73.6	63.2	20-Feb-17	TTL
+D	SMD009	312	SS	-60.4	MAG	63.4	MGA94_54	73.8	63.4	20-Feb-17	TTL
+EOF											

@@ -1,0 +1,19 @@
+# Eclipse Project Files #
+.classpath
+.project
+.settings
+
+# Node
+src/main/frontend/node_modules
+bundle.js
+npm-debug.log
+
+# Build Files #
+bin
+target
+build/
+.gradle
+
+# MRT log file
+logging.log*
+output.txt
