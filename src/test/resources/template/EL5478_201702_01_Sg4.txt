@@ -1,0 +1,64 @@
+H0002	Version	4															
+H0003	Date_generated	3-Feb-17															
+H0004	Reporting_period_end_date	31-Jul-17															
+H0005	State	VIC															
+H0100	Tenement_no/Combind_report_no	EL5478															
+H0101	Tenement_holder	Stavely Minerals Ltd															
+H0102	Project_name	Toora West															
+H0106	Tenement_operator	Stavely Minerals Ltd															
+H0150	Map_sheet_number 250K	Ballarat; SJ54-8															
+H0151	Map_sheet_number 100K	7423; Ararat															
+H0152	50K_map_sheet_number																
+H0153	25K_map_sheet_number																
+H0200	Start_date_of_data_acquisition	1-Jan-17															
+H0201	End_date_of_data_acquisition	31-Jul-17															
+H0202	Data_format	SG4															
+H0203	Number_of_data_records	2															
+H0204	Date_of_metadata_update	3-Feb-17															
+H0300	Related_data_file																
+H0301	Location_data_file	EL5478_201702_01_Collar.txt															
+H0302	Lithology_data_file	EL5478_201702_02_Lith.txt															
+H0303	Assay_data_file	EL5478_201702_10_LithoGeochem.txt															
+H0304	Survey_data_file	EL5478_201702_03_Survey.txt															
+H0305	SurfGeochem_Data_File																
+H0307	Lithology_code_file	SVY_logging_codes.txt															
+H0308	File verification List	EL5478_201702_verification_list.txt															
+H0310	Water_data_file																
+H0311	Water data incl in lithology file	No															
+H0313	Alteration_data_file	EL5478_201702_04_Alt.txt															
+H0314	Magsusc_data_file	EL5478_201702_09_Magsus.txt															
+H0315	Vein_data_file	EL5478_201702_05_Vein.txt															
+H0316	Recovery_data_file	EL5478_201702_08_Geotech.txt															
+H0317	Weathering_data_file																
+H0320	Other event_data_file	EL5478_201702_06_Struct.txt	EL5478_201702_07_Mins.txt														
+H0400	Drill_code	DDT															
+H0401	Drill_contractor	Titeline Drilling															
+H0402	Description	Mud Rotary precollar with diamond tail															
+H0500	Feature_located	Drillhole_collar															
+H0501	Geodetic_datum	GDA94															
+H0502	Vertical_datum	AHD															
+H0503	Projection	Map Grid of Australia (MGA)															
+H0508	Local Grid Name																
+H0530	Coordinate_system	Projected															
+H0531	Projection_zone	54															
+H0532	Surface_Location_Survey_Instrument	GPS															
+H0533	Surface_Location_Survey_Company	Stavely Minerals Ltd															
+H0600	Sample_Code	DDC	RCC														
+H0601	Sample_Type	Diamnad core	RC Chips														
+H0602	Sample_description	1/4 core	Reverse Circulation chips														
+H0700	Sample_Prep_Code	SO31															
+H0701	Sample_Prep_Desc	SO31:Fine pulverise to 75um															
+H0702	Job_no	G37215															
+H0800	Assay_code	AR	BLEG	ICP-OES													
+H0801	Assay_company	PH:Phlogiston Labs	BR:Brimstone Labs	BR:Brimstone Laboratories													
+H0802	Assay_description	Aqua regia digest	Bulk leach extractable.gold	Inductively.coupled plasma - Optical emission spectroscopy													
+H0900	Remarks																
+H1000	Sample ID	NAT_Grid_ID	Easting_MGA	Northing_MGA	Elevation	Total Hole Depth	Sample type	Nat_Survey_Method	Precollar_Depth	Dip	Azimuth_MAG	Lease_ID	Prospect	Date_Started	Date_Completed	Company	Comments
+H1001	NA	NA	metres	metres	NA	ppb	ppm	ppm	ppm	ppm	ppm	NA	NA	Date	Date	NA	NA
+H1002								BLEG	AR	ICP-OES	ICP-OES	ICP-OES					
+H1003								1	0.01	5	0.1	0.1	0.1				
+H1004	0	0	0.5	0.5	0.5	0.1	0	0	0.1	0.1	0.1	0	0	0	0	0	0
+H1006							P										
+D	STD001	MGA94_54	630500	5845150	250	335.9	DDT	GPS	123.6	-60	55	EL5478	Toora West	6-Jan-17	11-Jan-17	Stavely Minerals	
+D	STD002	MGA94_54	630694	5845228	250	315	DDT	GPS	107.6	-60	55	EL5478	Toora West	12-Jan-17	17-Jan-17	Stavely Minerals	EL5478 Prospect Toora West. hole cemented from 110m.
+EOF																	
