@@ -1,4 +1,0 @@
-ERROR: Hole_id: SMD009 exist in DS4 but missing in SL4
-ERROR: Hole_id: SMD009 exist in DL4 but missing in SL4
-WARNING: C:\Data\eclipse-workspace\mrt\src\test\resources\extract\mrt_sl4ds4dl4dg4sg4\EL5478_201702_01_Dg4.txt-line number 56: Template DG4 H1000 row requires the Drill_code column, found Drill code column, use it as Drill_code
-WARNING: C:\Data\eclipse-workspace\mrt\src\test\resources\extract\mrt_sl4ds4dl4dg4sg4\EL5478_201702_01_Sg4.txt-line number 56: H1000 requires the Sample_type header, found Sample type, use it as Sample_type
