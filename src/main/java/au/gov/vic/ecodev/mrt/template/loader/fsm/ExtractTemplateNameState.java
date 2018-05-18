@@ -11,7 +11,7 @@ import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 
 public class ExtractTemplateNameState implements LoaderState {
 
-	private static final String FILE_NAME_PATTERN = "^\\p{Alnum}+_\\p{Alnum}+\\.zip$";
+	private static final String FILE_NAME_PATTERN = "^\\p{Alnum}+[_\\p{Alnum}]+\\.zip$";
 	private static final long SAVING_FAILED = Numeral.NEGATIVE_ONE;
 	
 	@Override
