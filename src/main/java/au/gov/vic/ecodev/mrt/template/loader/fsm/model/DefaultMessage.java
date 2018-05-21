@@ -15,6 +15,7 @@ public class DefaultMessage implements Message, Serializable {
 	private List<File> failedFiles;
 	private String logFileName;
 	private String directErrorMessage;
+	private boolean partialFile;
 	
 	/**
 	 * Generated serial verison UID
@@ -105,6 +106,16 @@ public class DefaultMessage implements Message, Serializable {
 	@Override
 	public String getDirectErrorMessage() {
 		return directErrorMessage;
+	}
+
+	@Override
+	public boolean isPartialFile() {
+		return partialFile;
+	}
+
+	@Override
+	public void setPartialFile(boolean partialFile) {
+		this.partialFile = partialFile;
 	}
 
 }

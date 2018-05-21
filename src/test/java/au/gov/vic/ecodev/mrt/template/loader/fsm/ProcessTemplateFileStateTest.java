@@ -30,6 +30,7 @@ import au.gov.vic.ecodev.mrt.constants.LogSeverity;
 import au.gov.vic.ecodev.mrt.fixture.TestFixture;
 import au.gov.vic.ecodev.mrt.map.services.VictoriaMapServices;
 import au.gov.vic.ecodev.mrt.template.context.properties.DefaultStringTemplateProperties;
+import au.gov.vic.ecodev.mrt.template.files.DirectoryTreeReverseTraversalZipFileFinder;
 import au.gov.vic.ecodev.mrt.template.files.TemplateFileSelector;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.model.DefaultMessage;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.model.Message;
@@ -37,12 +38,13 @@ import au.gov.vic.ecodev.mrt.template.processor.TemplateProcessor;
 import au.gov.vic.ecodev.mrt.template.processor.TemplateProcessorFactory;
 import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
+import au.gov.vic.ecodev.mrt.template.processor.file.parser.sl4.Sl4TemplateFileParser;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.services.DbPersistentServices;
 import au.gov.vic.ecodev.mrt.template.processor.services.PersistentServices;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({TemplateProcessorFactory.class, ProcessTemplateFileState.class})
+@PrepareForTest({TemplateProcessorFactory.class, ProcessTemplateFileState.class, Sl4TemplateFileParser.class})
 public class ProcessTemplateFileStateTest {
 
 	private static final String NOT_TEMPLATE_FILE = "File: C:\\Data\\eclipse-workspace\\mrt\\src\\test\\resources\\template is not a SL4 template file.";
@@ -68,6 +70,7 @@ public class ProcessTemplateFileStateTest {
 			.thenReturn(mockPersistentServices);
 		givenTemplateContextProperty();
 		givenMapServices(mockTemplateLoaderStateMachineContext);
+		givenMockZipFileFinder();
 		when(mockTemplateLoaderStateMachineContext.saveDataBean(Matchers.any(Template.class)))
 			.thenReturn(true);
 		TestFixture.givenSl4TemplateProperties(mockTemplateLoaderStateMachineContext);
@@ -276,6 +279,7 @@ public class ProcessTemplateFileStateTest {
 		when(mockTemplateLoaderStateMachineContext.getPersistentServcies()).thenReturn(mockPersistenServices);
 		TestFixture.givenSl4TemplateProperties(mockTemplateLoaderStateMachineContext);
 		givenMapServices(mockTemplateLoaderStateMachineContext);
+		givenMockZipFileFinder();
 		// When
 		processTemplateFileState.on(mockTemplateLoaderStateMachineContext);
 		// Then
@@ -334,5 +338,14 @@ public class ProcessTemplateFileStateTest {
 		when(mockVictoriaMapServices.isWithinMga54NorthEast(Matchers.any(BigDecimal.class), 
 				Matchers.any(BigDecimal.class))).thenReturn(true);
 		when(mockContext.getMapServices()).thenReturn(mockVictoriaMapServices);
+	}
+	
+	private void givenMockZipFileFinder() throws Exception {
+		DirectoryTreeReverseTraversalZipFileFinder mockZipFileFinder = 
+				Mockito.mock(DirectoryTreeReverseTraversalZipFileFinder.class);
+		when(mockZipFileFinder.findZipFile()).thenReturn("abc.zip");
+		PowerMockito.whenNew(DirectoryTreeReverseTraversalZipFileFinder.class)
+			.withArguments(Matchers.anyString())
+			.thenReturn(mockZipFileFinder);
 	}
 }

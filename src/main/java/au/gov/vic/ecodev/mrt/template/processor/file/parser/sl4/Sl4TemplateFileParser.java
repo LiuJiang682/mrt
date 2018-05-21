@@ -18,6 +18,7 @@ import au.gov.vic.ecodev.mrt.template.processor.context.properties.sl4.Sl4String
 import au.gov.vic.ecodev.mrt.template.processor.context.properties.utils.SingleStringValueToListConventor;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
 import au.gov.vic.ecodev.mrt.template.processor.file.parser.MessageHandler;
+import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.helper.FileNameHelper;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.sl4.DValidator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.sl4.Sl4ValidatorFactory;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
@@ -61,6 +62,9 @@ public class Sl4TemplateFileParser {
 		LineNumberReader lineNumberReader = getLineNumberReader();
 		final List<String> mandatoryFields = getMandatoryValidateFields();
 		Sl4ValidatorFactory sl4ValidatorFactory = new Sl4ValidatorFactory(context, mandatoryFields);
+		String zipFile = new DirectoryTreeReverseTraversalZipFileFinder(file.getParent()).findZipFile();
+		boolean isPartialFileName = new FileNameHelper(zipFile).isPartailFileName();
+		templateParamMap.put(Strings.PARTIAL_FILE_NAME_KEY, Arrays.asList(String.valueOf(isPartialFileName)));
 		String line;
 		
 		while(null != (line = lineNumberReader.readLine())) {
@@ -71,6 +75,7 @@ public class Sl4TemplateFileParser {
 			Validator validator = sl4ValidatorFactory.getLineValidator(line);
 			if (validator instanceof DValidator) {
 				((DValidator) validator).setTemplateProcessorContext(context);
+				((DValidator) validator).setZipFileName(zipFile);
 			}
 			Optional<List<String>> errorMessage = validator.validate(templateParamMap, 
 					dataBean);
@@ -82,7 +87,6 @@ public class Sl4TemplateFileParser {
 		
 		if (null != dataBean) {
 			if (context.saveDataBean(dataBean)) {
-				String zipFile = new DirectoryTreeReverseTraversalZipFileFinder(file.getParent()).findZipFile();
 				context.addPassedFiles(zipFile);
 			} else {
 				throw new TemplateProcessorException("Unable to save the data bean!");
