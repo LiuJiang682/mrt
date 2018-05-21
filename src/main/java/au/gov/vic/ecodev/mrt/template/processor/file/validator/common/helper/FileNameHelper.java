@@ -25,7 +25,7 @@ public class FileNameHelper {
 		String simpleFileName = fileName;
 		int index = fileName.lastIndexOf(DELIM);
 		if (Numeral.NOT_FOUND < index) {
-			simpleFileName = fileName.substring(index);
+			simpleFileName = fileName.substring(index + Numeral.ONE);
 		}
 		
 		try {

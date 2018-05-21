@@ -3,6 +3,7 @@ package au.gov.vic.ecodev.mrt.template.processor.updater.tables;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.util.CollectionUtils;
 
 import au.gov.vic.ecodev.common.util.IDGenerator;
@@ -17,6 +18,8 @@ import au.gov.vic.ecodev.mrt.template.processor.updater.helper.LabelledColumnInd
 
 public class TemplateOptionalFieldUpdater {
 
+	private static final Logger LOGGER = Logger.getLogger(TemplateOptionalFieldUpdater.class);
+	
 	private final TemplateOptionalFieldDao templateOptionalFieldDao;
 	private final long sessionId;
 	private final Template template;
@@ -78,6 +81,7 @@ public class TemplateOptionalFieldUpdater {
 					templateOptionalField.setRowNumber(String.valueOf(rowNumber));
 					templateOptionalField.setFieldValue(
 							(String) new NullSafeCollections(dataRecordList).get(index));
+					LOGGER.info("About to insert: " + templateOptionalField);
 					templateOptionalFieldDao.updateOrSave(templateOptionalField);
 				});
 		}
