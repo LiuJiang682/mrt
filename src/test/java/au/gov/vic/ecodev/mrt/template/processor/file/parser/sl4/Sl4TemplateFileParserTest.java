@@ -14,18 +14,25 @@ import java.io.File;
 import java.math.BigDecimal;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Matchers;
 import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import au.gov.vic.ecodev.mrt.constants.LogSeverity;
 import au.gov.vic.ecodev.mrt.fixture.TestFixture;
 import au.gov.vic.ecodev.mrt.map.services.VictoriaMapServices;
+import au.gov.vic.ecodev.mrt.template.files.DirectoryTreeReverseTraversalZipFileFinder;
 import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.model.sl4.Sl4Template;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(Sl4TemplateFileParser.class)
 public class Sl4TemplateFileParserTest {
 
 	private static final String TEST_DATA_FILE = "src/test/resources/template/EL5478_201702_01_Collar.txt";
@@ -69,6 +76,7 @@ public class Sl4TemplateFileParserTest {
 		TestFixture.givenSl4TemplateProperties(mockContext);
 		givenMapServices(mockContext);
 		when(mockContext.saveDataBean(Matchers.any(Template.class))).thenReturn(true);
+		givenMockZipFileFinder();
 		Sl4TemplateFileParser testInstance = new Sl4TemplateFileParser(file, mockContext);
 		// When
 		testInstance.parse();
@@ -89,6 +97,7 @@ public class Sl4TemplateFileParserTest {
 		TestFixture.givenSl4TemplateProperties(mockContext);
 		givenMapServices(mockContext);
 		when(mockContext.saveDataBean(Matchers.any(Template.class))).thenReturn(false);
+		givenMockZipFileFinder();
 		Sl4TemplateFileParser testInstance = new Sl4TemplateFileParser(file, mockContext);
 		// When
 		testInstance.parse();
@@ -108,4 +117,12 @@ public class Sl4TemplateFileParserTest {
 		when(mockContext.getMapServices()).thenReturn(mockVictoriaMapServices);
 	}
 
+	private void givenMockZipFileFinder() throws Exception {
+		DirectoryTreeReverseTraversalZipFileFinder mockZipFileFinder = 
+				Mockito.mock(DirectoryTreeReverseTraversalZipFileFinder.class);
+		when(mockZipFileFinder.findZipFile()).thenReturn("abc.zip");
+		PowerMockito.whenNew(DirectoryTreeReverseTraversalZipFileFinder.class)
+			.withArguments(Matchers.anyString())
+			.thenReturn(mockZipFileFinder);
+	}
 }

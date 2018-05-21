@@ -13,16 +13,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Matchers;
 import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import au.gov.vic.ecodev.mrt.fixture.TestFixture;
 import au.gov.vic.ecodev.mrt.map.services.VictoriaMapServices;
+import au.gov.vic.ecodev.mrt.template.files.DirectoryTreeReverseTraversalZipFileFinder;
 import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
+import au.gov.vic.ecodev.mrt.template.processor.file.parser.sl4.Sl4TemplateFileParser;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(Sl4TemplateFileParser.class)
 public class Sl4TemplateProcessorTest {
 
 	@Test
@@ -35,6 +43,7 @@ public class Sl4TemplateProcessorTest {
 		testInstance.setTemplateProcessorContent(mockContext);
 		TestFixture.givenSl4TemplateProperties(mockContext);
 		givenMapServices(mockContext);
+		givenMockZipFileFinder();
 		when(mockContext.saveDataBean(Matchers.any(Template.class))).thenReturn(true);
 		//When
 		testInstance.processFile();
@@ -78,5 +87,14 @@ public class Sl4TemplateProcessorTest {
 		when(mockVictoriaMapServices.isWithinMga54NorthEast(Matchers.any(BigDecimal.class), 
 				Matchers.any(BigDecimal.class))).thenReturn(true);
 		when(mockContext.getMapServices()).thenReturn(mockVictoriaMapServices);
+	}
+	
+	private void givenMockZipFileFinder() throws Exception {
+		DirectoryTreeReverseTraversalZipFileFinder mockZipFileFinder = 
+				Mockito.mock(DirectoryTreeReverseTraversalZipFileFinder.class);
+		when(mockZipFileFinder.findZipFile()).thenReturn("abc.zip");
+		PowerMockito.whenNew(DirectoryTreeReverseTraversalZipFileFinder.class)
+			.withArguments(Matchers.anyString())
+			.thenReturn(mockZipFileFinder);
 	}
 }

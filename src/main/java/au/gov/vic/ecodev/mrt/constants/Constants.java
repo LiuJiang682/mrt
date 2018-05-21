@@ -48,6 +48,7 @@ public interface Constants {
 		static final String TEMPLATE_NAME_DL4 = "DL4";
 		static final String UNDER_LINE = "_";
 		static final String UNDER_LINE_DATA_KEY = "_D";
+		static final String PARTIAL_FILE_NAME_KEY = "isPartialFileName";
 	}
 	
 	interface Numeral {
