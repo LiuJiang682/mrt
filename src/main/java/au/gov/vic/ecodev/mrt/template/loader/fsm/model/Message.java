@@ -29,6 +29,4 @@ public interface Message {
 	public String getDirectErrorMessage();
 	public void setDirectErrorMessage(String string);
 	
-	public boolean isPartialFile();
-	public void setPartialFile(boolean partialFile);
 }

@@ -15,6 +15,7 @@ import au.gov.vic.ecodev.mrt.template.fields.ProjectionZone;
 import au.gov.vic.ecodev.mrt.template.fields.SL4ColumnHeaders;
 import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.H0531Validator;
+import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.helper.PartialFileNameFlagHelper;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.helper.StringListHelper;
 
 public class BoreHolePositionValidator {
@@ -23,6 +24,7 @@ public class BoreHolePositionValidator {
 	private final long lineNumber;
 	private final Map<String, List<String>> templateParamMap;
 	private final TemplateProcessorContext context;
+	private final boolean isPartialFileName;
 	
 	public BoreHolePositionValidator(String[] strs, long lineNumber, Map<String, List<String>> templateParamMap, 
 			TemplateProcessorContext context) {
@@ -39,6 +41,7 @@ public class BoreHolePositionValidator {
 			throw new IllegalArgumentException("BoreHolePositionValidator:context cannot be null!");
 		}
 		this.context = context;
+		this.isPartialFileName = new PartialFileNameFlagHelper(templateParamMap).getPartilaFileNameFlag();
 	}
 
 	public void validate(List<String> messages) {
@@ -130,17 +133,19 @@ public class BoreHolePositionValidator {
 			if (CollectionUtils.isEmpty(tenementNoList)) {
 				contructNoTenementWarningMessage(messages);
 			} else {
-				boolean foundTenement = false;
-				for (String tenenmentNo : tenementNoList) {
-					if (victoriaMapServices.isWithinTenementMga55LatitudeLongitude(tenenmentNo, 
+				if (!isPartialFileName) {
+					boolean foundTenement = false;
+					for (String tenenmentNo : tenementNoList) {
+						if (victoriaMapServices.isWithinTenementMga55LatitudeLongitude(tenenmentNo, 
 							latitude, longitude)) {
-						foundTenement = true;
-						break;
+							foundTenement = true;
+							break;
+						}
 					}
-				}
-				if (!foundTenement) {
-					contructNoTenementFoundWarningMessage(messages, latitude, longitude, 
+					if (!foundTenement) {
+						contructNoTenementFoundWarningMessage(messages, latitude, longitude, 
 							tenementNoList);
+					}
 				}
 			}
 		} else {
@@ -172,17 +177,19 @@ public class BoreHolePositionValidator {
 			if (CollectionUtils.isEmpty(tenementNoList)) {
 				contructNoTenementWarningMessage(messages);
 			} else {
-				boolean foundTenement = false;
-				for (String tenenmentNo : tenementNoList) {
-					if (victoriaMapServices.isWithinTenementMga54LatitudeLongitude(tenenmentNo, 
+				if (!isPartialFileName) {
+					boolean foundTenement = false;
+					for (String tenenmentNo : tenementNoList) {
+						if (victoriaMapServices.isWithinTenementMga54LatitudeLongitude(tenenmentNo, 
 							latitude, longitude)) {
-						foundTenement = true;
-						break;
+							foundTenement = true;
+							break;
+						}
 					}
-				}
-				if (!foundTenement) {
-					contructNoTenementFoundWarningMessage(messages, latitude, longitude, 
+					if (!foundTenement) {
+						contructNoTenementFoundWarningMessage(messages, latitude, longitude, 
 							tenementNoList);
+					}
 				}
 			}
 		} else {
@@ -198,17 +205,19 @@ public class BoreHolePositionValidator {
 				if (CollectionUtils.isEmpty(tenementNoList)) {
 					contructNoTenementWarningMessage(messages);
 				} else {
-					boolean foundTenement = false;
-					for (String tenenmentNo : tenementNoList) {
-						if (victoriaMapServices.isWithinTenementAgd55NorthEast(tenenmentNo, 
+					if (!isPartialFileName) {
+						boolean foundTenement = false;
+						for (String tenenmentNo : tenementNoList) {
+							if (victoriaMapServices.isWithinTenementAgd55NorthEast(tenenmentNo, 
 								easting, northing)) {
-							foundTenement = true;
-							break;
+								foundTenement = true;
+								break;
+							}
 						}
-					}
-					if (!foundTenement) {
-						contructNoTenementFoundWarningMessage(messages, easting, northing, 
+						if (!foundTenement) {
+							contructNoTenementFoundWarningMessage(messages, easting, northing, 
 								tenementNoList);
+						}
 					}
 				}
 			} else {
@@ -219,17 +228,19 @@ public class BoreHolePositionValidator {
 				if (CollectionUtils.isEmpty(tenementNoList)) {
 					contructNoTenementWarningMessage(messages);
 				} else {
-					boolean foundTenement = false;
-					for (String tenenmentNo : tenementNoList) {
-						if (victoriaMapServices.isWithinTenementMga55NorthEast(tenenmentNo, 
+					if (!isPartialFileName) {
+						boolean foundTenement = false;
+						for (String tenenmentNo : tenementNoList) {
+							if (victoriaMapServices.isWithinTenementMga55NorthEast(tenenmentNo, 
 								easting, northing)) {
-							foundTenement = true;
-							break;
+								foundTenement = true;
+								break;
+							}
 						}
-					}
-					if (!foundTenement) {
-						contructNoTenementFoundWarningMessage(messages, easting, northing, 
+						if (!foundTenement) {
+							contructNoTenementFoundWarningMessage(messages, easting, northing, 
 								tenementNoList);
+						}
 					}
 				}
 			} else {
@@ -246,17 +257,19 @@ public class BoreHolePositionValidator {
 				if (CollectionUtils.isEmpty(tenementNoList)) {
 					contructNoTenementWarningMessage(messages);
 				} else {
-					boolean foundTenement = false;
-					for (String tenenmentNo : tenementNoList) {
-						if (victoriaMapServices.isWithinTenementAgd54NorthEast(tenenmentNo, 
-								easting, northing)) {
-							foundTenement = true;
-							break;
+					if (!isPartialFileName) {
+						boolean foundTenement = false;
+						for (String tenenmentNo : tenementNoList) {
+							if (victoriaMapServices.isWithinTenementAgd54NorthEast(tenenmentNo, 
+									easting, northing)) {
+								foundTenement = true;
+								break;
+							}
 						}
-					}
-					if (!foundTenement) {
-						contructNoTenementFoundWarningMessage(messages, easting, northing, 
-								tenementNoList);
+						if (!foundTenement) {
+							contructNoTenementFoundWarningMessage(messages, easting, northing, 
+									tenementNoList);
+						}
 					}
 				}
 			} else {
@@ -267,17 +280,19 @@ public class BoreHolePositionValidator {
 				if (CollectionUtils.isEmpty(tenementNoList)) {
 					contructNoTenementWarningMessage(messages);
 				} else {
-					boolean foundTenement = false;
-					for (String tenenmentNo : tenementNoList) {
-						if (victoriaMapServices.isWithinTenementMga54NorthEast(tenenmentNo, 
+					if (!isPartialFileName) {
+						boolean foundTenement = false;
+						for (String tenenmentNo : tenementNoList) {
+							if (victoriaMapServices.isWithinTenementMga54NorthEast(tenenmentNo, 
 								easting, northing)) {
-							foundTenement = true;
-							break;
+								foundTenement = true;
+								break;
+							}
 						}
-					}
-					if (!foundTenement) {
-						contructNoTenementFoundWarningMessage(messages, easting, northing, 
+						if (!foundTenement) {
+							contructNoTenementFoundWarningMessage(messages, easting, northing, 
 								tenementNoList);
+						}
 					}
 				}
 			} else {
