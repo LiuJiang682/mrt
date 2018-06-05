@@ -30,7 +30,7 @@ public class ExtractTemplateNameState implements LoaderState {
 			} else {
 				templateLoaderStateMachineContext.getMessage().setFileNames(templateNames);
 				long batchId = templateLoaderStateMachineContext
-						.getPersistentServcies().getNextBatchId(templateNames);
+						.getPersistentServcies().getNextBatchId(templateNames, fileNames);
 				if (SAVING_FAILED == batchId) {
 					String message = "Unable to create session!";
 					templateLoaderStateMachineContext.getMessage().setDirectErrorMessage(message);

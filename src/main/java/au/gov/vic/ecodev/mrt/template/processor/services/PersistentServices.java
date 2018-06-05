@@ -9,7 +9,7 @@ import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 
 public interface PersistentServices {
 
-	long getNextBatchId(final List<String> templateNames);
+	long getNextBatchId(final List<String> templateNames, List<String> fileNames);
 
 	boolean saveStatusLog(long batchId, LogSeverity severity, String logMessage);
 	

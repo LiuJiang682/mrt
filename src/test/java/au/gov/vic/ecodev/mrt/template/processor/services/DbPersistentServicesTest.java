@@ -164,7 +164,7 @@ public class DbPersistentServicesTest {
 		givenTestInstance();
 		when(mockSessionHeaderDao.updateOrSave(Matchers.any(SessionHeader.class))).thenReturn(true);
 		// When
-		Long nextBatchId = dbPersistentServices.getNextBatchId(Arrays.asList("mrt"));
+		Long nextBatchId = dbPersistentServices.getNextBatchId(Arrays.asList("mrt"), Arrays.asList("MRT_EL123.zip"));
 		// Then
 		assertThat(Numeral.NEGATIVE_ONE == nextBatchId, is(false));
 	}
@@ -175,7 +175,7 @@ public class DbPersistentServicesTest {
 		givenTestInstance();
 		when(mockSessionHeaderDao.updateOrSave(Matchers.any(SessionHeader.class))).thenReturn(false);
 		// When
-		Long nextBatchId = dbPersistentServices.getNextBatchId(Arrays.asList("mrt"));
+		Long nextBatchId = dbPersistentServices.getNextBatchId(Arrays.asList("mrt"), Arrays.asList("MRT_EL123.zip"));
 		// Then
 		assertThat(Numeral.NEGATIVE_ONE == nextBatchId, is(true));
 	}
