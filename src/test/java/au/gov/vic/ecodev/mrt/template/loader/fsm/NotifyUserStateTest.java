@@ -1,14 +1,11 @@
 package au.gov.vic.ecodev.mrt.template.loader.fsm;
 
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.nullValue;
-import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
@@ -17,6 +14,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import au.gov.vic.ecodev.mrt.config.MrtConfigProperties;
 import au.gov.vic.ecodev.mrt.mail.Mailer;
+import au.gov.vic.ecodev.mrt.template.loader.fsm.helpers.TemplateLoaderStateMachineContextFinalStepHelper;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.model.DefaultMessage;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.model.Message;
 
@@ -32,14 +30,17 @@ public class NotifyUserStateTest {
 	public void shouldSendUserEmail() throws Exception {
 		// Given
 		givenTestInstance();
+		TemplateLoaderStateMachineContextFinalStepHelper mockTemplateLoaderStateMachineContextFinalStepHelper = 
+				Mockito.mock(TemplateLoaderStateMachineContextFinalStepHelper.class);
+		PowerMockito.whenNew(TemplateLoaderStateMachineContextFinalStepHelper.class)
+			.withArguments(eq(mockTemplateLoaderStateMachineContext))
+			.thenReturn(mockTemplateLoaderStateMachineContextFinalStepHelper);
 		// When
 		testInstance.on(mockTemplateLoaderStateMachineContext);
 		// Then
 		verify(mockMailer).send(Matchers.anyString(), 
 				Matchers.anyString(), Matchers.anyString(), Matchers.anyString(), Matchers.anyString());
-		ArgumentCaptor<Message> messageCaptor = ArgumentCaptor.forClass(Message.class);
-		verify(mockTemplateLoaderStateMachineContext).setMessage(messageCaptor.capture());
-		assertThat(messageCaptor.getValue(), is(nullValue()));
+		PowerMockito.verifyNew(TemplateLoaderStateMachineContextFinalStepHelper.class);
 	}
 	
 	@Test
@@ -49,6 +50,11 @@ public class NotifyUserStateTest {
 		PowerMockito.doThrow(new RuntimeException()).when(mockMailer)
 			.send(Matchers.anyString(), Matchers.anyString(), Matchers.anyString(), 
 				Matchers.anyString(), Matchers.anyString());
+		TemplateLoaderStateMachineContextFinalStepHelper mockTemplateLoaderStateMachineContextFinalStepHelper = 
+				Mockito.mock(TemplateLoaderStateMachineContextFinalStepHelper.class);
+		PowerMockito.whenNew(TemplateLoaderStateMachineContextFinalStepHelper.class)
+			.withArguments(eq(mockTemplateLoaderStateMachineContext))
+			.thenReturn(mockTemplateLoaderStateMachineContextFinalStepHelper);
 		//When
 		testInstance.on(mockTemplateLoaderStateMachineContext);
 		//Then
