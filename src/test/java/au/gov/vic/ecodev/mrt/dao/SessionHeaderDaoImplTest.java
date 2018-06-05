@@ -41,6 +41,7 @@ public class SessionHeaderDaoImplTest {
 		long sessionId = IDGenerator.getUID().longValue();
 		SessionHeader sessionHeader = new SessionHeader(sessionId);
 		sessionHeader.setTemplate("MRT");
+		sessionHeader.setFileName("FILE_NAME");
 		Date date = new Date(System.currentTimeMillis());
 		sessionHeader.setProcessDate(date);
 		sessionHeader.setTenement("TENEMENT");
@@ -60,6 +61,7 @@ public class SessionHeaderDaoImplTest {
 		assertThat(retrievedSessionHeader, is(notNullValue()));
 		assertThat(sessionHeader.getSessionId(), is(equalTo(sessionId)));
 		assertThat(sessionHeader.getTemplate(), is(equalTo("MRT")));
+		assertThat(sessionHeader.getFileName(), is(equalTo("FILE_NAME")));
 		assertThat(sessionHeader.getProcessDate(), is(equalTo(date)));
 		assertThat(sessionHeader.getTenement(),  is(equalTo("TENEMENT")));
 		assertThat(sessionHeader.getTenementHolder(), is(equalTo("TENEMENT_HOLDER")));
@@ -82,6 +84,7 @@ public class SessionHeaderDaoImplTest {
 		long sessionId = IDGenerator.getUID().longValue();
 		SessionHeader sessionHeader = new SessionHeader(sessionId);
 		sessionHeader.setTemplate("MRT");
+		sessionHeader.setFileName("FILE_NAME");
 		Date date = new Date(System.currentTimeMillis());
 		sessionHeader.setProcessDate(date);
 		sessionHeader.setTenement("TENEMENT");
@@ -106,6 +109,7 @@ public class SessionHeaderDaoImplTest {
 		assertThat(sqlInjected, is(notNullValue()));
 		assertThat(sqlInjected.getSessionId(), is(equalTo(sessionId)));
 		assertThat(sqlInjected.getTemplate(), is(equalTo("MRT")));
+		assertThat(sqlInjected.getFileName(), is(equalTo("FILE_NAME")));
 //		assertThat(sqlInjected.getProcessDate(), is(equalTo(date)));
 		assertThat(sqlInjected.getTenement(),  is(equalTo("TENEMENT")));
 		assertThat(sqlInjected.getTenementHolder(), is(equalTo("TENEMENT_HOLDER")));
