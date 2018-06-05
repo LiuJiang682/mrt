@@ -139,4 +139,8 @@ public class TemplateLoaderStateMachineContext implements TemplateProcessorConte
 	public MapServices getMapServices() {
 		return victoriaMapServices;
 	}
+	
+	public JdbcTemplate getJdbcTemplate() {
+		return this.jdbcTemplate;
+	}
 }

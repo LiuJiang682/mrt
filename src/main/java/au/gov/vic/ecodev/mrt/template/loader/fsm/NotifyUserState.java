@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import au.gov.vic.ecodev.mrt.config.MrtConfigProperties;
 import au.gov.vic.ecodev.mrt.mail.EmailBodyBuilder;
 import au.gov.vic.ecodev.mrt.mail.Mailer;
+import au.gov.vic.ecodev.mrt.template.loader.fsm.helpers.TemplateLoaderStateMachineContextFinalStepHelper;
 
 public class NotifyUserState implements LoaderState {
 
@@ -25,7 +26,6 @@ public class NotifyUserState implements LoaderState {
 		}
 		
 		//Clean up
-		//TODO -- Refactor to a new class for flexibility
-		templateLoaderStateMachineContext.setMessage(null);
+		new TemplateLoaderStateMachineContextFinalStepHelper(templateLoaderStateMachineContext).doFinalCleanUp();
 	}
 }
