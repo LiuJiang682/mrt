@@ -35,7 +35,7 @@ public class ExtractTemplateNameStateTest {
 		message.setFileNames(fileNames );
 		when(mockTemplateLoaderStateMachineContext.getMessage()).thenReturn(message);
 		PersistentServices mockPersistentServices = Mockito.mock(PersistentServices.class);
-		when(mockPersistentServices.getNextBatchId(Arrays.asList("mrt"))).thenReturn(1L);
+		when(mockPersistentServices.getNextBatchId(Arrays.asList("mrt"), Arrays.asList("mrt_eco.zip"))).thenReturn(1L);
 		when(mockTemplateLoaderStateMachineContext.getPersistentServcies()).thenReturn(mockPersistentServices);
 		//When
 		extractTemplateState.on(mockTemplateLoaderStateMachineContext);
@@ -56,7 +56,7 @@ public class ExtractTemplateNameStateTest {
 		message.setFileNames(fileNames );
 		when(mockTemplateLoaderStateMachineContext.getMessage()).thenReturn(message);
 		PersistentServices mockPersistentServices = Mockito.mock(PersistentServices.class);
-		when(mockPersistentServices.getNextBatchId(Arrays.asList("mrt"))).thenReturn(-1L);
+		when(mockPersistentServices.getNextBatchId(Arrays.asList("mrt"), Arrays.asList("mrt_eco.zip"))).thenReturn(-1L);
 		when(mockTemplateLoaderStateMachineContext.getPersistentServcies()).thenReturn(mockPersistentServices);
 		//When
 		extractTemplateState.on(mockTemplateLoaderStateMachineContext);

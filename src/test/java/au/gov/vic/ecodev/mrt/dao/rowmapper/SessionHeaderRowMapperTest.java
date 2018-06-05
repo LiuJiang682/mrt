@@ -25,6 +25,7 @@ public class SessionHeaderRowMapperTest {
 		ResultSet mockResultSet = Mockito.mock(ResultSet.class);
 		when(mockResultSet.getLong(eq("ID"))).thenReturn(1l);
 		when(mockResultSet.getString(eq("TEMPLATE"))).thenReturn("MRT");
+		when(mockResultSet.getString("FILE_NAME")).thenReturn("FILE_NAME");
 		Date date = new Date(System.currentTimeMillis());
 		when(mockResultSet.getDate(eq("PROCESS_DATE"))).thenReturn(date);
 		when(mockResultSet.getString(eq("TENEMENT"))).thenReturn("TENEMENT");
@@ -40,6 +41,7 @@ public class SessionHeaderRowMapperTest {
 		assertThat(sessionHeader, is(notNullValue()));
 		assertThat(sessionHeader.getSessionId(), is(equalTo(1l)));
 		assertThat(sessionHeader.getTemplate(), is(equalTo("MRT")));
+		assertThat(sessionHeader.getFileName(), is(equalTo("FILE_NAME")));
 		assertThat(sessionHeader.getProcessDate(), is(equalTo(date)));
 		assertThat(sessionHeader.getTenement(),  is(equalTo("TENEMENT")));
 		assertThat(sessionHeader.getTenementHolder(), is(equalTo("TENEMENT_HOLDER")));
