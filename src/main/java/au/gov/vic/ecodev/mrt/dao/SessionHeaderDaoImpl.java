@@ -16,11 +16,11 @@ public class SessionHeaderDaoImpl implements SessionHeaderDao {
 	
 	private static final Logger LOGGER = Logger.getLogger(SessionHeaderDaoImpl.class);
 
-	private static final String SELECT_SQL = "SELECT ID, TEMPLATE, FILE_NAME, PROCESS_DATE, TENEMENT, TENEMENT_HOLDER, REPORTING_DATE, PROJECT_NAME, STATUS, COMMENTS, EMAIL_SENT FROM SESSION_HEADER WHERE ID = ?";
+	private static final String SELECT_SQL = "SELECT ID, TEMPLATE, FILE_NAME, PROCESS_DATE, TENEMENT, TENEMENT_HOLDER, REPORTING_DATE, PROJECT_NAME, STATUS, COMMENTS, EMAIL_SENT, APPROVED, REJECTED, CREATED FROM SESSION_HEADER WHERE ID = ?";
 
-	private static final String UPDATE_SQL = "UPDATE SESSION_HEADER SET TEMPLATE = ?, FILE_NAME = ?, PROCESS_DATE = ?, TENEMENT = ?, TENEMENT_HOLDER = ?, REPORTING_DATE = ?, PROJECT_NAME = ?, STATUS = ?, COMMENTS = ?, EMAIL_SENT = ? where ID = ?";
+	private static final String UPDATE_SQL = "UPDATE SESSION_HEADER SET TEMPLATE = ?, FILE_NAME = ?, PROCESS_DATE = ?, TENEMENT = ?, TENEMENT_HOLDER = ?, REPORTING_DATE = ?, PROJECT_NAME = ?, STATUS = ?, COMMENTS = ?, EMAIL_SENT = ?, APPROVED = ?, REJECTED = ? where ID = ?";
 
-	private static final String INSERT_SQL = "INSERT INTO SESSION_HEADER(ID, TEMPLATE, FILE_NAME, PROCESS_DATE, TENEMENT, TENEMENT_HOLDER, REPORTING_DATE, PROJECT_NAME, STATUS, COMMENTS, EMAIL_SENT) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_SQL = "INSERT INTO SESSION_HEADER(ID, TEMPLATE, FILE_NAME, PROCESS_DATE, TENEMENT, TENEMENT_HOLDER, REPORTING_DATE, PROJECT_NAME, STATUS, COMMENTS, EMAIL_SENT, APPROVED, REJECTED) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 	private static final String COUNT_SQL = "SELECT COUNT(ID) FROM SESSION_HEADER WHERE ID = ?";
 
@@ -37,7 +37,8 @@ public class SessionHeaderDaoImpl implements SessionHeaderDao {
 					sessionHeader.getTemplate(), sessionHeader.getFileName(), sessionHeader.getProcessDate(), 
 					sessionHeader.getTenement(), sessionHeader.getTenementHolder(), sessionHeader.getReportingDate(), 
 					sessionHeader.getProjectName(), sessionHeader.getStatus().name(),
-					sessionHeader.getComments(), sessionHeader.getEmailSent() });
+					sessionHeader.getComments(), sessionHeader.getEmailSent(), sessionHeader.getApproved(), 
+					sessionHeader.getRejected()});
 			return Numeral.ONE == rows;
 		} else {
 			int rows = jdbcTemplate.update(UPDATE_SQL, new Object[] { sessionHeader.getTemplate(),
@@ -45,7 +46,8 @@ public class SessionHeaderDaoImpl implements SessionHeaderDao {
 					sessionHeader.getTenementHolder(), 
 					sessionHeader.getReportingDate(), sessionHeader.getProjectName(), 
 					sessionHeader.getStatus().name(), sessionHeader.getComments(), 
-					sessionHeader.getEmailSent(), sessionHeader.getSessionId() });
+					sessionHeader.getEmailSent(), sessionHeader.getApproved(), 
+					sessionHeader.getRejected(), sessionHeader.getSessionId() });
 			return Numeral.ONE == rows;
 		}
 	}

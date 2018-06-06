@@ -9,6 +9,9 @@ import au.gov.vic.ecodev.mrt.model.SessionHeader;
 
 public class SessionHeaderRowMapper implements RowMapper<SessionHeader> {
 
+	private static final String COLUMN_HEADER_CREATED = "CREATED";
+	private static final String COLUMN_HEADER_REJECTED = "REJECTED";
+	private static final String COLUMN_HEADER_APPROVED = "APPROVED";
 	private static final String COLUMN_HEADER_FILE_NAME = "FILE_NAME";
 	private static final String COLUMN_HEADER_TEMPLATE = "TEMPLATE";
 	private static final String COLUMN_HEADER_EMAIL_SENT = "EMAIL_SENT";
@@ -35,6 +38,9 @@ public class SessionHeaderRowMapper implements RowMapper<SessionHeader> {
 		sessionHeader.setStatus(rs.getString(COLUMN_HEADER_STATUS));
 		sessionHeader.setComments(rs.getString(COLUMN_HEADER_COMMENTS));
 		sessionHeader.setEmailSent(rs.getString(COLUMN_HEADER_EMAIL_SENT));
+		sessionHeader.setApproved(rs.getInt(COLUMN_HEADER_APPROVED));
+		sessionHeader.setRejected(rs.getInt(COLUMN_HEADER_REJECTED));
+		sessionHeader.setCreated(rs.getTimestamp(COLUMN_HEADER_CREATED));
 		return sessionHeader;
 	}
 
