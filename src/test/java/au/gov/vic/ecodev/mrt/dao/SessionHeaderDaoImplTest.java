@@ -51,6 +51,8 @@ public class SessionHeaderDaoImplTest {
 		sessionHeader.setStatus(SessionStatus.RUNNING);
 		sessionHeader.setComments("COMMENTS");
 		sessionHeader.setEmailSent("N");
+		sessionHeader.setApproved(0);
+		sessionHeader.setRejected(0);
 		//When
 		boolean flag = sessionHeaderDao.updateOrSave(sessionHeader);
 		//Then
@@ -70,6 +72,8 @@ public class SessionHeaderDaoImplTest {
 		assertThat(sessionHeader.getStatus().name(), is(equalTo("RUNNING")));
 		assertThat(sessionHeader.getComments(), is(equalTo("COMMENTS")));
 		assertThat(sessionHeader.getEmailSent(), is(equalTo("N")));
+		assertThat(sessionHeader.getApproved(), is(equalTo(0)));
+		assertThat(sessionHeader.getRejected(), is(equalTo(0)));
 		
 		sessionHeader.setStatus(SessionStatus.COMPLETED);
 		boolean updateFlag = sessionHeaderDao.updateOrSave(sessionHeader);
@@ -94,6 +98,8 @@ public class SessionHeaderDaoImplTest {
 		sessionHeader.setStatus(SessionStatus.RUNNING);
 		sessionHeader.setComments("COMMENTS");
 		sessionHeader.setEmailSent("N");
+		sessionHeader.setApproved(0);
+		sessionHeader.setRejected(0);
 		//When
 		boolean flag = sessionHeaderDao.updateOrSave(sessionHeader);
 		//Then
@@ -118,6 +124,8 @@ public class SessionHeaderDaoImplTest {
 		assertThat(sqlInjected.getStatus().name(), is(equalTo("RUNNING")));
 		assertThat(sqlInjected.getComments(), is(equalTo("COMMENTS'; DROP TABLE SESSION_HEADER; -- '")));
 		assertThat(sqlInjected.getEmailSent(), is(equalTo("N")));
+		assertThat(sessionHeader.getApproved(), is(equalTo(0)));
+		assertThat(sessionHeader.getRejected(), is(equalTo(0)));
 	}
 	
 	@Test

@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -35,6 +36,11 @@ public class SessionHeaderRowMapperTest {
 		when(mockResultSet.getString(eq("STATUS"))).thenReturn("RUNNING");
 		when(mockResultSet.getString(eq("COMMENTS"))).thenReturn("COMMENTS");
 		when(mockResultSet.getString(eq("EMAIL_SENT"))).thenReturn("N");
+		//This is mock test, in the real life approved and rejected must be mutual exclusive
+		when(mockResultSet.getInt(eq("APPROVED"))).thenReturn(1);
+		when(mockResultSet.getInt(eq("REJECTED"))).thenReturn(1);
+		Timestamp currentTimeStamp = new Timestamp(System.currentTimeMillis());
+		when(mockResultSet.getTimestamp("CREATED")).thenReturn(currentTimeStamp);
 		//When
 		SessionHeader sessionHeader = testInstance.mapRow(mockResultSet, 1);
 		//Then
@@ -50,5 +56,8 @@ public class SessionHeaderRowMapperTest {
 		assertThat(sessionHeader.getStatus().name(), is(equalTo("RUNNING")));
 		assertThat(sessionHeader.getComments(), is(equalTo("COMMENTS")));
 		assertThat(sessionHeader.getEmailSent(), is(equalTo("N")));
+		assertThat(sessionHeader.getApproved(), is(equalTo(1)));
+		assertThat(sessionHeader.getRejected(), is(equalTo(1)));
+		assertThat(sessionHeader.getCreated(), is(equalTo(currentTimeStamp)));
 	}
 }
