@@ -33,7 +33,7 @@ public class NotifyUserStateTest {
 		TemplateLoaderStateMachineContextFinalStepHelper mockTemplateLoaderStateMachineContextFinalStepHelper = 
 				Mockito.mock(TemplateLoaderStateMachineContextFinalStepHelper.class);
 		PowerMockito.whenNew(TemplateLoaderStateMachineContextFinalStepHelper.class)
-			.withArguments(eq(mockTemplateLoaderStateMachineContext))
+			.withArguments(eq(mockTemplateLoaderStateMachineContext), eq(true))
 			.thenReturn(mockTemplateLoaderStateMachineContextFinalStepHelper);
 		// When
 		testInstance.on(mockTemplateLoaderStateMachineContext);
@@ -53,7 +53,7 @@ public class NotifyUserStateTest {
 		TemplateLoaderStateMachineContextFinalStepHelper mockTemplateLoaderStateMachineContextFinalStepHelper = 
 				Mockito.mock(TemplateLoaderStateMachineContextFinalStepHelper.class);
 		PowerMockito.whenNew(TemplateLoaderStateMachineContextFinalStepHelper.class)
-			.withArguments(eq(mockTemplateLoaderStateMachineContext))
+			.withArguments(eq(mockTemplateLoaderStateMachineContext), eq(false))
 			.thenReturn(mockTemplateLoaderStateMachineContextFinalStepHelper);
 		//When
 		testInstance.on(mockTemplateLoaderStateMachineContext);

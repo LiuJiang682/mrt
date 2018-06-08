@@ -48,7 +48,7 @@ public class SessionHeaderDaoImplTest {
 		sessionHeader.setTenementHolder("TENEMENT_HOLDER");
 		sessionHeader.setReportingDate(date);
 		sessionHeader.setProjectName("PROJECT_NAME");
-		sessionHeader.setStatus(SessionStatus.RUNNING);
+		sessionHeader.setStatus(SessionStatus.RUNNING.name());
 		sessionHeader.setComments("COMMENTS");
 		sessionHeader.setEmailSent("N");
 		sessionHeader.setApproved(0);
@@ -75,7 +75,7 @@ public class SessionHeaderDaoImplTest {
 		assertThat(sessionHeader.getApproved(), is(equalTo(0)));
 		assertThat(sessionHeader.getRejected(), is(equalTo(0)));
 		
-		sessionHeader.setStatus(SessionStatus.COMPLETED);
+		sessionHeader.setStatus(SessionStatus.COMPLETED.name());
 		boolean updateFlag = sessionHeaderDao.updateOrSave(sessionHeader);
 		assertThat(updateFlag, is(true));
 		SessionHeader completedSessionHeader = (SessionHeader) sessionHeaderDao.get(sessionId);
@@ -95,7 +95,7 @@ public class SessionHeaderDaoImplTest {
 		sessionHeader.setTenementHolder("TENEMENT_HOLDER");
 		sessionHeader.setReportingDate(date);
 		sessionHeader.setProjectName("PROJECT_NAME");
-		sessionHeader.setStatus(SessionStatus.RUNNING);
+		sessionHeader.setStatus(SessionStatus.RUNNING.name());
 		sessionHeader.setComments("COMMENTS");
 		sessionHeader.setEmailSent("N");
 		sessionHeader.setApproved(0);

@@ -11,13 +11,15 @@ import au.gov.vic.ecodev.mrt.template.loader.fsm.model.Message;
 public class TemplateLoaderStateMachineContextFinalStepHelper {
 
 	private final TemplateLoaderStateMachineContext templateLoaderStateMachineContext;
+	private final boolean emailSent;
 	
 	public TemplateLoaderStateMachineContextFinalStepHelper(
-			TemplateLoaderStateMachineContext templateLoaderStateMachineContext) {
+			TemplateLoaderStateMachineContext templateLoaderStateMachineContext, boolean emailSent) {
 		if (null == templateLoaderStateMachineContext) {
 			throw new IllegalArgumentException("TemplateLoaderStateMachineContextFinalStepHelper: templateLoaderStateMachineContext parameter cannot be null!");
 		}
 		this.templateLoaderStateMachineContext = templateLoaderStateMachineContext;
+		this.emailSent = emailSent;
 	}
 
 	protected final void doSessionStatusUpdate() {
@@ -27,9 +29,14 @@ public class TemplateLoaderStateMachineContextFinalStepHelper {
 		SessionHeader session = (SessionHeader) sessionHeaderDaoImpl.get(batchId);
 		Message message = templateLoaderStateMachineContext.getMessage();
 		if (CollectionUtils.isEmpty(message.getFailedFiles())) {
-			session.setStatus(SessionStatus.COMPLETED);
+			session.setStatus(SessionStatus.COMPLETED.name());
 		} else {
-			session.setStatus(SessionStatus.FAILED);
+			session.setStatus(SessionStatus.FAILED.name());
+		}
+		if (emailSent) {
+			session.setEmailSent("Y");
+		} else {
+			session.setEmailSent("N");
 		}
 		sessionHeaderDaoImpl.updateOrSave(session);
 	}
