@@ -53,7 +53,7 @@ public class TemplateLoaderStateMachineContextFinalStepHelperTest {
 	@Test
 	public void shouldUpdateTheSessionStatusToCompleted() throws Exception {
 		// Given
-		givenTestInstance();
+		givenTestInstance(false);
 		JdbcTemplate mockJdbcTemplate = Mockito.mock(JdbcTemplate.class);
 		SessionHeader mockSessionHeader = Mockito.mock(SessionHeader.class);
 		SessionHeaderDaoImpl mockSessionHeaderDaoImpl = Mockito.mock(SessionHeaderDaoImpl.class);
@@ -67,13 +67,35 @@ public class TemplateLoaderStateMachineContextFinalStepHelperTest {
 		// Then
 		verify(mockSessionHeaderDaoImpl).get(Matchers.anyLong());
 		verify(mockSessionHeaderDaoImpl).updateOrSave(eq(mockSessionHeader));
-		verify(mockSessionHeader).setStatus(eq(SessionStatus.COMPLETED));
+		verify(mockSessionHeader).setStatus(eq(SessionStatus.COMPLETED.name()));
+		verify(mockSessionHeader).setEmailSent(eq("N"));
+	}
+	
+	@Test
+	public void shouldUpdateTheSessionStatusToCompletedAndEmailSent() throws Exception {
+		// Given
+		givenTestInstance(true);
+		JdbcTemplate mockJdbcTemplate = Mockito.mock(JdbcTemplate.class);
+		SessionHeader mockSessionHeader = Mockito.mock(SessionHeader.class);
+		SessionHeaderDaoImpl mockSessionHeaderDaoImpl = Mockito.mock(SessionHeaderDaoImpl.class);
+		PowerMockito.whenNew(SessionHeaderDaoImpl.class).withNoArguments().thenReturn(mockSessionHeaderDaoImpl);
+		when(mockSessionHeaderDaoImpl.get(Matchers.anyLong())).thenReturn(mockSessionHeader);
+		when(mockTemplateLoaderStateMachineContext.getJdbcTemplate()).thenReturn(mockJdbcTemplate);
+		Message message = new DefaultMessage();
+		when(mockTemplateLoaderStateMachineContext.getMessage()).thenReturn(message);
+		// When
+		testInstance.doSessionStatusUpdate();
+		// Then
+		verify(mockSessionHeaderDaoImpl).get(Matchers.anyLong());
+		verify(mockSessionHeaderDaoImpl).updateOrSave(eq(mockSessionHeader));
+		verify(mockSessionHeader).setStatus(eq(SessionStatus.COMPLETED.name()));
+		verify(mockSessionHeader).setEmailSent(eq("Y"));
 	}
 
 	@Test
 	public void shouldUpdateTheSessionStatusToFail() throws Exception {
 		// Given
-		givenTestInstance();
+		givenTestInstance(false);
 		JdbcTemplate mockJdbcTemplate = Mockito.mock(JdbcTemplate.class);
 		SessionHeader mockSessionHeader = Mockito.mock(SessionHeader.class);
 		SessionHeaderDaoImpl mockSessionHeaderDaoImpl = Mockito.mock(SessionHeaderDaoImpl.class);
@@ -88,13 +110,35 @@ public class TemplateLoaderStateMachineContextFinalStepHelperTest {
 		// Then
 		verify(mockSessionHeaderDaoImpl).get(Matchers.anyLong());
 		verify(mockSessionHeaderDaoImpl).updateOrSave(eq(mockSessionHeader));
-		verify(mockSessionHeader).setStatus(eq(SessionStatus.FAILED));
+		verify(mockSessionHeader).setStatus(eq(SessionStatus.FAILED.name()));
+		verify(mockSessionHeader).setEmailSent(eq("N"));
+	}
+	@Test
+	public void shouldUpdateTheSessionStatusToFailAndEmailSent() throws Exception {
+		// Given
+		givenTestInstance(true);
+		JdbcTemplate mockJdbcTemplate = Mockito.mock(JdbcTemplate.class);
+		SessionHeader mockSessionHeader = Mockito.mock(SessionHeader.class);
+		SessionHeaderDaoImpl mockSessionHeaderDaoImpl = Mockito.mock(SessionHeaderDaoImpl.class);
+		PowerMockito.whenNew(SessionHeaderDaoImpl.class).withNoArguments().thenReturn(mockSessionHeaderDaoImpl);
+		when(mockSessionHeaderDaoImpl.get(Matchers.anyLong())).thenReturn(mockSessionHeader);
+		when(mockTemplateLoaderStateMachineContext.getJdbcTemplate()).thenReturn(mockJdbcTemplate);
+		Message message = new DefaultMessage();
+		message.setFailedFiles(Arrays.asList(new File("abc")));
+		when(mockTemplateLoaderStateMachineContext.getMessage()).thenReturn(message);
+		// When
+		testInstance.doSessionStatusUpdate();
+		// Then
+		verify(mockSessionHeaderDaoImpl).get(Matchers.anyLong());
+		verify(mockSessionHeaderDaoImpl).updateOrSave(eq(mockSessionHeader));
+		verify(mockSessionHeader).setStatus(eq(SessionStatus.FAILED.name()));
+		verify(mockSessionHeader).setEmailSent(eq("Y"));
 	}
 
 	@Test
 	public void shouldReturnInstance() {
 		// Given
-		givenTestInstance();
+		givenTestInstance(false);
 		// When
 		// Then
 		assertThat(testInstance, is(notNullValue()));
@@ -105,13 +149,13 @@ public class TemplateLoaderStateMachineContextFinalStepHelperTest {
 		// Given
 		TemplateLoaderStateMachineContext context = null;
 		// When
-		new TemplateLoaderStateMachineContextFinalStepHelper(context);
+		new TemplateLoaderStateMachineContextFinalStepHelper(context, false);
 		fail("Program reached unexpected point!");
 	}
 
-	private void givenTestInstance() {
+	private void givenTestInstance(boolean emailSent) {
 		mockTemplateLoaderStateMachineContext = Mockito.mock(TemplateLoaderStateMachineContext.class);
 
-		testInstance = new TemplateLoaderStateMachineContextFinalStepHelper(mockTemplateLoaderStateMachineContext);
+		testInstance = new TemplateLoaderStateMachineContextFinalStepHelper(mockTemplateLoaderStateMachineContext, emailSent);
 	}
 }

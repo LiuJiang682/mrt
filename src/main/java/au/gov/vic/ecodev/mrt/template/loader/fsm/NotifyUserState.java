@@ -17,15 +17,17 @@ public class NotifyUserState implements LoaderState {
 		Mailer mailer = new Mailer(mrtConfigProperties);
 		mailer.createSession();
 		String body = new EmailBodyBuilder(templateLoaderStateMachineContext).build();
+		boolean emailSent = false;
 		try {
 			mailer.send(mrtConfigProperties.getToEmail(), 
 					mrtConfigProperties.getEmailSubject(), body , mrtConfigProperties.getEmailUser(), 
 					mrtConfigProperties.getEmailUserPwd());
+			emailSent = true;
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 		}
 		
 		//Clean up
-		new TemplateLoaderStateMachineContextFinalStepHelper(templateLoaderStateMachineContext).doFinalCleanUp();
+		new TemplateLoaderStateMachineContextFinalStepHelper(templateLoaderStateMachineContext, emailSent).doFinalCleanUp();
 	}
 }
