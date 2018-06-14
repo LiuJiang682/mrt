@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.powermock.reflect.Whitebox;
 import org.springframework.util.CollectionUtils;
 
 import au.gov.vic.ecodev.mrt.dao.sl4.SiteDao;
@@ -126,55 +127,55 @@ public class SiteUpdaterTest {
 		assertThat(prospect, is(nullValue()));
 	}
 	
-	@Test
-	public void shouldReturnProjectZone() {
-		// Given
-		givenTestInstance();
-		when(mockTemplate.get(eq("H0531"))).thenReturn(getProjectZoneList());
-		// When
-		BigDecimal amgZone = testInstance.extractAmgZoneFromTemplate(mockTemplate);
-		// Then
-		assertThat(amgZone, is(equalTo(new BigDecimal("54"))));
-	}
-	
-	@Test
-	public void shouldReturnNullAsProjectZoneWhenListContainsNotNumberValue() {
-		// Given
-		givenTestInstance();
-		List<String> projectZoneList = new ArrayList<>();
-		projectZoneList.add("Prjection_zone");
-		projectZoneList.add("abc");
-		when(mockTemplate.get(eq("H0531"))).thenReturn(projectZoneList);
-		// When
-		BigDecimal projectZone = testInstance.extractAmgZoneFromTemplate(mockTemplate);
-		// Then
-		assertThat(projectZone, is(nullValue()));
-	}
-
-	@Test
-	public void shouldReturnNullAsProjectZoneWhenListIsNull() {
-		// Given
-		givenTestInstance();
-		List<String> projectZoneList = null;
-		when(mockTemplate.get(eq("H0531"))).thenReturn(projectZoneList);
-		// When
-		BigDecimal projectZone = testInstance.extractAmgZoneFromTemplate(mockTemplate);
-		// Then
-		assertThat(projectZone, is(nullValue()));
-	}
-
-	@Test
-	public void shouldReturnNullAsProjectzoneWhenListContainsOnlyOneValue() {
-		// Given
-		givenTestInstance();
-		List<String> numList = new ArrayList<>();
-		numList.add("6");
-		when(mockTemplate.get(eq("H0531"))).thenReturn(numList);
-		// When
-		BigDecimal projectZone = testInstance.extractAmgZoneFromTemplate(mockTemplate);
-		// Then
-		assertThat(projectZone, is(nullValue()));
-	}
+//	@Test
+//	public void shouldReturnProjectZone() {
+//		// Given
+//		givenTestInstance();
+//		when(mockTemplate.get(eq("H0531"))).thenReturn(getProjectZoneList());
+//		// When
+//		BigDecimal amgZone = testInstance.extractAmgZoneFromTemplate(mockTemplate);
+//		// Then
+//		assertThat(amgZone, is(equalTo(new BigDecimal("54"))));
+//	}
+//	
+//	@Test
+//	public void shouldReturnNullAsProjectZoneWhenListContainsNotNumberValue() {
+//		// Given
+//		givenTestInstance();
+//		List<String> projectZoneList = new ArrayList<>();
+//		projectZoneList.add("Prjection_zone");
+//		projectZoneList.add("abc");
+//		when(mockTemplate.get(eq("H0531"))).thenReturn(projectZoneList);
+//		// When
+//		BigDecimal projectZone = testInstance.extractAmgZoneFromTemplate(mockTemplate);
+//		// Then
+//		assertThat(projectZone, is(nullValue()));
+//	}
+//
+//	@Test
+//	public void shouldReturnNullAsProjectZoneWhenListIsNull() {
+//		// Given
+//		givenTestInstance();
+//		List<String> projectZoneList = null;
+//		when(mockTemplate.get(eq("H0531"))).thenReturn(projectZoneList);
+//		// When
+//		BigDecimal projectZone = testInstance.extractAmgZoneFromTemplate(mockTemplate);
+//		// Then
+//		assertThat(projectZone, is(nullValue()));
+//	}
+//
+//	@Test
+//	public void shouldReturnNullAsProjectzoneWhenListContainsOnlyOneValue() {
+//		// Given
+//		givenTestInstance();
+//		List<String> numList = new ArrayList<>();
+//		numList.add("6");
+//		when(mockTemplate.get(eq("H0531"))).thenReturn(numList);
+//		// When
+//		BigDecimal projectZone = testInstance.extractAmgZoneFromTemplate(mockTemplate);
+//		// Then
+//		assertThat(projectZone, is(nullValue()));
+//	}
 	
 	@Test
 	public void shouldReturnLocnAccFromTemplate() {
@@ -443,17 +444,24 @@ public class SiteUpdaterTest {
 		assertThat(mandatoryFieldsIndexList.contains(new Integer(8)), is(true));
 	}
 	
+	@Test
+	public void shouldInitialisedH0531Field() throws TemplateProcessorException {
+		// Given
+		givenTestInstance();
+		when(mockTemplate.get(eq("H1000"))).thenReturn(TestFixture.getAMGColumnHeaderList());
+		when(mockTemplate.get(eq("H0531"))).thenReturn(TestFixture.getProjectZoneList());
+		List<Integer> mandatoryFieldsIndexList = new ArrayList<>();
+		// When
+		testInstance.init(mandatoryFieldsIndexList);
+		// Then
+		BigDecimal amgZone = Whitebox.getInternalState(testInstance, "amgZone");
+		assertThat(amgZone, is(equalTo(new BigDecimal("54"))));
+	}
+	
 	private void givenTestInstance() {
 		mockTemplate = Mockito.mock(Template.class);
 		mockSiteDao = Mockito.mock(SiteDao.class);
 		testInstance = new SiteUpdater(1l, mockTemplate, mockSiteDao);
-	}
-	
-	private List<String> getProjectZoneList() {
-		List<String> projectZoneList = new ArrayList<>();
-		projectZoneList.add("Prjection_zone");
-		projectZoneList.add("54");
-		return projectZoneList;
 	}
 	
 	private List<String> getLocnAccList() {

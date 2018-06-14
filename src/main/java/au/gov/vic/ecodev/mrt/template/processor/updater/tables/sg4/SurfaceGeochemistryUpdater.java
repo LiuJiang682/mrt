@@ -1,5 +1,6 @@
 package au.gov.vic.ecodev.mrt.template.processor.updater.tables.sg4;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import au.gov.vic.ecodev.common.util.IDGenerator;
@@ -12,6 +13,7 @@ import au.gov.vic.ecodev.mrt.template.fields.Sg4ColumnHeaders;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.updater.helper.DataExtractionHelper;
+import au.gov.vic.ecodev.mrt.template.processor.updater.helper.ProjectionZoneExtractionHelper;
 
 public class SurfaceGeochemistryUpdater {
 
@@ -23,6 +25,7 @@ public class SurfaceGeochemistryUpdater {
 	private int eastingIndex;
 	private int northingIndex;
 	private int sampleTypeIndex;
+	private BigDecimal amgZone;
 	
 	public SurfaceGeochemistryUpdater(SurfaceGeochemistryDao surfaceGeochemistryDao, long sessionId,
 			Template template) {
@@ -45,6 +48,7 @@ public class SurfaceGeochemistryUpdater {
 		sampleTypeIndex = new DataExtractionHelper(headers)
 				.extractMandatoryFieldIndex(sampleTypeName.get(Numeral.ZERO));
 		mandatoryFieldIndexList.add(sampleTypeIndex);
+		amgZone = new ProjectionZoneExtractionHelper(template).extractAmgZoneFromTemplate();
 	}
 
 	public void update(List<String> dataRecordList) {
@@ -59,6 +63,7 @@ public class SurfaceGeochemistryUpdater {
 				.extractBigDecimal(northingIndex));
 		surfaceGeochemistry.setSampleType((String) new NullSafeCollections(dataRecordList)
 				.get(sampleTypeIndex));
+		surfaceGeochemistry.setAmgZone(amgZone);
 		surfaceGeochemistryDao.updateOrSave(surfaceGeochemistry);
 	}
 	
