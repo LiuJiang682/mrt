@@ -154,21 +154,6 @@ public class SiteUpdater {
 		return locnAcc;
 	}
 	
-//	protected final BigDecimal extractAmgZoneFromTemplate(Template template) {
-//		BigDecimal amgZone = null;
-//		List<String> projectZoneList = template.get(KEY_H0531);
-//		if ((!CollectionUtils.isEmpty(projectZoneList)) 
-//				&& (Numeral.ONE < projectZoneList.size())) {
-//			String projectZone = projectZoneList.get(Numeral.ONE);
-//			try {
-//				amgZone = new BigDecimal(projectZone);
-//			} catch (NumberFormatException e) {
-//				//Ignore exception
-//			}
-//		}
-//		return amgZone;
-//	}
-	
 	protected final String extractProjectNameFromTemplate(Template template) {
 		String projectName = null;
 		List<String> projectNameList = template.get(KEY_H0102);
