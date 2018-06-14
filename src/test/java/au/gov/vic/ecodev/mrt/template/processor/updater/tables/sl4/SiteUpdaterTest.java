@@ -127,56 +127,6 @@ public class SiteUpdaterTest {
 		assertThat(prospect, is(nullValue()));
 	}
 	
-//	@Test
-//	public void shouldReturnProjectZone() {
-//		// Given
-//		givenTestInstance();
-//		when(mockTemplate.get(eq("H0531"))).thenReturn(getProjectZoneList());
-//		// When
-//		BigDecimal amgZone = testInstance.extractAmgZoneFromTemplate(mockTemplate);
-//		// Then
-//		assertThat(amgZone, is(equalTo(new BigDecimal("54"))));
-//	}
-//	
-//	@Test
-//	public void shouldReturnNullAsProjectZoneWhenListContainsNotNumberValue() {
-//		// Given
-//		givenTestInstance();
-//		List<String> projectZoneList = new ArrayList<>();
-//		projectZoneList.add("Prjection_zone");
-//		projectZoneList.add("abc");
-//		when(mockTemplate.get(eq("H0531"))).thenReturn(projectZoneList);
-//		// When
-//		BigDecimal projectZone = testInstance.extractAmgZoneFromTemplate(mockTemplate);
-//		// Then
-//		assertThat(projectZone, is(nullValue()));
-//	}
-//
-//	@Test
-//	public void shouldReturnNullAsProjectZoneWhenListIsNull() {
-//		// Given
-//		givenTestInstance();
-//		List<String> projectZoneList = null;
-//		when(mockTemplate.get(eq("H0531"))).thenReturn(projectZoneList);
-//		// When
-//		BigDecimal projectZone = testInstance.extractAmgZoneFromTemplate(mockTemplate);
-//		// Then
-//		assertThat(projectZone, is(nullValue()));
-//	}
-//
-//	@Test
-//	public void shouldReturnNullAsProjectzoneWhenListContainsOnlyOneValue() {
-//		// Given
-//		givenTestInstance();
-//		List<String> numList = new ArrayList<>();
-//		numList.add("6");
-//		when(mockTemplate.get(eq("H0531"))).thenReturn(numList);
-//		// When
-//		BigDecimal projectZone = testInstance.extractAmgZoneFromTemplate(mockTemplate);
-//		// Then
-//		assertThat(projectZone, is(nullValue()));
-//	}
-	
 	@Test
 	public void shouldReturnLocnAccFromTemplate() {
 		// Given
