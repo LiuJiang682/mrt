@@ -8,6 +8,7 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -61,6 +62,7 @@ public class SurfaceGeochemistryUpdaterTest {
 		givenTestInstance();
 		List<String> headers = TestFixture.getSg4MandatoryColumnsList();
 		when(mockTemplate.get(eq("H1000"))).thenReturn(headers);
+		when(mockTemplate.get(eq("H0531"))).thenReturn(TestFixture.getProjectZoneList());
 		givenMockTemplateData();
 		List<Integer> managdatoryIndexList = new ArrayList<>();
 		//When
@@ -74,6 +76,8 @@ public class SurfaceGeochemistryUpdaterTest {
 		assertThat(northingIndex, is(equalTo(2)));
 		Integer sampleTypeIndex = Whitebox.getInternalState(testInstance, "sampleTypeIndex");
 		assertThat(sampleTypeIndex, is(equalTo(3)));
+		BigDecimal amgZone = Whitebox.getInternalState(testInstance, "amgZone");
+		assertThat(amgZone, is(equalTo(new BigDecimal("54"))));
 	}
 	
 	@Test

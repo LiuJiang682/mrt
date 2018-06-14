@@ -37,6 +37,7 @@ public class SurfaceGeochemistryDaoImplTest {
 		surfaceGeochemistry.setSampleId("abc123");
 		surfaceGeochemistry.setEasting(BigDecimal.TEN);
 		surfaceGeochemistry.setNorthing(BigDecimal.ONE);
+		surfaceGeochemistry.setAmgZone(new BigDecimal("54"));
 		surfaceGeochemistry.setSampleType("ff");
 		//When
 		boolean updateFlag = surfaceGeochemistryDao.updateOrSave(surfaceGeochemistry);
@@ -70,6 +71,7 @@ public class SurfaceGeochemistryDaoImplTest {
 		surfaceGeochemistry.setSampleId("abc123");
 		surfaceGeochemistry.setEasting(BigDecimal.TEN);
 		surfaceGeochemistry.setNorthing(BigDecimal.ONE);
+		surfaceGeochemistry.setAmgZone(new BigDecimal("54"));
 		surfaceGeochemistry.setSampleType("dd");
 		return surfaceGeochemistryDao.updateOrSave(surfaceGeochemistry);
 	}
