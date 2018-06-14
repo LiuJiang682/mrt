@@ -14,9 +14,9 @@ public class SurfaceGeochemistryDaoImpl implements SurfaceGeochemistryDao {
 
 	private static final Logger LOGGER = Logger.getLogger(SurfaceGeochemistryDaoImpl.class);
 	
-	private static final String UPDATE_SQL = "UPDATE DH_SURFACE_GEOCHEMISTRY SET LOADER_ID = ?, SAMPLE_ID = ?, EASTING = ?, NORTHING = ?, SAMPLE_TYPE = ? WHERE ID = ?";
+	private static final String UPDATE_SQL = "UPDATE DH_SURFACE_GEOCHEMISTRY SET LOADER_ID = ?, SAMPLE_ID = ?, EASTING = ?, NORTHING = ?, SAMPLE_TYPE = ?, AMG_ZONE = ? WHERE ID = ?";
 
-	private static final String INSERT_SQL = "INSERT INTO DH_SURFACE_GEOCHEMISTRY(ID, LOADER_ID, SAMPLE_ID, EASTING, NORTHING, SAMPLE_TYPE) VALUES (?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_SQL = "INSERT INTO DH_SURFACE_GEOCHEMISTRY(ID, LOADER_ID, SAMPLE_ID, EASTING, NORTHING, SAMPLE_TYPE, AMG_ZONE) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
 	private static final String COUNT_SQL = "SELECT COUNT(ID) FROM DH_SURFACE_GEOCHEMISTRY WHERE ID = ?";
 	
@@ -31,13 +31,13 @@ public class SurfaceGeochemistryDaoImpl implements SurfaceGeochemistryDao {
 			int row = jdbcTemplate.update(INSERT_SQL, surfaceGeochemistry.getId(), 
 					surfaceGeochemistry.getLoaderId(), surfaceGeochemistry.getSampleId(), 
 					surfaceGeochemistry.getEasting(), surfaceGeochemistry.getNorthing(), 
-					surfaceGeochemistry.getSampleType());
+					surfaceGeochemistry.getSampleType(), surfaceGeochemistry.getAmgZone());
 			return Numeral.ONE == row;
 		} else {
 			int row = jdbcTemplate.update(UPDATE_SQL, surfaceGeochemistry.getLoaderId(), 
 					surfaceGeochemistry.getSampleId(), surfaceGeochemistry.getEasting(), 
 					surfaceGeochemistry.getNorthing(), surfaceGeochemistry.getSampleType(),
-					surfaceGeochemistry.getId());
+					surfaceGeochemistry.getAmgZone(), surfaceGeochemistry.getId());
 			return Numeral.ONE == row;
 		}
 	}

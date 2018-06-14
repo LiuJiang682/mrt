@@ -14,13 +14,13 @@ import au.gov.vic.ecodev.mrt.model.sl4.Site;
 import au.gov.vic.ecodev.mrt.template.fields.SL4ColumnHeaders;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
+import au.gov.vic.ecodev.mrt.template.processor.updater.helper.ProjectionZoneExtractionHelper;
 import au.gov.vic.ecodev.mrt.template.processor.updater.tables.index.finder.sl4.HoleIdIndexFinder;
 
 public class SiteUpdater {
 
 	private static final String N_A = "N/A";
 	private static final String KEY_H0102 = "H0102";
-	private static final String KEY_H0531 = "H0531";
 	private static final String KEY_H0506 = "H0506";
 	private static final String KEY_H0501 = "H0501";
 	private static final String KEY_H0502 = "H0502";
@@ -63,7 +63,7 @@ public class SiteUpdater {
 			mandatoryFieldsIndexList.add(longitudeIndex);
 		}
 		prospect = extractProjectNameFromTemplate(template);
-		amgZone = extractAmgZoneFromTemplate(template);
+		amgZone = new ProjectionZoneExtractionHelper(template).extractAmgZoneFromTemplate();
 		locnAcc = extractLocnAccFromTemplate(template);
 		locnDatumCd = extractLocnDatumCdFromTemplate(template);
 		elevDatumCd = extractElevDatumCdFromTemplate(template);
@@ -154,20 +154,20 @@ public class SiteUpdater {
 		return locnAcc;
 	}
 	
-	protected final BigDecimal extractAmgZoneFromTemplate(Template template) {
-		BigDecimal amgZone = null;
-		List<String> projectZoneList = template.get(KEY_H0531);
-		if ((!CollectionUtils.isEmpty(projectZoneList)) 
-				&& (Numeral.ONE < projectZoneList.size())) {
-			String projectZone = projectZoneList.get(Numeral.ONE);
-			try {
-				amgZone = new BigDecimal(projectZone);
-			} catch (NumberFormatException e) {
-				//Ignore exception
-			}
-		}
-		return amgZone;
-	}
+//	protected final BigDecimal extractAmgZoneFromTemplate(Template template) {
+//		BigDecimal amgZone = null;
+//		List<String> projectZoneList = template.get(KEY_H0531);
+//		if ((!CollectionUtils.isEmpty(projectZoneList)) 
+//				&& (Numeral.ONE < projectZoneList.size())) {
+//			String projectZone = projectZoneList.get(Numeral.ONE);
+//			try {
+//				amgZone = new BigDecimal(projectZone);
+//			} catch (NumberFormatException e) {
+//				//Ignore exception
+//			}
+//		}
+//		return amgZone;
+//	}
 	
 	protected final String extractProjectNameFromTemplate(Template template) {
 		String projectName = null;
