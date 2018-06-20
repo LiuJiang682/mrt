@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import au.gov.vic.ecodev.mrt.api.constants.LogSeverity;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
-import au.gov.vic.ecodev.mrt.constants.LogSeverity;
 import au.gov.vic.ecodev.mrt.template.files.DirectoryTreeReverseTraversalZipFileFinder;
 import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
@@ -40,17 +40,20 @@ public class MessageHandler {
 				LOGGER.debug(message);
 				if (message.startsWith(Strings.LOG_INFO_HEADER)) {
 					String formattedMessage = doStringFormat(
-							message.replace(Strings.LOG_INFO_HEADER, Strings.EMPTY).trim());
+							message.replace(Strings.LOG_INFO_HEADER, 
+									au.gov.vic.ecodev.mrt.api.constants.Constants.Strings.EMPTY).trim());
 					templateProcessorContext.saveStatusLog(LogSeverity.INFO, 
 							formattedMessage);
 				} else if (message.startsWith(Strings.LOG_WARNING_HEADER)) {
 					String formattedMessage = doStringFormat(
-							message.replace(Strings.LOG_WARNING_HEADER, Strings.EMPTY).trim());
+							message.replace(Strings.LOG_WARNING_HEADER, 
+									au.gov.vic.ecodev.mrt.api.constants.Constants.Strings.EMPTY).trim());
 					templateProcessorContext.saveStatusLog(LogSeverity.WARNING, 
 							formattedMessage);
 				} else {
 					if (message.startsWith(Strings.LOG_ERROR_HEADER)) {
-						message = message.replace(Strings.LOG_ERROR_HEADER, Strings.EMPTY).trim();
+						message = message.replace(Strings.LOG_ERROR_HEADER, 
+								au.gov.vic.ecodev.mrt.api.constants.Constants.Strings.EMPTY).trim();
 					}
 					String formattedMessage = doStringFormat(message);
 					templateProcessorContext.saveStatusLog(LogSeverity.ERROR, formattedMessage);

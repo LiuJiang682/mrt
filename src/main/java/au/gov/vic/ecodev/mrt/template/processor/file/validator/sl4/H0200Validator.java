@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.ThirdColumnNullIgnoreDateBasicValidator;
 import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
-import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.ThirdColumnNullIgnoreDateBasicValidator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.TemplateFieldBasicValidator;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.validator.Validator;

@@ -5,8 +5,8 @@ import java.math.BigDecimal;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
+import au.gov.vic.ecodev.mrt.api.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.config.MrtConfigProperties;
-import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
 
 public class VictoriaMapServicesSdoImpl implements VictoriaMapServices {
 

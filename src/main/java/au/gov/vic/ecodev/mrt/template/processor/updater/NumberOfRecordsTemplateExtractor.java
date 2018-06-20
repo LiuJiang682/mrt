@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.util.CollectionUtils;
 
-import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
+import au.gov.vic.ecodev.mrt.api.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 
 public class NumberOfRecordsTemplateExtractor {

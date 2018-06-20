@@ -23,7 +23,7 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import au.gov.vic.ecodev.mrt.constants.LogSeverity;
+import au.gov.vic.ecodev.mrt.api.constants.LogSeverity;
 import au.gov.vic.ecodev.mrt.fixture.TestFixture;
 import au.gov.vic.ecodev.mrt.template.context.properties.SqlCriteria;
 import au.gov.vic.ecodev.mrt.template.context.properties.StringListTemplateProperties;

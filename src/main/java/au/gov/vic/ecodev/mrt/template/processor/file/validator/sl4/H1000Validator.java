@@ -8,9 +8,9 @@ import java.util.Optional;
 
 import org.springframework.util.CollectionUtils;
 
+import au.gov.vic.ecodev.mrt.template.fields.SL4ColumnHeaders;
 import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
-import au.gov.vic.ecodev.mrt.template.fields.SL4ColumnHeaders;
 import au.gov.vic.ecodev.mrt.template.fields.GeodeticDatum;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.AzimuthMagHeaderValidator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.H0501Validator;
