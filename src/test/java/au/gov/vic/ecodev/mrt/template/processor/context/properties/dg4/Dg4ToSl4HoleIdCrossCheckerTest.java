@@ -15,7 +15,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Matchers;
 import org.mockito.Mockito;
 
-import au.gov.vic.ecodev.mrt.constants.LogSeverity;
+import au.gov.vic.ecodev.mrt.api.constants.LogSeverity;
 import au.gov.vic.ecodev.mrt.template.context.properties.SqlCriteria;
 import au.gov.vic.ecodev.mrt.template.context.properties.StringListTemplateProperties;
 import au.gov.vic.ecodev.mrt.template.criteria.TemplateCriteria;

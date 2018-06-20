@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
+import au.gov.vic.ecodev.mrt.api.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 
 public class ZipFileExtractor {
@@ -59,7 +59,8 @@ public class ZipFileExtractor {
 
 	protected final File createExtractDirectory() {
 		String fileName = file.getAbsolutePath();
-		fileName = fileName.replace(Strings.ZIP_FILE_EXTENSION, Strings.EMPTY);
+		fileName = fileName.replace(Strings.ZIP_FILE_EXTENSION, 
+				au.gov.vic.ecodev.mrt.api.constants.Constants.Strings.EMPTY);
 		return createDirectory(fileName);
 	}
 
