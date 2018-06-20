@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.springframework.util.CollectionUtils;
 
-import au.gov.vic.ecodev.mrt.config.MrtConfigProperties;
 import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
+import au.gov.vic.ecodev.mrt.config.MrtConfigProperties;
 import au.gov.vic.ecodev.mrt.template.files.FileMover;
 
 public class MoveFileToNextStageState implements LoaderState {
@@ -42,7 +42,8 @@ public class MoveFileToNextStageState implements LoaderState {
 					messageBuilder.append(", ");
 				}
 				String message = messageBuilder.toString();
-				message = message.substring(Numeral.ZERO, message.length() - Numeral.TWO);
+				message = message.substring(au.gov.vic.ecodev.mrt.api.constants.Constants.Numeral.ZERO, 
+						message.length() - Numeral.TWO);
 				templateLoaderStateMachineContext.getMessage().setDirectErrorMessage(message);
 			}
 		}

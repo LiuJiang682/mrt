@@ -19,8 +19,8 @@ import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.springframework.util.CollectionUtils;
 
-import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.template.fields.SL4ColumnHeaders;
+import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.template.fields.GeodeticDatum;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.H0501Validator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.sl4.H1000Validator;

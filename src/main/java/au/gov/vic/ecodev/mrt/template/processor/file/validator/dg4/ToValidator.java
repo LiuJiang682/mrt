@@ -72,7 +72,7 @@ public class ToValidator {
 			String fromString) {
 		BigDecimal from = new BigDecimal(fromString);
 		BigDecimal to = new BigDecimal(dataString);
-		if (Numeral.NEGATIVE_ONE == to.compareTo(from)) {
+		if (au.gov.vic.ecodev.mrt.api.constants.Constants.Numeral.NEGATIVE_ONE == to.compareTo(from)) {
 			String message = new StringBuilder(Strings.LOG_ERROR_HEADER)
 					.append("Line ")
 					.append(lineNumber)

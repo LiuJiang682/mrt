@@ -10,9 +10,9 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.util.StringUtils;
 
-import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
+import au.gov.vic.ecodev.mrt.api.constants.LogSeverity;
+import au.gov.vic.ecodev.mrt.api.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
-import au.gov.vic.ecodev.mrt.constants.LogSeverity;
 import au.gov.vic.ecodev.mrt.template.processor.services.PersistentServices;
 
 public class LogFileGenerator {

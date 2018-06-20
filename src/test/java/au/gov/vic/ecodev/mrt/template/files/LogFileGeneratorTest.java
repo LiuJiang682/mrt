@@ -18,7 +18,7 @@ import org.junit.Test;
 import org.mockito.Matchers;
 import org.mockito.Mockito;
 
-import au.gov.vic.ecodev.mrt.constants.LogSeverity;
+import au.gov.vic.ecodev.mrt.api.constants.LogSeverity;
 import au.gov.vic.ecodev.mrt.template.processor.services.PersistentServices;
 
 public class LogFileGeneratorTest {

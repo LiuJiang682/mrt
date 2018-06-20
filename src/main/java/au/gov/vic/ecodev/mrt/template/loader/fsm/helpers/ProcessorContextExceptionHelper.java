@@ -3,7 +3,7 @@ package au.gov.vic.ecodev.mrt.template.loader.fsm.helpers;
 import java.io.File;
 import java.util.List;
 
-import au.gov.vic.ecodev.mrt.constants.LogSeverity;
+import au.gov.vic.ecodev.mrt.api.constants.LogSeverity;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.TemplateLoaderStateMachineContext;
 
 public class ProcessorContextExceptionHelper {

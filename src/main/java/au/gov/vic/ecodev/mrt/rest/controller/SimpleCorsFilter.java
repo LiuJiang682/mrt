@@ -15,17 +15,18 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SimpleCorsFilter implements Filter {
-
+//public class SimpleCorsFilter implements Filter {
+public class SimpleCorsFilter {
+	
 	private static final Logger LOGGER = Logger.getLogger(SimpleCorsFilter.class);
 	
-	@Override
+//	@Override
 	public void destroy() {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
+//	@Override
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
 			throws IOException, ServletException {
 //		HttpServletRequest request = (HttpServletRequest) req;
@@ -41,7 +42,7 @@ public class SimpleCorsFilter implements Filter {
 
 	}
 
-	@Override
+//	@Override
 	public void init(FilterConfig arg0) throws ServletException {
 		LOGGER.info("init");
 

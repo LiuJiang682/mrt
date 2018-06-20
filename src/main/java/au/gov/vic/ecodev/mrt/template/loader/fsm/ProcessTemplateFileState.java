@@ -8,7 +8,7 @@ import java.util.Optional;
 
 import org.apache.log4j.Logger;
 
-import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
+import au.gov.vic.ecodev.mrt.api.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.template.files.TemplateFileSelector;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.helpers.ProcessorContextExceptionHelper;
@@ -50,7 +50,7 @@ public class ProcessTemplateFileState implements LoaderState {
 		
 		for (String template : templateList) {
 			String[] templateClass = template.split(Strings.COLON);
-			if (Numeral.TWO == templateClass.length) {
+			if (au.gov.vic.ecodev.mrt.constants.Constants.Numeral.TWO == templateClass.length) {
 				TemplateProcessor templateProcessor = TemplateProcessorFactory
 						.getProcessor(templateClass[Numeral.ONE]);
 				if (null == templateProcessor) {
