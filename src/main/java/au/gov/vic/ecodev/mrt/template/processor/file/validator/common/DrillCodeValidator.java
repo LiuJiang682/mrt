@@ -40,7 +40,7 @@ public class DrillCodeValidator {
 				return;
 			} else {
 				drillCodeIndex = columnHeaders.indexOf(drillCodeVariation.get(
-						au.gov.vic.ecodev.mrt.api.constants.Constants.Numeral.ZERO));
+						au.gov.vic.ecodev.mrt.constants.Constants.Numeral.ZERO));
 			}
 		}
 		++drillCodeIndex;

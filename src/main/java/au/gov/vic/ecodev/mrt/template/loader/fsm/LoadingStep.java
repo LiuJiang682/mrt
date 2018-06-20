@@ -4,9 +4,9 @@ import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
 
 public enum LoadingStep {
 
-	SCAN_DIR(au.gov.vic.ecodev.mrt.api.constants.Constants.Numeral.ZERO, 
+	SCAN_DIR(au.gov.vic.ecodev.mrt.constants.Constants.Numeral.ZERO, 
 			au.gov.vic.ecodev.mrt.template.loader.fsm.ScanDirectoryState.class), 
-	EXTRACT_TEMPLATE_NAME(au.gov.vic.ecodev.mrt.api.constants.Constants.Numeral.ONE, 
+	EXTRACT_TEMPLATE_NAME(au.gov.vic.ecodev.mrt.constants.Constants.Numeral.ONE, 
 			au.gov.vic.ecodev.mrt.template.loader.fsm.ExtractTemplateNameState.class), 
 	RETRIEVE_TEMPLATE(Numeral.TWO, au.gov.vic.ecodev.mrt.template.loader.fsm.RetrieveTemplateState.class),
 	UNZIP_ZIP_FILE(Numeral.THREE, au.gov.vic.ecodev.mrt.template.loader.fsm.UnzipZipFileState.class),

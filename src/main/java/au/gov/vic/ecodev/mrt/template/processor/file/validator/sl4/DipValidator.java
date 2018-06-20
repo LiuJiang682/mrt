@@ -48,8 +48,8 @@ public class DipValidator {
 			BigDecimal dip = new BigDecimal(dipString).setScale(scale);
 			BigDecimal negativeNinety = new BigDecimal(LOW_BOUNDRY_NEGATIVE_NINETY).setScale(scale);
 			BigDecimal ninety = new BigDecimal(UPPER_BOUNDRY_NINETY).setScale(scale);
-			if ((au.gov.vic.ecodev.mrt.api.constants.Constants.Numeral.NEGATIVE_ONE == dip.compareTo(negativeNinety))
-					||(au.gov.vic.ecodev.mrt.api.constants.Constants.Numeral.NEGATIVE_ONE == ninety.compareTo(dip))) {
+			if ((au.gov.vic.ecodev.mrt.constants.Constants.Numeral.NEGATIVE_ONE == dip.compareTo(negativeNinety))
+					||(au.gov.vic.ecodev.mrt.constants.Constants.Numeral.NEGATIVE_ONE == ninety.compareTo(dip))) {
 				errors.add(constructDipErrorMessage(lineNumber, dipString));
 			}
 		} catch (NumberFormatException e) {

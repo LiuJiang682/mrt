@@ -6,7 +6,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import au.gov.vic.ecodev.mrt.api.constants.Constants.Strings;
+import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 
 @Repository
 public class TemplateUpdaterConfigDaoImpl implements TemplateUpdaterConfigDao {

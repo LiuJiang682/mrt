@@ -2,7 +2,7 @@ package au.gov.vic.ecodev.mrt.constants;
 
 import java.util.regex.Pattern;
 
-import au.gov.vic.ecodev.mrt.api.constants.LogSeverity;
+import au.gov.vic.ecodev.mrt.constants.LogSeverity;
 
 
 public interface Constants {
@@ -62,10 +62,10 @@ public interface Constants {
 		static final int FIVE = 5;
 		static final int SIX = 6;
 		static final int SEVEN = 7;
-		
-		static final int NOT_FOUND = au.gov.vic.ecodev.mrt.api.constants.Constants.Numeral.NEGATIVE_ONE;
-		static final int INVALID_LINE_NUMBER = au.gov.vic.ecodev.mrt.api.constants.Constants.Numeral.NEGATIVE_ONE;
-		static final int INVALID_COLUMN_COUNT = au.gov.vic.ecodev.mrt.api.constants.Constants.Numeral.NEGATIVE_ONE;
+		static final int NEGATIVE_ONE = -1;
+		static final int NOT_FOUND = NEGATIVE_ONE;
+		static final int INVALID_LINE_NUMBER = NEGATIVE_ONE;
+		static final int INVALID_COLUMN_COUNT = NEGATIVE_ONE;
 	}
 	
 	interface RegexPattern {

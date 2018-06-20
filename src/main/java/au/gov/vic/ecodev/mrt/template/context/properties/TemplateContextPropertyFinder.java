@@ -31,8 +31,8 @@ public class TemplateContextPropertyFinder {
 			throw new TemplateProcessorException("Cannot split templatePropertyName! The templatePropertyName must be in templateName:propertyName format!");
 		}
 		
-		String propertyValue = persistentServices.getTemplateContextProperty(templateAndProperty[au.gov.vic.ecodev.mrt.api.constants.Constants.Numeral.ZERO], 
-				templateAndProperty[au.gov.vic.ecodev.mrt.api.constants.Constants.Numeral.ONE]);
+		String propertyValue = persistentServices.getTemplateContextProperty(templateAndProperty[au.gov.vic.ecodev.mrt.constants.Constants.Numeral.ZERO], 
+				templateAndProperty[au.gov.vic.ecodev.mrt.constants.Constants.Numeral.ONE]);
 		return new DefaultStringTemplateProperties(propertyValue);
 	}
 
