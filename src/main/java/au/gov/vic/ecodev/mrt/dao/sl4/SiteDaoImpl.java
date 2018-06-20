@@ -6,7 +6,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import au.gov.vic.ecodev.mrt.api.constants.Constants.Numeral;
+import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.dao.sl4.rowmapper.SiteRowMapper;
 import au.gov.vic.ecodev.mrt.model.sl4.Site;
 import au.gov.vic.ecodev.mrt.template.processor.model.Entity;

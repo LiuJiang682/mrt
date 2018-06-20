@@ -2,7 +2,7 @@ package au.gov.vic.ecodev.mrt.template.loader.fsm;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import au.gov.vic.ecodev.mrt.api.constants.LogSeverity;
+import au.gov.vic.ecodev.mrt.constants.LogSeverity;
 import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.config.MrtConfigProperties;
 import au.gov.vic.ecodev.mrt.map.services.MapServices;

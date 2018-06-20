@@ -15,7 +15,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.CollectionUtils;
 
-import au.gov.vic.ecodev.mrt.api.constants.LogSeverity;
+import au.gov.vic.ecodev.mrt.constants.LogSeverity;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest

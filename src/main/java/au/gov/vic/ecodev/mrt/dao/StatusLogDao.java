@@ -2,7 +2,7 @@ package au.gov.vic.ecodev.mrt.dao;
 
 import java.util.List;
 
-import au.gov.vic.ecodev.mrt.api.constants.LogSeverity;
+import au.gov.vic.ecodev.mrt.constants.LogSeverity;
 
 public interface StatusLogDao {
 

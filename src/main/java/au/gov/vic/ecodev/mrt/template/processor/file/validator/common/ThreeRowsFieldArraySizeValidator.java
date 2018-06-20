@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.util.StringUtils;
 
-import au.gov.vic.ecodev.mrt.api.constants.Constants.Numeral;
+import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
 
 public class ThreeRowsFieldArraySizeValidator {
 
