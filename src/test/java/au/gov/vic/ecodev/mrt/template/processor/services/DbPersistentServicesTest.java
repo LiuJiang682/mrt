@@ -21,8 +21,8 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import au.gov.vic.ecodev.mrt.api.constants.LogSeverity;
-import au.gov.vic.ecodev.mrt.api.constants.Constants.Numeral;
+import au.gov.vic.ecodev.mrt.constants.LogSeverity;
+import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.dao.SessionHeaderDao;
 import au.gov.vic.ecodev.mrt.dao.SessionHeaderDaoImpl;
 import au.gov.vic.ecodev.mrt.dao.StatusLogDao;

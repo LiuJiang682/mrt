@@ -10,8 +10,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import au.gov.vic.ecodev.common.util.IDGenerator;
-import au.gov.vic.ecodev.mrt.api.constants.LogSeverity;
-import au.gov.vic.ecodev.mrt.api.constants.Constants.Numeral;
+import au.gov.vic.ecodev.mrt.constants.LogSeverity;
+import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.dao.SessionHeaderDao;
 import au.gov.vic.ecodev.mrt.dao.StatusLogDao;

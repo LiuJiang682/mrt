@@ -42,7 +42,7 @@ public class MoveFileToNextStageState implements LoaderState {
 					messageBuilder.append(", ");
 				}
 				String message = messageBuilder.toString();
-				message = message.substring(au.gov.vic.ecodev.mrt.api.constants.Constants.Numeral.ZERO, 
+				message = message.substring(au.gov.vic.ecodev.mrt.constants.Constants.Numeral.ZERO, 
 						message.length() - Numeral.TWO);
 				templateLoaderStateMachineContext.getMessage().setDirectErrorMessage(message);
 			}

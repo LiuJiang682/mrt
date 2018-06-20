@@ -18,8 +18,8 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import au.gov.vic.ecodev.mrt.api.constants.LogSeverity;
 import au.gov.vic.ecodev.mrt.config.MrtConfigProperties;
+import au.gov.vic.ecodev.mrt.constants.LogSeverity;
 import au.gov.vic.ecodev.mrt.dao.StatusLogDao;
 import au.gov.vic.ecodev.mrt.template.files.LogFileGenerator;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.model.DefaultMessage;

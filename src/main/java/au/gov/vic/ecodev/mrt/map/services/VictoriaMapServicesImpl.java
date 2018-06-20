@@ -18,9 +18,9 @@ import org.locationtech.jts.operation.union.CascadedPolygonUnion;
 import org.locationtech.jtstest.testbuilder.io.shapefile.Shapefile;
 import org.springframework.core.io.ClassPathResource;
 
-import au.gov.vic.ecodev.mrt.api.constants.Constants.Numeral;
-import au.gov.vic.ecodev.mrt.api.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.config.MrtConfigProperties;
+import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
+import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.map.services.helper.ExceptionEmailer;
 
 public class VictoriaMapServicesImpl implements VictoriaMapServices {
