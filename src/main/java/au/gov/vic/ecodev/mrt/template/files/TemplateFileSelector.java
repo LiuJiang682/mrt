@@ -50,10 +50,10 @@ public class TemplateFileSelector {
 				while(null != (str = lineNumberReader.readLine())) { 
 					if (str.trim().toUpperCase().startsWith(DATA_FORMAT_HEADER)) {
 						String template = str.replace(DATA_FORMAT_HEADER, 
-								au.gov.vic.ecodev.mrt.api.constants.Constants.Strings.EMPTY).trim();
+								au.gov.vic.ecodev.mrt.constants.Constants.Strings.EMPTY).trim();
 						template = StringUtils.normalizeSpace(template);
 						template = template.replace(DATA_FORMAT, 
-								au.gov.vic.ecodev.mrt.api.constants.Constants.Strings.EMPTY).trim().toUpperCase();
+								au.gov.vic.ecodev.mrt.constants.Constants.Strings.EMPTY).trim().toUpperCase();
 						if (dataTemplate.contains(template)) {
 							return Optional.of(template + Strings.SPACE + file.getAbsolutePath());
 						}

@@ -10,7 +10,7 @@ import static org.mockito.Mockito.when;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import au.gov.vic.ecodev.mrt.api.constants.Constants.Strings;
+import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.model.sl4.Sl4Template;
 import au.gov.vic.ecodev.mrt.template.processor.services.PersistentServices;

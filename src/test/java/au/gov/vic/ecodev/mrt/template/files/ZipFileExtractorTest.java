@@ -12,7 +12,7 @@ import java.io.IOException;
 import org.assertj.core.util.Files;
 import org.junit.Test;
 
-import au.gov.vic.ecodev.mrt.api.constants.Constants.Numeral;
+import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.fixture.TestFixture;
 
 public class ZipFileExtractorTest {
