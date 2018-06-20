@@ -39,7 +39,8 @@ public class DrillCodeValidator {
 				messages.add(message);
 				return;
 			} else {
-				drillCodeIndex = columnHeaders.indexOf(drillCodeVariation.get(Numeral.ZERO));
+				drillCodeIndex = columnHeaders.indexOf(drillCodeVariation.get(
+						au.gov.vic.ecodev.mrt.api.constants.Constants.Numeral.ZERO));
 			}
 		}
 		++drillCodeIndex;

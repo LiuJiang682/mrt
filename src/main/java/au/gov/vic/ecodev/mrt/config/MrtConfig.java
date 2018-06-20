@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import au.gov.vic.ecodev.mrt.dao.SessionHeaderDao;
 import au.gov.vic.ecodev.mrt.dao.StatusLogDao;
-import au.gov.vic.ecodev.mrt.dao.TemplateConfigDao;
+//import au.gov.vic.ecodev.mrt.dao.TemplateConfigDao;
 import au.gov.vic.ecodev.mrt.map.services.VictoriaMapServices;
 import au.gov.vic.ecodev.mrt.map.services.VictoriaMapServicesSdoImpl;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.TemplateLoaderStateMachineContext;
@@ -37,8 +37,8 @@ public class MrtConfig {
 	@Autowired
 	private DataSource dataSource;
 
-	@Autowired
-	private TemplateConfigDao templateConfigDao;
+//	@Autowired
+//	private TemplateConfigDao templateConfigDao;
 
 	@Autowired
 	private StatusLogDao statusLogDao;
@@ -103,10 +103,10 @@ public class MrtConfig {
 		return persistentServices;
 	}
 
-	@Bean
-	public TemplateConfigDao templateConfigDao() {
-		return templateConfigDao;
-	}
+//	@Bean
+//	public TemplateConfigDao templateConfigDao() {
+//		return templateConfigDao;
+//	}
 
 	@Bean
 	public StatusLogDao statusLogDao() {

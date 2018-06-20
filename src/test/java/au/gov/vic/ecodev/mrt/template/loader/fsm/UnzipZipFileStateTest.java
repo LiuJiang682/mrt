@@ -24,8 +24,8 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.reflect.Whitebox;
 
+import au.gov.vic.ecodev.mrt.api.constants.LogSeverity;
 import au.gov.vic.ecodev.mrt.config.MrtConfigProperties;
-import au.gov.vic.ecodev.mrt.constants.LogSeverity;
 import au.gov.vic.ecodev.mrt.fixture.TestFixture;
 import au.gov.vic.ecodev.mrt.template.files.FileMover;
 import au.gov.vic.ecodev.mrt.template.files.ZipFileExtractor;

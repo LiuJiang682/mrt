@@ -18,7 +18,7 @@ import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.powermock.reflect.Whitebox;
 
-import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
+import au.gov.vic.ecodev.mrt.api.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.fixture.TestFixture;
 import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext;
 import au.gov.vic.ecodev.mrt.template.processor.validator.Validator;

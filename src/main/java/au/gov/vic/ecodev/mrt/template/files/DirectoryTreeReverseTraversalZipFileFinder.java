@@ -32,7 +32,8 @@ public class DirectoryTreeReverseTraversalZipFileFinder {
 		for (File fileInParent : filesInParent) {
 			if (fileInParent.isFile() 
 					&& (fileInParent.getName().endsWith(Strings.ZIP_FILE_EXTENSION))) {
-				String name = fileInParent.getName().replaceAll(Strings.ZIP_FILE_EXTENSION, Strings.EMPTY);
+				String name = fileInParent.getName().replaceAll(Strings.ZIP_FILE_EXTENSION, 
+						au.gov.vic.ecodev.mrt.api.constants.Constants.Strings.EMPTY);
 				if (this.parentName.contains(name)) {
 					return fileInParent.getAbsolutePath();
 				}
