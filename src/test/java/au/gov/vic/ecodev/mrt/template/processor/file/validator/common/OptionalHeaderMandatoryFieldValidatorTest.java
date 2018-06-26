@@ -32,7 +32,7 @@ public class OptionalHeaderMandatoryFieldValidatorTest {
 	@Test
 	public void shouldReturnMissingUomMessageWhenDataIsNotProvided() {
 		//Given
-		String[] strs = { "H1001", null, null, null, null, null, null, null, "ppm", "ppm", "ppm", "ppm" };
+		String[] strs = { "H1001", null, null, null, null, null, null, "ppm", "ppm", "ppm", "ppm" };
 		List<String> headers = TestFixture.getDg4FullColumnHeaderList();
 		List<String> mandatoryFields = TestFixture.getDg4H1001MadatoryFieldHeadersList();
 		String header = "H1001";
@@ -51,7 +51,7 @@ public class OptionalHeaderMandatoryFieldValidatorTest {
 	@Test
 	public void shouldReturnMissingUomMessageWhenDataIsProvidedWithVariationHeader() {
 		//Given
-		String[] strs = { "H1001", null, null, null, null, null, null, null, "ppm", "ppm", "ppm", "ppm" };
+		String[] strs = { "H1001", null, null, null, null, null, null, "ppm", "ppm", "ppm", "ppm" };
 		List<String> headers = new ArrayList<>(TestFixture.getDg4ColumnHeaderList());
 		headers.add("Sample_type");
 		headers.add("Au variance");
@@ -76,7 +76,7 @@ public class OptionalHeaderMandatoryFieldValidatorTest {
 	@Test
 	public void shouldReturnMissingUomMessageWhenDataIsProvidedWithIndexVariationHeader() {
 		//Given
-		String[] strs = { "H1001", null, null, null, null, null, null, "ppm", "ppm", "ppm", null, null };
+		String[] strs = { "H1001", null, null, null, null, null, "ppm", "ppm", "ppm", null, null };
 		List<String> headers = new ArrayList<>(TestFixture.getDg4ColumnHeaderList());
 		headers.add("Sample_type");
 		headers.add("Au variance");
@@ -102,7 +102,7 @@ public class OptionalHeaderMandatoryFieldValidatorTest {
 	@Test
 	public void shouldReturnMissingUomMessageWhenDataIsProvidedWithCustomHeader() {
 		//Given
-		String[] strs = { "H1001", null, null, null, null, null, null, "ppm", "ppm", "ppm", "ppm", null };
+		String[] strs = { "H1001", null, null, null, null, null, "ppm", "ppm", "ppm", "ppm", null };
 		List<String> headers = new ArrayList<>(TestFixture.getDg4ColumnHeaderList());
 		headers.add("Sample_type");
 		headers.add("Au variance");
