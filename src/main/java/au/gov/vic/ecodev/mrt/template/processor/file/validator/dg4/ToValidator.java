@@ -39,33 +39,44 @@ public class ToValidator {
 				.filter(to -> Dg4ColumnHeaders.TO.getCode().equalsIgnoreCase(to))
 				.findFirst();
 		if (toOptional.isPresent()) {
-			int index = columnHeaders.indexOf(toOptional.get());
-			String dataString = strs[++index];
-			new NumberStringValidator(dataString, Strings.TEMPLATE_NAME_DG4, toOptional.get(),
-					lineNumber).validate(messages);
-			boolean hasErrorMessage = new ErrorMessageChecker(messages).isContainsErrorMessages();
-			if (!hasErrorMessage) {
-				List<String> fromList = templateParamMap.get(Dg4ColumnHeaders.FROM.getCode());
-				if (CollectionUtils.isEmpty(fromList)) {
-					String message = new StringBuilder(Strings.LOG_ERROR_HEADER)
-							.append("Line ")
-							.append(lineNumber)
-							.append(": Template DG4 missing From column data")
-							.toString();
-					messages.add(message); 
-				} else {
-					doFromToValudeComparision(messages, dataString, fromList.get(Numeral.ZERO));
-				}
-			}
+			String toHeader = toOptional.get();
+			doToDataCheck(messages, toHeader);
 		} else {
-			String message = new StringBuilder(Strings.LOG_ERROR_HEADER)
+			List<String> toVariations = templateParamMap.get(Strings.TITLE_PREFIX + Dg4ColumnHeaders.TO.getCode());
+			if (CollectionUtils.isEmpty(toVariations)) {
+				String message = new StringBuilder(Strings.LOG_ERROR_HEADER)
 					.append("Line ")
 					.append(lineNumber)
 					.append(": Template DG4 missing To column")
 					.toString();
-			messages.add(message);
+				messages.add(message);
+			} else {
+				String toHeader = toVariations.get(Numeral.ZERO);
+				doToDataCheck(messages, toHeader);
+			}
 		}
 		
+	}
+
+	protected final void doToDataCheck(List<String> messages,  String toHeader) {
+		int index = columnHeaders.indexOf(toHeader);
+		String dataString = strs[++index];
+		new NumberStringValidator(dataString, Strings.TEMPLATE_NAME_DG4, toHeader,
+				lineNumber).validate(messages);
+		boolean hasErrorMessage = new ErrorMessageChecker(messages).isContainsErrorMessages();
+		if (!hasErrorMessage) {
+			List<String> fromList = templateParamMap.get(Dg4ColumnHeaders.FROM.getCode());
+			if (CollectionUtils.isEmpty(fromList)) {
+				String message = new StringBuilder(Strings.LOG_ERROR_HEADER)
+						.append("Line ")
+						.append(lineNumber)
+						.append(": Template DG4 missing From column data")
+						.toString();
+				messages.add(message); 
+			} else {
+				doFromToValudeComparision(messages, dataString, fromList.get(Numeral.ZERO));
+			}
+		}
 	}
 
 	private void doFromToValudeComparision(List<String> messages, String dataString, 

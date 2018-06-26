@@ -101,7 +101,71 @@ public class ToValidatorTest {
 		//Then
 		assertThat(CollectionUtils.isEmpty(messages), is(false));
 		assertThat(messages.size(), is(equalTo(1)));
-		assertThat(messages.get(0), is(equalTo("ERROR: Line 0: Template DG4 To column is expected as a number, but got: A")));
+		assertThat(messages.get(0), is(equalTo("ERROR: Line 0: Template DG4 Depth To column is expected as a number, but got: A")));
+	}
+	
+	@Test
+	public void shouldReturnNoMessageWhenToVariationExist() {
+		//Given
+		givenMandatoryFields();
+		String[] strs = { "D", "KPDD001",  "A",  "0", "1", "dd", "370" };
+		List<String> columnList = new ArrayList<>(params.get(Strings.COLUMN_HEADERS));
+		columnList.set(3, "Depth_To");
+		List<String> toVariations = new ArrayList<>();
+		toVariations.add("Depth_To");
+		params.put(Strings.TITLE_PREFIX + Dg4ColumnHeaders.TO.getCode(), toVariations);
+		List<String> fromList = new ArrayList<>();
+		fromList.add("0");
+		params.put(Dg4ColumnHeaders.FROM.getCode(), fromList);
+		ToValidator testInstance = new ToValidator(strs, 0, columnList, params);
+		List<String> messages = new ArrayList<>();
+		//When
+		testInstance.validate(messages);
+		//Then
+		assertThat(CollectionUtils.isEmpty(messages), is(true));
+	}
+	
+	@Test
+	public void shouldReturnNoFromMessageWhenToVariationExist() {
+		//Given
+		givenMandatoryFields();
+		String[] strs = { "D", "KPDD001",  "A",  "0", "1", "dd", "370" };
+		List<String> columnList = new ArrayList<>(params.get(Strings.COLUMN_HEADERS));
+		columnList.set(3, "Depth_To");
+		List<String> toVariations = new ArrayList<>();
+		toVariations.add("Depth_To");
+		params.put(Strings.TITLE_PREFIX + Dg4ColumnHeaders.TO.getCode(), toVariations);
+		ToValidator testInstance = new ToValidator(strs, 0, columnList, params);
+		List<String> messages = new ArrayList<>();
+		//When
+		testInstance.validate(messages);
+		//Then
+		assertThat(CollectionUtils.isEmpty(messages), is(false));
+		assertThat(messages.size(), is(equalTo(1)));
+		assertThat(messages.get(0), is(equalTo("ERROR: Line 0: Template DG4 missing From column data")));
+	}
+	
+	@Test
+	public void shouldReturnInvalidToMessageWhenToVariationExist() {
+		//Given
+		givenMandatoryFields();
+		String[] strs = { "D", "KPDD001",  "A",  "0", "A", "dd", "370" };
+		List<String> columnList = new ArrayList<>(params.get(Strings.COLUMN_HEADERS));
+		columnList.set(3, "Depth_To");
+		List<String> toVariations = new ArrayList<>();
+		toVariations.add("Depth_To");
+		params.put(Strings.TITLE_PREFIX + Dg4ColumnHeaders.TO.getCode(), toVariations);
+		List<String> fromList = new ArrayList<>();
+		fromList.add("0");
+		params.put(Dg4ColumnHeaders.FROM.getCode(), fromList);
+		ToValidator testInstance = new ToValidator(strs, 0, columnList, params);
+		List<String> messages = new ArrayList<>();
+		//When
+		testInstance.validate(messages);
+		//Then
+		assertThat(CollectionUtils.isEmpty(messages), is(false));
+		assertThat(messages.size(), is(equalTo(1)));
+		assertThat(messages.get(0), is(equalTo("ERROR: Line 0: Template DG4 Depth_To column is expected as a number, but got: A")));
 	}
 	
 	@Test

@@ -23,7 +23,7 @@ public class GeoChemistryUpdater {
 	private int sampleIdIndex;
 	private int fromIndex;
 	private int toIndex;
-	private int drillCodeIndex;
+//	private int drillCodeIndex;
 	
 	public GeoChemistryUpdater(final GeoChemistryDao geoChemistryDao, long sessionId, 
 			Template template) {
@@ -50,10 +50,10 @@ public class GeoChemistryUpdater {
 		toIndex = new DataExtractionHelper(headers)
 				.extractMandatoryFieldIndex(toName.get(Numeral.ZERO));
 		mandatoryFieldIndexList.add(toIndex);
-		List<String> drillCodeName = template.get(Dg4ColumnHeaders.DRILL_CODE.getCode());
-		drillCodeIndex = new DataExtractionHelper(headers)
-				.extractMandatoryFieldIndex(drillCodeName.get(Numeral.ZERO));
-		mandatoryFieldIndexList.add(drillCodeIndex);
+//		List<String> drillCodeName = template.get(Dg4ColumnHeaders.DRILL_CODE.getCode());
+//		drillCodeIndex = new DataExtractionHelper(headers)
+//				.extractMandatoryFieldIndex(drillCodeName.get(Numeral.ZERO));
+//		mandatoryFieldIndexList.add(drillCodeIndex);
 	}
 
 	public void update(List<String> dataRecordList) {
@@ -68,8 +68,8 @@ public class GeoChemistryUpdater {
 				.extractBigDecimal(fromIndex));
 		geoChemistry.setTo(new DataExtractionHelper(dataRecordList)
 				.extractBigDecimal(toIndex));
-		geoChemistry.setDrillCode((String) new NullSafeCollections(dataRecordList)
-				.get(drillCodeIndex));
+//		geoChemistry.setDrillCode((String) new NullSafeCollections(dataRecordList)
+//				.get(drillCodeIndex));
 		geoChemistryDao.updateOrSave(geoChemistry);
 	}
 

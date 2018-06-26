@@ -53,7 +53,7 @@ H0800	Assay_code	AR	BLEG	ICP-OES
 H0801	Assay_company	PH:Phlogiston Labs	BR:Brimstone Labs	BR:Brimstone Laboratories													
 H0802	Assay_description	Aqua regia digest	Bulk leach extractable.gold	Inductively.coupled plasma - Optical emission spectroscopy													
 H0900	Remarks																
-H1000	Hole_id	Sample_id	From	To	Sample_type	Au	Au	As	Cu	Pb	Zn	Drill code	Prospect	Date_Started	Date_Completed	Company	Comments
+H1000	Hole_id	Sample ID	Depth_from	Depth To	Sample_type	Au	Au	As	Cu	Pb	Zn	Drill code	Prospect	Date_Started	Date_Completed	Company	Comments
 H1001	NA	NA	metres	metres	NA	ppb	ppm	ppm	ppm	ppm	ppm	NA	NA	Date	Date	NA	NA
 H1002					BLEG	AR	ICP-OES	ICP-OES	ICP-OES					
 H1003					1	0.01	5	0.1	0.1	0.1				
