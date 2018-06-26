@@ -98,7 +98,7 @@ public class H1002ValidatorTest {
 	@Test
 	public void shouldReturnMissingValueMessageWhenH1002ValueIsNull() {
 		//Given
-		String[] strs = {"H1002", null, null, null, null, null, null, null, "AR", "ICP-OES", "ICP-OES", "ICP-OES"};
+		String[] strs = {"H1002", null, null, null, null, null, null,  "AR", "ICP-OES", "ICP-OES", "ICP-OES"};
 		H1002Validator testInstance = new H1002Validator();
 		testInstance.init(strs);
 		Map<String, List<String>> templateParamMap = new HashMap<>();

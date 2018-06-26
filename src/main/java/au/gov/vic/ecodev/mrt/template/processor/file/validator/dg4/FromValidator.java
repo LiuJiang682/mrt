@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.apache.commons.collections4.CollectionUtils;
+
+import au.gov.vic.ecodev.mrt.common.db.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.template.fields.Dg4ColumnHeaders;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.NumberStringValidator;
@@ -37,23 +40,34 @@ public class FromValidator {
 				.filter(column -> Dg4ColumnHeaders.FROM.getCode().equalsIgnoreCase(column))
 				.findFirst();
 		if (fromOptional.isPresent()) {
-			int index = columnHeaders.indexOf(fromOptional.get());
-			String dataString = strs[++index];
-			new NumberStringValidator(dataString, Strings.TEMPLATE_NAME_DG4, fromOptional.get(),
-					lineNumber).validate(messages);
-			boolean hasErrorMessage = new ErrorMessageChecker(messages).isContainsErrorMessages();
-			if (!hasErrorMessage) {
-				templateParamMap.put(Dg4ColumnHeaders.FROM.getCode(), Arrays.asList(dataString));
-			}
+			String fromHeader = fromOptional.get();
+			doFromValueCheck(messages, fromHeader);
 		} else {
-			String message = new StringBuilder(Strings.LOG_ERROR_HEADER)
+			List<String> fromVariations = templateParamMap.get(Strings.TITLE_PREFIX + Dg4ColumnHeaders.FROM.getCode());
+			if (CollectionUtils.isEmpty(fromVariations)) {
+				String message = new StringBuilder(Strings.LOG_ERROR_HEADER)
 					.append("Line ")
 					.append(lineNumber)
 					.append(": Template DG4 missing From column")
 					.toString();
-			messages.add(message);
+				messages.add(message);
+			} else {
+				String fromHeader = fromVariations.get(Numeral.ZERO);
+				doFromValueCheck(messages, fromHeader);
+			}
 		}
 		
+	}
+
+	protected final void doFromValueCheck(List<String> messages, String fromHeader) {
+		int index = columnHeaders.indexOf(fromHeader);
+		String dataString = strs[++index];
+		new NumberStringValidator(dataString, Strings.TEMPLATE_NAME_DG4, fromHeader,
+				lineNumber).validate(messages);
+		boolean hasErrorMessage = new ErrorMessageChecker(messages).isContainsErrorMessages();
+		if (!hasErrorMessage) {
+			templateParamMap.put(Dg4ColumnHeaders.FROM.getCode(), Arrays.asList(dataString));
+		}
 	}
 
 }

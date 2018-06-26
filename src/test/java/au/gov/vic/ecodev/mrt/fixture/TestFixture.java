@@ -621,7 +621,7 @@ public class TestFixture {
 	public static final String MANDATORY_FIELD_DG4 = "H0002,H0005,H0202,H0203,H0400,H0401,H0402,H0501,H0502,H0530,H0531,H0600,H0601,H0602,H0700,H0701,H0702,H0800,H0801,H0802,H1000,H1001,H1002,H1003,H1006,D";
 
 	public static String[] getDg4MandatoryColumns() {
-		String[] mandatoryColumns = { "Hole_id", "Sample_id", "From", "To", "Drill_code" };
+		String[] mandatoryColumns = { "Hole_id", "Sample ID", "Depth From", "Depth To" };
 		return mandatoryColumns;
 	}
 
@@ -794,12 +794,12 @@ public class TestFixture {
 	}
 	
 	public static String[] getDg4H1001Data() {
-		String[] strs = { "H1001", null, null, null, null, null, null, "ppm", "ppm", "ppm", "ppm", "ppm" };
+		String[] strs = { "H1001", null, null, null, null, null,  "ppm", "ppm", "ppm", "ppm", "ppm" };
 		return strs;
 	}
 
 	public static String[] getDg4H1003Data() {
-		String[] strs = { "H1003", null, null, null, null, null, null, "1", "0.01", "5", "0.1", "0.1" };
+		String[] strs = { "H1003", null, null, null, null, null, "1", "0.01", "5", "0.1", "0.1" };
 		return strs;
 	}
 }

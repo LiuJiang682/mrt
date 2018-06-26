@@ -56,7 +56,7 @@ public class H1003ValidatorTest {
 	@Test
 	public void shouldReturnMessageWhenH1001ValueIsNotProvided() {
 		// Given
-		String[] strs = { "H1001", null, null, null, null, null, null, null, "ppm", "ppm", "ppm", "ppm" };
+		String[] strs = { "H1001", null, null, null, null, null, null,  "ppm", "ppm", "ppm", "ppm" };
 		testInstance = new H1003Validator();
 		testInstance.init(strs);
 		Map<String, List<String>> templateParamMap = new HashMap<>();

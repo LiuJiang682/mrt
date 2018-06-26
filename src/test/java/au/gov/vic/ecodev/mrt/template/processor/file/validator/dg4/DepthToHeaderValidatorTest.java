@@ -1,4 +1,4 @@
-package au.gov.vic.ecodev.mrt.template.processor.file.validator.common;
+package au.gov.vic.ecodev.mrt.template.processor.file.validator.dg4;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -16,79 +16,78 @@ import java.util.Map;
 import org.junit.Test;
 import org.springframework.util.CollectionUtils;
 
-import au.gov.vic.ecodev.mrt.template.fields.SL4ColumnHeaders;
+import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
+import au.gov.vic.ecodev.mrt.template.fields.Dg4ColumnHeaders;
 
-public class DrillCodeHeaderValidatorTest {
-
-	private static final String DRILL_UNDER_LINE_CODE = "Drill_code";
+public class DepthToHeaderValidatorTest {
 
 	@Test
 	public void shouldReturnNoMessageWithStandardHeader() {
 		// Given
-		String[] strs = { "H1000", "Hole_id", "Depth", "Azimuth_MAG", "Dip", "Survey_instrument", DRILL_UNDER_LINE_CODE };
+		String[] strs = { "H1000", "Hole_id", "Depth To", "Azimuth_MAG", "Dip", "Survey_instrument" };
 		List<String> errorMessages = new ArrayList<>();
 		Map<String, List<String>> params = new HashMap<>();
 		// When
-		new DrillCodeHeaderValidator("DG4", "H1000", DRILL_UNDER_LINE_CODE)
+		new DepthToHeaderValidator("DG4", "H1000", Dg4ColumnHeaders.TO.getCode())
 			.validate(errorMessages, params, Arrays.asList(strs));
 		// Then
 		assertThat(CollectionUtils.isEmpty(errorMessages), is(true));
-		List<String> drillCodeList = params.get(DRILL_UNDER_LINE_CODE);
-		assertThat(drillCodeList.get(0), is(equalTo(DRILL_UNDER_LINE_CODE)));
+		List<String> depthFromList = params.get(Dg4ColumnHeaders.TO.getCode());
+		assertThat(depthFromList.get(0), is(equalTo(Dg4ColumnHeaders.TO.getCode())));
 	}
 	
 	@Test
-	public void shouldReturnUsingDepthSpaceFromAsDrillCodeWarningMessage() {
+	public void shouldReturnUsingDepthUnderLineToAsDepthToWarningMessage() {
 		// Given
-		String[] strs = { "H1000", "Hole_id",  "Azimuth_MAG", "Dip", "Survey_instrument", "Drill code" };
+		String[] strs = { "H1000", "Hole_id", "Depth_To", "Azimuth_MAG", "Dip", "Survey_instrument" };
 		List<String> errorMessages = new ArrayList<>();
 		Map<String, List<String>> params = new HashMap<>();
 		// When
-		new DrillCodeHeaderValidator("SL4", "H1000", DRILL_UNDER_LINE_CODE)
+		new DepthToHeaderValidator("DG4", "H1000", Dg4ColumnHeaders.TO.getCode())
 			.validate(errorMessages, params, Arrays.asList(strs));
 		// Then
 		assertThat(CollectionUtils.isEmpty(errorMessages), is(false));
 		assertThat(errorMessages.size(), is(equalTo(1)));
 		assertThat(errorMessages.get(0), 
-				is(equalTo("WARNING: Template SL4 H1000 row requires the Drill_code column, found Drill code column, use it as Drill_code")));
-		List<String> depthFromList = params.get(DRILL_UNDER_LINE_CODE);
-		assertThat(depthFromList.get(0), is(equalTo("Drill code")));
+				is(equalTo("WARNING: Template DG4 H1000 row requires the Depth To column, found Depth_To column, use it as Depth To")));
+		List<String> depthFromList = params.get(Strings.TITLE_PREFIX + Dg4ColumnHeaders.TO.getCode());
+		assertThat(depthFromList.get(0), is(equalTo("Depth_To")));
 	}
 	
 	@Test
-	public void shouldReturnUsingDrillHypenCodeAsDrillCodeWarningMessage() {
+	public void shouldReturnUsingDepthHypenFromAsDepthFromWarningMessage() {
 		// Given
-		String[] strs = { "H1000", "Hole_id",  "Azimuth_MAG", "Dip", "Survey_instrument", "Drill-code" };
+		String[] strs = { "H1000", "Hole_id",  "Azimuth_MAG", "Dip", "Survey_instrument", "Depth-To" };
 		List<String> errorMessages = new ArrayList<>();
 		Map<String, List<String>> params = new HashMap<>();
 		// When
-		new DrillCodeHeaderValidator("DG4", "H1000", DRILL_UNDER_LINE_CODE)
+		new DepthToHeaderValidator("DG4", "H1000", Dg4ColumnHeaders.TO.getCode())
 			.validate(errorMessages, params, Arrays.asList(strs));
 		// Then
 		assertThat(CollectionUtils.isEmpty(errorMessages), is(false));
 		assertThat(errorMessages.size(), is(equalTo(1)));
 		assertThat(errorMessages.get(0), 
-				is(equalTo("WARNING: Template DG4 H1000 row requires the Drill_code column, found Drill-code column, use it as Drill_code")));
-		List<String> depthFromList = params.get(DRILL_UNDER_LINE_CODE);
-		assertThat(depthFromList.get(0), is(equalTo("Drill-code")));
+				is(equalTo("WARNING: Template DG4 H1000 row requires the Depth To column, found Depth-To column, use it as Depth To")));
+		List<String> depthFromList = params.get(Strings.TITLE_PREFIX + Dg4ColumnHeaders.TO.getCode());
+		assertThat(depthFromList.get(0), is(equalTo("Depth-To")));
 	}
 	
 	@Test
-	public void shouldReturnUsingDrillCodeAsDrillCodeWarningMessage() {
+	public void shouldReturnUsingDepthFromAsDepthFromWarningMessage() {
 		// Given
-		String[] strs = { "H1000", "Hole_id",  "Azimuth_MAG", "Dip", "Survey_instrument", "Drillcode" };
+		String[] strs = { "H1000", "Hole_id",  "Azimuth_MAG", "Dip", "Survey_instrument", "DepthTo" };
 		List<String> errorMessages = new ArrayList<>();
 		Map<String, List<String>> params = new HashMap<>();
 		// When
-		new DrillCodeHeaderValidator("DG4", "H1000", DRILL_UNDER_LINE_CODE)
+		new DepthToHeaderValidator("DG4", "H1000", Dg4ColumnHeaders.TO.getCode())
 			.validate(errorMessages, params, Arrays.asList(strs));
 		// Then
 		assertThat(CollectionUtils.isEmpty(errorMessages), is(false));
 		assertThat(errorMessages.size(), is(equalTo(1)));
 		assertThat(errorMessages.get(0), 
-				is(equalTo("WARNING: Template DG4 H1000 row requires the Drill_code column, found Drillcode column, use it as Drill_code")));
-		List<String> depthFromList = params.get(DRILL_UNDER_LINE_CODE);
-		assertThat(depthFromList.get(0), is(equalTo("Drillcode")));
+				is(equalTo("WARNING: Template DG4 H1000 row requires the Depth To column, found DepthTo column, use it as Depth To")));
+		List<String> depthFromList = params.get(Strings.TITLE_PREFIX + Dg4ColumnHeaders.TO.getCode());
+		assertThat(depthFromList.get(0), is(equalTo("DepthTo")));
 	}
 	
 	@Test
@@ -96,9 +95,9 @@ public class DrillCodeHeaderValidatorTest {
 		//Given
 		String template = "DG4";
 		String row = "H1000";
-		String code = SL4ColumnHeaders.DRILL_CODE.getCode();
+		String code = Dg4ColumnHeaders.TO.getCode();
 		//When
-		DrillCodeHeaderValidator testInstance = new DrillCodeHeaderValidator(template, row, code);
+		DepthToHeaderValidator testInstance = new DepthToHeaderValidator(template, row, code);
 		//Then
 		assertThat(testInstance, is(notNullValue()));
 	}
@@ -109,7 +108,7 @@ public class DrillCodeHeaderValidatorTest {
 		String row = null;
 		String code = null;
 		//When
-		new DrillCodeHeaderValidator(template, row, code);
+		new DepthToHeaderValidator(template, row, code);
 		fail("Program reached unexpected point!");
 	}
 	
@@ -119,7 +118,7 @@ public class DrillCodeHeaderValidatorTest {
 		String row = null;
 		String code = null;
 		//When
-		new DrillCodeHeaderValidator(template, row, code);
+		new DepthToHeaderValidator(template, row, code);
 		fail("Program reached unexpected point!");
 	}
 	
@@ -129,7 +128,7 @@ public class DrillCodeHeaderValidatorTest {
 		String row = "H1000";
 		String code = null;
 		//When
-		new DrillCodeHeaderValidator(template, row, code);
+		new DepthToHeaderValidator(template, row, code);
 		fail("Program reached unexpected point!");
 	}
 	
@@ -140,12 +139,12 @@ public class DrillCodeHeaderValidatorTest {
 		List<String> errorMessages = new ArrayList<>();
 		Map<String, List<String>> params = new HashMap<>();
 		// When
-		new DrillCodeHeaderValidator("DG4", "H1000", DRILL_UNDER_LINE_CODE)
+		new DepthToHeaderValidator("DG4", "H1000", Dg4ColumnHeaders.TO.getCode())
 			.validate(errorMessages, params, Arrays.asList(strs));
 		// Then
 		assertThat(CollectionUtils.isEmpty(errorMessages), is(false));
 		assertThat(errorMessages.size(), is(equalTo(1)));
-		assertThat(errorMessages.get(0), is(equalTo("ERROR: Template DG4 H1000 row requires the Drill_code column")));
-		assertThat(params.get(DRILL_UNDER_LINE_CODE), is(nullValue()));
+		assertThat(errorMessages.get(0), is(equalTo("ERROR: Template DG4 H1000 row requires the Depth To column")));
+		assertThat(params.get(Dg4ColumnHeaders.TO.getCode()), is(nullValue()));
 	}
 }

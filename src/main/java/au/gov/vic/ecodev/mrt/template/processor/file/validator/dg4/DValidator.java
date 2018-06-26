@@ -8,10 +8,9 @@ import java.util.Optional;
 import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.template.fields.Dg4ColumnHeaders;
-import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.DrillCodeValidator;
-import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.MandatoryStringDataValidator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.LineNumberValidator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.ListSizeValidator;
+import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.MandatoryStringDataValidator;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.validator.Validator;
 import au.gov.vic.ecodev.mrt.template.processor.validator.helper.ErrorMessageChecker;
@@ -49,9 +48,9 @@ public class DValidator implements Validator {
 					new MandatoryStringDataValidator(strs, lineNumber, columnHeaders,
 							Dg4ColumnHeaders.SAMPLE_ID.getCode(), Strings.TEMPLATE_NAME_DG4)
 						.validate(messages);
-					new DrillCodeValidator(strs, lineNumber, columnHeaders, templateParamMap,
-							Dg4ColumnHeaders.DRILL_CODE.getCode())			
-						.validate(messages);
+//					new DrillCodeValidator(strs, lineNumber, columnHeaders, templateParamMap,
+//							Dg4ColumnHeaders.DRILL_CODE.getCode())			
+//						.validate(messages);
 					new FromValidator(strs, lineNumber, columnHeaders, templateParamMap)
 						.validate(messages);
 					new ToValidator(strs, lineNumber, columnHeaders, templateParamMap)
