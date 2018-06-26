@@ -127,26 +127,6 @@ public class H1000ValidatorTest {
 		assertThat(sampleIdList, is(nullValue()));
 	}
 
-//	@Test
-//	public void shouldReturnMissingDrillingCodeMessage() {
-//		// Given
-//		String[] strs = { "H1000", "Hole_id", "from", "To", "Drill_code1", "Sample_id" };
-//		givenTestInstance(strs);
-//		Map<String, List<String>> params = new HashMap<>();
-//		// When
-//		Optional<List<String>> errorMessages = testInstance.validate(params, mockDataBean);
-//		// Then
-//		assertThat(errorMessages.isPresent(), is(true));
-//		List<String> messages = errorMessages.get();
-//		assertThat(messages.size(), is(equalTo(1)));
-//		assertThat(messages.get(0), is(equalTo("ERROR: Template DG4 H1000 row requires the Drill_code column")));
-//		verify(mockDataBean, times(0)).put(Matchers.anyString(), Matchers.anyListOf(String.class));
-//		List<String> sampleIdList = params.get(Dg4ColumnHeaders.DRILL_CODE.getCode());
-//		assertThat(sampleIdList, is(nullValue()));
-//	}
-
-	
-
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
 	public void shouldCheckAllMustHaveFields() {
@@ -164,7 +144,6 @@ public class H1000ValidatorTest {
 		assertThat(columnHeaders.get(0), is(equalTo(Dg4ColumnHeaders.HOLE_ID.getCode())));
 		assertThat(columnHeaders.get(1), is(equalTo("Depth From")));
 		assertThat(columnHeaders.get(2), is(equalTo(Dg4ColumnHeaders.TO.getCode())));
-//		assertThat(columnHeaders.get(3), is(equalTo(Dg4ColumnHeaders.DRILL_CODE.getCode())));
 		assertThat(columnHeaders.get(3), is(equalTo(Dg4ColumnHeaders.SAMPLE_ID.getCode())));
 		ArgumentCaptor<String> keyCaptor = ArgumentCaptor.forClass(String.class);
 		ArgumentCaptor<List> valueCaptor = ArgumentCaptor.forClass(List.class);
@@ -177,7 +156,6 @@ public class H1000ValidatorTest {
 		assertThat(capturedKeyValues.get(1), is(equalTo(Dg4ColumnHeaders.FROM.getCode())));
 		assertThat(capturedKeyValues.get(2), is(equalTo(Dg4ColumnHeaders.TO.getCode())));
 		assertThat(capturedKeyValues.get(3), is(equalTo(Dg4ColumnHeaders.SAMPLE_ID.getCode())));
-//		assertThat(capturedKeyValues.get(4), is(equalTo(Dg4ColumnHeaders.DRILL_CODE.getCode())));
 		assertThat(capturedKeyValues.get(4), is(equalTo("H1000")));
 		assertThat(values.isEmpty(), is(false));
 		assertThat(values.size(), is(equalTo(5)));
@@ -189,13 +167,10 @@ public class H1000ValidatorTest {
 		assertThat(values.get(2).get(0), is(equalTo("Depth To")));
 		assertThat(values.get(3).size(), is(equalTo(1)));
 		assertThat(values.get(3).get(0), is(equalTo("Sample ID")));
-//		assertThat(values.get(4).size(), is(equalTo(1)));
-//		assertThat(values.get(4).get(0), is(equalTo("Drill_code")));
 		assertThat(values.get(4).size(), is(equalTo(4)));
 		assertThat(values.get(4).get(0), is(equalTo("Hole_id")));
 		assertThat(values.get(4).get(1), is(equalTo("Depth From")));
 		assertThat(values.get(4).get(2), is(equalTo("Depth To")));
-//		assertThat(values.get(4).get(3), is(equalTo("Drill_code")));
 		assertThat(values.get(4).get(3), is(equalTo("Sample ID")));
 	}
 	
@@ -218,7 +193,6 @@ public class H1000ValidatorTest {
 		assertThat(columnHeaders.get(0), is(equalTo(Dg4ColumnHeaders.HOLE_ID.getCode())));
 		assertThat(columnHeaders.get(1), is(equalTo("Depth From")));
 		assertThat(columnHeaders.get(2), is(equalTo(Dg4ColumnHeaders.TO.getCode())));
-//		assertThat(columnHeaders.get(3), is(equalTo(Dg4ColumnHeaders.DRILL_CODE.getCode())));
 		assertThat(columnHeaders.get(3), is(equalTo(Dg4ColumnHeaders.SAMPLE_ID.getCode())));
 		assertThat(columnHeaders.get(4), is(equalTo("Job_no")));
 		ArgumentCaptor<String> keyCaptor = ArgumentCaptor.forClass(String.class);
@@ -232,7 +206,6 @@ public class H1000ValidatorTest {
 		assertThat(capturedKeyValues.get(1), is(equalTo(Dg4ColumnHeaders.FROM.getCode())));
 		assertThat(capturedKeyValues.get(2), is(equalTo(Dg4ColumnHeaders.TO.getCode())));
 		assertThat(capturedKeyValues.get(3), is(equalTo(Dg4ColumnHeaders.SAMPLE_ID.getCode())));
-//		assertThat(capturedKeyValues.get(4), is(equalTo(Dg4ColumnHeaders.DRILL_CODE.getCode())));
 		assertThat(capturedKeyValues.get(4), is(equalTo("H1000")));
 		assertThat(values.isEmpty(), is(false));
 		assertThat(values.size(), is(equalTo(5)));
@@ -244,8 +217,6 @@ public class H1000ValidatorTest {
 		assertThat(values.get(2).get(0), is(equalTo("Depth To")));
 		assertThat(values.get(3).size(), is(equalTo(1)));
 		assertThat(values.get(3).get(0), is(equalTo("Sample ID")));
-//		assertThat(values.get(4).size(), is(equalTo(1)));
-//		assertThat(values.get(4).get(0), is(equalTo("Drill_code")));
 		assertThat(values.get(4).size(), is(equalTo(5)));
 		assertThat(values.get(4).get(0), is(equalTo("Hole_id")));
 		assertThat(values.get(4).get(1), is(equalTo("Depth From")));

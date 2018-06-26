@@ -19,7 +19,6 @@ import org.mockito.Mockito;
 
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.fixture.TestFixture;
-import au.gov.vic.ecodev.mrt.template.fields.Dg4ColumnHeaders;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.H0400Validator;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 
@@ -32,10 +31,7 @@ public class DValidatorTest {
 	@Test
 	public void shouldIncreaseTheRecordCount() {
 		givenTestConditions();
-//		givenDrillCode(params);
 		String[] datas = { "D", "KPDD001",  "A",  "0", "1",  "370" };
-//		params.put(Dg4ColumnHeaders.DRILL_CODE.getCode(), 
-//				Arrays.asList(Dg4ColumnHeaders.DRILL_CODE.getCode()));
 		DValidator dValidator = new DValidator();
 		dValidator.init(datas);
 		// When
@@ -55,8 +51,6 @@ public class DValidatorTest {
 	public void shouldIncreaseTheRecordCountOnTop() {
 		givenTestConditions();
 		params.put(Strings.NUMBER_OF_DATA_RECORDS_ADDED, Arrays.asList("1"));
-//		params.put(Dg4ColumnHeaders.DRILL_CODE.getCode(), 
-//				Arrays.asList(Dg4ColumnHeaders.DRILL_CODE.getCode()));
 		String[] datas = { "D", "KPDD001",  "A",  "0", "1", "DD", "370" };
 		DValidator dValidator = new DValidator();
 		dValidator.init(datas);
@@ -77,8 +71,6 @@ public class DValidatorTest {
 	public void shouldResetTheRecordCount() {
 		givenTestConditions();
 		params.put(Strings.NUMBER_OF_DATA_RECORDS_ADDED, Arrays.asList("abc"));
-//		params.put(Dg4ColumnHeaders.DRILL_CODE.getCode(), 
-//				Arrays.asList(Dg4ColumnHeaders.DRILL_CODE.getCode()));
 		String[] datas = { "D", "KPDD001",  "A",  "0", "1", "DD", "370" };
 		DValidator dValidator = new DValidator();
 		dValidator.init(datas);
@@ -115,8 +107,6 @@ public class DValidatorTest {
 	public void shouldReturnIncorrectColumnSizeMessageWhenStrsIsNull() {
 		givenMandatoryFields();
 		givenCurrentLineNumber(params);
-//		params.put(Dg4ColumnHeaders.DRILL_CODE.getCode(), 
-//				Arrays.asList(Dg4ColumnHeaders.DRILL_CODE.getCode()));
 		givenMockTemplate();
 		String[] datas = null;
 		DValidator dValidator = new DValidator();
@@ -169,30 +159,10 @@ public class DValidatorTest {
 		verify(mockDataBean, times(0)).put(Matchers.anyString(), Matchers.anyListOf(String.class));
 	}
 	
-//	@Test
-//	public void shouldReturnInvalidDrillCodeValueMessage() {
-//		givenTestConditions();
-//		String[] datas = { "D", "KPDD001",  "A",  "0", "1", "dd", "370" };
-//		params.put(Dg4ColumnHeaders.DRILL_CODE.getCode(), 
-//				Arrays.asList(Dg4ColumnHeaders.DRILL_CODE.getCode()));
-//		DValidator dValidator = new DValidator();
-//		dValidator.init(datas);
-//		// When
-//		Optional<List<String>> errorMessages = dValidator.validate(params, mockDataBean);
-//		// Then
-//		assertThat(errorMessages.isPresent(), is(true));
-//		List<String> messages = errorMessages.get();
-//		assertThat(messages.size(), is(equalTo(1)));
-//		assertThat(messages.get(0), is(equalTo("Line 6's Drill_Code column must exist in H0400! But got: dd")));
-//		verify(mockDataBean, times(0)).put(Matchers.anyString(), Matchers.anyListOf(String.class));
-//	}
-	
 	@Test
 	public void shouldReturnMissingHoleIdColumnMessage() {
 		givenTestConditions();
 		String[] datas = { "D", "KPDD001",  "A",  "0", "1", "DD", "370" };
-//		params.put(Dg4ColumnHeaders.DRILL_CODE.getCode(), 
-//				Arrays.asList(Dg4ColumnHeaders.DRILL_CODE.getCode()));
 		params.get(Strings.COLUMN_HEADERS).set(0, "xx");
 		DValidator dValidator = new DValidator();
 		dValidator.init(datas);
@@ -210,8 +180,6 @@ public class DValidatorTest {
 	public void shouldReturnInvalidHoleIdValueMessage() {
 		givenTestConditions();
 		String[] datas = { "D", "",  "A",  "0", "1", "DD", "370" };
-//		params.put(Dg4ColumnHeaders.DRILL_CODE.getCode(), 
-//				Arrays.asList(Dg4ColumnHeaders.DRILL_CODE.getCode()));
 		DValidator dValidator = new DValidator();
 		dValidator.init(datas);
 		// When
@@ -228,8 +196,6 @@ public class DValidatorTest {
 	public void shouldReturnMissingSampleIdColumnMessage() {
 		givenTestConditions();
 		String[] datas = { "D", "KPDD001",  "A",  "0", "1", "DD", "370" };
-//		params.put(Dg4ColumnHeaders.DRILL_CODE.getCode(), 
-//				Arrays.asList(Dg4ColumnHeaders.DRILL_CODE.getCode()));
 		params.get(Strings.COLUMN_HEADERS).set(1, "xx");
 		DValidator dValidator = new DValidator();
 		dValidator.init(datas);
@@ -247,8 +213,6 @@ public class DValidatorTest {
 	public void shouldReturnInvalidSampleIdValueMessage() {
 		givenTestConditions();
 		String[] datas = { "D", "KPDD001",  "",  "0", "1", "DD", "370" };
-//		params.put(Dg4ColumnHeaders.DRILL_CODE.getCode(), 
-//				Arrays.asList(Dg4ColumnHeaders.DRILL_CODE.getCode()));
 		DValidator dValidator = new DValidator();
 		dValidator.init(datas);
 		// When
