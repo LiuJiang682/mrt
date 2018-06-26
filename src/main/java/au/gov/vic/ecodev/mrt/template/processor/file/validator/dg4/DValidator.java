@@ -48,9 +48,6 @@ public class DValidator implements Validator {
 					new MandatoryStringDataValidator(strs, lineNumber, columnHeaders,
 							Dg4ColumnHeaders.SAMPLE_ID.getCode(), Strings.TEMPLATE_NAME_DG4)
 						.validate(messages);
-//					new DrillCodeValidator(strs, lineNumber, columnHeaders, templateParamMap,
-//							Dg4ColumnHeaders.DRILL_CODE.getCode())			
-//						.validate(messages);
 					new FromValidator(strs, lineNumber, columnHeaders, templateParamMap)
 						.validate(messages);
 					new ToValidator(strs, lineNumber, columnHeaders, templateParamMap)
