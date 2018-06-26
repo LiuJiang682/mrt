@@ -71,7 +71,45 @@ public class FromValidatorTest {
 		//Then
 		assertThat(CollectionUtils.isEmpty(messages), is(false));
 		assertThat(messages.size(), is(equalTo(1)));
-		assertThat(messages.get(0), is(equalTo("ERROR: Line 0: Template DG4 From column is expected as a number, but got: A")));
+		assertThat(messages.get(0), is(equalTo("ERROR: Line 0: Template DG4 Depth From column is expected as a number, but got: A")));
+	}
+	
+	@Test
+	public void shouldReturnNoMessageWhenFromVariationExist() {
+		//Given
+		givenMandatoryFields();
+		String[] strs = { "D", "KPDD001",  "1",  "1", "1", "dd", "370" };
+		List<String> columnList = new ArrayList<>(params.get(Strings.COLUMN_HEADERS));
+		columnList.set(2, "Depth_from");
+		List<String> fromVariant = new ArrayList<>();
+		fromVariant.add("Depth_from");
+		params.put(Strings.TITLE_PREFIX + Dg4ColumnHeaders.FROM.getCode(), fromVariant);
+		FromValidator testInstance = new FromValidator(strs, 0, columnList, params);
+		List<String> messages = new ArrayList<>();
+		//When
+		testInstance.validate(messages);
+		//Then
+		assertThat(CollectionUtils.isEmpty(messages), is(true));
+	}
+	
+	@Test
+	public void shouldReturnInvalidFromMessageWhenFromVariationExist() {
+		//Given
+		givenMandatoryFields();
+		String[] strs = { "D", "KPDD001",  "A",  "A", "1", "dd", "370" };
+		List<String> columnList = new ArrayList<>(params.get(Strings.COLUMN_HEADERS));
+		columnList.set(2, "Depth_from");
+		List<String> fromVariant = new ArrayList<>();
+		fromVariant.add("Depth_from");
+		params.put(Strings.TITLE_PREFIX + Dg4ColumnHeaders.FROM.getCode(), fromVariant);
+		FromValidator testInstance = new FromValidator(strs, 0, columnList, params);
+		List<String> messages = new ArrayList<>();
+		//When
+		testInstance.validate(messages);
+		//Then
+		assertThat(CollectionUtils.isEmpty(messages), is(false));
+		assertThat(messages.size(), is(equalTo(1)));
+		assertThat(messages.get(0), is(equalTo("ERROR: Line 0: Template DG4 Depth_from column is expected as a number, but got: A")));
 	}
 	
 	@Test

@@ -42,8 +42,8 @@ public class GeoChemistryUpdaterTest {
 				.thenReturn(Arrays.asList(Dg4ColumnHeaders.FROM.getCode()));
 		when(mockTemplate.get(eq(Dg4ColumnHeaders.TO.getCode())))
 				.thenReturn(Arrays.asList(Dg4ColumnHeaders.TO.getCode()));
-		when(mockTemplate.get(eq(Dg4ColumnHeaders.DRILL_CODE.getCode())))
-				.thenReturn(Arrays.asList(Dg4ColumnHeaders.DRILL_CODE.getCode()));
+//		when(mockTemplate.get(eq(Dg4ColumnHeaders.DRILL_CODE.getCode())))
+//				.thenReturn(Arrays.asList(Dg4ColumnHeaders.DRILL_CODE.getCode()));
 		GeoChemistryUpdater testInstance = new GeoChemistryUpdater(mockGeoChemistryDao,
 				1l, mockTemplate);
 		List<Integer> managdatoryIndexList = new ArrayList<>();
@@ -73,8 +73,8 @@ public class GeoChemistryUpdaterTest {
 				.thenReturn(Arrays.asList(Dg4ColumnHeaders.FROM.getCode()));
 		when(mockTemplate.get(eq(Dg4ColumnHeaders.TO.getCode())))
 				.thenReturn(Arrays.asList(Dg4ColumnHeaders.TO.getCode()));
-		when(mockTemplate.get(eq(Dg4ColumnHeaders.DRILL_CODE.getCode())))
-				.thenReturn(Arrays.asList(Dg4ColumnHeaders.DRILL_CODE.getCode()));
+//		when(mockTemplate.get(eq(Dg4ColumnHeaders.DRILL_CODE.getCode())))
+//				.thenReturn(Arrays.asList(Dg4ColumnHeaders.DRILL_CODE.getCode()));
 		GeoChemistryUpdater testInstance = new GeoChemistryUpdater(mockGeoChemistryDao, 1l, mockTemplate);
 		List<Integer> managdatoryIndexList = new ArrayList<>();
 		// When
@@ -88,17 +88,17 @@ public class GeoChemistryUpdaterTest {
 		assertThat(fromIndex, is(equalTo(2)));
 		Integer toIndex = Whitebox.getInternalState(testInstance, "toIndex");
 		assertThat(toIndex, is(equalTo(3)));
-		Integer drillCodeIndex = Whitebox.getInternalState(testInstance, "drillCodeIndex");
-		assertThat(drillCodeIndex, is(equalTo(4)));
+//		Integer drillCodeIndex = Whitebox.getInternalState(testInstance, "drillCodeIndex");
+//		assertThat(drillCodeIndex, is(equalTo(4)));
 		assertMandatoryIndexList(managdatoryIndexList);
 	}
 
 	private void assertMandatoryIndexList(List<Integer> managdatoryIndexList) {
-		assertThat(managdatoryIndexList.size(), is(equalTo(5)));
+		assertThat(managdatoryIndexList.size(), is(equalTo(4)));
 		assertThat(managdatoryIndexList.contains(0), is(true));
 		assertThat(managdatoryIndexList.contains(1), is(true));
 		assertThat(managdatoryIndexList.contains(2), is(true));
 		assertThat(managdatoryIndexList.contains(3), is(true));
-		assertThat(managdatoryIndexList.contains(4), is(true));
+//		assertThat(managdatoryIndexList.contains(4), is(true));
 	}
 }
