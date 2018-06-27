@@ -1,6 +1,7 @@
 package au.gov.vic.ecodev.mrt.template.processor.updater.dl4;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,11 +17,14 @@ import au.gov.vic.ecodev.mrt.template.processor.persistent.Dao;
 import au.gov.vic.ecodev.mrt.template.processor.update.TemplateUpdater;
 import au.gov.vic.ecodev.mrt.template.processor.updater.NumberOfRecordsTemplateExtractor;
 import au.gov.vic.ecodev.mrt.template.processor.updater.tables.TemplateHeaderH1000FieldUpdater;
+import au.gov.vic.ecodev.mrt.template.processor.updater.tables.TemplateHeaderOptionalFieldUpdater;
 import au.gov.vic.ecodev.mrt.template.processor.updater.tables.TemplateOptionalFieldUpdater;
 import au.gov.vic.ecodev.mrt.template.processor.updater.tables.dl4.LithologyUpdater;
 
 public class Dl4TemplateUpdater implements TemplateUpdater {
 
+	private static final List<String> TEMPLATE_PERSISTENT_KEY_LIST = Arrays.asList("H1001", "H1004");
+	
 	private List<Dao> daos;
 	
 	@Override
@@ -49,6 +53,11 @@ public class Dl4TemplateUpdater implements TemplateUpdater {
 							template.get(Strings.KEY_H1000), 
 							templateOptionalFieldDao, Strings.TEMPLATE_NAME_DL4);
 			templateHeaderH1000Updater.update();
+			
+			TemplateHeaderOptionalFieldUpdater templateHeaderOptionalFieldUpdater = 
+					new TemplateHeaderOptionalFieldUpdater(sessionId, template, 
+							templateOptionalFieldDao, TEMPLATE_PERSISTENT_KEY_LIST);
+			templateHeaderOptionalFieldUpdater.update();
 			
 			for(int index = Numeral.ONE; index <= numOfRecords; index++) {
 				List<String> dataRecordList = template.get(Strings.DATA_RECORD_PREFIX + index);

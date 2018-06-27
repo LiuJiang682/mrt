@@ -451,7 +451,7 @@ public class TestFixture {
 	private static final String DG4_H1003_MANDATORY_FIELDS = "H,He,Li,Be,B,C,N,O,F,Ne,Na,Mg,Al,Si,P,S,Cl,Ar,K,Ca,Sc,Ti,V,Cr,Mn,Fe,Co,Ni,Cu,Zn,Ga,Ge,As,Se,Br,Kr,Rb,Sr,Y,Zr,Nb,Mo,Tc,Ru,Rh,Pd,Ag,Cd,In,Sn,Sb,Te,I,Xe,Cs,Ba,La,Ce,Pr,Nd,Pm,Sm,Eu,Gd,Tb,Dy,Ho,Er,Tm,Yb,Lu,Hf,Ta,W,Re,Os,Ir,Pt,Au,Hg,Tl,Pb,Bi,Po,At,Rn,Fr,Ra,Ac,Th,Pa,U,Np,Pu,Am,Cm,Bk,Cf,Es,Fm,Md,No,Lr,Rf,Db,Sg,Bh,Hs,Mt,Ds,Rg,Cn,Nh,Fl,Mc,Lv,Ts,Og";
 
 	public static String[] getDl4MandatoryColumns() {
-		String[] mandatoryColumns = { "Hole_id", "Depth_from" };
+		String[] mandatoryColumns = { "Hole_id", "Depth_from", "Depth_to" };
 		return mandatoryColumns;
 	}
 
@@ -822,4 +822,15 @@ public class TestFixture {
 		String[] strs = {null, "1", "0", "0"};
 		return Arrays.asList(strs);
 	}
+
+	public static List<String> getDl4H1001List() {
+		String[] strs = {null, "metres", "metres"};
+		return Arrays.asList(strs);
+	}
+
+	public static List<String> getDl4H1004List() {
+		String[] strs = {null, "1", "1"};
+		return Arrays.asList(strs);
+	}
+
 }
