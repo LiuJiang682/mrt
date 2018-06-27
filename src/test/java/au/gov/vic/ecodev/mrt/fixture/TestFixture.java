@@ -802,4 +802,14 @@ public class TestFixture {
 		String[] strs = { "H1003", null, null, null, null, null, "1", "0.01", "5", "0.1", "0.1" };
 		return strs;
 	}
+
+	public static List<String> getSl4H1001List() {
+		String[] strs = {null, "metres", "metres", "metres", "metres", "N/A", "degrees", "degrees"};
+		return Arrays.asList(strs);
+	}
+
+	public static List<String> getSl4H1004List() {
+		String[] strs = {null, "1", "1", "1", "1", "0", "1", "1"};
+		return Arrays.asList(strs);
+	}
 }

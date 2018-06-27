@@ -51,7 +51,8 @@ public class Sl4DateRecordUpdaterTest {
 		givenTestInstance(daos);
 		when(mockTemplate.get(eq("H0203"))).thenReturn(TestFixture.getNumList());
 		when(mockTemplate.get(eq("H1000"))).thenReturn(TestFixture.getColumnHeaderListWithOptionalFields());
-		when(mockTemplate.get(eq("H0102"))).thenReturn(TestFixture.getProjectNameList());
+		when(mockTemplate.get(eq("H1001"))).thenReturn(TestFixture.getSl4H1001List());
+		when(mockTemplate.get(eq("H1004"))).thenReturn(TestFixture.getSl4H1004List());
 		when(mockTemplate.get(eq("H0531"))).thenReturn(TestFixture.getProjectZoneList());
 		when(mockTemplate.get(eq("D1"))).thenReturn(TestFixture.getDListWithOptionalFields());
 		when(mockTemplate.get(eq("D2"))).thenReturn(TestFixture.getDListWithOptionalFields());
@@ -65,7 +66,7 @@ public class Sl4DateRecordUpdaterTest {
 				ArgumentCaptor.forClass(TemplateOptionalField.class);
 		verify(mockSiteDao, times(3)).updateOrSave(siteCaptor.capture());
 		verify(mockBoreHoleDao, times(3)).updateOrSave(boreHoleCaptor.capture());
-		verify(mockTemplateOptionalFieldDao, times(10)).updateOrSave(optionalFieldCaptor.capture());
+		verify(mockTemplateOptionalFieldDao, times(24)).updateOrSave(optionalFieldCaptor.capture());
 		Site capturedSite = siteCaptor.getValue();
 		assertThat(capturedSite, is(notNullValue()));
 		BoreHole capturedBoreHole = boreHoleCaptor.getValue();
