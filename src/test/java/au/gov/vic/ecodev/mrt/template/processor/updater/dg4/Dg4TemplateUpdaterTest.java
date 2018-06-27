@@ -17,6 +17,7 @@ import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -30,6 +31,7 @@ import au.gov.vic.ecodev.mrt.fixture.TestFixture;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.persistent.Dao;
+import au.gov.vic.ecodev.mrt.template.processor.updater.tables.TemplateHeaderOptionalFieldUpdater;
 import au.gov.vic.ecodev.mrt.template.processor.updater.tables.TemplateOptionalFieldUpdater;
 import au.gov.vic.ecodev.mrt.template.processor.updater.tables.dg4.GeoChemistryUpdater;
 
@@ -61,7 +63,11 @@ public class Dg4TemplateUpdaterTest {
 		PowerMockito.whenNew(TemplateOptionalFieldUpdater.class)
 			.withArguments(eq(sessionId), eq(mockTemplate), eq(mockTemplateOptionalFieldDao))
 			.thenReturn(mockTemplateOptionalFieldUpdater);
-		
+		TemplateHeaderOptionalFieldUpdater mockTemplateHeaderOptionalFieldUpdater = 
+				Mockito.mock(TemplateHeaderOptionalFieldUpdater.class);
+		PowerMockito.whenNew(TemplateHeaderOptionalFieldUpdater.class)
+			.withArguments(eq(sessionId), eq(mockTemplate), eq(mockTemplateOptionalFieldDao), Matchers.any(List.class))
+			.thenReturn(mockTemplateHeaderOptionalFieldUpdater);
 		// When
 		testInstance.update(sessionId, mockTemplate);
 		// Then
