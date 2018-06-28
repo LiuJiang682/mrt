@@ -131,4 +131,9 @@ public class DbPersistentServices implements PersistentServices {
 		return templateContextPropertiesDao.getTemplateContextProperty(templateName, propertyName);
 	}
 
+	@Override
+	public String getTemplateOwnerEmail(String templateName) {
+		return templateConfigDao.getOwnerEmails(templateName);
+	}
+
 }

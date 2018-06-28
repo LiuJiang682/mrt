@@ -15,6 +15,7 @@ public class DefaultMessage implements Message, Serializable {
 	private List<File> failedFiles;
 	private String logFileName;
 	private String directErrorMessage;
+	private String templateOwnerEmail;
 	
 	/**
 	 * Generated serial verison UID
@@ -105,5 +106,15 @@ public class DefaultMessage implements Message, Serializable {
 	@Override
 	public String getDirectErrorMessage() {
 		return directErrorMessage;
+	}
+
+	@Override
+	public String getTemplateOwnerEmail() {
+		return templateOwnerEmail;
+	}
+
+	@Override
+	public void setTemplateOwnerEmail(String templateOwnerEmail) {
+		this.templateOwnerEmail = templateOwnerEmail;
 	}
 }
