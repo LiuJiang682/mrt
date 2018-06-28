@@ -48,17 +48,6 @@ public class ExtractTemplateNameState implements LoaderState {
 		}
 	}
 
-//	protected final String extractTemplateOwnerEmails(final PersistentServices persistentServices, 
-//			final List<String> templateNames) {
-//		List<String> ownerEmails = new ArrayList<>();
-//		templateNames.stream()
-//				.forEach(templateName -> {
-//					String ownerEmail =  persistentServices.getTemplateOwnerEmail(templateName);
-//					ownerEmails.add(ownerEmail);
-//				});
-//		return String.join(Strings.COMMA, ownerEmails);
-//	}
-
 	protected final  List<String> filterZipFile(List<String> fileNames) {
 		return fileNames.stream()
 			.filter(fileName -> fileName.matches(FILE_NAME_PATTERN))
