@@ -29,4 +29,6 @@ public interface Message {
 	public String getDirectErrorMessage();
 	public void setDirectErrorMessage(String string);
 	
+	public String getTemplateOwnerEmail();
+	public void setTemplateOwnerEmail(final String owenerEmail);
 }

@@ -40,6 +40,16 @@ public class TemplateConfigDaoImplTest {
 		// is(equalTo("SL4:au.gov.vic.ecodev.mrt.template.processor.sl4.Sl4TemplateProcessor,DS4,DL4,DG4")));
 		assertThat(classes, is(equalTo("SL4:au.gov.vic.ecodev.mrt.template.processor.sl4.Sl4TemplateProcessor,DS4:au.gov.vic.ecodev.mrt.template.processor.ds4.Ds4TemplateProcessor,DL4:au.gov.vic.ecodev.mrt.template.processor.dl4.Dl4TemplateProcessor,DG4:au.gov.vic.ecodev.mrt.template.processor.dg4.Dg4TemplateProcessor,SG4:au.gov.vic.ecodev.mrt.template.processor.sg4.Sg4TemplateProcessor")));
 	}
+	
+	@Test
+	public void shouldReturnOwnerMails() {
+		// Given
+		String template = "mrt";
+		// When
+		String ownerEmails = templateConfigDao.getOwnerEmails(template);
+		// Then
+		assertThat(ownerEmails, is(equalTo("jiang.liu@ecodev.vic.gov.au")));
+	}
 
 	@Test
 	public void shouldReturnEmptyTemplateClass() {
@@ -50,13 +60,33 @@ public class TemplateConfigDaoImplTest {
 		// Then
 		assertThat(StringUtils.isBlank(classes), is(true));
 	}
+	
+	@Test
+	public void shouldReturnEmptyOwnerEmails() {
+		// Given
+		String template = "Dummy";
+		// When
+		String classes = templateConfigDao.getOwnerEmails(template);
+		// Then
+		assertThat(StringUtils.isBlank(classes), is(true));
+	}
 
 	@Test
-	public void shouldReturnMrtTemplateClassSqlInjection() {
+	public void shouldReturnBlankTemplateClassWhenSqlInjection() {
 		// Given
-		String template = "  or 1=1";
+		String template = "  mrt' or '1'='1";
 		// When
 		String classes = templateConfigDao.getTemplateClasses(template);
+		// Then
+		assertThat(StringUtils.isBlank(classes), is(true));
+	}
+	
+	@Test
+	public void shouldReturnBlankOwnerEmailSqlInjection() {
+		// Given
+		String template = "  mrt' or '1'='1";
+		// When
+		String classes = templateConfigDao.getOwnerEmails(template);
 		// Then
 		assertThat(StringUtils.isBlank(classes), is(true));
 	}
