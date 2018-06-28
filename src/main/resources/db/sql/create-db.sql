@@ -1,7 +1,8 @@
 CREATE OR REPLACE TABLE template_config (
   id         BIGINT NOT NULL PRIMARY KEY,
   template_name VARCHAR(250),
-  class_names  VARCHAR(1000)
+  class_names  VARCHAR(1000),
+  OWNER_EMAILS VARCHAR(1000),
 );
 
 CREATE OR REPLACE TABLE template_updater_config (

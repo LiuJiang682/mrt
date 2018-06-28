@@ -1,5 +1,6 @@
 package au.gov.vic.ecodev.mrt.template.processor.services;
 
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
@@ -14,6 +15,7 @@ import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
@@ -45,6 +47,7 @@ public class DbPersistentServicesTest {
 	private SessionHeaderDao mockSessionHeaderDao;
 	private TemplateUpdaterConfigDao mockTemplateUpdaterConfigDao;
 	private TemplateContextPropertiesDao mockTemplateContextPropertiesDao;
+	private TemplateConfigDao mockTemplateConfigDao;
 	
 	@Test
 	public void shouldReturnInstance() {
@@ -204,13 +207,28 @@ public class DbPersistentServicesTest {
 		verify(mockTemplateUpdater).update(Matchers.anyLong(), eq(template));
 	}
 	
+	@Test
+	public void shouldReturnTemplateOwnerEmail() {
+		// Given
+		givenTestInstance();
+		String templateName = "mrt";
+		when(mockTemplateConfigDao.getOwnerEmails(eq("mrt"))).thenReturn("jiang.liu@ecodev.vic.gov.au");
+		// When
+		String email = dbPersistentServices.getTemplateOwnerEmail(templateName);
+		// Then
+		assertThat(email, is(equalTo("jiang.liu@ecodev.vic.gov.au")));
+		ArgumentCaptor<String> templateNameCaptor = ArgumentCaptor.forClass(String.class);
+		verify(mockTemplateConfigDao).getOwnerEmails(templateNameCaptor.capture());
+		assertThat(templateNameCaptor.getValue(), is(equalTo("mrt")));
+	}
+	
 	private void givenTestInstance() {
-		TemplateConfigDao templateConfigDao = Mockito.mock(TemplateConfigDao.class);
+		mockTemplateConfigDao = Mockito.mock(TemplateConfigDao.class);
 		mockStatusLogDao = Mockito.mock(StatusLogDao.class);
 		mockSessionHeaderDao = Mockito.mock(SessionHeaderDao.class);
 		mockTemplateUpdaterConfigDao = Mockito.mock(TemplateUpdaterConfigDao.class);
 		mockTemplateContextPropertiesDao = Mockito.mock(TemplateContextPropertiesDao.class);
-		dbPersistentServices = new DbPersistentServices(templateConfigDao, mockStatusLogDao, 
+		dbPersistentServices = new DbPersistentServices(mockTemplateConfigDao, mockStatusLogDao, 
 				mockSessionHeaderDao, mockTemplateUpdaterConfigDao,
 				mockTemplateContextPropertiesDao);
 	}

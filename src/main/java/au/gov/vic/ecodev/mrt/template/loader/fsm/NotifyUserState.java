@@ -19,7 +19,7 @@ public class NotifyUserState implements LoaderState {
 		String body = new EmailBodyBuilder(templateLoaderStateMachineContext).build();
 		boolean emailSent = false;
 		try {
-			mailer.send(mrtConfigProperties.getToEmail(), 
+			mailer.send(templateLoaderStateMachineContext.getMessage().getTemplateOwnerEmail(), 
 					mrtConfigProperties.getEmailSubject(), body , mrtConfigProperties.getEmailUser(), 
 					mrtConfigProperties.getEmailUserPwd());
 			emailSent = true;

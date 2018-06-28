@@ -21,4 +21,5 @@ public interface PersistentServices {
 
 	boolean saveDataBean(final JdbcTemplate jdbcTemplate, long batchId, final Template template);
 
+	String getTemplateOwnerEmail(final String templateName);
 }

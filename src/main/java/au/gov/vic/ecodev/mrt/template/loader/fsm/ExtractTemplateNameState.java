@@ -8,6 +8,7 @@ import org.springframework.util.CollectionUtils;
 
 import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
+import au.gov.vic.ecodev.mrt.template.loader.fsm.helpers.TemplateOwnerEmailHelper;
 
 public class ExtractTemplateNameState implements LoaderState {
 
@@ -36,11 +37,27 @@ public class ExtractTemplateNameState implements LoaderState {
 					templateLoaderStateMachineContext.getMessage().setDirectErrorMessage(message);
 					templateLoaderStateMachineContext.setNextStepToNotifyUser();
 				} else {
+					String templateOwnerEmails = new TemplateOwnerEmailHelper(templateLoaderStateMachineContext
+							.getPersistentServcies())
+							.extractTemplateOwnerEmails(templateNames);  
+					templateLoaderStateMachineContext.getMessage()
+						.setTemplateOwnerEmail(templateOwnerEmails);
 					templateLoaderStateMachineContext.getMessage().setBatchId(batchId);
 				}
 			}
 		}
 	}
+
+//	protected final String extractTemplateOwnerEmails(final PersistentServices persistentServices, 
+//			final List<String> templateNames) {
+//		List<String> ownerEmails = new ArrayList<>();
+//		templateNames.stream()
+//				.forEach(templateName -> {
+//					String ownerEmail =  persistentServices.getTemplateOwnerEmail(templateName);
+//					ownerEmails.add(ownerEmail);
+//				});
+//		return String.join(Strings.COMMA, ownerEmails);
+//	}
 
 	protected final  List<String> filterZipFile(List<String> fileNames) {
 		return fileNames.stream()
