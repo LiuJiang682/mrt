@@ -31,6 +31,31 @@ public class TemplateOwnerEmailHelperTest {
 	}
 	
 	@Test
+	public void shouldExtract2TemplateOwnerEmails() {
+		//Given
+		givenTestInstance();
+		when(mockPersistentServices.getTemplateOwnerEmail(eq("mrt"))).thenReturn("jiang.liu@ecodev.vic.gov.au");
+		when(mockPersistentServices.getTemplateOwnerEmail(eq("hygo"))).thenReturn("gavin.stilgoe@ecodev.vic.gov.au");
+		//When
+		String ownerEmails = testInstance.extractTemplateOwnerEmails(Arrays.asList("mrt", "hygo"));
+		//Then
+		assertThat(ownerEmails, is(equalTo("jiang.liu@ecodev.vic.gov.au,gavin.stilgoe@ecodev.vic.gov.au")));
+	}
+	
+	@Test
+	public void shouldExtract3TemplateOwnerEmails() {
+		//Given
+		givenTestInstance();
+		when(mockPersistentServices.getTemplateOwnerEmail(eq("mrt"))).thenReturn("jiang.liu@ecodev.vic.gov.au");
+		when(mockPersistentServices.getTemplateOwnerEmail(eq("hygo"))).thenReturn("gavin.stilgoe@ecodev.vic.gov.au");
+		when(mockPersistentServices.getTemplateOwnerEmail(eq("gas"))).thenReturn("colin.marson@ecodev.vic.gov.au");
+		//When
+		String ownerEmails = testInstance.extractTemplateOwnerEmails(Arrays.asList("mrt", "hygo", "gas"));
+		//Then
+		assertThat(ownerEmails, is(equalTo("jiang.liu@ecodev.vic.gov.au,gavin.stilgoe@ecodev.vic.gov.au,colin.marson@ecodev.vic.gov.au")));
+	}
+	
+	@Test
 	public void shouldReturnInstance() {
 		//Given
 		givenTestInstance();
