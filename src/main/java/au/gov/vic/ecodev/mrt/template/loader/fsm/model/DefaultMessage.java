@@ -16,9 +16,10 @@ public class DefaultMessage implements Message, Serializable {
 	private String logFileName;
 	private String directErrorMessage;
 	private String templateOwnerEmail;
+	private List<String> outsideBoreHoleIds = new ArrayList<>();
 	
 	/**
-	 * Generated serial verison UID
+	 * Generated serial version UID
 	 */
 	private static final long serialVersionUID = 7169609988757271195L;
 
@@ -116,5 +117,15 @@ public class DefaultMessage implements Message, Serializable {
 	@Override
 	public void setTemplateOwnerEmail(String templateOwnerEmail) {
 		this.templateOwnerEmail = templateOwnerEmail;
+	}
+
+	@Override
+	public List<String> getBoreHoleIdsOutSideTenement() {
+		return outsideBoreHoleIds;
+	}
+
+	@Override
+	public void setBoreHoleIdsOutSideTenement(List<String> outsideBoreHoleIds) {
+		this.outsideBoreHoleIds = outsideBoreHoleIds;
 	}
 }

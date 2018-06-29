@@ -26,6 +26,7 @@ import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.fixture.TestFixture;
 import au.gov.vic.ecodev.mrt.map.services.VictoriaMapServices;
 import au.gov.vic.ecodev.mrt.template.fields.SL4ColumnHeaders;
+import au.gov.vic.ecodev.mrt.template.loader.fsm.model.DefaultMessage;
 import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.H0531Validator;
 
@@ -73,12 +74,13 @@ public class BoreHolePositionValidatorTest {
 				Matchers.any(BigDecimal.class), 
 				Matchers.any(BigDecimal.class))).thenReturn(false);
 		when(mockContext.getMapServices()).thenReturn(mockVictoriaMapServices);
+		when(mockContext.getMessage()).thenReturn(new DefaultMessage());
 		List<String> messages = new ArrayList<>();
 		//When
 		testInstance.validate(messages);
 		//Then
 		assertThat(messages.size(), is(equalTo(1)));
-		assertThat(messages.get(0), is(equalTo("WARNING: Line number 1 coordinate 392200, 6589600 is not included in tenement: EL123")));
+		assertThat(messages.get(0), is(equalTo("WARNING: Line number 1 bore hole ID: KPDD001, coordinate: 392200, 6589600 is not inside the tenement: EL123")));
 		ArgumentCaptor<BigDecimal> eastingCaptor = ArgumentCaptor.forClass(BigDecimal.class);
 		ArgumentCaptor<BigDecimal> northingCaptor = ArgumentCaptor.forClass(BigDecimal.class);
 		verify(mockVictoriaMapServices).isWithinMga54NorthEast(eastingCaptor.capture(), 
@@ -167,12 +169,13 @@ public class BoreHolePositionValidatorTest {
 		when(mockVictoriaMapServices.isWithinMga54LatitudeLongitude(Matchers.any(BigDecimal.class), 
 				Matchers.any(BigDecimal.class))).thenReturn(true);
 		when(mockContext.getMapServices()).thenReturn(mockVictoriaMapServices);
+		when(mockContext.getMessage()).thenReturn(new DefaultMessage());
 		List<String> messages = new ArrayList<>();
 		//When
 		testInstance.validate(messages);
 		//Then
 		assertThat(messages.size(), is(equalTo(1)));
-		assertThat(messages.get(0), is(equalTo("WARNING: Line number 1 coordinate -35.33781, 143.5544 is not included in tenement: EL123")));
+		assertThat(messages.get(0), is(equalTo("WARNING: Line number 1 bore hole ID: KPDD001, coordinate: -35.33781, 143.5544 is not inside the tenement: EL123")));
 		ArgumentCaptor<BigDecimal> latitudeCaptor = ArgumentCaptor.forClass(BigDecimal.class);
 		ArgumentCaptor<BigDecimal> longitudeCaptor = ArgumentCaptor.forClass(BigDecimal.class);
 		verify(mockVictoriaMapServices).isWithinMga54LatitudeLongitude(latitudeCaptor.capture(), 
@@ -276,12 +279,13 @@ public class BoreHolePositionValidatorTest {
 				Matchers.any(BigDecimal.class), 
 				Matchers.any(BigDecimal.class))).thenReturn(false);
 		when(mockContext.getMapServices()).thenReturn(mockVictoriaMapServices);
+		when(mockContext.getMessage()).thenReturn(new DefaultMessage());
 		List<String> messages = new ArrayList<>();
 		//When
 		testInstance.validate(messages);
 		//Then
 		assertThat(messages.size(), is(equalTo(1)));
-		assertThat(messages.get(0), is(equalTo("WARNING: Line number 1 coordinate 392200, 6589600 is not included in tenement: EL123")));
+		assertThat(messages.get(0), is(equalTo("WARNING: Line number 1 bore hole ID: KPDD001, coordinate: 392200, 6589600 is not inside the tenement: EL123")));
 		ArgumentCaptor<BigDecimal> eastingCaptor = ArgumentCaptor.forClass(BigDecimal.class);
 		ArgumentCaptor<BigDecimal> northingCaptor = ArgumentCaptor.forClass(BigDecimal.class);
 		verify(mockVictoriaMapServices).isWithinAgd54NorthEast(eastingCaptor.capture(), 
@@ -375,12 +379,13 @@ public class BoreHolePositionValidatorTest {
 				Matchers.any(BigDecimal.class), 
 				Matchers.any(BigDecimal.class))).thenReturn(false);
 		when(mockContext.getMapServices()).thenReturn(mockVictoriaMapServices);
+		when(mockContext.getMessage()).thenReturn(new DefaultMessage());
 		List<String> messages = new ArrayList<>();
 		//When
 		testInstance.validate(messages);
 		//Then
 		assertThat(messages.size(), is(equalTo(1)));
-		assertThat(messages.get(0), is(equalTo("WARNING: Line number 1 coordinate 392200, 6589600 is not included in tenement: EL123")));
+		assertThat(messages.get(0), is(equalTo("WARNING: Line number 1 bore hole ID: KPDD001, coordinate: 392200, 6589600 is not inside the tenement: EL123")));
 		ArgumentCaptor<BigDecimal> eastingCaptor = ArgumentCaptor.forClass(BigDecimal.class);
 		ArgumentCaptor<BigDecimal> northingCaptor = ArgumentCaptor.forClass(BigDecimal.class);
 		verify(mockVictoriaMapServices).isWithinMga55NorthEast(eastingCaptor.capture(), 
@@ -476,12 +481,13 @@ public class BoreHolePositionValidatorTest {
 				Matchers.any(BigDecimal.class), 
 				Matchers.any(BigDecimal.class))).thenReturn(false);
 		when(mockContext.getMapServices()).thenReturn(mockVictoriaMapServices);
+		when(mockContext.getMessage()).thenReturn(new DefaultMessage());
 		List<String> messages = new ArrayList<>();
 		//When
 		testInstance.validate(messages);
 		//Then
 		assertThat(messages.size(), is(equalTo(1)));
-		assertThat(messages.get(0), is(equalTo("WARNING: Line number 1 coordinate 392200, 6589600 is not included in tenement: EL123")));
+		assertThat(messages.get(0), is(equalTo("WARNING: Line number 1 bore hole ID: KPDD001, coordinate: 392200, 6589600 is not inside the tenement: EL123")));
 		ArgumentCaptor<BigDecimal> eastingCaptor = ArgumentCaptor.forClass(BigDecimal.class);
 		ArgumentCaptor<BigDecimal> northingCaptor = ArgumentCaptor.forClass(BigDecimal.class);
 		verify(mockVictoriaMapServices).isWithinAgd55NorthEast(eastingCaptor.capture(), 
@@ -674,7 +680,8 @@ public class BoreHolePositionValidatorTest {
 				Matchers.any(BigDecimal.class), 
 				Matchers.any(BigDecimal.class))).thenReturn(false);
 		when(mockContext.getMapServices()).thenReturn(mockVictoriaMapServices);
-		String[] strs = { "D", "", null, null, "320", "210", "DD", "80", "-38.11095", "147.06802" };
+		when(mockContext.getMessage()).thenReturn(new DefaultMessage());
+		String[] strs = { "D", "KPDD001", null, null, "320", "210", "DD", "80", "-38.11095", "147.06802" };
 		long batchId = 1l;
 		templateParamMap = new HashMap<>();
 		templateParamMap.put(Strings.TITLE_PREFIX + H0531Validator.PROJECTION_ZONE_TITLE, 
@@ -689,7 +696,7 @@ public class BoreHolePositionValidatorTest {
 		testInstance.validate(messages);
 		//Then
 		assertThat(messages.size(), is(equalTo(1)));
-		assertThat(messages.get(0), is(equalTo("WARNING: Line number 1 coordinate -38.11095, 147.06802 is not included in tenement: EL123")));
+		assertThat(messages.get(0), is(equalTo("WARNING: Line number 1 bore hole ID: KPDD001, coordinate: -38.11095, 147.06802 is not inside the tenement: EL123")));
 		ArgumentCaptor<BigDecimal> latitudeCaptor = ArgumentCaptor.forClass(BigDecimal.class);
 		ArgumentCaptor<BigDecimal> longitudeCaptor = ArgumentCaptor.forClass(BigDecimal.class);
 		verify(mockVictoriaMapServices).isWithinMga55LatitudeLongitude(latitudeCaptor.capture(), 
@@ -884,7 +891,7 @@ public class BoreHolePositionValidatorTest {
 		List<String> messages = new ArrayList<>();
 		List<String> tnoList = new ArrayList<>();
 		//When
-		testInstance.doLatitudeLongitudeCheck(messages, "54", columnHeaders, 
+		testInstance.doLatitudeLongitudeCheck(messages, "KPDD001", "54", columnHeaders, 
 				mockVictoriaMapServices, tnoList);
 		assertThat(messages.size(), is(equalTo(1)));
 		assertThat(messages.get(0), is(equalTo("ERROR: Line number 1 has invalid data: abc for column: Latitude")));
@@ -903,7 +910,7 @@ public class BoreHolePositionValidatorTest {
 		List<String> messages = new ArrayList<>();
 		List<String> tnoList = new ArrayList<>();
 		//When
-		testInstance.doLatitudeLongitudeCheck(messages, "54", columnHeaders, 
+		testInstance.doLatitudeLongitudeCheck(messages, "KPDD001", "54", columnHeaders, 
 				mockVictoriaMapServices, tnoList);
 		assertThat(messages.size(), is(equalTo(1)));
 		assertThat(messages.get(0), is(equalTo("ERROR: Line number 1 has invalid data: abc for column: Longitude")));
@@ -949,7 +956,7 @@ public class BoreHolePositionValidatorTest {
 	
 	private void givenTestInstance() {
 		mockContext = Mockito.mock(TemplateProcessorContext.class);
-		String[] strs = { "D", "", "392200", "6589600", "320", "210", "DD", "80", "310" };
+		String[] strs = { "D", "KPDD001", "392200", "6589600", "320", "210", "DD", "80", "310" };
 		long batchId = 1l;
 		templateParamMap = new HashMap<>();
 		templateParamMap.put(Strings.COLUMN_HEADERS, TestFixture.getColumnHeaderList());
@@ -960,7 +967,7 @@ public class BoreHolePositionValidatorTest {
 	
 	private void givenLatitudeLongitudeTestInstance(String[] strsParam) {
 		mockContext = Mockito.mock(TemplateProcessorContext.class);
-		String[] strs = { "D", "", null, null, "320", "210", "DD", "80", "-35.33781", "143.5544" };
+		String[] strs = { "D", "KPDD001", null, null, "320", "210", "DD", "80", "-35.33781", "143.5544" };
 		long batchId = 1l;
 		templateParamMap = new HashMap<>();
 		templateParamMap.put(Strings.COLUMN_HEADERS, TestFixture.getAMGColumnHeaderList());
