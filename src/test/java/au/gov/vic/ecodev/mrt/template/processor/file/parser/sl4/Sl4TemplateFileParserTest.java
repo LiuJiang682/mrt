@@ -26,6 +26,7 @@ import au.gov.vic.ecodev.mrt.constants.LogSeverity;
 import au.gov.vic.ecodev.mrt.fixture.TestFixture;
 import au.gov.vic.ecodev.mrt.map.services.VictoriaMapServices;
 import au.gov.vic.ecodev.mrt.template.files.DirectoryTreeReverseTraversalZipFileFinder;
+import au.gov.vic.ecodev.mrt.template.loader.fsm.model.DefaultMessage;
 import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
@@ -76,6 +77,7 @@ public class Sl4TemplateFileParserTest {
 		TestFixture.givenSl4TemplateProperties(mockContext);
 		givenMapServices(mockContext);
 		when(mockContext.saveDataBean(Matchers.any(Template.class))).thenReturn(true);
+		when(mockContext.getMessage()).thenReturn(new DefaultMessage());
 		givenMockZipFileFinder();
 		Sl4TemplateFileParser testInstance = new Sl4TemplateFileParser(file, mockContext);
 		// When
@@ -97,6 +99,7 @@ public class Sl4TemplateFileParserTest {
 		TestFixture.givenSl4TemplateProperties(mockContext);
 		givenMapServices(mockContext);
 		when(mockContext.saveDataBean(Matchers.any(Template.class))).thenReturn(false);
+		when(mockContext.getMessage()).thenReturn(new DefaultMessage());
 		givenMockZipFileFinder();
 		Sl4TemplateFileParser testInstance = new Sl4TemplateFileParser(file, mockContext);
 		// When

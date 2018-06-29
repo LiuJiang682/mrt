@@ -1,7 +1,11 @@
 package au.gov.vic.ecodev.mrt.mail;
 
+import java.util.List;
+
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.TemplateLoaderStateMachineContext;
 
 public class EmailBodyBuilder {
@@ -30,6 +34,13 @@ public class EmailBodyBuilder {
 			buf.append("\n\n");
 			buf.append("The failed processed files at ");
 			buf.append(templateLoaderStateMachineContext.getMrtConfigProperties().getFailedFileDirectory());
+			
+			List<String> boreHoleIds = templateLoaderStateMachineContext.getMessage().getBoreHoleIdsOutSideTenement();
+			if (CollectionUtils.isNotEmpty(boreHoleIds)) {
+				buf.append("\n\n");
+				buf.append("The following bore Hole Ids are outside the tenement: ");
+				buf.append(String.join(Strings.COMMA, boreHoleIds));
+			}
 			return buf.toString();
 		} else {
 			StringBuilder buf = new StringBuilder("Hi\n");

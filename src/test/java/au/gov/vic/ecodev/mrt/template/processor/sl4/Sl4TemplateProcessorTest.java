@@ -24,6 +24,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import au.gov.vic.ecodev.mrt.fixture.TestFixture;
 import au.gov.vic.ecodev.mrt.map.services.VictoriaMapServices;
 import au.gov.vic.ecodev.mrt.template.files.DirectoryTreeReverseTraversalZipFileFinder;
+import au.gov.vic.ecodev.mrt.template.loader.fsm.model.DefaultMessage;
 import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
 import au.gov.vic.ecodev.mrt.template.processor.file.parser.sl4.Sl4TemplateFileParser;
@@ -45,6 +46,7 @@ public class Sl4TemplateProcessorTest {
 		givenMapServices(mockContext);
 		givenMockZipFileFinder();
 		when(mockContext.saveDataBean(Matchers.any(Template.class))).thenReturn(true);
+		when(mockContext.getMessage()).thenReturn(new DefaultMessage());
 		//When
 		testInstance.processFile();
 		//Then

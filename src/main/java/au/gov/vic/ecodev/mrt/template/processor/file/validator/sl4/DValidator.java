@@ -25,7 +25,6 @@ public class DValidator implements Validator {
 	
 	private String[] strs;
 	private TemplateProcessorContext context;
-	private String zipFileName;
 	
 	@Override
 	public void init(String[] strs) {
@@ -37,7 +36,6 @@ public class DValidator implements Validator {
 	}
 	
 	public void setZipFileName(final String zipFileName) {
-		this.zipFileName = zipFileName;
 	}
 
 	@Override

@@ -467,7 +467,7 @@ public class DValidatorTest {
 		// Then
 		assertThat(errorMessages.isPresent(), is(true));
 		List<String> messages = errorMessages.get();
-		assertThat(messages.size(), is(equalTo(1)));
+		assertThat(messages.size(), is(equalTo(2)));
 		assertThat(messages.get(0), is(equalTo("ERROR: Line 6: Template SL4 missing Hole_id column")));
 		verify(mockDataBean, times(0)).put(Matchers.anyString(), Matchers.anyListOf(String.class));
 	}
