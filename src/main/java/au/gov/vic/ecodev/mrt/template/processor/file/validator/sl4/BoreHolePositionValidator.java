@@ -85,20 +85,21 @@ public class BoreHolePositionValidator {
 						northing = new BigDecimal(dataString);
 					}
 				}
+				String boreHoleId = getHoleId(messages, columnHeaders, SL4ColumnHeaders.HOLE_ID.getCode());
 				MapServices mapServices = context.getMapServices();
 				VictoriaMapServices  victoriaMapServices = (VictoriaMapServices) mapServices;
 				List<String> tenmentNoList = new StringListHelper()
 						.trimOffTheTitle(templateParamMap.get(Strings.KEY_H0100));
 				if ((null == easting) 
 						&& (null == northing)) {
-					doLatitudeLongitudeCheck(messages, projectionZone, columnHeaders,
+					doLatitudeLongitudeCheck(messages, boreHoleId, projectionZone, columnHeaders,
 							victoriaMapServices, tenmentNoList);
 				} else {
 					if (ProjectionZone.VIC_54.getZone().equals(projectionZone)) {
-						doZone54Check(messages, useAmg, easting, northing, 
+						doZone54Check(messages, boreHoleId, useAmg, easting, northing, 
 								victoriaMapServices, tenmentNoList);
 					} else if (ProjectionZone.VIC_55.getZone().equals(projectionZone)) {
-						doZone55Check(messages, useAmg, easting, northing, 
+						doZone55Check(messages, boreHoleId, useAmg, easting, northing, 
 								victoriaMapServices, tenmentNoList);
 					}
 				}
@@ -106,7 +107,7 @@ public class BoreHolePositionValidator {
 		}
 	}
 
-	protected final void doLatitudeLongitudeCheck(List<String> messages,
+	protected final void doLatitudeLongitudeCheck(List<String> messages, String boreHoleId,
 			String projectionZone, List<String> columnHeaders, 
 			VictoriaMapServices victoriaMapServices, List<String> tenmentNoList) {
 
@@ -117,16 +118,16 @@ public class BoreHolePositionValidator {
 		if ((null != latitude)
 				&& (null != longitude)) {
 			if (ProjectionZone.VIC_54.getZone().equals(projectionZone)) {
-				doZone54LatitudeLongitudeCheck(messages, latitude, longitude, 
+				doZone54LatitudeLongitudeCheck(messages, boreHoleId, latitude, longitude, 
 						victoriaMapServices, tenmentNoList);
 			} else if (ProjectionZone.VIC_55.getZone().equals(projectionZone)) {
-				doZone55LatitudeLongitudeCheck(messages, latitude, longitude, 
+				doZone55LatitudeLongitudeCheck(messages, boreHoleId, latitude, longitude, 
 						victoriaMapServices, tenmentNoList);
 			}
 		}
 	}
 
-	protected final void doZone55LatitudeLongitudeCheck(List<String> messages, 
+	protected final void doZone55LatitudeLongitudeCheck(List<String> messages, String boreHoleId,
 			BigDecimal latitude, BigDecimal longitude,
 			VictoriaMapServices victoriaMapServices, List<String> tenementNoList) {
 		if (victoriaMapServices.isWithinMga55LatitudeLongitude(latitude, longitude)) {
@@ -143,7 +144,7 @@ public class BoreHolePositionValidator {
 						}
 					}
 					if (!foundTenement) {
-						contructNoTenementFoundWarningMessage(messages, latitude, longitude, 
+						handleNoTenementFound(messages, boreHoleId, latitude, longitude, 
 							tenementNoList);
 					}
 				}
@@ -153,6 +154,18 @@ public class BoreHolePositionValidator {
 		}
 	}
 
+	protected final String getHoleId(final List<String> messages, 
+			final List<String> columnHeaders, String code) {
+		int columnIndex = columnHeaders.indexOf(code);
+		String holeId = null;
+		if (Numeral.NOT_FOUND == columnIndex) {
+			constructMissingHeaderMessages(messages, code);
+		} else {
+			holeId = strs[++columnIndex];
+		}
+		return holeId;
+	}
+	
 	protected final BigDecimal getCoordinateData(final List<String> messages, 
 			final List<String> columnHeaders, String code) {
 		int columnIndex = columnHeaders.indexOf(code);
@@ -170,7 +183,7 @@ public class BoreHolePositionValidator {
 		return data;
 	}
 
-	protected final void doZone54LatitudeLongitudeCheck(List<String> messages, 
+	protected final void doZone54LatitudeLongitudeCheck(List<String> messages, String boreHoleId,
 			BigDecimal latitude, BigDecimal longitude, VictoriaMapServices victoriaMapServices, 
 			List<String> tenementNoList) {
 		if (victoriaMapServices.isWithinMga54LatitudeLongitude(latitude, longitude)) {
@@ -187,7 +200,7 @@ public class BoreHolePositionValidator {
 						}
 					}
 					if (!foundTenement) {
-						contructNoTenementFoundWarningMessage(messages, latitude, longitude, 
+						handleNoTenementFound(messages, boreHoleId, latitude, longitude, 
 							tenementNoList);
 					}
 				}
@@ -197,7 +210,7 @@ public class BoreHolePositionValidator {
 		}
 	}
 
-	protected final void doZone55Check(List<String> messages, boolean useAmg, 
+	protected final void doZone55Check(List<String> messages, String boreHoleId, boolean useAmg, 
 			BigDecimal easting, BigDecimal northing,
 			VictoriaMapServices victoriaMapServices, List<String> tenementNoList) {
 		if (useAmg) {
@@ -215,7 +228,7 @@ public class BoreHolePositionValidator {
 							}
 						}
 						if (!foundTenement) {
-							contructNoTenementFoundWarningMessage(messages, easting, northing, 
+							handleNoTenementFound(messages, boreHoleId, easting, northing, 
 								tenementNoList);
 						}
 					}
@@ -238,7 +251,7 @@ public class BoreHolePositionValidator {
 							}
 						}
 						if (!foundTenement) {
-							contructNoTenementFoundWarningMessage(messages, easting, northing, 
+							handleNoTenementFound(messages, boreHoleId, easting, northing, 
 								tenementNoList);
 						}
 					}
@@ -249,7 +262,7 @@ public class BoreHolePositionValidator {
 		}
 	}
 
-	protected final void doZone54Check(List<String> messages, boolean useAmg, 
+	protected final void doZone54Check(List<String> messages, String boreHoleId, boolean useAmg, 
 			BigDecimal easting, BigDecimal northing,
 			VictoriaMapServices victoriaMapServices, List<String> tenementNoList) {
 		if (useAmg) {
@@ -267,7 +280,7 @@ public class BoreHolePositionValidator {
 							}
 						}
 						if (!foundTenement) {
-							contructNoTenementFoundWarningMessage(messages, easting, northing, 
+							handleNoTenementFound(messages, boreHoleId, easting, northing, 
 									tenementNoList);
 						}
 					}
@@ -290,7 +303,7 @@ public class BoreHolePositionValidator {
 							}
 						}
 						if (!foundTenement) {
-							contructNoTenementFoundWarningMessage(messages, easting, northing, 
+							handleNoTenementFound(messages, boreHoleId, easting, northing, 
 								tenementNoList);
 						}
 					}
@@ -301,6 +314,14 @@ public class BoreHolePositionValidator {
 		}
 	}
 
+	protected final void handleNoTenementFound(List<String> messages, String boreHoleId,
+			BigDecimal easting, BigDecimal northing, List<String> tenementNoList) {
+		contructNoTenementFoundWarningMessage(messages, boreHoleId, easting, northing, 
+				tenementNoList);
+		List<String> boreHoleIds = this.context.getMessage().getBoreHoleIdsOutSideTenement();
+		boreHoleIds.add(boreHoleId);
+	}
+	
 	private void contructErrorMessage(List<String> messages, BigDecimal easting, 
 			BigDecimal northing) {
 		String message = new StringBuilder(Strings.LOG_ERROR_HEADER)
@@ -346,16 +367,18 @@ public class BoreHolePositionValidator {
 		messages.add(message);		
 	}
 	
-	private void contructNoTenementFoundWarningMessage(List<String> messages, 
+	private void contructNoTenementFoundWarningMessage(List<String> messages, String boreHoleId,
 			BigDecimal x, BigDecimal y, List<String> tenementNoList) {
 		String message = new StringBuilder(Strings.LOG_WARNING_HEADER)
 				.append("Line number ")
 				.append(lineNumber)
-				.append(" coordinate ")
+				.append(" bore hole ID: ")
+				.append(boreHoleId)
+				.append(", coordinate: ")
 				.append(x)
 				.append(", ")
 				.append(y)
-				.append(" is not included in tenement: ")
+				.append(" is not inside the tenement: ")
 				.append(String.join(Strings.COMMA, tenementNoList))
 				.toString();
 		messages.add(message);
