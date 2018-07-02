@@ -8,6 +8,7 @@ import java.util.Optional;
 import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.template.fields.Sg4ColumnHeaders;
+import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.EastingValidator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.LineNumberValidator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.ListSizeValidator;
@@ -21,10 +22,15 @@ import au.gov.vic.ecodev.mrt.template.processor.validator.helper.ValidatorHelper
 public class DValidator implements Validator {
 
 	private String[] strs;
+	private TemplateProcessorContext context;
 	
 	@Override
 	public void init(String[] strs) {
 		this.strs = strs;
+	}
+	
+	public void setTemplateProcessorContext(final TemplateProcessorContext context) {
+		this.context = context;
 	}
 
 	@Override
@@ -59,6 +65,8 @@ public class DValidator implements Validator {
 							Sg4ColumnHeaders.NORTHING_MGA.getCode(),
 							Sg4ColumnHeaders.NORTHING_AMG.getCode()).validate(messages);
 					new SampleTypeDataValidator(strs, lineNumber, columnHeaders, templateParamMap)
+						.validate(messages);
+					new SamplePositionValidator(strs, lineNumber, templateParamMap, context)
 						.validate(messages);
 				}
 			}
