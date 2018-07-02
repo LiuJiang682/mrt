@@ -1,5 +1,8 @@
 package au.gov.vic.ecodev.mrt.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -16,6 +19,8 @@ import au.gov.vic.ecodev.mrt.template.processor.model.Entity;
 public class TemplateOptionalFieldDaoImpl implements TemplateOptionalFieldDao {
 	
 	private static final Logger LOGGER = Logger.getLogger(TemplateOptionalFieldDaoImpl.class);
+
+	private static final String GET_SELECT_SQL = "SELECT ID, LOADER_ID, TEMPLATE_NAME, TEMPLATE_HEADER, ROW_NUMBER, FIELD_VALUE FROM DH_OPTIONAL_FIELDS WHERE ID = ?";
 
 	private static final String SELECT_SQL = "SELECT COUNT(ID) FROM DH_OPTIONAL_FIELDS WHERE ID = ?";
 
@@ -54,10 +59,9 @@ public class TemplateOptionalFieldDaoImpl implements TemplateOptionalFieldDao {
 	@Override
 	public Entity get(long id) {
 		TemplateOptionalField templateOptionalField = null;
-		String selectSql = "SELECT ID, LOADER_ID, TEMPLATE_NAME, TEMPLATE_HEADER, ROW_NUMBER, FIELD_VALUE FROM DH_OPTIONAL_FIELDS WHERE ID = ?";
 		
 		try {
-			templateOptionalField = jdbcTemplate.queryForObject(selectSql, new Object[]{id}, 
+			templateOptionalField = jdbcTemplate.queryForObject(GET_SELECT_SQL, new Object[]{id}, 
 					new TemplateOptionalFieldRowMapper());
 		} catch (EmptyResultDataAccessException e) {
 			LOGGER.warn("No SessionHeader found for id: " + id, e);
@@ -68,6 +72,24 @@ public class TemplateOptionalFieldDaoImpl implements TemplateOptionalFieldDao {
 	@Override
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
+	}
+
+	@Override
+	public boolean batchUpdate(List<Entity> entities) {
+		List<Object[]> argumentList = new ArrayList<>(entities.size());
+		
+		entities.stream().forEach(entity -> {
+			TemplateOptionalField templateOptionalField = (TemplateOptionalField)entity;
+			Object[] arguments = new Object[] {
+					templateOptionalField.getId(), 
+					templateOptionalField.getSessionId(), templateOptionalField.getTemplateName(),
+					templateOptionalField.getTemplateHeader(), templateOptionalField.getRowNumber(),
+					templateOptionalField.getFieldValue()
+			};
+			argumentList.add(arguments);
+		});
+		int[] rows = jdbcTemplate.batchUpdate(INSERT_SQL, argumentList);
+		return rows.length == entities.size();
 	}
 
 }
