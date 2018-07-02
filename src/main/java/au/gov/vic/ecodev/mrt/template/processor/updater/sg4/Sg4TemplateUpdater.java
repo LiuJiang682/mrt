@@ -62,6 +62,7 @@ public class Sg4TemplateUpdater implements TemplateUpdater {
 				surfaceGeochemistryUpdater.update(dataRecordList);
 				templateOptionalFiledUpdater.update(dataRecordList, index);
 			}
+			templateOptionalFiledUpdater.flush();
 		} catch(Exception e) {
 			throw new TemplateProcessorException(e.getMessage(), e);
 		}
