@@ -13,6 +13,7 @@ import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDao;
 import au.gov.vic.ecodev.mrt.model.TemplateOptionalField;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
+import au.gov.vic.ecodev.mrt.template.processor.model.Entity;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.updater.helper.LabelledColumnIndexListExtractor;
 
@@ -25,6 +26,7 @@ public class TemplateOptionalFieldUpdater {
 	private final Template template;
 	
 	private List<Integer> indexList;
+	private List<Entity> cache;
 	
 	public TemplateOptionalFieldUpdater(long sessionId, Template template,
 			TemplateOptionalFieldDao templateOptionalFieldDao) {
@@ -37,6 +39,7 @@ public class TemplateOptionalFieldUpdater {
 			throw new IllegalArgumentException("TemplateOptionalFieldUpdater:templateOptionalFieldDao parameter cannot be null!");
 		}
 		this.templateOptionalFieldDao = templateOptionalFieldDao;
+		this.cache = new ArrayList<>();
 	}
 
 	public void init(List<Integer> mandatoryFieldIndexList) throws TemplateProcessorException {
@@ -82,9 +85,15 @@ public class TemplateOptionalFieldUpdater {
 					templateOptionalField.setFieldValue(
 							(String) new NullSafeCollections(dataRecordList).get(index));
 					LOGGER.info("About to insert: " + templateOptionalField);
-					templateOptionalFieldDao.updateOrSave(templateOptionalField);
+//					templateOptionalFieldDao.updateOrSave(templateOptionalField);
+					cache.add(templateOptionalField);
 				});
 		}
+	}
+	
+	public boolean flush() {
+		LOGGER.info("About to flush");
+		return templateOptionalFieldDao.batchUpdate(cache);
 	}
 
 	private String getTemplateName(String templateName) {

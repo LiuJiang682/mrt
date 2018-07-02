@@ -84,6 +84,8 @@ public class Sl4DataRecordUpdater {
 			boreHoleUpdater.update(dataRecordList);
 			templateOptionalFiledUpdater.update(dataRecordList, index);
 		}
+		
+		templateOptionalFiledUpdater.flush();
 	}
 
 	protected final TemplateOptionalFieldDao getTemplateOptionalFieldDao() throws TemplateProcessorException {

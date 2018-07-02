@@ -6,7 +6,6 @@ import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -15,6 +14,7 @@ import java.util.List;
 
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.springframework.util.CollectionUtils;
 
@@ -32,19 +32,24 @@ public class TemplateOptionalFieldUpdaterTest {
 	private TemplateOptionalFieldDao mockTemplateOptionalFieldDao;
 	private Template mockTemplate;
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Test
 	public void shouldUpdateTheDataBaseWithOptionalFields() throws TemplateProcessorException {
 		//Given
 		givenTestCondition();
+		when(mockTemplateOptionalFieldDao.batchUpdate(Matchers.anyList())).thenReturn(true);
 		List<String> dataRecordList = TestFixture.getDListWithOptionalFields();
 		//When
 		testInstance.update(dataRecordList, 6);
+		boolean flag = testInstance.flush();
 		//Then
-		ArgumentCaptor<Entity> entityCaptor = ArgumentCaptor.forClass(Entity.class);
-		verify(mockTemplateOptionalFieldDao, times(2)).updateOrSave(entityCaptor.capture());
-		List<Entity> entities = entityCaptor.getAllValues();
-		assertThat(CollectionUtils.isEmpty(entities), is(false));
-		assertThat(entities.size(), is(equalTo(2)));
+		assertThat(flag, is(true));
+		ArgumentCaptor<List> entitiesCaptor = ArgumentCaptor.forClass(List.class);
+		verify(mockTemplateOptionalFieldDao).batchUpdate(entitiesCaptor.capture());
+		List<List> entityList = entitiesCaptor.getAllValues();
+		assertThat(CollectionUtils.isEmpty(entityList), is(false));
+		assertThat(entityList.size(), is(equalTo(1)));
+		List<Entity> entities = entityList.get(0);
 		TemplateOptionalField templateOptionalField1 = (TemplateOptionalField) entities.get(0);
 		assertThat(templateOptionalField1.getSessionId(), is(equalTo(100l)));
 		assertThat(templateOptionalField1.getTemplateName(), is(equalTo("SL4")));
