@@ -64,6 +64,7 @@ public class Dl4TemplateUpdater implements TemplateUpdater {
 				lithologyUpdater.update(dataRecordList);
 				templateOptionalFiledUpdater.update(dataRecordList, index);
 			}
+			templateOptionalFiledUpdater.flush();
 		} catch(Exception e) {
 			throw new TemplateProcessorException(e.getMessage(), e);
 		}

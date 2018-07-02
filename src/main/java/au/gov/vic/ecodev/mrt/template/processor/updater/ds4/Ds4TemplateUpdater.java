@@ -64,6 +64,7 @@ public class Ds4TemplateUpdater implements TemplateUpdater {
 				downHoleUpdater.update(dataRecordList);
 				templateOptionalFiledUpdater.update(dataRecordList, index);
 			}		
+			templateOptionalFiledUpdater.flush();
 		} catch(Exception e) {
 			throw new TemplateProcessorException(e.getMessage(), e);
 		}
