@@ -17,6 +17,7 @@ import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext
 import au.gov.vic.ecodev.mrt.template.processor.context.properties.utils.MultiStringValueToListConventor;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
 import au.gov.vic.ecodev.mrt.template.processor.file.parser.MessageHandler;
+import au.gov.vic.ecodev.mrt.template.processor.file.validator.sg4.DValidator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.sg4.Sg4ValidatorFactory;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.model.sg4.Sg4Template;
@@ -57,6 +58,9 @@ public class Sg4TemplateFileParser {
 			templateParamMap.put(Strings.CURRENT_LINE, Arrays.asList(String.valueOf(lineNumber)));
 			
 			Validator validator = sg4ValidatorFactory.getLineValidator(line);
+			if (validator instanceof DValidator) {
+				((DValidator) validator).setTemplateProcessorContext(context);
+			}
 			Optional<List<String>> errorMessage = validator.validate(templateParamMap, 
 					dataBean);
 			if (errorMessage.isPresent()) {
