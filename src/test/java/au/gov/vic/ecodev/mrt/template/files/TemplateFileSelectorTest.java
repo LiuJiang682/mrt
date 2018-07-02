@@ -47,10 +47,12 @@ public class TemplateFileSelectorTest {
 		//Given
 		givenTestInstance();
 		//When
-		Optional<String> sl4TemplateFile = testInstance.getTemplateFileInDirectory(Arrays.asList(TemplateFileSelector.DATA_FORMAT_SL4));
+		Optional<List<String>> sl4TemplateFile = testInstance.getTemplateFileInDirectory(Arrays.asList(TemplateFileSelector.DATA_FORMAT_SL4));
 		//Then
 //		assertThat(sl4TemplateFile.get(), is(equalTo("SL4 EL5478_201702_01_Collar.txt")));
-		String sl4TemplateFileString = sl4TemplateFile.get();
+		List<String> sl4TemplateFileStrings = sl4TemplateFile.get();
+		assertThat(sl4TemplateFileStrings.size(), is(equalTo(1)));
+		String sl4TemplateFileString = sl4TemplateFileStrings.get(0);
 		assertThat(sl4TemplateFileString, is(notNullValue()));
 		String[] templateAndFile = sl4TemplateFileString.split(Strings.SPACE);
 		assertThat(templateAndFile[Numeral.ZERO], is(equalTo("SL4")));
@@ -75,7 +77,7 @@ public class TemplateFileSelectorTest {
 		List<File> files = Collections.emptyList();
 		String dataTemplate = "";
 		//When
-		Optional<String> file = testInstance.findTemplateFileName(files , Arrays.asList(dataTemplate));
+		Optional<List<String>> file = testInstance.findTemplateFileName(files , Arrays.asList(dataTemplate));
 		//Then
 		assertThat(file.isPresent(), is(false));
 	}
@@ -87,7 +89,7 @@ public class TemplateFileSelectorTest {
 		List<File> files = TestFixture.getListOfFiles(directory);
 		String dataTemplate = "";
 		//When
-		Optional<String> file = testInstance.findTemplateFileName(files, Arrays.asList(dataTemplate));
+		Optional<List<String>> file = testInstance.findTemplateFileName(files, Arrays.asList(dataTemplate));
 		//Then
 		assertThat(file.isPresent(), is(false));
 	}
@@ -99,7 +101,7 @@ public class TemplateFileSelectorTest {
 		List<File> files = TestFixture.getListOfFiles(directory);
 		String dataTemplate = "SL4";
 		//When
-		Optional<String> file = testInstance.findTemplateFileName(files, Arrays.asList(dataTemplate));
+		Optional<List<String>> file = testInstance.findTemplateFileName(files, Arrays.asList(dataTemplate));
 		//Then
 		assertThat(file.isPresent(), is(true));
 	}
