@@ -5,6 +5,9 @@ import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import au.gov.vic.ecodev.common.util.IDGenerator;
 import au.gov.vic.ecodev.mrt.model.TemplateOptionalField;
+import au.gov.vic.ecodev.mrt.template.processor.model.Entity;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
@@ -44,6 +48,24 @@ public class TemplateOptionalFieldDaoImplTest {
 	}
 	
 	@Test
+	public void shouldInsertAListOfRecords() {
+		//Given
+		long id1 = IDGenerator.getUID().longValue();
+		long id2 = IDGenerator.getUID().longValue();
+		TemplateOptionalField entity1 = buildOptionalDTO();
+		entity1.setId(id1);
+		TemplateOptionalField entity2 = buildOptionalDTO();
+		entity2.setId(id2);
+		List<Entity> entities = new ArrayList<>();
+		entities.add(entity1);
+		entities.add(entity2);
+		//When
+		boolean flag = templateOptionalFieldDao.batchUpdate(entities);
+		//Then
+		assertThat(flag, is(true));
+	}
+	
+	@Test
 	public void shouldUpdateExistingRecord() {
 		//Given
 		boolean flag = givenNewRecord();
@@ -70,6 +92,13 @@ public class TemplateOptionalFieldDaoImplTest {
 	
 	private boolean givenNewRecord() {
 		id = IDGenerator.getUID().longValue();
+		TemplateOptionalField entity = buildOptionalDTO();
+		
+		boolean flag = templateOptionalFieldDao.updateOrSave(entity);
+		return flag;
+	}
+
+	private TemplateOptionalField buildOptionalDTO() {
 		long sessionId = 100l;
 		String templateName = "SL4";
 		String templateHeader = "Au";
@@ -82,8 +111,6 @@ public class TemplateOptionalFieldDaoImplTest {
 		entity.setTemplateHeader(templateHeader);
 		entity.setRowNumber(rowNumber);
 		entity.setFieldValue(fieldValue);
-		
-		boolean flag = templateOptionalFieldDao.updateOrSave(entity);
-		return flag;
+		return entity;
 	}
 }

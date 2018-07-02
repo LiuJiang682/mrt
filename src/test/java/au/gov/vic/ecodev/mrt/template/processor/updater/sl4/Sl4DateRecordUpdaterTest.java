@@ -1,5 +1,6 @@
 package au.gov.vic.ecodev.mrt.template.processor.updater.sl4;
 
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
@@ -39,6 +40,7 @@ public class Sl4DateRecordUpdaterTest {
 	private Template mockTemplate;
 	private Map<String, Long> drillingCodes;
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
 	public void shouldUpdateTheDataBase() throws TemplateProcessorException {
 		// Given
@@ -65,15 +67,22 @@ public class Sl4DateRecordUpdaterTest {
 		ArgumentCaptor<BoreHole> boreHoleCaptor = ArgumentCaptor.forClass(BoreHole.class);
 		ArgumentCaptor<TemplateOptionalField> optionalFieldCaptor = 
 				ArgumentCaptor.forClass(TemplateOptionalField.class);
+		ArgumentCaptor<List> cacheCaptor = ArgumentCaptor.forClass(List.class);
 		verify(mockSiteDao, times(3)).updateOrSave(siteCaptor.capture());
 		verify(mockBoreHoleDao, times(3)).updateOrSave(boreHoleCaptor.capture());
-		verify(mockTemplateOptionalFieldDao, times(24)).updateOrSave(optionalFieldCaptor.capture());
+		verify(mockTemplateOptionalFieldDao).updateOrSave(optionalFieldCaptor.capture());
+		verify(mockTemplateOptionalFieldDao, times(2)).batchUpdate(cacheCaptor.capture());
 		Site capturedSite = siteCaptor.getValue();
 		assertThat(capturedSite, is(notNullValue()));
 		BoreHole capturedBoreHole = boreHoleCaptor.getValue();
 		assertThat(capturedBoreHole, is(notNullValue()));
 		TemplateOptionalField capturedTemplateOptionalField = optionalFieldCaptor.getValue();
 		assertThat(capturedTemplateOptionalField, is(notNullValue()));
+		List<List> entityList = cacheCaptor.getAllValues();
+		assertThat(entityList, is(notNullValue()));
+		assertThat(entityList.size(), is(equalTo(2)));
+		assertThat(entityList.get(0).size(), is(equalTo(14)));
+		assertThat(entityList.get(1).size(), is(equalTo(9)));
 		PowerMockito.verifyNoMoreInteractions();
 	}
 	

@@ -1,10 +1,10 @@
 package au.gov.vic.ecodev.mrt.template.processor.updater.tables;
 
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
@@ -18,7 +18,6 @@ import org.mockito.Mockito;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDao;
 import au.gov.vic.ecodev.mrt.fixture.TestFixture;
-import au.gov.vic.ecodev.mrt.template.processor.model.Entity;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.model.dg4.Dg4Template;
 
@@ -28,6 +27,7 @@ public class TemplateHeaderOptionalFieldUpdaterTest {
 	private TemplateOptionalFieldDao mockTemplateOptionalFieldDao;
 	private Template template;
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
 	public void shouldUpdateDatabase() {
 		//Given
@@ -43,10 +43,12 @@ public class TemplateHeaderOptionalFieldUpdaterTest {
 		//When
 		testInstance.update();
 		//Then
-		ArgumentCaptor<Entity> entityCaptor = ArgumentCaptor.forClass(Entity.class);
-		verify(mockTemplateOptionalFieldDao, times(7)).updateOrSave(entityCaptor.capture());
-		List<Entity> capturedList = entityCaptor.getAllValues();
+		ArgumentCaptor<List> entityCaptor = ArgumentCaptor.forClass(List.class);
+		verify(mockTemplateOptionalFieldDao).batchUpdate(entityCaptor.capture());
+		List<List> capturedList = entityCaptor.getAllValues();
 		assertThat(capturedList, is(notNullValue()));
+		assertThat(capturedList.size(), is(equalTo(1)));
+		assertThat(capturedList.get(0).size(), is(equalTo(7)));
 	}
 	
 	@Test
