@@ -61,7 +61,7 @@ public class ProcessTemplateFileState implements LoaderState {
 							new TemplateFileSelector(file.getAbsolutePath());
 					List<String> templateNames = new ArrayList<>();
 					templateNames.add(templateClass[Numeral.ZERO]);
-					Optional<String> templateAndFileName = templateFileSelector
+					Optional<List<String>> templateAndFileName = templateFileSelector
 							.getTemplateFileInDirectory(templateNames);
 					if (templateAndFileName.isPresent()) {
 						doTemplateFileProcessing(templateLoaderStateMachineContext, 
@@ -117,17 +117,25 @@ public class ProcessTemplateFileState implements LoaderState {
 	
 	protected final void doTemplateFileProcessing(
 			final TemplateLoaderStateMachineContext templateLoaderStateMachineContext,
-			final TemplateProcessor templateProcessor, final String templateAndFileName)
+			final TemplateProcessor templateProcessor, final List<String> templateAndFileNames)
 			throws TemplateProcessorException {
-		String str = templateAndFileName;
-		String[] strs = str.split(Strings.SPACE);
-		List<File> files = new ArrayList<>();
-		String fileName = strs[Numeral.ONE];
-		File fileToProcess = new File(fileName);
-		files.add(fileToProcess);
+		List<File> files = doFileExtration(templateAndFileNames);
 		templateProcessor.setFileList(files);
 		templateProcessor.setTemplateProcessorContent(templateLoaderStateMachineContext);
 		templateProcessor.processFile();
+	}
+	
+	protected final List<File> doFileExtration(final List<String> templateAndFileNames) {
+		List<File> files = new ArrayList<>();
+		templateAndFileNames.stream()
+			.forEach(templateAndFileName -> {
+				String str = templateAndFileName;
+				String[] strs = str.split(Strings.SPACE);
+				String fileName = strs[Numeral.ONE];
+				File fileToProcess = new File(fileName);
+				files.add(fileToProcess);
+			});
+		return files;
 	}
 
 	private void handleNoTemplateFound(final File file,

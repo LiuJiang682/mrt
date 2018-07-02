@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.LineNumberReader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.util.CollectionUtils;
 
+import au.gov.vic.ecodev.mrt.common.db.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 
 public class TemplateFileSelector {
@@ -31,7 +33,7 @@ public class TemplateFileSelector {
 		
 	}
 
-	public Optional<String> getTemplateFileInDirectory(final List<String> dataTemplate) throws IOException {
+	public Optional<List<String>> getTemplateFileInDirectory(final List<String> dataTemplate) throws IOException {
 		if (CollectionUtils.isEmpty(dataTemplate)) {
 			throw new IllegalArgumentException("Parameter dataTemplate cannot be null!");
 		}
@@ -39,8 +41,9 @@ public class TemplateFileSelector {
 		return findTemplateFileName(files, dataTemplate);
 	}
 
-	protected final Optional<String> findTemplateFileName(List<File> files, List<String> dataTemplate) {
-		Optional<String> slTemplateFileName = Optional.empty();
+	protected final Optional<List<String>> findTemplateFileName(List<File> files, List<String> dataTemplate) {
+		Optional<List<String>> slTemplateFileName = Optional.empty();
+		List<String> fileNames = new ArrayList<>();
 		for (File file : files) {
 			LineNumberReader lineNumberReader;
 			String str;
@@ -55,13 +58,17 @@ public class TemplateFileSelector {
 						template = template.replace(DATA_FORMAT, 
 								au.gov.vic.ecodev.mrt.constants.Constants.Strings.EMPTY).trim().toUpperCase();
 						if (dataTemplate.contains(template)) {
-							return Optional.of(template + Strings.SPACE + file.getAbsolutePath());
+							fileNames.add(template + Strings.SPACE + file.getAbsolutePath());
 						}
+						break;
 					}
 				}
 			} catch (IOException e) {
 				LOGGER.error(e.getMessage(), e);
 			}
+		}
+		if (Numeral.ZERO < fileNames.size()) {
+			slTemplateFileName = Optional.of(fileNames);
 		}
 		
 		return slTemplateFileName;
