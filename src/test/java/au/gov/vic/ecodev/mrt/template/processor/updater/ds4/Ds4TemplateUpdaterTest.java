@@ -99,6 +99,7 @@ public class Ds4TemplateUpdaterTest {
 		PowerMockito.verifyNew(DownHoleUpdater.class)
 			.withArguments(eq(mockDownHoleDao), eq(sessionId), eq(mockTemplate));
 		verifyNoMoreInteractions(mockDownHoleUpdater);
+		verify(mockTemplateOptionalFieldUpdater).flush();
 		verifyNoMoreInteractions(mockTemplateOptionalFieldUpdater);
 		PowerMockito.verifyNew(TemplateHeaderOptionalFieldUpdater.class)
 			.withArguments(eq(sessionId), eq(mockTemplate), eq(mockTemplateOptionalFieldDao), Matchers.any(List.class));

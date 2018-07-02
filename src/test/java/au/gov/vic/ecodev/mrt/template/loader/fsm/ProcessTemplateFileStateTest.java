@@ -1,7 +1,7 @@
 package au.gov.vic.ecodev.mrt.template.loader.fsm;
 
-import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
@@ -348,6 +348,49 @@ public class ProcessTemplateFileStateTest {
 		assertThat(files.size(), is(equalTo(2)));
 		assertThat(files.get(0).getAbsolutePath(), is(equalTo("C:\\Data\\eclipse-work\\mrt\\src\\test\\resources\\template\\EL5478_201702_01_Collar.txt")));
 		assertThat(files.get(1).getAbsolutePath(), is(equalTo("C:\\Data\\eclipse-work\\mrt\\src\\test\\resources\\template\\EL5478_201702_03_Dl4.txt")));
+	}
+	
+	@Test
+	public void shouldCalledHandleProcessorExceptionWhenTemplateIsSL4() {
+		// Given
+		File file = new File("abc");
+		TemplateLoaderStateMachineContext localContext = Mockito.mock(TemplateLoaderStateMachineContext.class);
+		ProcessTemplateFileState testInstance = PowerMockito.mock(ProcessTemplateFileState.class);
+		PowerMockito.doNothing().when(testInstance).handleProcessorException(eq(localContext), 
+				eq(file), Matchers.anyString());
+		PowerMockito.doCallRealMethod().when(testInstance).handleNoTemplateFound(Matchers.any(File.class), 
+				Matchers.any(TemplateLoaderStateMachineContext.class), 
+				Matchers.anyString());
+		// When
+		testInstance.handleNoTemplateFound(file, localContext, "SL4");
+		// Then
+		ArgumentCaptor<String> stringCaptor = ArgumentCaptor.forClass(String.class);
+		verify(testInstance).handleProcessorException(eq(localContext), 
+				eq(file), stringCaptor.capture());
+		String message = stringCaptor.getValue();
+		assertThat(message.contains("abc is not a SL4 template file"), is(true));
+	}
+	
+	@Test
+	public void shouldLogWarningWhenTemplateIsDL4() {
+		// Given
+		File file = new File("abc");
+		TemplateLoaderStateMachineContext localContext = Mockito.mock(TemplateLoaderStateMachineContext.class);
+		ProcessTemplateFileState testInstance = PowerMockito.mock(ProcessTemplateFileState.class);
+		PowerMockito.doNothing().when(testInstance).handleProcessorException(eq(localContext), 
+				eq(file), Matchers.anyString());
+		PowerMockito.doCallRealMethod().when(testInstance).handleNoTemplateFound(Matchers.any(File.class), 
+				Matchers.any(TemplateLoaderStateMachineContext.class), 
+				Matchers.anyString());
+		// When
+		testInstance.handleNoTemplateFound(file, localContext, "DL4");
+		// Then
+		ArgumentCaptor<LogSeverity> severityCaptor = ArgumentCaptor.forClass(LogSeverity.class);
+		ArgumentCaptor<String> stringCaptor = ArgumentCaptor.forClass(String.class);
+		verify(localContext).saveStatusLog(severityCaptor.capture(),  stringCaptor.capture());
+		assertThat(severityCaptor.getValue(), is(equalTo(LogSeverity.WARNING)));
+		String message = stringCaptor.getValue();
+		assertThat(message.contains("abc is not a DL4 template file"), is(true));
 	}
 
 	private void givenTestInstance() {

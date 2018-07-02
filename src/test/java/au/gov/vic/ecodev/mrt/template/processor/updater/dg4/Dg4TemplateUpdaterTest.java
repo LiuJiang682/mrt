@@ -98,7 +98,7 @@ public class Dg4TemplateUpdaterTest {
 		assertThat(capturedOptionalDataList.size(), is(equalTo(3)));
 		List capturedRowNumberList = rowNumberCaptor.getAllValues();
 		assertThat(capturedRowNumberList.size(), is(equalTo(3)));
-		
+		verify(mockTemplateOptionalFieldUpdater).flush();
 		verifyNoMoreInteractions(mockTemplateOptionalFieldUpdater);
 		
 		PowerMockito.verifyNew(GeoChemistryUpdater.class)
