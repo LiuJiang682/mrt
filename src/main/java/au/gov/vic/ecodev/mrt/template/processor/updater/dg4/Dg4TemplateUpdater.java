@@ -62,6 +62,7 @@ public class Dg4TemplateUpdater implements TemplateUpdater {
 				geoChemistryUpdater.update(dataRecordList);
 				templateOptionalFiledUpdater.update(dataRecordList, index);
 			}
+			templateOptionalFiledUpdater.flush();
 		} catch(Exception e) {
 			throw new TemplateProcessorException(e.getMessage(), e);
 		}

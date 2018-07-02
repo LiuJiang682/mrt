@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 
 import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
+import au.gov.vic.ecodev.mrt.constants.LogSeverity;
 import au.gov.vic.ecodev.mrt.template.files.TemplateFileSelector;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.helpers.ProcessorContextExceptionHelper;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.model.Message;
@@ -138,16 +139,20 @@ public class ProcessTemplateFileState implements LoaderState {
 		return files;
 	}
 
-	private void handleNoTemplateFound(final File file,
+	protected final void handleNoTemplateFound(final File file,
 			final TemplateLoaderStateMachineContext templateLoaderStateMachineContext, 
 			final String templateClass) {
-		String errorMessage = new StringBuilder("File: ")
+		String message = new StringBuilder("File: ")
 				.append(file.getAbsolutePath())
 				.append(" is not a ")
 				.append(templateClass)
 				.append(" template file.")
 				.toString();
-		handleProcessorException(templateLoaderStateMachineContext, 
-				file, errorMessage);
+		if (Strings.TEMPLATE_NAME_SL4.equalsIgnoreCase(templateClass)) {
+			handleProcessorException(templateLoaderStateMachineContext, 
+					file, message);
+		} else {
+			templateLoaderStateMachineContext.saveStatusLog(LogSeverity.WARNING, message);
+		}
 	}
 }
