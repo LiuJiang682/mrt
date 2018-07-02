@@ -1,5 +1,6 @@
 package au.gov.vic.ecodev.mrt.template.processor.updater.tables;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -10,6 +11,7 @@ import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDao;
 import au.gov.vic.ecodev.mrt.model.TemplateOptionalField;
+import au.gov.vic.ecodev.mrt.template.processor.model.Entity;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.updater.helper.LabelledColumnIndexListExtractor;
 
@@ -19,6 +21,8 @@ public class TemplateHeaderOptionalFieldUpdater {
 	private final Template template;
 	private final TemplateOptionalFieldDao templateOptionalFieldDao;
 	private final List<String> keys;
+	
+	private List<Entity> cache;
 	
 	public TemplateHeaderOptionalFieldUpdater(long sessionId, Template template,
 			TemplateOptionalFieldDao templateOptionalFieldDao, List<String> keys) {
@@ -35,6 +39,7 @@ public class TemplateHeaderOptionalFieldUpdater {
 			throw new IllegalArgumentException("TemplateHeaderOptionalFieldUpdater:keys cannot be null or empty!");
 		}
 		this.keys = keys;
+		cache = new ArrayList<>();
 	}
 
 	public void update() {
@@ -62,11 +67,13 @@ public class TemplateHeaderOptionalFieldUpdater {
 							templateOptionalField.setTemplateHeader(header);
 							templateOptionalField.setRowNumber(key);
 							templateOptionalField.setFieldValue(value);
-							templateOptionalFieldDao.updateOrSave(templateOptionalField);
+//							templateOptionalFieldDao.updateOrSave(templateOptionalField);
+							cache.add(templateOptionalField);
 						}
 					}
 				}
 			});
+		templateOptionalFieldDao.batchUpdate(cache);
 	}
 
 	private String getTemplateName(String templateName) {
