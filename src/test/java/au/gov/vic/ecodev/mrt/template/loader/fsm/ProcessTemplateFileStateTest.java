@@ -2,6 +2,7 @@ package au.gov.vic.ecodev.mrt.template.loader.fsm;
 
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.eq;
@@ -317,6 +318,36 @@ public class ProcessTemplateFileStateTest {
 		// When
 		processTemplateFileState.processingTemplate(className, file, mockTemplateLoaderStateMachineContext);
 		fail("Program reached unexpected point!");
+	}
+	
+	@Test
+	public void shouldExtractFile() {
+		// Given
+		givenTestInstance();
+		List<String> templateAndFileNames = new ArrayList<>();
+		templateAndFileNames.add("SL4 " + "C:\\\\Data\\eclipse-work\\mrt\\src\\test\\resources\\template\\EL5478_201702_01_Collar.txt");
+		// When
+		List<File> files = processTemplateFileState.doFileExtration(templateAndFileNames);
+		// Then
+		assertThat(files, is(notNullValue()));
+		assertThat(files.size(), is(equalTo(1)));
+		assertThat(files.get(0).getAbsolutePath(), is(equalTo("C:\\Data\\eclipse-work\\mrt\\src\\test\\resources\\template\\EL5478_201702_01_Collar.txt")));
+	}
+	
+	@Test
+	public void shouldExtract2File() {
+		// Given
+		givenTestInstance();
+		List<String> templateAndFileNames = new ArrayList<>();
+		templateAndFileNames.add("SL4 " + "C:\\\\Data\\eclipse-work\\mrt\\src\\test\\resources\\template\\EL5478_201702_01_Collar.txt");
+		templateAndFileNames.add("DL4 " + "C:\\\\Data\\eclipse-work\\mrt\\src\\test\\resources\\template\\EL5478_201702_03_Dl4.txt");
+		// When
+		List<File> files = processTemplateFileState.doFileExtration(templateAndFileNames);
+		// Then
+		assertThat(files, is(notNullValue()));
+		assertThat(files.size(), is(equalTo(2)));
+		assertThat(files.get(0).getAbsolutePath(), is(equalTo("C:\\Data\\eclipse-work\\mrt\\src\\test\\resources\\template\\EL5478_201702_01_Collar.txt")));
+		assertThat(files.get(1).getAbsolutePath(), is(equalTo("C:\\Data\\eclipse-work\\mrt\\src\\test\\resources\\template\\EL5478_201702_03_Dl4.txt")));
 	}
 
 	private void givenTestInstance() {
