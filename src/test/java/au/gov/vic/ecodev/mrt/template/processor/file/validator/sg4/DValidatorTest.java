@@ -5,7 +5,9 @@ import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -19,21 +21,28 @@ import org.mockito.Mockito;
 
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.fixture.TestFixture;
+import au.gov.vic.ecodev.mrt.map.services.VictoriaMapServices;
 import au.gov.vic.ecodev.mrt.template.fields.Sg4ColumnHeaders;
+import au.gov.vic.ecodev.mrt.template.loader.fsm.model.DefaultMessage;
+import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext;
+import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.H0531Validator;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 
 public class DValidatorTest {
 
 	private Map<String, List<String>> params;
 	private Template mockDataBean;
+	private TemplateProcessorContext mockContext;
+	
+	private DValidator dValidator;
+	private VictoriaMapServices mockVictoriaMapServices;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
 	public void shouldIncreaseTheRecordCount() {
 		givenTestConditions();
 		String[] datas = { "D", "KPDD001", "392200", "6589600", "320", "210", "DD", "-90", "270" };
-		DValidator dValidator = new DValidator();
-		dValidator.init(datas);
+		givenTestInstance(datas);
 		// When
 		Optional<List<String>> errorMessages = dValidator.validate(params, mockDataBean);
 		// Then
@@ -52,8 +61,7 @@ public class DValidatorTest {
 		givenTestConditions();
 		params.put(Strings.NUMBER_OF_DATA_RECORDS_ADDED, Arrays.asList("1"));
 		String[] datas = { "D", "KPDD001", "392200", "6589600", "320", "210", "DD", "-90", "270" };
-		DValidator dValidator = new DValidator();
-		dValidator.init(datas);
+		givenTestInstance(datas);
 		// When
 		Optional<List<String>> errorMessages = dValidator.validate(params, mockDataBean);
 		// Then
@@ -72,8 +80,7 @@ public class DValidatorTest {
 		givenTestConditions();
 		params.put(Strings.NUMBER_OF_DATA_RECORDS_ADDED, Arrays.asList("abc"));
 		String[] datas = { "D", "KPDD001", "392200", "6589600", "320", "210", "DD", "-90", "270" };
-		DValidator dValidator = new DValidator();
-		dValidator.init(datas);
+		givenTestInstance(datas);
 		// When
 		Optional<List<String>> errorMessages = dValidator.validate(params, mockDataBean);
 		// Then
@@ -85,13 +92,14 @@ public class DValidatorTest {
 		assertThat(keyCaptor.getValue(), is(equalTo("D1")));
 		doValuesAssert(valueCaptor);
 	}
+
+	
 	
 	@Test
 	public void shouldReturnIncorrectEASTING_MGAMessage() {
 		givenTestConditions();
 		String[] datas = { "D", "KPDD001", "39220.1", "6589600", "320", "210", "DD", "-90", "270" };
-		DValidator dValidator = new DValidator();
-		dValidator.init(datas);
+		givenTestInstance(datas);
 		// When
 		Optional<List<String>> errorMessages = dValidator.validate(params, mockDataBean);
 		// Then
@@ -107,8 +115,7 @@ public class DValidatorTest {
 	public void shouldReturnIncorrectEASTING_AMGMessage() {
 		givenAmgTestConditions();
 		String[] datas = { "D", "KPDD001", "39220.1", "6589600", "320", "210", "DD", "-90", "270" };
-		DValidator dValidator = new DValidator();
-		dValidator.init(datas);
+		givenTestInstance(datas);
 		// When
 		Optional<List<String>> errorMessages = dValidator.validate(params, mockDataBean);
 		// Then
@@ -124,8 +131,7 @@ public class DValidatorTest {
 	public void shouldReturnIncorrectNORTHING_MGAMessage() {
 		givenTestConditions();
 		String[] datas = { "D", "KPDD001", "392200", "65896.1", "320", "210", "DD", "-90", "270" };
-		DValidator dValidator = new DValidator();
-		dValidator.init(datas);
+		givenTestInstance(datas);
 		// When
 		Optional<List<String>> errorMessages = dValidator.validate(params, mockDataBean);
 		// Then
@@ -141,8 +147,7 @@ public class DValidatorTest {
 	public void shouldReturnIncorrectNORTHING_AMGMessage() {
 		givenAmgTestConditions();
 		String[] datas = { "D", "KPDD001", "392200", "65896.1", "320", "210", "DD", "-90", "270" };
-		DValidator dValidator = new DValidator();
-		dValidator.init(datas);
+		givenTestInstance(datas);
 		// When
 		Optional<List<String>> errorMessages = dValidator.validate(params, mockDataBean);
 		// Then
@@ -159,15 +164,14 @@ public class DValidatorTest {
 		//Given
 		givenTestConditions();
 		String[] datas = { "D", "KPDD001", "392200", "6589600", "320", "210", "DD", "-90", "270" };
-		DValidator dValidator = new DValidator();
-		dValidator.init(datas);
+		givenTestInstance(datas);
 		params.get(Strings.COLUMN_HEADERS).set(0, "xxx");
 		// When
 		Optional<List<String>> errorMessages = dValidator.validate(params, mockDataBean);
 		// Then
 		assertThat(errorMessages.isPresent(), is(true));
 		List<String> messages = errorMessages.get();
-		assertThat(messages.size(), is(equalTo(1)));
+		assertThat(messages.size(), is(equalTo(2)));
 		assertThat(messages.get(0), is(equalTo("ERROR: Line 6: Template SG4 missing Sample ID column")));
 		verify(mockDataBean, times(0)).put(Matchers.anyString(), Matchers.anyListOf(String.class));
 	}
@@ -177,8 +181,7 @@ public class DValidatorTest {
 		//Given
 		givenTestConditions();
 		String[] datas = { "D", "KPDD001", "392200", "6589600", "320", "210", "DD", "-90", "270" };
-		DValidator dValidator = new DValidator();
-		dValidator.init(datas);
+		givenTestInstance(datas);
 		params.get(Strings.COLUMN_HEADERS).set(3, "xxx");
 		// When
 		Optional<List<String>> errorMessages = dValidator.validate(params, mockDataBean);
@@ -273,6 +276,8 @@ public class DValidatorTest {
 				Arrays.asList(Sg4ColumnHeaders.SAMPLE_ID.getCode()));
 		params.put(Sg4ColumnHeaders.SAMPLE_TYPE.getCode(), 
 				Arrays.asList(Sg4ColumnHeaders.SAMPLE_TYPE.getCode()));
+		params.put(Strings.TITLE_PREFIX + H0531Validator.PROJECTION_ZONE_TITLE, Arrays.asList("54"));
+		params.put(Strings.KEY_H0100, Arrays.asList("Tenemnet_no", "EL100"));
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -293,6 +298,18 @@ public class DValidatorTest {
 		givenMandatoryFields();
 		TestFixture.givenCurrentLineNumber(params);
 		givenMockTemplate();
+		givenMockContext();
+	}
+
+	private void givenMockContext() {
+		mockContext = Mockito.mock(TemplateProcessorContext.class);
+		when(mockContext.getMessage()).thenReturn(new DefaultMessage());
+		mockVictoriaMapServices = Mockito.mock(VictoriaMapServices.class);
+		when(mockVictoriaMapServices.isWithinMga54NorthEast(Matchers.any(BigDecimal.class), 
+				Matchers.any(BigDecimal.class))).thenReturn(true);
+		when(mockVictoriaMapServices.isWithinTenementMga54NorthEast(Matchers.anyString(), 
+				Matchers.any(BigDecimal.class), Matchers.any(BigDecimal.class))).thenReturn(true);
+		when(mockContext.getMapServices()).thenReturn(mockVictoriaMapServices);
 	}
 	
 	private void givenMockTemplate() {
@@ -307,11 +324,24 @@ public class DValidatorTest {
 				Arrays.asList(Sg4ColumnHeaders.SAMPLE_ID.getCode()));
 		params.put(Sg4ColumnHeaders.SAMPLE_TYPE.getCode(), 
 				Arrays.asList(Sg4ColumnHeaders.SAMPLE_TYPE.getCode()));
+		params.put(Strings.TITLE_PREFIX + H0531Validator.PROJECTION_ZONE_TITLE, Arrays.asList("54"));
+		params.put(Strings.KEY_H0100, Arrays.asList("Tenemnet_no", "EL100"));
 	}
 	
 	private void givenAmgTestConditions() {
 		givenMandatoryAmgFields();
 		TestFixture.givenCurrentLineNumber(params);
 		givenMockTemplate();
+		givenMockContext();
+		when(mockVictoriaMapServices.isWithinAgd54NorthEast(
+				Matchers.any(BigDecimal.class), Matchers.any(BigDecimal.class))).thenReturn(true);
+		when(mockVictoriaMapServices.isWithinTenementAgd54NorthEast(Matchers.anyString(), 
+				Matchers.any(BigDecimal.class), Matchers.any(BigDecimal.class))).thenReturn(true);
+	}
+	
+	private void givenTestInstance(String[] datas) {
+		dValidator = new DValidator();
+		dValidator.init(datas);
+		dValidator.setTemplateProcessorContext(mockContext);
 	}
 }

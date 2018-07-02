@@ -7,6 +7,9 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -17,8 +20,12 @@ import au.gov.vic.ecodev.mrt.template.loader.fsm.model.Message;
 
 public class EmailBodyBuilderTest {
 
+	private static final String TEST_EMAIL_WITH_BORE_HOLE_AND_SAMPLE = "Hi\n\nThe log file for batch: 1 is available at src/test/resources/generated/log\n\nThe successfull processed files at src/test/resources/passed\n\nThe failed processed files at src/test/resources/failed\n\nThe following bore Hole Ids are outside the tenement: KPDD001\n\nThe following sample Ids are outside the tenement: KPDD001";
+	private static final String TEST_EMAIL_WITH_SAMPLE_ID = "Hi\n\nThe log file for batch: 1 is available at src/test/resources/generated/log\n\nThe successfull processed files at src/test/resources/passed\n\nThe failed processed files at src/test/resources/failed\n\nThe following sample Ids are outside the tenement: KPDD001";
+	private static final String TEST_EMAIL_WITH_BORE_HOLE_ID = "Hi\n\nThe log file for batch: 1 is available at src/test/resources/generated/log\n\nThe successfull processed files at src/test/resources/passed\n\nThe failed processed files at src/test/resources/failed\n\nThe following bore Hole Ids are outside the tenement: KPDD001";
 	private static final String TEST_DIRECT_ERROR_MESSAGE_EMAIL_BODY = "Hi\n\nThe template file process is failed due to: directErrorMessage";
 	private static final String TEST_NORMAL_EMAIL_BODY = "Hi\n\nThe log file for batch: 1 is available at src/test/resources/generated/log\n\nThe successfull processed files at src/test/resources/passed\n\nThe failed processed files at src/test/resources/failed";
+	
 	private EmailBodyBuilder testInstance;
 	private TemplateLoaderStateMachineContext mockTemplateLoaderStateMachineContext;
 	
@@ -71,6 +78,70 @@ public class EmailBodyBuilderTest {
 		// Then
 		assertThat(body, is(equalTo(TEST_NORMAL_EMAIL_BODY)));
 	}
+	
+	@Test
+	public void shouldReturnEmailBodyWithBoreHoleIds() {
+		// Given
+		givenTestInstance();
+		MrtConfigProperties mockMrtConfigProperties = Mockito.mock(MrtConfigProperties.class);
+		when(mockMrtConfigProperties.getPassedFileDirectory()).thenReturn("src/test/resources/passed");
+		when(mockMrtConfigProperties.getFailedFileDirectory()).thenReturn("src/test/resources/failed");
+		when(mockTemplateLoaderStateMachineContext.getMrtConfigProperties()).thenReturn(mockMrtConfigProperties);
+		Message message = new DefaultMessage();
+		message.setBatchId(1);
+		message.setLogFileName("src/test/resources/generated/log");
+		List<String> boreHoleIds = new ArrayList<>();
+		boreHoleIds.add("KPDD001");
+		message.setBoreHoleIdsOutSideTenement(boreHoleIds);
+		when(mockTemplateLoaderStateMachineContext.getMessage()).thenReturn(message);
+		// When
+		String body = testInstance.build();
+		// Then
+		assertThat(body, is(equalTo(TEST_EMAIL_WITH_BORE_HOLE_ID)));
+	}
+	
+	@Test
+	public void shouldReturnEmailBodyWithSampleIds() {
+		// Given
+		givenTestInstance();
+		MrtConfigProperties mockMrtConfigProperties = Mockito.mock(MrtConfigProperties.class);
+		when(mockMrtConfigProperties.getPassedFileDirectory()).thenReturn("src/test/resources/passed");
+		when(mockMrtConfigProperties.getFailedFileDirectory()).thenReturn("src/test/resources/failed");
+		when(mockTemplateLoaderStateMachineContext.getMrtConfigProperties()).thenReturn(mockMrtConfigProperties);
+		Message message = new DefaultMessage();
+		message.setBatchId(1);
+		message.setLogFileName("src/test/resources/generated/log");
+		List<String> boreHoleIds = new ArrayList<>();
+		boreHoleIds.add("KPDD001");
+		message.setSampleIdsOutSideTenement(boreHoleIds);
+		when(mockTemplateLoaderStateMachineContext.getMessage()).thenReturn(message);
+		// When
+		String body = testInstance.build();
+		// Then
+		assertThat(body, is(equalTo(TEST_EMAIL_WITH_SAMPLE_ID)));
+	}
+	
+	@Test
+	public void shouldReturnEmailBodyWithBoreHoleIdAndSampleIds() {
+		// Given
+		givenTestInstance();
+		MrtConfigProperties mockMrtConfigProperties = Mockito.mock(MrtConfigProperties.class);
+		when(mockMrtConfigProperties.getPassedFileDirectory()).thenReturn("src/test/resources/passed");
+		when(mockMrtConfigProperties.getFailedFileDirectory()).thenReturn("src/test/resources/failed");
+		when(mockTemplateLoaderStateMachineContext.getMrtConfigProperties()).thenReturn(mockMrtConfigProperties);
+		Message message = new DefaultMessage();
+		message.setBatchId(1);
+		message.setLogFileName("src/test/resources/generated/log");
+		List<String> boreHoleIds = new ArrayList<>();
+		boreHoleIds.add("KPDD001");
+		message.setBoreHoleIdsOutSideTenement(boreHoleIds);
+		message.setSampleIdsOutSideTenement(boreHoleIds);
+		when(mockTemplateLoaderStateMachineContext.getMessage()).thenReturn(message);
+		// When
+		String body = testInstance.build();
+		// Then
+		assertThat(body, is(equalTo(TEST_EMAIL_WITH_BORE_HOLE_AND_SAMPLE)));
+	}
 
 	private void givenTestInstance() {
 		mockTemplateLoaderStateMachineContext = Mockito
@@ -78,4 +149,5 @@ public class EmailBodyBuilderTest {
 		// When
 		testInstance = new EmailBodyBuilder(mockTemplateLoaderStateMachineContext);
 	}
+	
 }
