@@ -17,6 +17,7 @@ public class DefaultMessage implements Message, Serializable {
 	private String directErrorMessage;
 	private String templateOwnerEmail;
 	private List<String> outsideBoreHoleIds = new ArrayList<>();
+	private List<String> outsideSampleIds = new ArrayList<>();
 	
 	/**
 	 * Generated serial version UID
@@ -127,5 +128,15 @@ public class DefaultMessage implements Message, Serializable {
 	@Override
 	public void setBoreHoleIdsOutSideTenement(List<String> outsideBoreHoleIds) {
 		this.outsideBoreHoleIds = outsideBoreHoleIds;
+	}
+
+	@Override
+	public List<String> getSampleIdsOutSideTenement() {
+		return outsideSampleIds;
+	}
+
+	@Override
+	public void setSampleIdsOutSideTenement(List<String> outsideSampleIds) {
+		this.outsideSampleIds = outsideSampleIds;
 	}
 }

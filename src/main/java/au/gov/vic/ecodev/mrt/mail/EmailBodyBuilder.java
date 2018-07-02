@@ -41,6 +41,13 @@ public class EmailBodyBuilder {
 				buf.append("The following bore Hole Ids are outside the tenement: ");
 				buf.append(String.join(Strings.COMMA, boreHoleIds));
 			}
+			
+			List<String> sampleIds = templateLoaderStateMachineContext.getMessage().getSampleIdsOutSideTenement();
+			if (CollectionUtils.isNotEmpty(sampleIds)) {
+				buf.append("\n\n");
+				buf.append("The following sample Ids are outside the tenement: ");
+				buf.append(String.join(Strings.COMMA, sampleIds));
+			}
 			return buf.toString();
 		} else {
 			StringBuilder buf = new StringBuilder("Hi\n");
