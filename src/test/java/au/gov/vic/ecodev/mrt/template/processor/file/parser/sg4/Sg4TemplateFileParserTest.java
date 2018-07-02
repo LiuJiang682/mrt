@@ -10,6 +10,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.File;
+import java.math.BigDecimal;
 
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -18,6 +19,7 @@ import org.mockito.Mockito;
 
 import au.gov.vic.ecodev.mrt.constants.LogSeverity;
 import au.gov.vic.ecodev.mrt.fixture.TestFixture;
+import au.gov.vic.ecodev.mrt.map.services.VictoriaMapServices;
 import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.model.sg4.Sg4Template;
@@ -33,6 +35,12 @@ public class Sg4TemplateFileParserTest {
 		TemplateProcessorContext mockContext = Mockito.mock(TemplateProcessorContext.class);
 		TestFixture.givenSg4TemplateProperties(mockContext);
 		when(mockContext.saveDataBean(Matchers.any(Template.class))).thenReturn(true);
+		VictoriaMapServices mockVictoriaMapServices = Mockito.mock(VictoriaMapServices.class);
+		when(mockVictoriaMapServices.isWithinMga54NorthEast(Matchers.any(BigDecimal.class), 
+				Matchers.any(BigDecimal.class))).thenReturn(true);
+		when(mockVictoriaMapServices.isWithinTenementMga54NorthEast(Matchers.anyString(), 
+				Matchers.any(BigDecimal.class), Matchers.any(BigDecimal.class))).thenReturn(true);
+		when(mockContext.getMapServices()).thenReturn(mockVictoriaMapServices);
 		Sg4TemplateFileParser testInstance = new Sg4TemplateFileParser(file, mockContext);
 		// When
 		testInstance.parse();
