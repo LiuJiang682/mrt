@@ -12,7 +12,6 @@ import java.util.Optional;
 import org.apache.log4j.Logger;
 
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
-import au.gov.vic.ecodev.mrt.template.files.DirectoryTreeReverseTraversalZipFileFinder;
 import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext;
 import au.gov.vic.ecodev.mrt.template.processor.context.properties.utils.MultiStringValueToListConventor;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
@@ -22,6 +21,7 @@ import au.gov.vic.ecodev.mrt.template.processor.file.validator.sg4.Sg4ValidatorF
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.model.sg4.Sg4Template;
 import au.gov.vic.ecodev.mrt.template.processor.validator.Validator;
+import au.gov.vic.ecodev.utils.file.finder.DirectoryTreeReverseTraversalZipFileFinder;
 
 public class Sg4TemplateFileParser {
 
