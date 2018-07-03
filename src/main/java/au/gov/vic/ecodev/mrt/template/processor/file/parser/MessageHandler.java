@@ -7,9 +7,9 @@ import org.apache.log4j.Logger;
 
 import au.gov.vic.ecodev.mrt.constants.LogSeverity;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
-import au.gov.vic.ecodev.mrt.template.files.DirectoryTreeReverseTraversalZipFileFinder;
 import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
+import au.gov.vic.ecodev.utils.file.finder.DirectoryTreeReverseTraversalZipFileFinder;
 
 public class MessageHandler {
 
