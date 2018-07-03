@@ -10,8 +10,8 @@ import org.springframework.util.CollectionUtils;
 
 import au.gov.vic.ecodev.mrt.config.MrtConfigProperties;
 import au.gov.vic.ecodev.mrt.template.files.FileMover;
-import au.gov.vic.ecodev.mrt.template.files.ZipFileExtractor;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.helpers.ProcessorContextExceptionHelper;
+import au.gov.vic.ecodev.utils.file.zip.extract.ZipFileExtractor;
 
 public class UnzipZipFileState implements LoaderState {
 	

@@ -28,9 +28,9 @@ import au.gov.vic.ecodev.mrt.config.MrtConfigProperties;
 import au.gov.vic.ecodev.mrt.constants.LogSeverity;
 import au.gov.vic.ecodev.mrt.fixture.TestFixture;
 import au.gov.vic.ecodev.mrt.template.files.FileMover;
-import au.gov.vic.ecodev.mrt.template.files.ZipFileExtractor;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.model.DefaultMessage;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.model.Message;
+import au.gov.vic.ecodev.utils.file.zip.extract.ZipFileExtractor;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(UnzipZipFileState.class)
