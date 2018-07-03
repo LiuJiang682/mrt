@@ -12,7 +12,6 @@ import java.util.Optional;
 import org.apache.log4j.Logger;
 
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
-import au.gov.vic.ecodev.mrt.template.files.DirectoryTreeReverseTraversalZipFileFinder;
 import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext;
 import au.gov.vic.ecodev.mrt.template.processor.context.properties.ds4.Ds4ToSl4HoleIdCrossChecker;
 import au.gov.vic.ecodev.mrt.template.processor.context.properties.ds4.Ds4ToSl4SurveyedDepthCrossChecker;
@@ -24,6 +23,7 @@ import au.gov.vic.ecodev.mrt.template.processor.file.validator.ds4.Ds4ValidatorF
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.model.ds4.Ds4Template;
 import au.gov.vic.ecodev.mrt.template.processor.validator.Validator;
+import au.gov.vic.ecodev.utils.file.finder.DirectoryTreeReverseTraversalZipFileFinder;
 
 public class Ds4TemplateFileParser {
 

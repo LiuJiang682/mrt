@@ -31,7 +31,6 @@ import au.gov.vic.ecodev.mrt.constants.LogSeverity;
 import au.gov.vic.ecodev.mrt.fixture.TestFixture;
 import au.gov.vic.ecodev.mrt.map.services.VictoriaMapServices;
 import au.gov.vic.ecodev.mrt.template.context.properties.DefaultStringTemplateProperties;
-import au.gov.vic.ecodev.mrt.template.files.DirectoryTreeReverseTraversalZipFileFinder;
 import au.gov.vic.ecodev.mrt.template.files.TemplateFileSelector;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.model.DefaultMessage;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.model.Message;
@@ -43,6 +42,7 @@ import au.gov.vic.ecodev.mrt.template.processor.file.parser.sl4.Sl4TemplateFileP
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.services.DbPersistentServices;
 import au.gov.vic.ecodev.mrt.template.processor.services.PersistentServices;
+import au.gov.vic.ecodev.utils.file.finder.DirectoryTreeReverseTraversalZipFileFinder;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({TemplateProcessorFactory.class, ProcessTemplateFileState.class, Sl4TemplateFileParser.class})
