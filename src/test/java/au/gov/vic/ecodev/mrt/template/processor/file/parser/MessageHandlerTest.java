@@ -29,6 +29,7 @@ import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.model.sl4.Sl4Template;
 import au.gov.vic.ecodev.utils.file.finder.DirectoryTreeReverseTraversalZipFileFinder;
+import au.gov.vic.ecodev.utils.file.helper.MessageHandler;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(MessageHandler.class)

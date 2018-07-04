@@ -15,6 +15,7 @@ import org.mockito.Mockito;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
 import au.gov.vic.ecodev.mrt.template.processor.services.PersistentServices;
 import au.gov.vic.ecodev.mrt.template.properties.TemplateProperties;
+import au.gov.vic.ecodev.template.processor.context.properties.StringTemplateProperties;
 
 public class TemplateContextPropertyFinderTest {
 
