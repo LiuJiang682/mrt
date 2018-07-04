@@ -95,6 +95,11 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
+            <groupId>au.gov.vic.ecodev.sgv</groupId>
+            <artifactId>template_context</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>au.gov.vic.ecodev.mrt</groupId>
             <artifactId>comm_db</artifactId>
             <version>0.0.1-SNAPSHOT</version>

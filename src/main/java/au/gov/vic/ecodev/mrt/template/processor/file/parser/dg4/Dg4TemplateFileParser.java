@@ -18,12 +18,12 @@ import au.gov.vic.ecodev.mrt.template.processor.context.properties.dg4.Dg4ToSl4H
 import au.gov.vic.ecodev.mrt.template.processor.context.properties.dg4.Dg4ToSl4ToCrossChecker;
 import au.gov.vic.ecodev.mrt.template.processor.context.properties.utils.MultiStringValueToListConventor;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
-import au.gov.vic.ecodev.mrt.template.processor.file.parser.MessageHandler;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.dg4.Dg4ValidatorFactory;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.model.dg4.Dg4Template;
 import au.gov.vic.ecodev.mrt.template.processor.validator.Validator;
 import au.gov.vic.ecodev.utils.file.finder.DirectoryTreeReverseTraversalZipFileFinder;
+import au.gov.vic.ecodev.utils.file.helper.MessageHandler;
 
 public class Dg4TemplateFileParser {
 

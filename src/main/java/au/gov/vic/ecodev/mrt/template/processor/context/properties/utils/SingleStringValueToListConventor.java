@@ -3,10 +3,10 @@ package au.gov.vic.ecodev.mrt.template.processor.context.properties.utils;
 import java.util.Arrays;
 import java.util.List;
 
-import au.gov.vic.ecodev.mrt.template.context.properties.StringTemplateProperties;
 import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
 import au.gov.vic.ecodev.mrt.template.properties.TemplateProperties;
+import au.gov.vic.ecodev.template.processor.context.properties.StringTemplateProperties;
 
 public class SingleStringValueToListConventor {
 

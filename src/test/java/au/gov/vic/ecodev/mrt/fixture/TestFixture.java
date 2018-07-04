@@ -19,13 +19,13 @@ import java.util.zip.ZipOutputStream;
 
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.template.context.properties.DefaultStringTemplateProperties;
-import au.gov.vic.ecodev.mrt.template.context.properties.StringTemplateProperties;
 import au.gov.vic.ecodev.mrt.template.fields.Ds4ColumnHeaders;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.model.DefaultMessage;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.model.Message;
 import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
 import au.gov.vic.ecodev.mrt.template.properties.TemplateProperties;
+import au.gov.vic.ecodev.template.processor.context.properties.StringTemplateProperties;
 
 public class TestFixture {
 
