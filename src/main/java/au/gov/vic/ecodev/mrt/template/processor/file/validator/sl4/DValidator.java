@@ -68,9 +68,7 @@ public class DValidator implements Validator {
 					new DipValidator(strs, lineNumber, columnHeaders, templateParamMap).validate(messages);
 					new ElevationValidator(strs, lineNumber, columnHeaders).validate(messages);
 					new TotalDepthValidator(strs, lineNumber, columnHeaders).validate(messages);
-					templateParamMap.put(Strings.KEY_H0100, dataBean.get(Strings.KEY_H0100));
-					new BoreHolePositionValidator(strs, lineNumber, templateParamMap, context)
-						.validate(messages);
+					doBoreHolePositionValidation(templateParamMap, dataBean, messages, lineNumber);
 				}
 			}
 		}
@@ -82,5 +80,14 @@ public class DValidator implements Validator {
 		} 
 		return new ValidatorHelper(messages, hasErrorMessage)
 				.updateDataBeanOrCreateErrorOptional(strs, dataBean);
+	}
+
+	protected final void doBoreHolePositionValidation(Map<String, List<String>> templateParamMap, Template dataBean,
+			List<String> messages, int lineNumber) {
+		if (null != dataBean) {
+			templateParamMap.put(Strings.KEY_H0100, dataBean.get(Strings.KEY_H0100));
+			new BoreHolePositionValidator(strs, lineNumber, templateParamMap, context)
+				.validate(messages);
+		}
 	}
 }

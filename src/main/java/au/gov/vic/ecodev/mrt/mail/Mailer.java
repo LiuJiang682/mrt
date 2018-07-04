@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import org.springframework.util.StringUtils;
 
 import au.gov.vic.ecodev.mrt.config.MrtConfigProperties;
+import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 
 public class Mailer {
 
@@ -71,8 +72,11 @@ public class Mailer {
 		if (StringUtils.isEmpty(toEmail)) {
 			throw new IllegalArgumentException("Parameter toEmail cannot be null or empty!");
 		}
-		if (!isValidEmailAddress(toEmail)) {
-			throw new IllegalArgumentException("Parameter toEmail " + toEmail + " is not a valid email address!");
+		String[] toEmails = toEmail.split(Strings.COMMA);
+		for(String email : toEmails) {
+			if (!isValidEmailAddress(email)) {
+				throw new IllegalArgumentException("Parameter toEmail " + toEmail + " is not a valid email address!");
+			}
 		}
 		MimeMessage msg = new MimeMessage(session);
 		// set message headers
