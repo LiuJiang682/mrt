@@ -13,10 +13,8 @@ import org.apache.log4j.Logger;
 
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext;
-import au.gov.vic.ecodev.mrt.template.processor.context.properties.sl4.Sl4StringToListTemplatePropertiesParser;
 import au.gov.vic.ecodev.mrt.template.processor.context.properties.utils.SingleStringValueToListConventor;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
-import au.gov.vic.ecodev.mrt.template.processor.file.parser.MessageHandler;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.helper.FileNameHelper;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.sl4.DValidator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.sl4.Sl4ValidatorFactory;
@@ -24,7 +22,9 @@ import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.model.sl4.Sl4Template;
 import au.gov.vic.ecodev.mrt.template.processor.validator.Validator;
 import au.gov.vic.ecodev.mrt.template.properties.TemplateProperties;
+import au.gov.vic.ecodev.template.processor.context.properties.StringToListTemplatePropertiesParser;
 import au.gov.vic.ecodev.utils.file.finder.DirectoryTreeReverseTraversalZipFileFinder;
+import au.gov.vic.ecodev.utils.file.helper.MessageHandler;
 
 public class Sl4TemplateFileParser {
 
@@ -100,7 +100,7 @@ public class Sl4TemplateFileParser {
 
 	protected final List<String> getMandatoryValidateFields() throws TemplateProcessorException {
 		TemplateProperties sl4MandatoryFieldTemplateProperties = context.getTemplateContextProperty(TEMPLATE_PROP_SL4_MANDATORY_VALIDATE);
-		List<String> mandatoryFields = new Sl4StringToListTemplatePropertiesParser(sl4MandatoryFieldTemplateProperties, 
+		List<String> mandatoryFields = new StringToListTemplatePropertiesParser(sl4MandatoryFieldTemplateProperties, 
 				Strings.COMMA).parse();
 		return mandatoryFields;
 	}

@@ -17,12 +17,12 @@ import au.gov.vic.ecodev.mrt.template.processor.context.properties.dl4.Dl4ToSl4D
 import au.gov.vic.ecodev.mrt.template.processor.context.properties.dl4.Dl4ToSl4HoleIdCrossChecker;
 import au.gov.vic.ecodev.mrt.template.processor.context.properties.utils.MultiStringValueToListConventor;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
-import au.gov.vic.ecodev.mrt.template.processor.file.parser.MessageHandler;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.dl4.Dl4ValidatorFactory;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.model.dl4.Dl4Template;
 import au.gov.vic.ecodev.mrt.template.processor.validator.Validator;
 import au.gov.vic.ecodev.utils.file.finder.DirectoryTreeReverseTraversalZipFileFinder;
+import au.gov.vic.ecodev.utils.file.helper.MessageHandler;
 
 public class Dl4TemplateFileParser {
 	

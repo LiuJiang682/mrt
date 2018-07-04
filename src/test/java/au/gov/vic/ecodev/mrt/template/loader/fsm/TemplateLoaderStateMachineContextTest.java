@@ -21,7 +21,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import au.gov.vic.ecodev.mrt.config.MrtConfigProperties;
 import au.gov.vic.ecodev.mrt.map.services.VictoriaMapServices;
 import au.gov.vic.ecodev.mrt.template.context.properties.SqlCriteria;
-import au.gov.vic.ecodev.mrt.template.context.properties.StringTemplateProperties;
 import au.gov.vic.ecodev.mrt.template.criteria.TemplateCriteria;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.model.DefaultMessage;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.model.Message;
@@ -29,6 +28,7 @@ import au.gov.vic.ecodev.mrt.template.processor.context.properties.ds4.DownHoleH
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
 import au.gov.vic.ecodev.mrt.template.processor.services.PersistentServices;
 import au.gov.vic.ecodev.mrt.template.properties.TemplateProperties;
+import au.gov.vic.ecodev.template.processor.context.properties.StringTemplateProperties;
 
 public class TemplateLoaderStateMachineContextTest {
 

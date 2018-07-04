@@ -2,8 +2,6 @@ package au.gov.vic.ecodev.mrt.constants;
 
 import java.util.regex.Pattern;
 
-import au.gov.vic.ecodev.mrt.constants.LogSeverity;
-
 
 public interface Constants {
 
@@ -24,9 +22,9 @@ public interface Constants {
 		static final String TAB = "\t";
 		static final String CURRENT_LINE = "currentLine";
 		static final String EOF = "EOF";
-		static final String LOG_INFO_HEADER = LogSeverity.INFO.name() + COLON + SPACE;
-		static final String LOG_WARNING_HEADER = LogSeverity.WARNING.name() + COLON + SPACE;
-		static final String LOG_ERROR_HEADER = LogSeverity.ERROR.name() + COLON + SPACE;
+		static final String LOG_INFO_HEADER = au.gov.vic.ecodev.utils.constants.Constants.Strings.LOG_INFO_HEADER;
+		static final String LOG_WARNING_HEADER = au.gov.vic.ecodev.utils.constants.Constants.Strings.LOG_WARNING_HEADER;
+		static final String LOG_ERROR_HEADER = au.gov.vic.ecodev.utils.constants.Constants.Strings.LOG_ERROR_HEADER;
 		static final String AZIMUTH_TRUE = "Azimuth_TRUE";
 		static final String DATA_RECORD_PREFIX = "D";
 		static final String DATE_FORMAT_DD_MMM_YY = "dd-MMM-yy";

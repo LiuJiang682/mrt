@@ -16,7 +16,7 @@ public class Sl4ValidatorFactory {
 	
 	public Sl4ValidatorFactory(TemplateProcessorContext context, List<String> mandatoryFields) {
 		if (null == context) {
-			throw new IllegalArgumentException("Ds4ValidatorFactory: Parameter context cannot be null!");
+			throw new IllegalArgumentException("Sl4ValidatorFactory: Parameter context cannot be null!");
 		}
 		this.context = context;
 		this.mandatoryFields = mandatoryFields;
