@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -15,9 +16,13 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Matchers;
 import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.fixture.TestFixture;
@@ -28,6 +33,8 @@ import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.H0400Valid
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.H0531Validator;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(DValidator.class)
 public class DValidatorTest {
 
 	private Map<String, List<String>> params;
@@ -474,6 +481,7 @@ public class DValidatorTest {
 	
 	@Test
 	public void shouldReturnInvalidHoleIdValueMessage() {
+		//Given
 		givenTestConditions();
 		String[] datas = { "D", "", "392200", "6589600", "320", "210", "DD", "80", "310" };
 		DValidator dValidator = new DValidator();
@@ -489,6 +497,39 @@ public class DValidatorTest {
 		assertThat(messages.size(), is(equalTo(1)));
 		assertThat(messages.get(0), is(equalTo("ERROR: Line 6: Template SL4 column Hole_id cannot be null or empty")));
 		verify(mockDataBean, times(0)).put(Matchers.anyString(), Matchers.anyListOf(String.class));
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Test
+	public void shouldCallBoreHolePositionValidatorWhenDataBeanExist() throws Exception {
+		//Given
+		params = new HashMap<>();
+		givenMockTemplate();
+		DValidator dValidator = new DValidator();
+		List<String> messages = new ArrayList<>();
+		BoreHolePositionValidator mockBoreHolePositionValidator = PowerMockito.mock(BoreHolePositionValidator.class);
+		PowerMockito.whenNew(BoreHolePositionValidator.class).withAnyArguments()
+			.thenReturn(mockBoreHolePositionValidator);
+		//When
+		dValidator.doBoreHolePositionValidation(params, mockDataBean, messages, 0);
+		//Then
+		verify(mockBoreHolePositionValidator).validate(Matchers.anyList());
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Test
+	public void shouldNotCallBoreHolePositionValidatorWhenDataBeanIsNull() throws Exception {
+		//Given
+		params = new HashMap<>();
+		DValidator dValidator = new DValidator();
+		List<String> messages = new ArrayList<>();
+		BoreHolePositionValidator mockBoreHolePositionValidator = PowerMockito.mock(BoreHolePositionValidator.class);
+		PowerMockito.whenNew(BoreHolePositionValidator.class).withAnyArguments()
+			.thenReturn(mockBoreHolePositionValidator);
+		//When
+		dValidator.doBoreHolePositionValidation(params, mockDataBean, messages, 0);
+		//Then
+		verify(mockBoreHolePositionValidator, times(0)).validate(Matchers.anyList());
 	}
 	
 	private void givenPrecisionParams() {
