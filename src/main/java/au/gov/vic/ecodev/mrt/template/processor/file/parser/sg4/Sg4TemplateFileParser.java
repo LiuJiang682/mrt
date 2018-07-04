@@ -15,13 +15,13 @@ import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext;
 import au.gov.vic.ecodev.mrt.template.processor.context.properties.utils.MultiStringValueToListConventor;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
-import au.gov.vic.ecodev.mrt.template.processor.file.parser.MessageHandler;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.sg4.DValidator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.sg4.Sg4ValidatorFactory;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.model.sg4.Sg4Template;
 import au.gov.vic.ecodev.mrt.template.processor.validator.Validator;
 import au.gov.vic.ecodev.utils.file.finder.DirectoryTreeReverseTraversalZipFileFinder;
+import au.gov.vic.ecodev.utils.file.helper.MessageHandler;
 
 public class Sg4TemplateFileParser {
 

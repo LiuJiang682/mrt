@@ -14,10 +14,11 @@ import org.springframework.util.CollectionUtils;
 import au.gov.vic.ecodev.mrt.template.context.properties.DefaultStringTemplateProperties;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
 import au.gov.vic.ecodev.mrt.template.properties.TemplateProperties;
+import au.gov.vic.ecodev.template.processor.context.properties.StringToListTemplatePropertiesParser;
 
 public class Sl4StringToListTemplatePropertiesParserTest {
 
-	private Sl4StringToListTemplatePropertiesParser testInstance;
+	private StringToListTemplatePropertiesParser testInstance;
 	private TemplateProperties property;
 	private String delim;
 	
@@ -36,7 +37,7 @@ public class Sl4StringToListTemplatePropertiesParserTest {
 		//Given
 		property = Mockito.mock(TemplateProperties.class);
 		String delim = ",";
-		testInstance = new Sl4StringToListTemplatePropertiesParser(property, delim);
+		testInstance = new StringToListTemplatePropertiesParser(property, delim);
 		//When
 		testInstance.parse();
 		fail("Program reached unexpected point!");
@@ -57,7 +58,7 @@ public class Sl4StringToListTemplatePropertiesParserTest {
 		TemplateProperties property = null;
 		String delim = null;
 		//When 
-		new Sl4StringToListTemplatePropertiesParser(property, delim);
+		new StringToListTemplatePropertiesParser(property, delim);
 		fail("Program reached unexpected point!");
 	}
 	
@@ -67,7 +68,7 @@ public class Sl4StringToListTemplatePropertiesParserTest {
 		TemplateProperties property = Mockito.mock(TemplateProperties.class);
 		String delim = null;
 		//When 
-		new Sl4StringToListTemplatePropertiesParser(property, delim);
+		new StringToListTemplatePropertiesParser(property, delim);
 		fail("Program reached unexpected point!");
 	}
 	
@@ -75,6 +76,6 @@ public class Sl4StringToListTemplatePropertiesParserTest {
 		property = new DefaultStringTemplateProperties("H0002,H0005,H0202,H0203,H0400,H0401,H0402,H0501,H0502,H0503,H0530,H0531,H0532,H0533,H1000,D");
 		delim = ",";
 	
-		testInstance = new Sl4StringToListTemplatePropertiesParser(property, delim);
+		testInstance = new StringToListTemplatePropertiesParser(property, delim);
 	}
 }

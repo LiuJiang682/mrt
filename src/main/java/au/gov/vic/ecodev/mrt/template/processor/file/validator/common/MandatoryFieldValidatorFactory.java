@@ -6,9 +6,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
-import au.gov.vic.ecodev.mrt.template.context.properties.StringTemplateProperties;
 import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext;
 import au.gov.vic.ecodev.mrt.template.processor.validator.Validator;
+import au.gov.vic.ecodev.template.processor.context.properties.StringTemplateProperties;
 
 public class MandatoryFieldValidatorFactory {
 
