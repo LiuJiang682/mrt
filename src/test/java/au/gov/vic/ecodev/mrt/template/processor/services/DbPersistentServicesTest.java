@@ -12,6 +12,7 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,6 +32,7 @@ import au.gov.vic.ecodev.mrt.dao.StatusLogDao;
 import au.gov.vic.ecodev.mrt.dao.TemplateConfigDao;
 import au.gov.vic.ecodev.mrt.dao.TemplateContextPropertiesDao;
 import au.gov.vic.ecodev.mrt.dao.TemplateUpdaterConfigDao;
+import au.gov.vic.ecodev.mrt.fixture.TestFixture;
 import au.gov.vic.ecodev.mrt.model.SessionHeader;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.model.sl4.Sl4Template;
@@ -212,16 +214,20 @@ public class DbPersistentServicesTest {
 		// Given
 		givenTestInstance();
 		String templateName = "mrt";
-		when(mockTemplateConfigDao.getOwnerEmails(eq("mrt"))).thenReturn("jiang.liu@ecodev.vic.gov.au");
+		Map<String, Object> emailProps = TestFixture.getEmailProperties();
+		when(mockTemplateConfigDao.getOwnerEmailProperties(eq("mrt"))).thenReturn(emailProps);
 		// When
-		String email = dbPersistentServices.getTemplateOwnerEmail(templateName);
+		Map<String, Object> email = dbPersistentServices.getTemplateOwnerEmail(templateName);
 		// Then
-		assertThat(email, is(equalTo("jiang.liu@ecodev.vic.gov.au")));
+		assertThat(email, is(notNullValue()));
+		assertThat(email.size(), is(equalTo(2)));
+		assertThat(email.get("OWNER_EMAILS"), is(equalTo("jiang.liu@ecodev.vic.gov.au")));
+		assertThat(email.get("EMAILS_BUILDER"), is(equalTo("au.gov.vic.ecodev.mrt.mail.MrtEmailBodyBuilder")));
 		ArgumentCaptor<String> templateNameCaptor = ArgumentCaptor.forClass(String.class);
-		verify(mockTemplateConfigDao).getOwnerEmails(templateNameCaptor.capture());
+		verify(mockTemplateConfigDao).getOwnerEmailProperties(templateNameCaptor.capture());
 		assertThat(templateNameCaptor.getValue(), is(equalTo("mrt")));
 	}
-	
+
 	private void givenTestInstance() {
 		mockTemplateConfigDao = Mockito.mock(TemplateConfigDao.class);
 		mockStatusLogDao = Mockito.mock(StatusLogDao.class);

@@ -6,20 +6,17 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
-import au.gov.vic.ecodev.mrt.template.loader.fsm.TemplateLoaderStateMachineContext;
+import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext;
 
-public class EmailBodyBuilder {
+public class MrtEmailBodyBuilder implements EmailBodyBuilder {
 
-	private final TemplateLoaderStateMachineContext templateLoaderStateMachineContext;
+	private TemplateProcessorContext templateLoaderStateMachineContext;
 
-	public EmailBodyBuilder(TemplateLoaderStateMachineContext templateLoaderStateMachineContext) {
+	@Override
+	public String build() {
 		if (null == templateLoaderStateMachineContext) {
 			throw new IllegalArgumentException("Parameter templateLoaderStateMachineContext cannot be null!");
 		}
-		this.templateLoaderStateMachineContext = templateLoaderStateMachineContext;
-	}
-
-	public String build() {
 		String directErrorMessage = templateLoaderStateMachineContext.getMessage().getDirectErrorMessage();
 		if (StringUtils.isEmpty(directErrorMessage)) {
 			StringBuilder buf = new StringBuilder("Hi\n");
@@ -30,10 +27,10 @@ public class EmailBodyBuilder {
 			buf.append(templateLoaderStateMachineContext.getMessage().getLogFileName());
 			buf.append("\n\n");
 			buf.append("The successfull processed files at ");
-			buf.append(templateLoaderStateMachineContext.getMrtConfigProperties().getPassedFileDirectory());
+			buf.append(templateLoaderStateMachineContext.getMessage().getPassedFileDirectory());
 			buf.append("\n\n");
 			buf.append("The failed processed files at ");
-			buf.append(templateLoaderStateMachineContext.getMrtConfigProperties().getFailedFileDirectory());
+			buf.append(templateLoaderStateMachineContext.getMessage().getFailedFileDirectory());
 			
 			List<String> boreHoleIds = templateLoaderStateMachineContext.getMessage().getBoreHoleIdsOutSideTenement();
 			if (CollectionUtils.isNotEmpty(boreHoleIds)) {
@@ -56,6 +53,11 @@ public class EmailBodyBuilder {
 			buf.append(directErrorMessage);
 			return buf.toString();
 		}
+	}
+
+	@Override
+	public void setTemplateProcessorContext(TemplateProcessorContext templateProcessorContext) {
+		this.templateLoaderStateMachineContext = templateProcessorContext;
 	}
 
 }

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class DefaultMessage implements Message, Serializable {
 
@@ -15,9 +16,11 @@ public class DefaultMessage implements Message, Serializable {
 	private List<File> failedFiles;
 	private String logFileName;
 	private String directErrorMessage;
-	private String templateOwnerEmail;
+	private List<Map<String, Object>> templateOwnerEmail;
 	private List<String> outsideBoreHoleIds = new ArrayList<>();
 	private List<String> outsideSampleIds = new ArrayList<>();
+	private String passedFileDirectory;
+	private String failedFileDirectory;
 	
 	/**
 	 * Generated serial version UID
@@ -111,12 +114,12 @@ public class DefaultMessage implements Message, Serializable {
 	}
 
 	@Override
-	public String getTemplateOwnerEmail() {
+	public List<Map<String, Object>> getTemplateOwnerEmail() {
 		return templateOwnerEmail;
 	}
 
 	@Override
-	public void setTemplateOwnerEmail(String templateOwnerEmail) {
+	public void setTemplateOwnerEmail(List<Map<String, Object>> templateOwnerEmail) {
 		this.templateOwnerEmail = templateOwnerEmail;
 	}
 
@@ -138,5 +141,25 @@ public class DefaultMessage implements Message, Serializable {
 	@Override
 	public void setSampleIdsOutSideTenement(List<String> outsideSampleIds) {
 		this.outsideSampleIds = outsideSampleIds;
+	}
+
+	@Override
+	public String getPassedFileDirectory() {
+		return passedFileDirectory;
+	}
+
+	@Override
+	public void setPassedFileDirectory(String directoryName) {
+		this.passedFileDirectory = directoryName;
+	}
+
+	@Override
+	public String getFailedFileDirectory() {
+		return failedFileDirectory;
+	}
+
+	@Override
+	public void setFailedFileDirectory(String directoryName) {
+		this.failedFileDirectory = directoryName;
 	}
 }

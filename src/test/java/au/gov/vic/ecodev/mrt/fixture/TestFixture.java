@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -831,6 +832,13 @@ public class TestFixture {
 	public static List<String> getDl4H1004List() {
 		String[] strs = {null, "1", "1"};
 		return Arrays.asList(strs);
+	}
+
+	public static Map<String, Object> getEmailProperties() {
+		Map<String, Object> emailProps = new HashMap<>();
+		emailProps.put("OWNER_EMAILS", "jiang.liu@ecodev.vic.gov.au");
+		emailProps.put("EMAILS_BUILDER", "au.gov.vic.ecodev.mrt.mail.MrtEmailBodyBuilder");
+		return emailProps;
 	}
 
 }
