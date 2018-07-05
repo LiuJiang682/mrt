@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.mockito.Matchers;
 import org.mockito.Mockito;
 
+import au.gov.vic.ecodev.mrt.config.MrtConfigProperties;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.model.DefaultMessage;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.model.Message;
 import au.gov.vic.ecodev.mrt.template.processor.services.PersistentServices;
@@ -36,12 +37,18 @@ public class ExtractTemplateNameStateTest {
 		PersistentServices mockPersistentServices = Mockito.mock(PersistentServices.class);
 		when(mockPersistentServices.getNextBatchId(Arrays.asList("mrt"), Arrays.asList("mrt_eco.zip"))).thenReturn(1L);
 		when(mockTemplateLoaderStateMachineContext.getPersistentServcies()).thenReturn(mockPersistentServices);
+		MrtConfigProperties mockMrtConfigProperties = Mockito.mock(MrtConfigProperties.class);
+		when(mockMrtConfigProperties.getPassedFileDirectory()).thenReturn("passedDir");
+		when(mockMrtConfigProperties.getFailedFileDirectory()).thenReturn("failedDir");
+		when(mockTemplateLoaderStateMachineContext.getMrtConfigProperties()).thenReturn(mockMrtConfigProperties);
 		//When
 		extractTemplateState.on(mockTemplateLoaderStateMachineContext);
 		//Then
 		List<String> templateName = message.getFileNames();
 		assertThat(templateName.get(0), is(equalTo("mrt")));
 		assertThat(message.getBatchId(), is(equalTo(1L)));
+		assertThat(message.getPassedFileDirectory(), is(equalTo("passedDir")));
+		assertThat(message.getFailedFileDirectory(), is(equalTo("failedDir")));
 	}
 	
 	@Test
