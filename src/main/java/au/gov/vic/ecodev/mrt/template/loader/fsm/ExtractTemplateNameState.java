@@ -1,6 +1,7 @@
 package au.gov.vic.ecodev.mrt.template.loader.fsm;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.util.CollectionUtils;
 
@@ -36,11 +37,15 @@ public class ExtractTemplateNameState implements LoaderState {
 					templateLoaderStateMachineContext.getMessage().setDirectErrorMessage(message);
 					templateLoaderStateMachineContext.setNextStepToNotifyUser();
 				} else {
-					String templateOwnerEmails = new TemplateOwnerEmailHelper(templateLoaderStateMachineContext
+					List<Map<String, Object>> templateOwnerEmails = new TemplateOwnerEmailHelper(templateLoaderStateMachineContext
 							.getPersistentServcies())
 							.extractTemplateOwnerEmails(templateNames);  
 					templateLoaderStateMachineContext.getMessage()
 						.setTemplateOwnerEmail(templateOwnerEmails);
+					templateLoaderStateMachineContext.getMessage().setFailedFileDirectory(
+							templateLoaderStateMachineContext.getMrtConfigProperties().getFailedFileDirectory());
+					templateLoaderStateMachineContext.getMessage().setPassedFileDirectory(
+							templateLoaderStateMachineContext.getMrtConfigProperties().getPassedFileDirectory());
 					templateLoaderStateMachineContext.getMessage().setBatchId(batchId);
 				}
 			}

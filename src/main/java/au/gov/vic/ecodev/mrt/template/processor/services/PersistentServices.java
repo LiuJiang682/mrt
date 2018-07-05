@@ -1,6 +1,7 @@
 package au.gov.vic.ecodev.mrt.template.processor.services;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -21,5 +22,5 @@ public interface PersistentServices {
 
 	boolean saveDataBean(final JdbcTemplate jdbcTemplate, long batchId, final Template template);
 
-	String getTemplateOwnerEmail(final String templateName);
+	Map<String, Object> getTemplateOwnerEmail(final String templateName);
 }

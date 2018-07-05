@@ -3,7 +3,10 @@ package au.gov.vic.ecodev.mrt.dao;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNull.notNullValue;
+import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.assertThat;
+
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
@@ -46,9 +49,12 @@ public class TemplateConfigDaoImplTest {
 		// Given
 		String template = "mrt";
 		// When
-		String ownerEmails = templateConfigDao.getOwnerEmails(template);
+		Map<String, Object> ownerEmails = templateConfigDao.getOwnerEmailProperties(template);
 		// Then
-		assertThat(ownerEmails, is(equalTo("jiang.liu@ecodev.vic.gov.au")));
+		assertThat(ownerEmails, is(notNullValue()));
+		assertThat(ownerEmails.size(), is(equalTo(2)));
+		assertThat(ownerEmails.get("OWNER_EMAILS"), is(equalTo("jiang.liu@ecodev.vic.gov.au")));
+		assertThat(ownerEmails.get("EMAILS_BUILDER"), is(equalTo("au.gov.vic.ecodev.mrt.mail.MrtEmailBodyBuilder")));
 	}
 
 	@Test
@@ -66,9 +72,9 @@ public class TemplateConfigDaoImplTest {
 		// Given
 		String template = "Dummy";
 		// When
-		String classes = templateConfigDao.getOwnerEmails(template);
+		Map<String, Object> classes = templateConfigDao.getOwnerEmailProperties(template);
 		// Then
-		assertThat(StringUtils.isBlank(classes), is(true));
+		assertThat(classes, is(nullValue()));
 	}
 
 	@Test
@@ -86,8 +92,8 @@ public class TemplateConfigDaoImplTest {
 		// Given
 		String template = "  mrt' or '1'='1";
 		// When
-		String classes = templateConfigDao.getOwnerEmails(template);
+		Map<String, Object> classes = templateConfigDao.getOwnerEmailProperties(template);
 		// Then
-		assertThat(StringUtils.isBlank(classes), is(true));
+		assertThat(classes, is(nullValue()));
 	}
 }
