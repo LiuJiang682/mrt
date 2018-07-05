@@ -2,8 +2,8 @@ package au.gov.vic.ecodev.mrt.template.loader.fsm.helpers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.template.processor.services.PersistentServices;
 
 public class TemplateOwnerEmailHelper {
@@ -14,13 +14,13 @@ public class TemplateOwnerEmailHelper {
 		this.persistentServices = persistentServices;
 	}
 	
-	public final String extractTemplateOwnerEmails(final List<String> templateNames) {
-		List<String> ownerEmails = new ArrayList<>();
+	public final List<Map<String, Object>> extractTemplateOwnerEmails(final List<String> templateNames) {
+		List<Map<String, Object>> ownerEmails = new ArrayList<>();
 		templateNames.stream()
 				.forEach(templateName -> {
-					String ownerEmail =  persistentServices.getTemplateOwnerEmail(templateName);
+					Map<String, Object> ownerEmail =  persistentServices.getTemplateOwnerEmail(templateName);
 					ownerEmails.add(ownerEmail);
 				});
-		return String.join(Strings.COMMA, ownerEmails);
+		return ownerEmails;
 	}
 }

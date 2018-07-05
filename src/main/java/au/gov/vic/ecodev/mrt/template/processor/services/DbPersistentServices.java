@@ -2,6 +2,7 @@ package au.gov.vic.ecodev.mrt.template.processor.services;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -10,9 +11,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import au.gov.vic.ecodev.common.util.IDGenerator;
-import au.gov.vic.ecodev.mrt.constants.LogSeverity;
 import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
+import au.gov.vic.ecodev.mrt.constants.LogSeverity;
 import au.gov.vic.ecodev.mrt.dao.SessionHeaderDao;
 import au.gov.vic.ecodev.mrt.dao.StatusLogDao;
 import au.gov.vic.ecodev.mrt.dao.TemplateConfigDao;
@@ -132,8 +133,8 @@ public class DbPersistentServices implements PersistentServices {
 	}
 
 	@Override
-	public String getTemplateOwnerEmail(String templateName) {
-		return templateConfigDao.getOwnerEmails(templateName);
+	public Map<String, Object> getTemplateOwnerEmail(String templateName) {
+		return templateConfigDao.getOwnerEmailProperties(templateName);
 	}
 
 }
