@@ -1,6 +1,7 @@
 package au.gov.vic.ecodev.mrt.template.processor.file.validator.sl4;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -320,6 +321,8 @@ public class BoreHolePositionValidator {
 				tenementNoList);
 		List<String> boreHoleIds = this.context.getMessage().getBoreHoleIdsOutSideTenement();
 		boreHoleIds.add(boreHoleId);
+		//Set the warning column for display.
+		this.templateParamMap.put(Strings.ISSUE_COLUMN_INDEX, Arrays.asList(String.valueOf(Numeral.ZERO)));
 	}
 	
 	private void contructErrorMessage(List<String> messages, BigDecimal easting, 
