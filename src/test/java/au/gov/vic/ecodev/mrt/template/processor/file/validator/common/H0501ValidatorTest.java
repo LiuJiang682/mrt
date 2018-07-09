@@ -2,6 +2,7 @@ package au.gov.vic.ecodev.mrt.template.processor.file.validator.common;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -17,6 +18,7 @@ import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.H0501Validator;
+import au.gov.vic.ecodev.mrt.template.processor.model.MrtTemplateValue;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 
 public class H0501ValidatorTest {
@@ -24,7 +26,6 @@ public class H0501ValidatorTest {
 	private H0501Validator testInstance;
 	private Template mockDataBean;
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
 	public void shouldReturnEmptyErrorMessageWithGDA94() {
 		// Given
@@ -40,16 +41,17 @@ public class H0501ValidatorTest {
 		assertThat(numberOfRecords.size(), is(equalTo(1)));
 		assertThat(numberOfRecords.get(0), is(equalTo("GDA94")));
 		ArgumentCaptor<String> keyCaptor = ArgumentCaptor.forClass(String.class);
-		ArgumentCaptor<List> valueCaptor = ArgumentCaptor.forClass(List.class);
+		ArgumentCaptor<MrtTemplateValue> valueCaptor = ArgumentCaptor.forClass(MrtTemplateValue.class);
 		verify(mockDataBean).put(keyCaptor.capture(), valueCaptor.capture());
 		assertThat(keyCaptor.getValue(), is(equalTo("H0501")));
-		List<String> values = valueCaptor.getValue();
+		MrtTemplateValue value = valueCaptor.getValue();
+		assertThat(value, is(notNullValue()));
+		List<String> values = value.getDatas();
 		assertThat(values.isEmpty(), is(false));
 		assertThat(values.get(0), is(equalTo("Geodetic_datum")));
 		assertThat(values.get(1), is(equalTo("GDA94")));
 	}
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
 	public void shouldReturnEmptyErrorMessageWithAGD84() {
 		// Given
@@ -65,10 +67,12 @@ public class H0501ValidatorTest {
 		assertThat(numberOfRecords.size(), is(equalTo(1)));
 		assertThat(numberOfRecords.get(0), is(equalTo("AGD84")));
 		ArgumentCaptor<String> keyCaptor = ArgumentCaptor.forClass(String.class);
-		ArgumentCaptor<List> valueCaptor = ArgumentCaptor.forClass(List.class);
+		ArgumentCaptor<MrtTemplateValue> valueCaptor = ArgumentCaptor.forClass(MrtTemplateValue.class);
 		verify(mockDataBean).put(keyCaptor.capture(), valueCaptor.capture());
 		assertThat(keyCaptor.getValue(), is(equalTo("H0501")));
-		List<String> values = valueCaptor.getValue();
+		MrtTemplateValue value = valueCaptor.getValue();
+		assertThat(value, is(notNullValue()));
+		List<String> values = value.getDatas();
 		assertThat(values.isEmpty(), is(false));
 		assertThat(values.get(0), is(equalTo("Geodetic_datum")));
 		assertThat(values.get(1), is(equalTo("AGD84")));

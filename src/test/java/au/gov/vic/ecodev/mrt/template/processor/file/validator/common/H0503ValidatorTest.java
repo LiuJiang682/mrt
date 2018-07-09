@@ -2,6 +2,7 @@ package au.gov.vic.ecodev.mrt.template.processor.file.validator.common;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -18,6 +19,7 @@ import org.mockito.Mockito;
 import org.springframework.util.CollectionUtils;
 
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.H0503Validator;
+import au.gov.vic.ecodev.mrt.template.processor.model.MrtTemplateValue;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 
 public class H0503ValidatorTest {
@@ -25,7 +27,6 @@ public class H0503ValidatorTest {
 	private H0503Validator testInstance;
 	private Template mockDataBean;
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
 	public void shouldReturnNoErrorMessageWith2Columns() {
 		// Given
@@ -39,16 +40,17 @@ public class H0503ValidatorTest {
 		List<String> retrieved = params.get(H0503Validator.PROJECTION_TITLE);
 		assertThat(CollectionUtils.isEmpty(retrieved), is(true));
 		ArgumentCaptor<String> keyCaptor = ArgumentCaptor.forClass(String.class);
-		ArgumentCaptor<List> valueCaptor = ArgumentCaptor.forClass(List.class);
+		ArgumentCaptor<MrtTemplateValue> valueCaptor = ArgumentCaptor.forClass(MrtTemplateValue.class);
 		verify(mockDataBean).put(keyCaptor.capture(), valueCaptor.capture());
 		assertThat(keyCaptor.getValue(), is(equalTo("H0503")));
-		List<String> values = valueCaptor.getValue();
+		MrtTemplateValue value = valueCaptor.getValue();
+		assertThat(value, is(notNullValue()));
+		List<String> values = value.getDatas();
 		assertThat(values.isEmpty(), is(false));
 		assertThat(values.size(), is(equalTo(1)));
 		assertThat(values.get(0), is(equalTo("Projection")));
 	}
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
 	public void shouldReturnNoErrorMessageWith3Columns() {
 		// Given
@@ -60,10 +62,11 @@ public class H0503ValidatorTest {
 		// Then
 		assertThat(errorMessages.isPresent(), is(false));
 		ArgumentCaptor<String> keyCaptor = ArgumentCaptor.forClass(String.class);
-		ArgumentCaptor<List> valueCaptor = ArgumentCaptor.forClass(List.class);
+		ArgumentCaptor<MrtTemplateValue> valueCaptor = ArgumentCaptor.forClass(MrtTemplateValue.class);
 		verify(mockDataBean).put(keyCaptor.capture(), valueCaptor.capture());
 		assertThat(keyCaptor.getValue(), is(equalTo("H0503")));
-		List<String> values = valueCaptor.getValue();
+		MrtTemplateValue value = valueCaptor.getValue();
+		List<String> values = value.getDatas();
 		assertThat(values.isEmpty(), is(false));
 		assertThat(values.size(), is(equalTo(2)));
 		assertThat(values.get(0), is(equalTo("Projection")));

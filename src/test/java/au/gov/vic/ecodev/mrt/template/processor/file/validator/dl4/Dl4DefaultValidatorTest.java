@@ -18,6 +18,7 @@ import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
+import au.gov.vic.ecodev.mrt.template.processor.model.MrtTemplateValue;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 
 public class Dl4DefaultValidatorTest {
@@ -25,7 +26,6 @@ public class Dl4DefaultValidatorTest {
 	private Template mockDataBean;
 	private Dl4DefaultValidator testInstance;
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
 	public void shouldReturnEmptyMessageWhenStringArrayIsPopulatedAndUpdateDataBean() {
 		// Given
@@ -37,10 +37,11 @@ public class Dl4DefaultValidatorTest {
 		// Then
 		assertThat(errorMessages.isPresent(), is(false));
 		ArgumentCaptor<String> keyCaptor = ArgumentCaptor.forClass(String.class);
-		ArgumentCaptor<List> valueCaptor = ArgumentCaptor.forClass(List.class);
+		ArgumentCaptor<MrtTemplateValue> valueCaptor = ArgumentCaptor.forClass(MrtTemplateValue.class);
 		verify(mockDataBean).put(keyCaptor.capture(), valueCaptor.capture());
 		assertThat(keyCaptor.getValue(), is(equalTo("abc")));
-		List<String> values = valueCaptor.getValue();
+		MrtTemplateValue value = valueCaptor.getValue();
+		List<String> values = value.getDatas();
 		assertThat(values.isEmpty(), is(false));
 		assertThat(values.get(0), is(equalTo("123")));
 	}

@@ -18,6 +18,7 @@ import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
+import au.gov.vic.ecodev.mrt.template.processor.model.MrtTemplateValue;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 
 public class ValidatorHelperTest {
@@ -123,7 +124,7 @@ public class ValidatorHelperTest {
 		Optional<List<String>> messagesOptional = testInstance.updateDataBeanOrCreateErrorOptional(datas, mockTemplate);
 		//Then
 		assertThat(messagesOptional.isPresent(), is(false));
-		verify(mockTemplate).put(eq("abc"), Matchers.anyListOf(String.class));
+		verify(mockTemplate).put(eq("abc"), Matchers.any(MrtTemplateValue.class));
 	}
 	
 	@Test

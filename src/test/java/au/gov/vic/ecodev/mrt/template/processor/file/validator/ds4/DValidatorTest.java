@@ -2,6 +2,7 @@ package au.gov.vic.ecodev.mrt.template.processor.file.validator.ds4;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -21,6 +22,7 @@ import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.fixture.TestFixture;
 import au.gov.vic.ecodev.mrt.template.fields.Ds4ColumnHeaders;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.H0400Validator;
+import au.gov.vic.ecodev.mrt.template.processor.model.MrtTemplateValue;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 
 public class DValidatorTest {
@@ -28,7 +30,6 @@ public class DValidatorTest {
 	private Map<String, List<String>> params;
 	private Template mockDataBean;
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
 	public void shouldIncreaseTheRecordCount() {
 		givenTestConditions();
@@ -43,13 +44,12 @@ public class DValidatorTest {
 		assertThat(errorMessages.isPresent(), is(false));
 		assertThat(params.get(Strings.NUMBER_OF_DATA_RECORDS_ADDED).get(0), is(equalTo("1")));
 		ArgumentCaptor<String> keyCaptor = ArgumentCaptor.forClass(String.class);
-		ArgumentCaptor<List> valueCaptor = ArgumentCaptor.forClass(List.class);
+		ArgumentCaptor<MrtTemplateValue> valueCaptor = ArgumentCaptor.forClass(MrtTemplateValue.class);
 		verify(mockDataBean).put(keyCaptor.capture(), valueCaptor.capture());
 		assertThat(keyCaptor.getValue(), is(equalTo("D1")));
 		doValuesAssert(valueCaptor);
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Test
 	public void shouldIncreaseTheRecordCountOnTop() {
 		givenTestConditions();
@@ -65,13 +65,12 @@ public class DValidatorTest {
 		assertThat(errorMessages.isPresent(), is(false));
 		assertThat(params.get(Strings.NUMBER_OF_DATA_RECORDS_ADDED).get(0), is(equalTo("2")));
 		ArgumentCaptor<String> keyCaptor = ArgumentCaptor.forClass(String.class);
-		ArgumentCaptor<List> valueCaptor = ArgumentCaptor.forClass(List.class);
+		ArgumentCaptor<MrtTemplateValue> valueCaptor = ArgumentCaptor.forClass(MrtTemplateValue.class);
 		verify(mockDataBean).put(keyCaptor.capture(), valueCaptor.capture());
 		assertThat(keyCaptor.getValue(), is(equalTo("D2")));
 		doValuesAssert(valueCaptor);
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
 	public void shouldResetTheRecordCount() {
 		givenTestConditions();
@@ -87,7 +86,7 @@ public class DValidatorTest {
 		assertThat(errorMessages.isPresent(), is(false));
 		assertThat(params.get(Strings.NUMBER_OF_DATA_RECORDS_ADDED).get(0), is(equalTo("1")));
 		ArgumentCaptor<String> keyCaptor = ArgumentCaptor.forClass(String.class);
-		ArgumentCaptor<List> valueCaptor = ArgumentCaptor.forClass(List.class);
+		ArgumentCaptor<MrtTemplateValue> valueCaptor = ArgumentCaptor.forClass(MrtTemplateValue.class);
 		verify(mockDataBean).put(keyCaptor.capture(), valueCaptor.capture());
 		assertThat(keyCaptor.getValue(), is(equalTo("D1")));
 		doValuesAssert(valueCaptor);
@@ -271,9 +270,10 @@ public class DValidatorTest {
 		givenMockTemplate();
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	protected void doValuesAssert(ArgumentCaptor<List> valueCaptor) {
-		List<String> values = valueCaptor.getValue();
+	private void doValuesAssert(ArgumentCaptor<MrtTemplateValue> valueCaptor) {
+		MrtTemplateValue value = valueCaptor.getValue();
+		assertThat(value, is(notNullValue()));
+		List<String> values = value.getDatas();
 		assertThat(values.isEmpty(), is(false));
 		assertThat(values.get(0), is(equalTo("KPDD001")));
 		assertThat(values.get(1), is(equalTo("210")));
