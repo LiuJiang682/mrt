@@ -2,6 +2,7 @@ package au.gov.vic.ecodev.mrt.template.processor.file.validator.common;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -19,6 +20,7 @@ import org.mockito.Mockito;
 
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.H0503Validator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.H0530Validator;
+import au.gov.vic.ecodev.mrt.template.processor.model.MrtTemplateValue;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 
 public class H0530ValidatorTest {
@@ -87,7 +89,6 @@ public class H0530ValidatorTest {
 		verify(mockDataBean, times(0)).put(Matchers.anyString(), Matchers.anyListOf(String.class));
 	}
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
 	public void shouldReturnNoErrorMessage() {
 		// Given
@@ -99,10 +100,12 @@ public class H0530ValidatorTest {
 		// Then
 		assertThat(errorMessages.isPresent(), is(false));
 		ArgumentCaptor<String> keyCaptor = ArgumentCaptor.forClass(String.class);
-		ArgumentCaptor<List> valueCaptor = ArgumentCaptor.forClass(List.class);
+		ArgumentCaptor<MrtTemplateValue> valueCaptor = ArgumentCaptor.forClass(MrtTemplateValue.class);
 		verify(mockDataBean).put(keyCaptor.capture(), valueCaptor.capture());
 		assertThat(keyCaptor.getValue(), is(equalTo("H0530")));
-		List<String> values = valueCaptor.getValue();
+		MrtTemplateValue value = valueCaptor.getValue();
+		assertThat(value, is(notNullValue()));
+		List<String> values = value.getDatas();
 		assertThat(values.isEmpty(), is(false));
 		assertThat(values.size(), is(equalTo(2)));
 		assertThat(values.get(0), is(equalTo("Coordinate_system")));

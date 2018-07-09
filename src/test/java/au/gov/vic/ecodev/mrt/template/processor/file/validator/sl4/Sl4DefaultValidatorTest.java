@@ -2,6 +2,7 @@ package au.gov.vic.ecodev.mrt.template.processor.file.validator.sl4;
 
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -19,6 +20,7 @@ import org.mockito.Mockito;
 
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.sl4.Sl4DefaultValidator;
+import au.gov.vic.ecodev.mrt.template.processor.model.MrtTemplateValue;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 
 public class Sl4DefaultValidatorTest {
@@ -26,7 +28,6 @@ public class Sl4DefaultValidatorTest {
 	private Sl4DefaultValidator testInstance;
 	private Template mockDataBean;
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
 	public void shouldReturnEmptyMessageWhenStringArrayIsPopulatedAndUpdateDataBean() {
 		// Given
@@ -38,12 +39,13 @@ public class Sl4DefaultValidatorTest {
 		// Then
 		assertThat(errorMessages.isPresent(), is(false));
 		ArgumentCaptor<String> keyCaptor = ArgumentCaptor.forClass(String.class);
-		ArgumentCaptor<List> valueCaptor = ArgumentCaptor.forClass(List.class);
+		ArgumentCaptor<MrtTemplateValue> valueCaptor = ArgumentCaptor.forClass(MrtTemplateValue.class);
 		verify(mockDataBean).put(keyCaptor.capture(), valueCaptor.capture());
 		assertThat(keyCaptor.getValue(), is(equalTo("abc")));
-		List<String> values = valueCaptor.getValue();
-		assertThat(values.isEmpty(), is(false));
-		assertThat(values.get(0), is(equalTo("123")));
+		MrtTemplateValue values = valueCaptor.getValue();
+		assertThat(values, is(notNullValue()));
+		assertThat(values.getDatas().isEmpty(), is(false));
+		assertThat(values.getDatas().get(0), is(equalTo("123")));
 	}
 
 	@Test
