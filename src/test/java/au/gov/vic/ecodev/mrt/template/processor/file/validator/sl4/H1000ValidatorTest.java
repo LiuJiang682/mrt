@@ -2,6 +2,7 @@ package au.gov.vic.ecodev.mrt.template.processor.file.validator.sl4;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -24,6 +25,7 @@ import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.template.fields.GeodeticDatum;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.H0501Validator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.sl4.H1000Validator;
+import au.gov.vic.ecodev.mrt.template.processor.model.MrtTemplateValue;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 
 public class H1000ValidatorTest {
@@ -285,7 +287,6 @@ public class H1000ValidatorTest {
 		assertThat(message, is(equalTo("No H0501 Geodetic_datum data!")));
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
 	public void shouldCheckAllMustHaveFields() {
 		// Given
@@ -308,10 +309,12 @@ public class H1000ValidatorTest {
 		assertThat(columnHeaders.get(6), is(equalTo(SL4ColumnHeaders.DIP.getCode())));
 		assertThat(columnHeaders.get(7), is(equalTo(SL4ColumnHeaders.AZIMUTH_MAG.getCode())));
 		ArgumentCaptor<String> keyCaptor = ArgumentCaptor.forClass(String.class);
-		ArgumentCaptor<List> valueCaptor = ArgumentCaptor.forClass(List.class);
+		ArgumentCaptor<MrtTemplateValue> valueCaptor = ArgumentCaptor.forClass(MrtTemplateValue.class);
 		verify(mockDataBean).put(keyCaptor.capture(), valueCaptor.capture());
 		assertThat(keyCaptor.getValue(), is(equalTo("H1000")));
-		List<String> values = valueCaptor.getValue();
+		MrtTemplateValue value = valueCaptor.getValue();
+		assertThat(value, is(notNullValue()));
+		List<String> values = value.getDatas();
 		assertThat(values.isEmpty(), is(false));
 		assertThat(values.size(), is(equalTo(8)));
 		assertThat(values.get(0), is(equalTo("Hole_id")));
@@ -324,7 +327,6 @@ public class H1000ValidatorTest {
 		assertThat(values.get(7), is(equalTo("Azimuth_MAG")));
 	}
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
 	public void shouldCheckAllMustHaveAmgFields() {
 		// Given
@@ -348,10 +350,12 @@ public class H1000ValidatorTest {
 		assertThat(columnHeaders.get(7), is(equalTo(SL4ColumnHeaders.LATITUDE.getCode())));
 		assertThat(columnHeaders.get(8), is(equalTo(SL4ColumnHeaders.LONGITUDE.getCode())));
 		ArgumentCaptor<String> keyCaptor = ArgumentCaptor.forClass(String.class);
-		ArgumentCaptor<List> valueCaptor = ArgumentCaptor.forClass(List.class);
+		ArgumentCaptor<MrtTemplateValue> valueCaptor = ArgumentCaptor.forClass(MrtTemplateValue.class);
 		verify(mockDataBean).put(keyCaptor.capture(), valueCaptor.capture());
 		assertThat(keyCaptor.getValue(), is(equalTo("H1000")));
-		List<String> values = valueCaptor.getValue();
+		MrtTemplateValue value = valueCaptor.getValue();
+		assertThat(value, is(notNullValue()));
+		List<String> values = value.getDatas();
 		assertThat(values.isEmpty(), is(false));
 		assertThat(values.size(), is(equalTo(9)));
 		assertThat(values.get(0), is(equalTo(SL4ColumnHeaders.HOLE_ID.getCode())));

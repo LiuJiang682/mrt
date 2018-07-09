@@ -2,6 +2,7 @@ package au.gov.vic.ecodev.mrt.template.processor.file.validator.sg4;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -23,6 +24,7 @@ import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.template.fields.GeodeticDatum;
 import au.gov.vic.ecodev.mrt.template.fields.Sg4ColumnHeaders;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.H0501Validator;
+import au.gov.vic.ecodev.mrt.template.processor.model.MrtTemplateValue;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 
 public class H1000ValidatorTest {
@@ -208,23 +210,34 @@ public class H1000ValidatorTest {
 		assertThat(columnHeaders.get(3), is(equalTo(Sg4ColumnHeaders.SAMPLE_TYPE.getCode())));
 		ArgumentCaptor<String> keyCaptor = ArgumentCaptor.forClass(String.class);
 		ArgumentCaptor<List> valueCaptor = ArgumentCaptor.forClass(List.class);
-		verify(mockDataBean, times(3)).put(keyCaptor.capture(), valueCaptor.capture());
+		verify(mockDataBean, times(2)).put(keyCaptor.capture(), valueCaptor.capture());
 		List<String> keys = keyCaptor.getAllValues();
-		assertThat(keys.size(), is(equalTo(3)));
+		assertThat(keys.size(), is(equalTo(2)));
 		assertThat(keys.get(0), is(equalTo("Sample ID")));
 		assertThat(keys.get(1), is(equalTo("Sample_type")));
-		assertThat(keys.get(2), is(equalTo("H1000")));
 		List<List> values = valueCaptor.getAllValues();
-		assertThat(values.size(), is(equalTo(3)));
+		assertThat(values.size(), is(equalTo(2)));
 		assertThat(values.get(0).size(), is(equalTo(1)));
 		assertThat(values.get(0).get(0), is(equalTo("Sample ID")));
 		assertThat(values.get(1).size(), is(equalTo(1)));
 		assertThat(values.get(1).get(0), is(equalTo("Sample_type")));
-		assertThat(values.get(2).size(), is(equalTo(4)));
-		assertThat(values.get(2).get(0), is(equalTo(Sg4ColumnHeaders.SAMPLE_ID.getCode())));
-		assertThat(values.get(2).get(1), is(equalTo(Sg4ColumnHeaders.EASTING_MGA.getCode())));
-		assertThat(values.get(2).get(2), is(equalTo(Sg4ColumnHeaders.NORTHING_MGA.getCode())));
-		assertThat(values.get(2).get(3), is(equalTo(Sg4ColumnHeaders.SAMPLE_TYPE.getCode())));
+		
+		ArgumentCaptor<String> key1Captor = ArgumentCaptor.forClass(String.class);
+		ArgumentCaptor<MrtTemplateValue> value1Captor = ArgumentCaptor.forClass(MrtTemplateValue.class);
+		verify(mockDataBean).put(key1Captor.capture(), value1Captor.capture());
+		List<String> aKeys = key1Captor.getAllValues();
+		List<MrtTemplateValue> aValueList = value1Captor.getAllValues();
+		assertThat(aKeys, is(notNullValue()));
+		assertThat(aKeys.size(), is(equalTo(1)));
+		assertThat(aKeys.get(0), is(equalTo("H1000")));
+		assertThat(aValueList, is(notNullValue()));
+		assertThat(aValueList.size(), is(equalTo(1)));
+		List<String> aValues = aValueList.get(0).getDatas();
+		assertThat(aValues.size(), is(equalTo(4)));
+		assertThat(aValues.get(0), is(equalTo(Sg4ColumnHeaders.SAMPLE_ID.getCode())));
+		assertThat(aValues.get(1), is(equalTo(Sg4ColumnHeaders.EASTING_MGA.getCode())));
+		assertThat(aValues.get(2), is(equalTo(Sg4ColumnHeaders.NORTHING_MGA.getCode())));
+		assertThat(aValues.get(3), is(equalTo(Sg4ColumnHeaders.SAMPLE_TYPE.getCode())));
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -247,23 +260,34 @@ public class H1000ValidatorTest {
 		assertThat(columnHeaders.get(3), is(equalTo(Sg4ColumnHeaders.SAMPLE_TYPE.getCode())));
 		ArgumentCaptor<String> keyCaptor = ArgumentCaptor.forClass(String.class);
 		ArgumentCaptor<List> valueCaptor = ArgumentCaptor.forClass(List.class);
-		verify(mockDataBean, times(3)).put(keyCaptor.capture(), valueCaptor.capture());
+		verify(mockDataBean, times(2)).put(keyCaptor.capture(), valueCaptor.capture());
 		List<String> keys = keyCaptor.getAllValues();
-		assertThat(keys.size(), is(equalTo(3)));
+		assertThat(keys.size(), is(equalTo(2)));
 		assertThat(keys.get(0), is(equalTo("Sample ID")));
 		assertThat(keys.get(1), is(equalTo("Sample_type")));
-		assertThat(keys.get(2), is(equalTo("H1000")));
 		List<List> values = valueCaptor.getAllValues();
-		assertThat(values.size(), is(equalTo(3)));
+		assertThat(values.size(), is(equalTo(2)));
 		assertThat(values.get(0).size(), is(equalTo(1)));
 		assertThat(values.get(0).get(0), is(equalTo("Sample ID")));
 		assertThat(values.get(1).size(), is(equalTo(1)));
 		assertThat(values.get(1).get(0), is(equalTo("Sample_type")));
-		assertThat(values.get(2).size(), is(equalTo(4)));
-		assertThat(values.get(2).get(0), is(equalTo(Sg4ColumnHeaders.SAMPLE_ID.getCode())));
-		assertThat(values.get(2).get(1), is(equalTo(Sg4ColumnHeaders.EASTING_AMG.getCode())));
-		assertThat(values.get(2).get(2), is(equalTo(Sg4ColumnHeaders.NORTHING_AMG.getCode())));
-		assertThat(values.get(2).get(3), is(equalTo(Sg4ColumnHeaders.SAMPLE_TYPE.getCode())));
+		
+		ArgumentCaptor<String> key1Captor = ArgumentCaptor.forClass(String.class);
+		ArgumentCaptor<MrtTemplateValue> value1Captor = ArgumentCaptor.forClass(MrtTemplateValue.class);
+		verify(mockDataBean).put(key1Captor.capture(), value1Captor.capture());
+		List<String> aKeys = key1Captor.getAllValues();
+		List<MrtTemplateValue> aValueList = value1Captor.getAllValues();
+		assertThat(aKeys, is(notNullValue()));
+		assertThat(aKeys.size(), is(equalTo(1)));
+		assertThat(aKeys.get(0), is(equalTo("H1000")));
+		assertThat(aValueList, is(notNullValue()));
+		assertThat(aValueList.size(), is(equalTo(1)));
+		List<String> aValues = aValueList.get(0).getDatas();
+		assertThat(aValues.size(), is(equalTo(4)));
+		assertThat(aValues.get(0), is(equalTo(Sg4ColumnHeaders.SAMPLE_ID.getCode())));
+		assertThat(aValues.get(1), is(equalTo(Sg4ColumnHeaders.EASTING_AMG.getCode())));
+		assertThat(aValues.get(2), is(equalTo(Sg4ColumnHeaders.NORTHING_AMG.getCode())));
+		assertThat(aValues.get(3), is(equalTo(Sg4ColumnHeaders.SAMPLE_TYPE.getCode())));
 	}
 
 	private void givenTestInstance(final String[] strs) {
