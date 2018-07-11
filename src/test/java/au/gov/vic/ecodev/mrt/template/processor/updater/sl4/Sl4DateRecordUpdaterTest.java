@@ -20,6 +20,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 
+import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDao;
 import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDaoImpl;
 import au.gov.vic.ecodev.mrt.dao.sl4.BoreHoleDao;
@@ -31,6 +32,7 @@ import au.gov.vic.ecodev.mrt.model.TemplateOptionalField;
 import au.gov.vic.ecodev.mrt.model.sl4.BoreHole;
 import au.gov.vic.ecodev.mrt.model.sl4.Site;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
+import au.gov.vic.ecodev.mrt.template.processor.model.MrtTemplateValue;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.persistent.Dao;
 
@@ -57,9 +59,11 @@ public class Sl4DateRecordUpdaterTest {
 		when(mockTemplate.get(eq("H1001"))).thenReturn(TestFixture.getSl4H1001List());
 		when(mockTemplate.get(eq("H1004"))).thenReturn(TestFixture.getSl4H1004List());
 		when(mockTemplate.get(eq("H0531"))).thenReturn(TestFixture.getProjectZoneList());
-		when(mockTemplate.get(eq("D1"))).thenReturn(TestFixture.getDListWithOptionalFields());
-		when(mockTemplate.get(eq("D2"))).thenReturn(TestFixture.getDListWithOptionalFields());
-		when(mockTemplate.get(eq("D3"))).thenReturn(TestFixture.getDListWithOptionalFields());
+		MrtTemplateValue optionalFields = new MrtTemplateValue(TestFixture.getDListWithOptionalFields(), 
+				Numeral.NOT_FOUND);
+		when(mockTemplate.getTemplateValue(eq("D1"))).thenReturn(optionalFields);
+		when(mockTemplate.getTemplateValue(eq("D2"))).thenReturn(optionalFields);
+		when(mockTemplate.getTemplateValue(eq("D3"))).thenReturn(optionalFields);
 		// When
 		testInstance.update();
 		// Then
