@@ -115,6 +115,8 @@ public class SiteDaoImplTest {
 		site.setLocnAcc(BigDecimal.ZERO);
 		site.setLocnDatumCd("GDA94");
 		site.setElevDatumCd("AHD");
+		site.setNumberOfDataRecord(-1);
+		site.setIssueColumnIndex(-1);
 		// When
 		return siteDao.updateOrSave(site);
 	}

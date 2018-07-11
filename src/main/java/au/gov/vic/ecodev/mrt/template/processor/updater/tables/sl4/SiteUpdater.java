@@ -14,6 +14,8 @@ import au.gov.vic.ecodev.mrt.model.sl4.Site;
 import au.gov.vic.ecodev.mrt.template.fields.SL4ColumnHeaders;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
+import au.gov.vic.ecodev.mrt.template.processor.model.TemplateValue;
+import au.gov.vic.ecodev.mrt.template.processor.model.MrtTemplateValue;
 import au.gov.vic.ecodev.mrt.template.processor.updater.helper.ProjectionZoneExtractionHelper;
 import au.gov.vic.ecodev.mrt.template.processor.updater.tables.index.finder.sl4.HoleIdIndexFinder;
 
@@ -69,7 +71,9 @@ public class SiteUpdater {
 		elevDatumCd = extractElevDatumCdFromTemplate(template);
 	}
 	
-	public void update(List<String> dataRecordList) {
+	public void update(TemplateValue templateValue) {
+		MrtTemplateValue mrtTemplateValue = (MrtTemplateValue)templateValue;
+		List<String> dataRecordList = mrtTemplateValue.getDatas();
 		Site site = new Site();
 		site.setLoaderId(sessionId);
 		site.setSiteId((String) new NullSafeCollections(dataRecordList).get(holeIdIndex));
@@ -83,6 +87,7 @@ public class SiteUpdater {
 		site.setLocnAcc(locnAcc);
 		site.setLocnDatumCd(locnDatumCd);
 		site.setElevDatumCd(elevDatumCd);
+		site.setIssueColumnIndex(mrtTemplateValue.getIssueColumnIndex());
 		siteDao.updateOrSave(site);
 	}
 	
