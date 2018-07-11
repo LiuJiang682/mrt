@@ -39,6 +39,8 @@ public class SiteRowMapperTest {
 		when(mockResultSet.getBigDecimal(eq("ELEVATION_GL"))).thenReturn(BigDecimal.TEN);
 		when(mockResultSet.getBigDecimal(eq("ELEV_ACC"))).thenReturn(BigDecimal.ZERO);
 		when(mockResultSet.getString(eq("ELEV_DATUM_CD"))).thenReturn("AHD");
+		when(mockResultSet.getInt(eq("NUM_DATA_RECORDS"))).thenReturn(-1);
+		when(mockResultSet.getInt(eq("ISSUE_COLUMN_INDEX"))).thenReturn(-1);
 		//When
 		Site site = testInstance.mapRow(mockResultSet, 1);
 		//Then
@@ -58,5 +60,7 @@ public class SiteRowMapperTest {
 		assertThat(site.getElevationGl(), is(equalTo(BigDecimal.TEN)));
 		assertThat(site.getElevAcc(), is(equalTo(BigDecimal.ZERO)));
 		assertThat(site.getElevDatumCd(), is(equalTo("AHD")));
+		assertThat(site.getNumberOfDataRecord(), is(equalTo(-1)));
+		assertThat(site.getIssueColumnIndex(), is(equalTo(-1)));
 	}
 }
