@@ -40,7 +40,7 @@ H0502	Vertical_datum	AHD
 H0503	Projection	Map Grid of Australia (MGA)															
 H0508	Local Grid Name																
 H0530	Coordinate_system	Projected															
-H0531	Projection_zone	54															
+H0531	Projection_zone	55															
 H0532	Surface_Location_Survey_Instrument	GPS															
 H0533	Surface_Location_Survey_Company	Stavely Minerals Ltd															
 H0900	Remarks																
