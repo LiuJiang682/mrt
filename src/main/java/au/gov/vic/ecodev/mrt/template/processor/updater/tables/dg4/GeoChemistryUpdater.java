@@ -23,7 +23,6 @@ public class GeoChemistryUpdater {
 	private int sampleIdIndex;
 	private int fromIndex;
 	private int toIndex;
-//	private int drillCodeIndex;
 	
 	public GeoChemistryUpdater(final GeoChemistryDao geoChemistryDao, long sessionId, 
 			Template template) {

@@ -14,6 +14,7 @@ import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDao;
 import au.gov.vic.ecodev.mrt.dao.sl4.BoreHoleDao;
 import au.gov.vic.ecodev.mrt.dao.sl4.SiteDao;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
+import au.gov.vic.ecodev.mrt.template.processor.model.MrtTemplateValue;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.persistent.Dao;
 import au.gov.vic.ecodev.mrt.template.processor.updater.NumberOfRecordsTemplateExtractor;
@@ -79,8 +80,10 @@ public class Sl4DataRecordUpdater {
 		templateHeaderOptionalFieldUpdater.update();
 		
 		for (int index = Numeral.ONE; index <= numOfRecords; index++) {
-			List<String> dataRecordList = template.get(Strings.DATA_RECORD_PREFIX + index);
-			siteUpdater.update(dataRecordList);
+			MrtTemplateValue mrtTemplateValue = (MrtTemplateValue) template
+					.getTemplateValue(Strings.DATA_RECORD_PREFIX + index);
+			siteUpdater.update(mrtTemplateValue);
+			List<String> dataRecordList = mrtTemplateValue.getDatas();
 			boreHoleUpdater.update(dataRecordList);
 			templateOptionalFiledUpdater.update(dataRecordList, index);
 		}
