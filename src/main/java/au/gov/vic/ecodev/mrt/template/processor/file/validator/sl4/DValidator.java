@@ -5,28 +5,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.log4j.Logger;
-
 import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.template.fields.SL4ColumnHeaders;
 import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.DrillCodeValidator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.EastingValidator;
-import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.MandatoryStringDataValidator;
-import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.NorthingValidator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.LineNumberValidator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.ListSizeValidator;
+import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.MandatoryStringDataValidator;
+import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.NorthingValidator;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.validator.Validator;
 import au.gov.vic.ecodev.mrt.template.processor.validator.helper.ErrorMessageChecker;
+import au.gov.vic.ecodev.mrt.template.processor.validator.helper.IssueColumnIndexHelper;
 import au.gov.vic.ecodev.mrt.template.processor.validator.helper.RecordCounter;
 import au.gov.vic.ecodev.mrt.template.processor.validator.helper.ValidatorHelper;
 
 public class DValidator implements Validator {
-	
-	private static final Logger LOGGER = Logger.getLogger(DValidator.class);
 	
 	private String[] strs;
 	private TemplateProcessorContext context;
@@ -83,22 +79,10 @@ public class DValidator implements Validator {
 			String count = new RecordCounter().incrementAndGet(templateParamMap);
 			strs[Numeral.ZERO] += count;
 		} 
-		int issueColumnIndex = getIssueColumnIndex(templateParamMap.get(Strings.ISSUE_COLUMN_INDEX));
+		int issueColumnIndex = new IssueColumnIndexHelper().
+				getIssueColumnIndex(templateParamMap.get(Strings.ISSUE_COLUMN_INDEX));
 		return new ValidatorHelper(messages, hasErrorMessage, issueColumnIndex)
 				.updateDataBeanOrCreateErrorOptional(strs, dataBean);
-	}
-	
-	protected final int getIssueColumnIndex(List<String> list) {
-		int issueColumnIndex = Numeral.NOT_FOUND;
-		
-		if (CollectionUtils.isNotEmpty(list)) {
-			try {
-				issueColumnIndex = Integer.parseInt(list.get(Numeral.ZERO));
-			} catch (NumberFormatException e) {
-				LOGGER.error(e.getMessage(), e);
-			}
-		}
-		return issueColumnIndex;
 	}
 
 	protected final void doBoreHolePositionValidation(Map<String, List<String>> templateParamMap, Template dataBean,

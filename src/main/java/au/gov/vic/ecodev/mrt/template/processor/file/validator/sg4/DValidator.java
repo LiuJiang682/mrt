@@ -16,6 +16,7 @@ import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.NorthingVa
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.validator.Validator;
 import au.gov.vic.ecodev.mrt.template.processor.validator.helper.ErrorMessageChecker;
+import au.gov.vic.ecodev.mrt.template.processor.validator.helper.IssueColumnIndexHelper;
 import au.gov.vic.ecodev.mrt.template.processor.validator.helper.RecordCounter;
 import au.gov.vic.ecodev.mrt.template.processor.validator.helper.ValidatorHelper;
 
@@ -66,8 +67,7 @@ public class DValidator implements Validator {
 							Sg4ColumnHeaders.NORTHING_AMG.getCode()).validate(messages);
 					new SampleTypeDataValidator(strs, lineNumber, columnHeaders, templateParamMap)
 						.validate(messages);
-					new SamplePositionValidator(strs, lineNumber, templateParamMap, context)
-						.validate(messages);
+					doSamplePositionValidation(strs, lineNumber, dataBean, templateParamMap, context, messages);
 				}
 			}
 		}
@@ -77,8 +77,19 @@ public class DValidator implements Validator {
 			String count = new RecordCounter().incrementAndGet(templateParamMap);
 			strs[Numeral.ZERO] += count;
 		} 
-		return new ValidatorHelper(messages, hasErrorMessage)
+		int issueColumnIndex = new IssueColumnIndexHelper().
+				getIssueColumnIndex(templateParamMap.get(Strings.ISSUE_COLUMN_INDEX));
+		return new ValidatorHelper(messages, hasErrorMessage, issueColumnIndex)
 				.updateDataBeanOrCreateErrorOptional(strs, dataBean);
+	}
+
+	protected void doSamplePositionValidation(String[] strs, int lineNumber, Template dataBean, 
+			Map<String, List<String>> templateParamMap, TemplateProcessorContext context, List<String> messages) {
+		if (null != dataBean) {
+			templateParamMap.put(Strings.KEY_H0100, dataBean.get(Strings.KEY_H0100));
+			new SamplePositionValidator(strs, lineNumber, templateParamMap, context)
+				.validate(messages);
+		}
 	}
 
 }

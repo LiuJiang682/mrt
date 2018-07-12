@@ -530,52 +530,6 @@ public class DValidatorTest {
 		verify(mockBoreHolePositionValidator, times(0)).validate(Matchers.anyList());
 	}
 	
-	@Test
-	public void shouldReturnIssueColumnIndex() {
-		//Given
-		DValidator dValidator = new DValidator();
-		List<String> list = new ArrayList<>();
-		list.add("0");
-		//When
-		int index = dValidator.getIssueColumnIndex(list);
-		//Then
-		assertThat(index, is(equalTo(0)));
-	}
-	
-	@Test
-	public void shouldReturnNotFoundIssueColumnIndexWhenNullListProvided() {
-		//Given
-		DValidator dValidator = new DValidator();
-		List<String> list = null;
-		//When
-		int index = dValidator.getIssueColumnIndex(list);
-		//Then
-		assertThat(index, is(equalTo(-1)));
-	}
-	
-	@Test
-	public void shouldReturnNotFoundIssueColumnIndexWhenEmptyListProvided() {
-		//Given
-		DValidator dValidator = new DValidator();
-		List<String> list = new ArrayList<>();
-		//When
-		int index = dValidator.getIssueColumnIndex(list);
-		//Then
-		assertThat(index, is(equalTo(-1)));
-	}
-	
-	@Test
-	public void shouldReturnNotFoundIssueColumnIndexWhenStringListProvided() {
-		//Given
-		DValidator dValidator = new DValidator();
-		List<String> list = new ArrayList<>();
-		list.add("abc");
-		//When
-		int index = dValidator.getIssueColumnIndex(list);
-		//Then
-		assertThat(index, is(equalTo(-1)));
-	}
-	
 	private void givenPrecisionParams() {
 		params.put(Strings.AZIMUTH_MAG_PRECISION, Arrays.asList("6"));
 		params.put(Strings.DIP_PRECISION, Arrays.asList("6"));
