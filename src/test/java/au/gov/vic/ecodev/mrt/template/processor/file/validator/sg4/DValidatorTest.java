@@ -44,6 +44,7 @@ public class DValidatorTest {
 		givenTestConditions();
 		String[] datas = { "D", "KPDD001", "392200", "6589600", "320", "210", "DD", "-90", "270" };
 		givenTestInstance(datas);
+		givenSampleCondition(dValidator);
 		// When
 		Optional<List<String>> errorMessages = dValidator.validate(params, mockDataBean);
 		// Then
@@ -62,6 +63,7 @@ public class DValidatorTest {
 		params.put(Strings.NUMBER_OF_DATA_RECORDS_ADDED, Arrays.asList("1"));
 		String[] datas = { "D", "KPDD001", "392200", "6589600", "320", "210", "DD", "-90", "270" };
 		givenTestInstance(datas);
+		givenSampleCondition(dValidator);
 		// When
 		Optional<List<String>> errorMessages = dValidator.validate(params, mockDataBean);
 		// Then
@@ -80,6 +82,7 @@ public class DValidatorTest {
 		params.put(Strings.NUMBER_OF_DATA_RECORDS_ADDED, Arrays.asList("abc"));
 		String[] datas = { "D", "KPDD001", "392200", "6589600", "320", "210", "DD", "-90", "270" };
 		givenTestInstance(datas);
+		givenSampleCondition(dValidator);
 		// When
 		Optional<List<String>> errorMessages = dValidator.validate(params, mockDataBean);
 		// Then
@@ -99,6 +102,7 @@ public class DValidatorTest {
 		givenTestConditions();
 		String[] datas = { "D", "KPDD001", "39220.1", "6589600", "320", "210", "DD", "-90", "270" };
 		givenTestInstance(datas);
+		givenSampleCondition(dValidator);
 		// When
 		Optional<List<String>> errorMessages = dValidator.validate(params, mockDataBean);
 		// Then
@@ -115,6 +119,7 @@ public class DValidatorTest {
 		givenAmgTestConditions();
 		String[] datas = { "D", "KPDD001", "39220.1", "6589600", "320", "210", "DD", "-90", "270" };
 		givenTestInstance(datas);
+		givenSampleAMGCondition(dValidator);
 		// When
 		Optional<List<String>> errorMessages = dValidator.validate(params, mockDataBean);
 		// Then
@@ -131,6 +136,7 @@ public class DValidatorTest {
 		givenTestConditions();
 		String[] datas = { "D", "KPDD001", "392200", "65896.1", "320", "210", "DD", "-90", "270" };
 		givenTestInstance(datas);
+		givenSampleCondition(dValidator);
 		// When
 		Optional<List<String>> errorMessages = dValidator.validate(params, mockDataBean);
 		// Then
@@ -147,6 +153,7 @@ public class DValidatorTest {
 		givenAmgTestConditions();
 		String[] datas = { "D", "KPDD001", "392200", "65896.1", "320", "210", "DD", "-90", "270" };
 		givenTestInstance(datas);
+		givenSampleAMGCondition(dValidator);
 		// When
 		Optional<List<String>> errorMessages = dValidator.validate(params, mockDataBean);
 		// Then
@@ -164,6 +171,7 @@ public class DValidatorTest {
 		givenTestConditions();
 		String[] datas = { "D", "KPDD001", "392200", "6589600", "320", "210", "DD", "-90", "270" };
 		givenTestInstance(datas);
+		givenSampleCondition(dValidator);
 		params.get(Strings.COLUMN_HEADERS).set(0, "xxx");
 		// When
 		Optional<List<String>> errorMessages = dValidator.validate(params, mockDataBean);
@@ -181,6 +189,7 @@ public class DValidatorTest {
 		givenTestConditions();
 		String[] datas = { "D", "KPDD001", "392200", "6589600", "320", "210", "DD", "-90", "270" };
 		givenTestInstance(datas);
+		givenSampleCondition(dValidator);
 		params.get(Strings.COLUMN_HEADERS).set(3, "xxx");
 		// When
 		Optional<List<String>> errorMessages = dValidator.validate(params, mockDataBean);
@@ -343,5 +352,37 @@ public class DValidatorTest {
 		dValidator = new DValidator();
 		dValidator.init(datas);
 		dValidator.setTemplateProcessorContext(mockContext);
+	}
+	
+	private void givenSampleCondition(DValidator dValidator) {
+		TemplateProcessorContext mockContext = Mockito.mock(TemplateProcessorContext.class);
+		mockVictoriaMapServices = Mockito.mock(VictoriaMapServices.class);
+		when(mockVictoriaMapServices.isWithinMga54NorthEast(Matchers.any(BigDecimal.class), Matchers.any(BigDecimal.class)))
+			.thenReturn(true);
+		when(mockVictoriaMapServices.isWithinTenementMga54NorthEast(
+				Matchers.anyString(), Matchers.any(BigDecimal.class), 
+				Matchers.any(BigDecimal.class)))
+			.thenReturn(true);
+		when(mockContext.getMapServices()).thenReturn(mockVictoriaMapServices);
+		dValidator.setTemplateProcessorContext(mockContext);
+		params.put(Strings.TITLE_PREFIX + H0531Validator.PROJECTION_ZONE_TITLE, 
+				Arrays.asList("54"));
+		when(mockDataBean.get(Strings.KEY_H0100)).thenReturn(Arrays.asList("Tenement_no", "EL123"));
+	}
+	
+	private void givenSampleAMGCondition(DValidator dValidator) {
+		TemplateProcessorContext mockContext = Mockito.mock(TemplateProcessorContext.class);
+		mockVictoriaMapServices = Mockito.mock(VictoriaMapServices.class);
+		when(mockVictoriaMapServices.isWithinAgd54NorthEast(Matchers.any(BigDecimal.class), 
+				Matchers.any(BigDecimal.class))).thenReturn(true);
+		when(mockVictoriaMapServices.isWithinTenementAgd54NorthEast(
+				Matchers.anyString(), Matchers.any(BigDecimal.class), 
+				Matchers.any(BigDecimal.class)))
+			.thenReturn(true);
+		when(mockContext.getMapServices()).thenReturn(mockVictoriaMapServices);
+		dValidator.setTemplateProcessorContext(mockContext);
+		params.put(Strings.TITLE_PREFIX + H0531Validator.PROJECTION_ZONE_TITLE, 
+				Arrays.asList("54"));
+		when(mockDataBean.get(Strings.KEY_H0100)).thenReturn(Arrays.asList("Tenement_no", "EL123"));
 	}
 }

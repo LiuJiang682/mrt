@@ -23,6 +23,7 @@ import au.gov.vic.ecodev.mrt.fixture.TestFixture;
 import au.gov.vic.ecodev.mrt.model.sg4.SurfaceGeochemistry;
 import au.gov.vic.ecodev.mrt.template.fields.Sg4ColumnHeaders;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
+import au.gov.vic.ecodev.mrt.template.processor.model.MrtTemplateValue;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 
 public class SurfaceGeochemistryUpdaterTest {
@@ -41,8 +42,9 @@ public class SurfaceGeochemistryUpdaterTest {
 		givenMockTemplateData();
 		List<Integer> managdatoryIndexList = new ArrayList<>();
 		testInstance.init(managdatoryIndexList);
+		MrtTemplateValue value = new MrtTemplateValue(TestFixture.getSg4DataList(), -1);
 		//When
-		testInstance.update(TestFixture.getSg4DataList());
+		testInstance.update(value);
 		//Then
 		ArgumentCaptor<SurfaceGeochemistry> surfaceGeochemistryCaptor = ArgumentCaptor
 				.forClass(SurfaceGeochemistry.class);
