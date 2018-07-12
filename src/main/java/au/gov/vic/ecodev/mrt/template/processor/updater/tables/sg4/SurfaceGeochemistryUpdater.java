@@ -11,7 +11,9 @@ import au.gov.vic.ecodev.mrt.dao.sg4.SurfaceGeochemistryDao;
 import au.gov.vic.ecodev.mrt.model.sg4.SurfaceGeochemistry;
 import au.gov.vic.ecodev.mrt.template.fields.Sg4ColumnHeaders;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
+import au.gov.vic.ecodev.mrt.template.processor.model.MrtTemplateValue;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
+import au.gov.vic.ecodev.mrt.template.processor.model.TemplateValue;
 import au.gov.vic.ecodev.mrt.template.processor.updater.helper.DataExtractionHelper;
 import au.gov.vic.ecodev.mrt.template.processor.updater.helper.ProjectionZoneExtractionHelper;
 
@@ -51,7 +53,9 @@ public class SurfaceGeochemistryUpdater {
 		amgZone = new ProjectionZoneExtractionHelper(template).extractAmgZoneFromTemplate();
 	}
 
-	public void update(List<String> dataRecordList) {
+	public void update(TemplateValue templateValue) {
+		MrtTemplateValue mrtTemplateValue = (MrtTemplateValue)templateValue;
+		List<String> dataRecordList = mrtTemplateValue.getDatas();
 		SurfaceGeochemistry surfaceGeochemistry = new SurfaceGeochemistry();
 		surfaceGeochemistry.setId(IDGenerator.getUID().longValue());
 		surfaceGeochemistry.setLoaderId(sessionId);

@@ -12,6 +12,7 @@ import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDaoImpl;
 import au.gov.vic.ecodev.mrt.dao.sg4.SurfaceGeochemistryDao;
 import au.gov.vic.ecodev.mrt.dao.sg4.SurfaceGeochemistryDaoImpl;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
+import au.gov.vic.ecodev.mrt.template.processor.model.MrtTemplateValue;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.persistent.Dao;
 import au.gov.vic.ecodev.mrt.template.processor.update.TemplateUpdater;
@@ -58,9 +59,10 @@ public class Sg4TemplateUpdater implements TemplateUpdater {
 			int numOfRecords = new NumberOfRecordsTemplateExtractor()
 					.extractNumOfRecordsFromTemplate(template);
 			for(int index = Numeral.ONE; index <= numOfRecords; index++) {
-				List<String> dataRecordList = template.get(Strings.DATA_RECORD_PREFIX + index);
-				surfaceGeochemistryUpdater.update(dataRecordList);
-				templateOptionalFiledUpdater.update(dataRecordList, index);
+				MrtTemplateValue mrtTemplateValue = (MrtTemplateValue) template
+						.getTemplateValue(Strings.DATA_RECORD_PREFIX + index);
+				surfaceGeochemistryUpdater.update(mrtTemplateValue);
+				templateOptionalFiledUpdater.update(mrtTemplateValue.getDatas(), index);
 			}
 			templateOptionalFiledUpdater.flush();
 		} catch(Exception e) {
