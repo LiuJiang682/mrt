@@ -11,12 +11,14 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -28,6 +30,7 @@ import au.gov.vic.ecodev.mrt.dao.sg4.SurfaceGeochemistryDao;
 import au.gov.vic.ecodev.mrt.dao.sg4.SurfaceGeochemistryDaoImpl;
 import au.gov.vic.ecodev.mrt.fixture.TestFixture;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
+import au.gov.vic.ecodev.mrt.template.processor.model.MrtTemplateValue;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.persistent.Dao;
 import au.gov.vic.ecodev.mrt.template.processor.updater.tables.TemplateOptionalFieldUpdater;
@@ -48,6 +51,8 @@ public class Sg4TemplateUpdaterTest {
 		Template mockTemplate = Mockito.mock(Template.class);
 		when(mockTemplate.get(eq("H0203"))).thenReturn(TestFixture.getNumList());
 		when(mockTemplate.get(eq("H1000"))).thenReturn(TestFixture.getSg4MandatoryColumnsList());
+		MrtTemplateValue value = new MrtTemplateValue(new ArrayList(), -1);
+		when(mockTemplate.getTemplateValue(Matchers.anyString())).thenReturn(value);
 		SurfaceGeochemistryDao mockSurfaceGeochemistryDao = Mockito.mock(SurfaceGeochemistryDao.class);
 		TemplateOptionalFieldDao mockTemplateOptionalFieldDao = 
 				Mockito.mock(TemplateOptionalFieldDao.class);
@@ -70,7 +75,7 @@ public class Sg4TemplateUpdaterTest {
 		assertThat(capturedIndexList, is(notNullValue()));
 		assertThat(capturedIndexList.size(), is(equalTo(1)));
 		
-		ArgumentCaptor<List> listCaptor = ArgumentCaptor.forClass(List.class);
+		ArgumentCaptor<MrtTemplateValue> listCaptor = ArgumentCaptor.forClass(MrtTemplateValue.class);
 		verify(mockSurfaceGeochemistryUpdater, times(3)).update(listCaptor.capture());
 		List capturedList = listCaptor.getAllValues();
 		assertThat(capturedList, is(notNullValue()));
