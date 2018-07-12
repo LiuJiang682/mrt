@@ -119,7 +119,7 @@ public class BoreHolePositionValidatorTest {
 		testInstance.validate(messages);
 		//Then
 		assertThat(messages.size(), is(equalTo(1)));
-		assertThat(messages.get(0), is(equalTo("WARNING: No tenement no provided!")));
+		assertThat(messages.get(0), is(equalTo("WARNING: No tenement number provided!")));
 		ArgumentCaptor<BigDecimal> eastingCaptor = ArgumentCaptor.forClass(BigDecimal.class);
 		ArgumentCaptor<BigDecimal> northingCaptor = ArgumentCaptor.forClass(BigDecimal.class);
 		verify(mockVictoriaMapServices).isWithinMga54NorthEast(eastingCaptor.capture(), 
@@ -213,7 +213,7 @@ public class BoreHolePositionValidatorTest {
 		testInstance.validate(messages);
 		//Then
 		assertThat(messages.size(), is(equalTo(1)));
-		assertThat(messages.get(0), is(equalTo("WARNING: No tenement no provided!")));
+		assertThat(messages.get(0), is(equalTo("WARNING: No tenement number provided!")));
 		ArgumentCaptor<BigDecimal> latitudeCaptor = ArgumentCaptor.forClass(BigDecimal.class);
 		ArgumentCaptor<BigDecimal> longitudeCaptor = ArgumentCaptor.forClass(BigDecimal.class);
 		verify(mockVictoriaMapServices).isWithinMga54LatitudeLongitude(latitudeCaptor.capture(), 
@@ -324,7 +324,7 @@ public class BoreHolePositionValidatorTest {
 		testInstance.validate(messages);
 		//Then
 		assertThat(messages.size(), is(equalTo(1)));
-		assertThat(messages.get(0), is(equalTo("WARNING: No tenement no provided!")));
+		assertThat(messages.get(0), is(equalTo("WARNING: No tenement number provided!")));
 		ArgumentCaptor<BigDecimal> eastingCaptor = ArgumentCaptor.forClass(BigDecimal.class);
 		ArgumentCaptor<BigDecimal> northingCaptor = ArgumentCaptor.forClass(BigDecimal.class);
 		verify(mockVictoriaMapServices).isWithinAgd54NorthEast(eastingCaptor.capture(), 
@@ -424,7 +424,7 @@ public class BoreHolePositionValidatorTest {
 		testInstance.validate(messages);
 		//Then
 		assertThat(messages.size(), is(equalTo(1)));
-		assertThat(messages.get(0), is(equalTo("WARNING: No tenement no provided!")));
+		assertThat(messages.get(0), is(equalTo("WARNING: No tenement number provided!")));
 		ArgumentCaptor<BigDecimal> eastingCaptor = ArgumentCaptor.forClass(BigDecimal.class);
 		ArgumentCaptor<BigDecimal> northingCaptor = ArgumentCaptor.forClass(BigDecimal.class);
 		verify(mockVictoriaMapServices).isWithinMga55NorthEast(eastingCaptor.capture(), 
@@ -526,7 +526,7 @@ public class BoreHolePositionValidatorTest {
 		testInstance.validate(messages);
 		//Then
 		assertThat(messages.size(), is(equalTo(1)));
-		assertThat(messages.get(0), is(equalTo("WARNING: No tenement no provided!")));
+		assertThat(messages.get(0), is(equalTo("WARNING: No tenement number provided!")));
 		ArgumentCaptor<BigDecimal> eastingCaptor = ArgumentCaptor.forClass(BigDecimal.class);
 		ArgumentCaptor<BigDecimal> northingCaptor = ArgumentCaptor.forClass(BigDecimal.class);
 		verify(mockVictoriaMapServices).isWithinAgd55NorthEast(eastingCaptor.capture(), 
@@ -743,7 +743,7 @@ public class BoreHolePositionValidatorTest {
 		testInstance.validate(messages);
 		//Then
 		assertThat(messages.size(), is(equalTo(1)));
-		assertThat(messages.get(0), is(equalTo("WARNING: No tenement no provided!")));
+		assertThat(messages.get(0), is(equalTo("WARNING: No tenement number provided!")));
 		ArgumentCaptor<BigDecimal> latitudeCaptor = ArgumentCaptor.forClass(BigDecimal.class);
 		ArgumentCaptor<BigDecimal> longitudeCaptor = ArgumentCaptor.forClass(BigDecimal.class);
 		verify(mockVictoriaMapServices).isWithinMga55LatitudeLongitude(latitudeCaptor.capture(), 
@@ -780,7 +780,7 @@ public class BoreHolePositionValidatorTest {
 		testInstance.validate(messages);
 		//Then
 		assertThat(messages.size(), is(equalTo(1)));
-		assertThat(messages.get(0), is(equalTo("WARNING: No tenement no provided!")));
+		assertThat(messages.get(0), is(equalTo("WARNING: No tenement number provided!")));
 		ArgumentCaptor<BigDecimal> latitudeCaptor = ArgumentCaptor.forClass(BigDecimal.class);
 		ArgumentCaptor<BigDecimal> longitudeCaptor = ArgumentCaptor.forClass(BigDecimal.class);
 		verify(mockVictoriaMapServices).isWithinMga55LatitudeLongitude(latitudeCaptor.capture(), 
