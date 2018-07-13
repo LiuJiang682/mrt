@@ -50,6 +50,8 @@ public interface Constants {
 		static final String UNDER_LINE_DATA_KEY = "_D";
 		static final String PARTIAL_FILE_NAME_KEY = "isPartialFileName";
 		static final String ISSUE_COLUMN_INDEX = "issueColumnIndex";
+		static final String KEY_H0535 = "H0535";
+		static final String KEY_H0534 = "H0534";
 	}
 	
 	interface Numeral {
