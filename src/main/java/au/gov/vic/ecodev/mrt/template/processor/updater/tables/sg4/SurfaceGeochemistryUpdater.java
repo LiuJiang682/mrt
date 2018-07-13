@@ -68,6 +68,7 @@ public class SurfaceGeochemistryUpdater {
 		surfaceGeochemistry.setSampleType((String) new NullSafeCollections(dataRecordList)
 				.get(sampleTypeIndex));
 		surfaceGeochemistry.setAmgZone(amgZone);
+		surfaceGeochemistry.setIssueColumnIndex(mrtTemplateValue.getIssueColumnIndex());
 		surfaceGeochemistryDao.updateOrSave(surfaceGeochemistry);
 	}
 	
