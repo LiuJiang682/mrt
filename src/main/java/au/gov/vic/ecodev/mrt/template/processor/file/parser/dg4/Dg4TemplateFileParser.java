@@ -18,6 +18,7 @@ import au.gov.vic.ecodev.mrt.template.processor.context.properties.dg4.Dg4ToSl4H
 import au.gov.vic.ecodev.mrt.template.processor.context.properties.dg4.Dg4ToSl4ToCrossChecker;
 import au.gov.vic.ecodev.mrt.template.processor.context.properties.utils.MultiStringValueToListConventor;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
+import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.H0203DataIntegrityValidator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.dg4.Dg4ValidatorFactory;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.model.dg4.Dg4Template;
@@ -69,6 +70,8 @@ public class Dg4TemplateFileParser {
 			}
 		}
 		
+		template = new H0203DataIntegrityValidator().doFileDataIntegrityCheck(templateParamMap, template, 
+				context, file);
 		doTemplateSavingAndIntegrityCheck(template);
 	}
 	
