@@ -23,7 +23,7 @@ import au.gov.vic.ecodev.mrt.template.processor.updater.tables.dg4.GeoChemistryU
 
 public class Dg4TemplateUpdater implements TemplateUpdater {
 
-	private static final List<String> TEMPLATE_PERSISTENT_KEY_LIST = Arrays.asList("H1001", "H1002", "H1003");
+	private static final List<String> TEMPLATE_PERSISTENT_KEY_LIST = Arrays.asList("H1001", "H1002", "H1003", "H1004", "H1005", "H1006", "H1007");
 			
 	private List<Dao> daos;
 	
