@@ -15,6 +15,7 @@ import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext;
 import au.gov.vic.ecodev.mrt.template.processor.context.properties.utils.MultiStringValueToListConventor;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
+import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.H0203DataIntegrityValidator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.sg4.DValidator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.sg4.Sg4ValidatorFactory;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
@@ -68,6 +69,9 @@ public class Sg4TemplateFileParser {
 						file, lineNumber).doMessagesHandling();
 			}
 		}
+		
+		dataBean = new H0203DataIntegrityValidator().doFileDataIntegrityCheck(templateParamMap, dataBean, 
+				context, file);
 		
 		if (null != dataBean) {
 			if (context.saveDataBean(dataBean)) {
