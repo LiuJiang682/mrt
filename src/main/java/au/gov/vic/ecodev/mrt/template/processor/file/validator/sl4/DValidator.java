@@ -80,7 +80,7 @@ public class DValidator implements Validator {
 			strs[Numeral.ZERO] += count;
 		} 
 		int issueColumnIndex = new IssueColumnIndexHelper().
-				getIssueColumnIndex(templateParamMap.get(Strings.ISSUE_COLUMN_INDEX));
+				getIssueColumnIndex(templateParamMap.remove(Strings.ISSUE_COLUMN_INDEX));
 		return new ValidatorHelper(messages, hasErrorMessage, issueColumnIndex)
 				.updateDataBeanOrCreateErrorOptional(strs, dataBean);
 	}
