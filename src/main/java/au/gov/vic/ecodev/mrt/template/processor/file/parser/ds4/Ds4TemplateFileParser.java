@@ -18,6 +18,7 @@ import au.gov.vic.ecodev.mrt.template.processor.context.properties.ds4.Ds4ToSl4S
 import au.gov.vic.ecodev.mrt.template.processor.context.properties.utils.MultiStringValueToListConventor;
 import au.gov.vic.ecodev.mrt.template.processor.context.properties.utils.SingleStringValueToListConventor;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
+import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.H0203H0534H0535DataIntegrityValidator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.ds4.Ds4ValidatorFactory;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.model.ds4.Ds4Template;
@@ -73,7 +74,9 @@ public class Ds4TemplateFileParser {
 						file, lineNumber).doMessagesHandling();
 			}
 		}
-		
+		 
+		template = new H0203H0534H0535DataIntegrityValidator().doFileDataIntegrityCheck(templateParamMap, template, 
+				context, file);
 		doTemplateSavingAndIntegrityCheck(template);
 	}
 
