@@ -27,26 +27,23 @@ public class Sg4DefaultValidator implements Validator {
 	@Override
 	public Optional<List<String>> validate(Map<String, List<String>> templateParamMap, Template dataBean) {
 		List<String> messages = new ArrayList<>();
-		if (ArrayUtils.isNotEmpty(strs)) {
-			if ((Numeral.ONE == strs.length) 
-					&&(Strings.EOF.equalsIgnoreCase(strs[Numeral.ZERO]))) {
-				if (null == templateParamMap) {
-					String Message = "Parameter templateParamMap cannot be null!";
-					messages.add(Message);
-				} else {
-					List<String> expectedRecordsList = templateParamMap.get(Strings.NUMBER_OF_DATA_RECORDS_TITLE);
-					List<String> actualRecordsList = templateParamMap.get(Strings.NUMBER_OF_DATA_RECORDS_ADDED);
-					new DataRecordNumberValidator(expectedRecordsList, 
-							actualRecordsList).validate(messages);
-//					new MandatoryRowChecker(templateParamMap.get(KEY_H0534), KEY_H0534)
-//						.validate(messages);
-//					new MandatoryRowChecker(templateParamMap.get(KEY_H0535), KEY_H0535)
-//						.validate(messages);
-				}
-			}
-		}
-		boolean hasErrorMessage = new ErrorMessageChecker(messages).isContainsErrorMessages();
-		return new ValidatorHelper(messages, hasErrorMessage)
+//		if (ArrayUtils.isNotEmpty(strs)) {
+//			if ((Numeral.ONE == strs.length) 
+//					&&(Strings.EOF.equalsIgnoreCase(strs[Numeral.ZERO]))) {
+//				if (null == templateParamMap) {
+//					String Message = "Parameter templateParamMap cannot be null!";
+//					messages.add(Message);
+//				} else {
+//					List<String> expectedRecordsList = templateParamMap.get(Strings.NUMBER_OF_DATA_RECORDS_TITLE);
+//					List<String> actualRecordsList = templateParamMap.get(Strings.NUMBER_OF_DATA_RECORDS_ADDED);
+//					new DataRecordNumberValidator(expectedRecordsList, 
+//							actualRecordsList).validate(messages);
+//				}
+//			}
+//		}
+//		boolean hasErrorMessage = new ErrorMessageChecker(messages).isContainsErrorMessages();
+//		return new ValidatorHelper(messages, hasErrorMessage)
+		return new ValidatorHelper(messages, false)
 				.updateDataBeanOrCreateErrorOptional(strs, dataBean);
 	}
 
