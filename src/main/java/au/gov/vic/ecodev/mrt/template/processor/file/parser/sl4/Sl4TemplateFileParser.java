@@ -15,6 +15,7 @@ import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext;
 import au.gov.vic.ecodev.mrt.template.processor.context.properties.utils.SingleStringValueToListConventor;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
+import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.H0203H0532H0533DataIntegrityValidator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.helper.FileNameHelper;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.sl4.DValidator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.sl4.Sl4ValidatorFactory;
@@ -85,6 +86,9 @@ public class Sl4TemplateFileParser {
 			}
 		}
 		
+		dataBean = new H0203H0532H0533DataIntegrityValidator()
+				.doFileDataIntegrityCheck(templateParamMap, dataBean, context, file);
+		
 		if (null != dataBean) {
 			if (context.saveDataBean(dataBean)) {
 				context.addPassedFiles(zipFile);
@@ -97,7 +101,7 @@ public class Sl4TemplateFileParser {
 	private LineNumberReader getLineNumberReader() throws Exception {
 		return new LineNumberReader(new FileReader(file.getAbsolutePath()));
 	}
-
+	
 	protected final List<String> getMandatoryValidateFields() throws TemplateProcessorException {
 		TemplateProperties sl4MandatoryFieldTemplateProperties = context.getTemplateContextProperty(TEMPLATE_PROP_SL4_MANDATORY_VALIDATE);
 		List<String> mandatoryFields = new StringToListTemplatePropertiesParser(sl4MandatoryFieldTemplateProperties, 
