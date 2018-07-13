@@ -51,6 +51,12 @@ public class SurfaceGeochemistryUpdaterTest {
 		verify(mockSurfaceGeochemistryDao).updateOrSave(surfaceGeochemistryCaptor.capture());
 		List<SurfaceGeochemistry> entities = surfaceGeochemistryCaptor.getAllValues();
 		assertThat(entities.size(), is(equalTo(1)));
+		SurfaceGeochemistry surfaceGeochemistry = entities.get(0);
+		assertThat(surfaceGeochemistry.getSampleId(), is(equalTo("KP32001")));
+		assertThat(surfaceGeochemistry.getEasting(), is(equalTo(new BigDecimal("392200"))));
+		assertThat(surfaceGeochemistry.getNorthing(), is(equalTo(new BigDecimal("6589600"))));
+		assertThat(surfaceGeochemistry.getSampleType(), is(equalTo("SOI")));
+		assertThat(surfaceGeochemistry.getIssueColumnIndex(), is(equalTo(-1)));
 		assertThat(managdatoryIndexList.size(), is(equalTo(4)));
 		assertThat(managdatoryIndexList.contains(0), is(true));
 		assertThat(managdatoryIndexList.contains(1), is(true));
