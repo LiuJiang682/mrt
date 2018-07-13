@@ -64,77 +64,77 @@ public class Dg4DefaultValidatorTest {
 		verify(mockDataBean, times(0)).put(Matchers.anyString(), Matchers.anyListOf(String.class));
 	}
 	
-	@Test
-	public void shouldReturnIncorrectSizeMessageWhenStringArrayIsEof() {
-		// Given
-		givenTestInstance();
-		String[] strs = { "EOF" };
-		testInstance.init(strs);
-		Map<String, List<String>> params = new HashMap<>();
-		params.put(Strings.NUMBER_OF_DATA_RECORDS_TITLE, Arrays.asList("3"));
-		params.put(Strings.NUMBER_OF_DATA_RECORDS_ADDED, Arrays.asList("2"));
-		// When
-		Optional<List<String>> errorMessages = testInstance.validate(params, mockDataBean);
-		// Then
-		assertThat(errorMessages.isPresent(), is(true));
-		List<String> messages = errorMessages.get();
-		assertThat(messages.size(), is(equalTo(1)));
-		assertThat(messages.get(0),
-				is(equalTo("Number_of_data_records in the templateParamMap is 3 and Number_of_records_added is 2")));
-		verify(mockDataBean, times(0)).put(Matchers.anyString(), Matchers.anyListOf(String.class));
-	}
+//	@Test
+//	public void shouldReturnIncorrectSizeMessageWhenStringArrayIsEof() {
+//		// Given
+//		givenTestInstance();
+//		String[] strs = { "EOF" };
+//		testInstance.init(strs);
+//		Map<String, List<String>> params = new HashMap<>();
+//		params.put(Strings.NUMBER_OF_DATA_RECORDS_TITLE, Arrays.asList("3"));
+//		params.put(Strings.NUMBER_OF_DATA_RECORDS_ADDED, Arrays.asList("2"));
+//		// When
+//		Optional<List<String>> errorMessages = testInstance.validate(params, mockDataBean);
+//		// Then
+//		assertThat(errorMessages.isPresent(), is(true));
+//		List<String> messages = errorMessages.get();
+//		assertThat(messages.size(), is(equalTo(1)));
+//		assertThat(messages.get(0),
+//				is(equalTo("Number_of_data_records in the templateParamMap is 3 and Number_of_records_added is 2")));
+//		verify(mockDataBean, times(0)).put(Matchers.anyString(), Matchers.anyListOf(String.class));
+//	}
 	
-	@Test
-	public void shouldReturnNoActualRecordMessageWhenStringArrayIsEofAndNoActualRecordParam() {
-		// Given
-		givenTestInstance();
-		String[] strs = { "EOF" };
-		testInstance.init(strs);
-		Map<String, List<String>> params = new HashMap<>();
-		params.put(Strings.NUMBER_OF_DATA_RECORDS_TITLE, Arrays.asList("3"));
-		// When
-		Optional<List<String>> errorMessages = testInstance.validate(params, mockDataBean);
-		// Then
-		assertThat(errorMessages.isPresent(), is(true));
-		List<String> messages = errorMessages.get();
-		assertThat(messages.size(), is(equalTo(1)));
-		assertThat(messages.get(0), is(equalTo("No Number_of_records_added in the templateParamMap")));
-		verify(mockDataBean, times(0)).put(Matchers.anyString(), Matchers.anyListOf(String.class));
-	}
+//	@Test
+//	public void shouldReturnNoActualRecordMessageWhenStringArrayIsEofAndNoActualRecordParam() {
+//		// Given
+//		givenTestInstance();
+//		String[] strs = { "EOF" };
+//		testInstance.init(strs);
+//		Map<String, List<String>> params = new HashMap<>();
+//		params.put(Strings.NUMBER_OF_DATA_RECORDS_TITLE, Arrays.asList("3"));
+//		// When
+//		Optional<List<String>> errorMessages = testInstance.validate(params, mockDataBean);
+//		// Then
+//		assertThat(errorMessages.isPresent(), is(true));
+//		List<String> messages = errorMessages.get();
+//		assertThat(messages.size(), is(equalTo(1)));
+//		assertThat(messages.get(0), is(equalTo("No Number_of_records_added in the templateParamMap")));
+//		verify(mockDataBean, times(0)).put(Matchers.anyString(), Matchers.anyListOf(String.class));
+//	}
 	
-	@Test
-	public void shouldReturnNoExpectedRecordMessageWhenStringArrayIsEofAndNoExpectedRecordParam() {
-		// Given
-		givenTestInstance();
-		String[] strs = { "EOF" };
-		testInstance.init(strs);
-		Map<String, List<String>> params = new HashMap<>();
-		params.put(Strings.NUMBER_OF_DATA_RECORDS_ADDED, Arrays.asList("3"));
-		// When
-		Optional<List<String>> errorMessages = testInstance.validate(params, mockDataBean);
-		// Then
-		assertThat(errorMessages.isPresent(), is(true));
-		List<String> messages = errorMessages.get();
-		assertThat(messages.size(), is(equalTo(1)));
-		assertThat(messages.get(0), is(equalTo("No Number_of_data_records in the templateParamMap")));
-		verify(mockDataBean, times(0)).put(Matchers.anyString(), Matchers.anyListOf(String.class));
-	}
+//	@Test
+//	public void shouldReturnNoExpectedRecordMessageWhenStringArrayIsEofAndNoExpectedRecordParam() {
+//		// Given
+//		givenTestInstance();
+//		String[] strs = { "EOF" };
+//		testInstance.init(strs);
+//		Map<String, List<String>> params = new HashMap<>();
+//		params.put(Strings.NUMBER_OF_DATA_RECORDS_ADDED, Arrays.asList("3"));
+//		// When
+//		Optional<List<String>> errorMessages = testInstance.validate(params, mockDataBean);
+//		// Then
+//		assertThat(errorMessages.isPresent(), is(true));
+//		List<String> messages = errorMessages.get();
+//		assertThat(messages.size(), is(equalTo(1)));
+//		assertThat(messages.get(0), is(equalTo("No Number_of_data_records in the templateParamMap")));
+//		verify(mockDataBean, times(0)).put(Matchers.anyString(), Matchers.anyListOf(String.class));
+//	}
 	
-	@Test
-	public void shouldReturnNullParamsMessageWhenStringArrayIsEofAndParamIsNull() {
-		// Given
-		givenTestInstance();
-		String[] strs = { "EOF" };
-		testInstance.init(strs);
-		// When
-		Optional<List<String>> errorMessages = testInstance.validate(null, mockDataBean);
-		// Then
-		assertThat(errorMessages.isPresent(), is(true));
-		List<String> messages = errorMessages.get();
-		assertThat(messages.size(), is(equalTo(1)));
-		assertThat(messages.get(0), is(equalTo("Parameter templateParamMap cannot be null!")));
-		verify(mockDataBean, times(0)).put(Matchers.anyString(), Matchers.anyListOf(String.class));
-	}
+//	@Test
+//	public void shouldReturnNullParamsMessageWhenStringArrayIsEofAndParamIsNull() {
+//		// Given
+//		givenTestInstance();
+//		String[] strs = { "EOF" };
+//		testInstance.init(strs);
+//		// When
+//		Optional<List<String>> errorMessages = testInstance.validate(null, mockDataBean);
+//		// Then
+//		assertThat(errorMessages.isPresent(), is(true));
+//		List<String> messages = errorMessages.get();
+//		assertThat(messages.size(), is(equalTo(1)));
+//		assertThat(messages.get(0), is(equalTo("Parameter templateParamMap cannot be null!")));
+//		verify(mockDataBean, times(0)).put(Matchers.anyString(), Matchers.anyListOf(String.class));
+//	}
 	
 	@Test
 	public void shouldReturnEmptyMessageWhenStringArrayIsNull() {
