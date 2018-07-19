@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections4.MapUtils;
+
 import au.gov.vic.ecodev.mrt.template.processor.services.PersistentServices;
 
 public class TemplateOwnerEmailHelper {
@@ -19,7 +21,9 @@ public class TemplateOwnerEmailHelper {
 		templateNames.stream()
 				.forEach(templateName -> {
 					Map<String, Object> ownerEmail =  persistentServices.getTemplateOwnerEmail(templateName);
-					ownerEmails.add(ownerEmail);
+					if (MapUtils.isNotEmpty(ownerEmail)) {
+						ownerEmails.add(ownerEmail);
+					}
 				});
 		return ownerEmails;
 	}

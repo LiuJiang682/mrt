@@ -1,7 +1,7 @@
 package au.gov.vic.ecodev.mrt.template.loader.fsm;
 
-import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.eq;
@@ -140,6 +140,44 @@ public class NotifyUserStateTest {
 		boolean emailSent = testInstance.doEmailDispatch(mockTemplateLoaderStateMachineContext, emailBuildersMap);
 		//Then
 		assertThat(emailSent, is(false));
+	}
+	
+	@Test
+	public void shouldReturnOwnerEmailPropertiesWhenTemplateProvided() throws Exception {
+		//Given
+		givenTestInstance();
+		Message message = new DefaultMessage();
+		List<Map<String, Object>> owenerEmails = new ArrayList<>();
+		Map<String, Object> emailMap = new HashMap<>();
+		emailMap.put("OWNER_EMAILS", "jiang.liu@ecodev.vic.gov.au");
+		emailMap.put("EMAILS_BUILDER", "au.gov.vic.ecodev.mrt.mail.Mailer");
+		owenerEmails.add(emailMap);
+		message.setTemplateOwnerEmail(owenerEmails);
+		when(mockTemplateLoaderStateMachineContext.getMessage()).thenReturn(message);
+		//When
+		List<Map<String, Object>> emailProperties = testInstance.getTemplateOwnerEmail(mockTemplateLoaderStateMachineContext);
+		//Then
+		assertThat(emailProperties, is(notNullValue()));
+		assertThat(emailProperties.size(), is(equalTo(1)));
+		Map<String, Object> retrievedEmailMap = emailProperties.get(0);
+		assertThat(retrievedEmailMap.get("OWNER_EMAILS"), is(equalTo("jiang.liu@ecodev.vic.gov.au")));
+		assertThat(retrievedEmailMap.get("EMAILS_BUILDER"), is(equalTo("au.gov.vic.ecodev.mrt.mail.Mailer")));
+	}
+	
+	@Test
+	public void shouldReturnOwnerEmailPropertiesWhenTemplateIsNotProvided() throws Exception {
+		//Given
+		givenTestInstance();
+		Message message = new DefaultMessage();
+		when(mockTemplateLoaderStateMachineContext.getMessage()).thenReturn(message);
+		//When
+		List<Map<String, Object>> emailProperties = testInstance.getTemplateOwnerEmail(mockTemplateLoaderStateMachineContext);
+		//Then
+		assertThat(emailProperties, is(notNullValue()));
+		assertThat(emailProperties.size(), is(equalTo(1)));
+		Map<String, Object> retrievedEmailMap = emailProperties.get(0);
+		assertThat(retrievedEmailMap.get("OWNER_EMAILS"), is(equalTo("jiang.liu@ecodev.vic.gov.au")));
+		assertThat(retrievedEmailMap.get("EMAILS_BUILDER"), is(equalTo("au.gov.vic.ecodev.mrt.mail.MrtEmailBodyBuilder")));
 	}
 	
 	private void givenTestInstance() throws Exception {

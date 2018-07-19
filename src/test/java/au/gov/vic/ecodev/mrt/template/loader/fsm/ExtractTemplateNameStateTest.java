@@ -7,6 +7,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
 import org.junit.Test;
 import org.mockito.Matchers;
 import org.mockito.Mockito;
+import org.springframework.util.CollectionUtils;
 
 import au.gov.vic.ecodev.mrt.config.MrtConfigProperties;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.model.DefaultMessage;
@@ -71,7 +73,7 @@ public class ExtractTemplateNameStateTest {
 		assertThat(templateName.get(0), is(equalTo("mrt")));
 		assertThat(message.getBatchId(), is(equalTo(0L)));
 		assertThat(message.getDirectErrorMessage(), is(equalTo("Unable to create session!")));
-		verify(mockTemplateLoaderStateMachineContext).setNextStepToNotifyUser();
+		verify(mockTemplateLoaderStateMachineContext).setNextStepToMoveFileToNextStage();
 	}
 
 	
@@ -101,7 +103,27 @@ public class ExtractTemplateNameStateTest {
 		extractTemplateState.on(mockTemplateLoaderStateMachineContext);
 		//Then
 		assertThat(message.getDirectErrorMessage(), is(equalTo("No template name found in file: MyJava.java")));
-		verify(mockTemplateLoaderStateMachineContext).setNextStepToNotifyUser();
+		verify(mockTemplateLoaderStateMachineContext).setNextStepToMoveFileToNextStage();
+	}
+	
+	@Test
+	public void shouldAddFileToFailedFileWhenHandleErrorCalled() {
+		//Given
+		givenTestInstance();
+		TemplateLoaderStateMachineContext mockTemplateLoaderStateMachineContext = Mockito.mock(TemplateLoaderStateMachineContext.class);
+		Message message = new DefaultMessage();
+		message.setFileNames(Arrays.asList("MyJava.java"));
+		message.setAbsoluteFileNames(Arrays.asList("C:\\temp\\MyJava.java"));
+		when(mockTemplateLoaderStateMachineContext.getMessage()).thenReturn(message);
+		String errorMessage = "No template name found in file: MyJava.java";
+		//When
+		extractTemplateState.handleError(mockTemplateLoaderStateMachineContext, errorMessage);
+		//Then
+		assertThat(message.getDirectErrorMessage(), is(equalTo("No template name found in file: MyJava.java")));
+		verify(mockTemplateLoaderStateMachineContext, times(3)).getMessage();
+		verify(mockTemplateLoaderStateMachineContext).setNextStepToMoveFileToNextStage();
+		List<File> fileList = message.getFailedFiles();
+		assertThat(CollectionUtils.isEmpty(fileList), is(false));
 	}
 	
 	private void givenTestInstance() {

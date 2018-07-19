@@ -20,29 +20,39 @@ public class UnzipZipFileState implements LoaderState {
 	@Override
 	public void on(TemplateLoaderStateMachineContext templateLoaderStateMachineContext) {
 		List<File> zipFiles = templateLoaderStateMachineContext.getMessage().getFileList();
-		FileMover fileMover = new FileMover(zipFiles);
-		MrtConfigProperties mrtConfigProperties = templateLoaderStateMachineContext.getMrtConfigProperties();
-		String destination = mrtConfigProperties.getZipFileExtractDestination();
-		LOGGER.info("File move to: " + destination);
-		boolean overwrittenZipFile = mrtConfigProperties.getZipFileOverwritten();
-		List<File> newFiles = fileMover.moveFile(destination, overwrittenZipFile);
-		if (CollectionUtils.isEmpty(newFiles)) {
-			handleEmptyFileList(templateLoaderStateMachineContext, zipFiles, destination);
+		if (CollectionUtils.isEmpty(zipFiles)) {
+			handleEmpatyZipFile(templateLoaderStateMachineContext);
 		} else {
-			List<File> extractedDirs = new ArrayList<>();
-			File currentFile = null;
-			try {
-				for (File file : newFiles) {
-					currentFile = file;
-					ZipFileExtractor zipFileExtractor = new ZipFileExtractor(currentFile);
-					File dir = zipFileExtractor.extract();
-					extractedDirs.add(dir);
+			FileMover fileMover = new FileMover(zipFiles);
+			MrtConfigProperties mrtConfigProperties = templateLoaderStateMachineContext.getMrtConfigProperties();
+			String destination = mrtConfigProperties.getZipFileExtractDestination();
+			LOGGER.info("File move to: " + destination);
+			List<File> newFiles = fileMover.moveFile(destination);
+			if (CollectionUtils.isEmpty(newFiles)) {
+				handleEmptyFileList(templateLoaderStateMachineContext, zipFiles, destination);
+			} else {
+				List<File> extractedDirs = new ArrayList<>();
+				File currentFile = null;
+				try {
+					for (File file : newFiles) {
+						currentFile = file;
+						ZipFileExtractor zipFileExtractor = new ZipFileExtractor(currentFile);
+						File dir = zipFileExtractor.extract();
+						extractedDirs.add(dir);
+					}
+					templateLoaderStateMachineContext.getMessage().setFileList(extractedDirs);	
+				} catch (IOException e) {
+					handleIOException(templateLoaderStateMachineContext, newFiles, currentFile, e);
 				}
-				templateLoaderStateMachineContext.getMessage().setFileList(extractedDirs);	
-			} catch (IOException e) {
-				handleIOException(templateLoaderStateMachineContext, newFiles, currentFile, e);
 			}
 		}
+	}
+
+	protected void handleEmpatyZipFile(TemplateLoaderStateMachineContext templateLoaderStateMachineContext) {
+		String abnormalExitReason = "Empty zip file list!";
+		new ProcessorContextExceptionHelper().handleProcessorException(templateLoaderStateMachineContext,
+				null, 0, null, abnormalExitReason);
+		templateLoaderStateMachineContext.setNextStepToGenerateStatusLogState();
 	}
 
 	private void handleEmptyFileList(TemplateLoaderStateMachineContext templateLoaderStateMachineContext,

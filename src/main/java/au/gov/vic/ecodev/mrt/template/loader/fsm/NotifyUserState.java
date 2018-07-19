@@ -1,5 +1,6 @@
 package au.gov.vic.ecodev.mrt.template.loader.fsm;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -19,6 +20,8 @@ import au.gov.vic.ecodev.mrt.template.loader.fsm.helpers.TemplateLoaderStateMach
 
 public class NotifyUserState implements LoaderState {
 
+	private static final String DEFAULT_EMAIL_BODY_BUILDER = "au.gov.vic.ecodev.mrt.mail.MrtEmailBodyBuilder";
+
 	private static final Logger LOGGER = Logger.getLogger(NotifyUserState.class);
 	
 	private static final String EMAILS_BUILDER = "EMAILS_BUILDER";
@@ -27,13 +30,14 @@ public class NotifyUserState implements LoaderState {
 	@Override
 	public void on(TemplateLoaderStateMachineContext templateLoaderStateMachineContext) {
 		
-		List<Map<String, Object>> ownerEmails = templateLoaderStateMachineContext.getMessage().getTemplateOwnerEmail();
+		List<Map<String, Object>> ownerEmails = getTemplateOwnerEmail(templateLoaderStateMachineContext);
 		Map<String, Set<String>> emailBuildersMap = getEmailBuilderMap(ownerEmails);
 		 
 		boolean emailSent = doEmailDispatch(templateLoaderStateMachineContext, 
 				emailBuildersMap);
 		//Clean up
-		new TemplateLoaderStateMachineContextFinalStepHelper(templateLoaderStateMachineContext, emailSent).doFinalCleanUp();
+		new TemplateLoaderStateMachineContextFinalStepHelper(templateLoaderStateMachineContext, emailSent)
+			.doFinalCleanUp();
 	}
 
 	protected final boolean doEmailDispatch(TemplateLoaderStateMachineContext templateLoaderStateMachineContext,
@@ -76,5 +80,20 @@ public class NotifyUserState implements LoaderState {
 				emailList.add(toEmail);
 			});
 		return emailBuildersMap;
+	}
+
+	protected final List<Map<String, Object>> getTemplateOwnerEmail(final TemplateLoaderStateMachineContext 
+			templateLoaderStateMachineContext) {
+		List<Map<String, Object>> ownerEmails = templateLoaderStateMachineContext.getMessage().getTemplateOwnerEmail();
+		if (CollectionUtils.isEmpty(ownerEmails)) {
+			Map<String, Object> templateOwnerEmailProperties = new HashMap<>();
+			String toEmail = templateLoaderStateMachineContext.getMrtConfigProperties().getToEmail();
+			templateOwnerEmailProperties.put(OWNER_EMAILS, toEmail);
+			String builderClass = DEFAULT_EMAIL_BODY_BUILDER;
+			templateOwnerEmailProperties.put(EMAILS_BUILDER, builderClass);
+			ownerEmails = new ArrayList<>();
+			ownerEmails.add(templateOwnerEmailProperties);
+		}
+		return ownerEmails;
 	}
 }
