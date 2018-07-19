@@ -93,6 +93,18 @@ public class TemplateOwnerEmailHelperTest {
 		assertThat(foundSecondEmailBuilder, is(true));
 	}
 	
+	@Test
+	public void shouldNoExtractTemplateOwnerEmailsWhenNoData() {
+		//Given
+		givenTestInstance();
+		when(mockPersistentServices.getTemplateOwnerEmail(eq("abc"))).thenReturn(null);
+		//When
+		List<Map<String, Object>> ownerEmails = testInstance.extractTemplateOwnerEmails(Arrays.asList("abc"));
+		//Then
+		assertThat(ownerEmails, is(notNullValue()));
+		assertThat(ownerEmails.size(), is(equalTo(0)));
+	}
+	
 //	@Test
 //	public void shouldExtract3TemplateOwnerEmails() {
 //		//Given

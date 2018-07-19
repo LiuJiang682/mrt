@@ -17,7 +17,6 @@ import org.assertj.core.util.Files;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -132,7 +131,7 @@ public class UnzipZipFileStateTest {
 		when(mockTemplateLoaderStateMachineContext.getMessage()).thenReturn(message);
 		FileMover mockFileMover = Mockito.mock(FileMover.class);
 		PowerMockito.whenNew(FileMover.class).withArguments(eq(fileList)).thenReturn(mockFileMover);
-		when(mockFileMover.moveFile(eq("abc"), Matchers.anyBoolean())).thenReturn(fileList);
+		when(mockFileMover.moveFile(eq("abc"))).thenReturn(fileList);
 		ZipFileExtractor mockZipFileExtractor = Mockito.mock(ZipFileExtractor.class);
 		PowerMockito.whenNew(ZipFileExtractor.class).withArguments(eq(file)).thenReturn(mockZipFileExtractor);
 		when(mockZipFileExtractor.extract()).thenThrow(new IOException("Test"));
@@ -148,4 +147,29 @@ public class UnzipZipFileStateTest {
 		assertThat(logMessageCaptor.getValue(), is(equalTo("Test")));
 		verify(mockTemplateLoaderStateMachineContext).setNextStepToGenerateStatusLogState();
 	}
+	
+	@Test
+	public void shouldLogErrorWhenExecuteOnMethodWithNullZipFileList() throws Exception {
+		//Given
+		TemplateLoaderStateMachineContext mockTemplateLoaderStateMachineContext = 
+				Mockito.mock(TemplateLoaderStateMachineContext.class);
+		MrtConfigProperties properties = new MrtConfigProperties();
+		Whitebox.setInternalState(properties, "zipFileExtractDestination", "abc");
+		when(mockTemplateLoaderStateMachineContext.getMrtConfigProperties()).thenReturn(properties);
+		Message message = new DefaultMessage();
+		message.setFileList(null);
+		when(mockTemplateLoaderStateMachineContext.getMessage()).thenReturn(message);
+		UnzipZipFileState unzipZipFileState = new UnzipZipFileState();
+		//When
+		unzipZipFileState.on(mockTemplateLoaderStateMachineContext);
+		//Then
+		ArgumentCaptor<LogSeverity> logSeverityCaptor = ArgumentCaptor.forClass(LogSeverity.class);
+		ArgumentCaptor<String> logMessageCaptor = ArgumentCaptor.forClass(String.class);
+		verify(mockTemplateLoaderStateMachineContext).saveStatusLog(logSeverityCaptor.capture(), 
+				logMessageCaptor.capture());
+		assertThat(logSeverityCaptor.getValue(), is(equalTo(LogSeverity.ERROR)));
+		assertThat(logMessageCaptor.getValue(), is(equalTo("Empty zip file list!")));
+		verify(mockTemplateLoaderStateMachineContext).setNextStepToGenerateStatusLogState();
+	}
+	
 }

@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.CollectionUtils;
 
 import au.gov.vic.ecodev.mrt.config.MrtConfig;
 import au.gov.vic.ecodev.mrt.constants.LogSeverity;
@@ -70,6 +71,31 @@ public class RetrieveTemplateStateTest {
 		//Then
 		List<String> templateClasses = templateLoaderStateMachineContext.getMessage().getTemplateClasses();
 		assertThat(templateClasses, is(notNullValue()));
+		ArgumentCaptor<Long> batchIdCaptor = ArgumentCaptor.forClass(Long.class);
+		ArgumentCaptor<LogSeverity> severityCaptor = ArgumentCaptor.forClass(LogSeverity.class);
+		ArgumentCaptor<String> logMessageCaptor = ArgumentCaptor.forClass(String.class);
+		verify(mockPersistentServices).saveStatusLog(batchIdCaptor.capture(), 
+				severityCaptor.capture(),
+				logMessageCaptor.capture());
+		assertThat(batchIdCaptor.getValue(), is(equalTo(1L)));
+		assertThat(severityCaptor.getValue(), is(equalTo(LogSeverity.ERROR)));
+		assertThat(logMessageCaptor.getValue(), is(equalTo("Not template class found for file: C:\\Data\\eclipse-workspace\\mrt\\mrt_eco.zip")));
+		assertThat(templateLoaderStateMachineContext.getMessage().getFileList().size(), is(equalTo(0)));
+	}
+	
+	@Test
+	public void shouldAddFailedFileWhenHandleTemplateNotFoundCalled() {
+		//Given
+		givenTestInstance();
+		givenTestMessage();
+		PersistentServices mockPersistentServices = Mockito.mock(PersistentServices.class);
+		when(mockPersistentServices.getTemplateClasses(Matchers.anyString())).thenReturn(null);
+		Whitebox.setInternalState(templateLoaderStateMachineContext, "persistentServices", mockPersistentServices);
+		//When
+		retrieveTemplateState.handleTemplateNotFound(templateLoaderStateMachineContext, 0);
+		//Then
+		List<File> failedFiles = templateLoaderStateMachineContext.getMessage().getFailedFiles();
+		assertThat(CollectionUtils.isEmpty(failedFiles), is(false));
 		ArgumentCaptor<Long> batchIdCaptor = ArgumentCaptor.forClass(Long.class);
 		ArgumentCaptor<LogSeverity> severityCaptor = ArgumentCaptor.forClass(LogSeverity.class);
 		ArgumentCaptor<String> logMessageCaptor = ArgumentCaptor.forClass(String.class);
