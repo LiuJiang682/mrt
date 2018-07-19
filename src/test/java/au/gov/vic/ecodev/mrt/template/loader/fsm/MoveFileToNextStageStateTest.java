@@ -71,10 +71,11 @@ public class MoveFileToNextStageStateTest {
 		when(mockTemplateLoaderStateMachineContext.getMessage()).thenReturn(message);
 		File[] movedFilesArray = {new File("abc"), new File("def")};
 		FileMover mockFileMover = Mockito.mock(FileMover.class);
-		when(mockFileMover.moveFile(eq(PASSED_DIRECTORY), eq(true))).thenReturn(Arrays.asList(movedFilesArray));
+		when(mockFileMover.moveFile(eq(PASSED_DIRECTORY + File.separator + "0")))
+			.thenReturn(Arrays.asList(movedFilesArray));
 		PowerMockito.whenNew(FileMover.class).withArguments(eq(files)).thenReturn(mockFileMover);
 		//When
-		testInstance.moveFile(files, PASSED_DIRECTORY, true, mockTemplateLoaderStateMachineContext);
+		testInstance.moveFile(files, PASSED_DIRECTORY, mockTemplateLoaderStateMachineContext);
 		//Then
 		assertThat(message.getDirectErrorMessage(), is(equalTo("Failed move file to: src/test/resources/passed, expected move 3 but only moved: C:\\Data\\eclipse-workspace\\mrt\\abc, C:\\Data\\eclipse-workspace\\mrt\\def")));
 	}
@@ -91,10 +92,11 @@ public class MoveFileToNextStageStateTest {
 		when(mockTemplateLoaderStateMachineContext.getMessage()).thenReturn(message);
 		File[] movedFilesArray = {new File("abc"), new File("def"), new File("ghi")};
 		FileMover mockFileMover = Mockito.mock(FileMover.class);
-		when(mockFileMover.moveFile(eq(PASSED_DIRECTORY), eq(true))).thenReturn(Arrays.asList(movedFilesArray));
+		when(mockFileMover.moveFile(eq(PASSED_DIRECTORY + File.separator + "0")))
+			.thenReturn(Arrays.asList(movedFilesArray));
 		PowerMockito.whenNew(FileMover.class).withArguments(eq(files)).thenReturn(mockFileMover);
 		//When
-		testInstance.moveFile(files, PASSED_DIRECTORY, true, mockTemplateLoaderStateMachineContext);
+		testInstance.moveFile(files, PASSED_DIRECTORY, mockTemplateLoaderStateMachineContext);
 		//Then
 		assertThat(message.getDirectErrorMessage(), is(nullValue()));
 	}

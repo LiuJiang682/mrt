@@ -48,8 +48,11 @@ public class ScanDirectoryStateTest {
 		//Then
 		ArgumentCaptor<Message> messageCaptor = ArgumentCaptor.forClass(Message.class);
 		verify(mockTemplateLoaderStateMachineContent).setMessage(messageCaptor.capture());
-		List<?> fileNames = messageCaptor.getValue().getFileList();
+		Message message = messageCaptor.getValue();
+		List<?> fileNames = message.getFileList();
 		assertThat(CollectionUtils.isEmpty(fileNames), is(false));
+		List<String> absoluteFileNames = message.getAbsoluteFileNames();
+		assertThat(CollectionUtils.isEmpty(absoluteFileNames), is(false));
 		Files.delete(zipFile);
 	}
 	

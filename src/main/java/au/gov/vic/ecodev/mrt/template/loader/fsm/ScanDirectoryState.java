@@ -24,12 +24,16 @@ public class ScanDirectoryState implements LoaderState {
 			List<String> fileNames = files.stream()
 				.map(File::getName)
 				.collect(Collectors.toList());
+			List<String> absolutionFileNames = files.stream()
+					.map(File::getAbsolutePath)
+					.collect(Collectors.toList());
 			if (CollectionUtils.isEmpty(fileNames)) {
 				templateLoaderStateMachineContext.setNextStepToEnd();
 			} else {
 				Message message = new DefaultMessage();
 				message.setFileList(files);
 				message.setFileNames(fileNames);
+				message.setAbsoluteFileNames(absolutionFileNames);
 				templateLoaderStateMachineContext.setMessage(message);
 			}
 		} catch (Exception e) {

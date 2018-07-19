@@ -1,10 +1,12 @@
 package au.gov.vic.ecodev.mrt.template.loader.fsm;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.util.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 
+import au.gov.vic.ecodev.common.util.StringListToFileListConvertor;
 import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.helpers.TemplateNameExtractor;
@@ -24,18 +26,15 @@ public class ExtractTemplateNameState implements LoaderState {
 			List<String> zipFileNames = new ZipFileFilter().filterZipFile(fileNames);
 			List<String> templateNames = new TemplateNameExtractor().extractTemplateName(zipFileNames);
 			if (CollectionUtils.isEmpty(templateNames)) {
-				templateLoaderStateMachineContext.getMessage()
-					.setDirectErrorMessage("No template name found in file: " 
-						+ String.join(Strings.COMMA, fileNames));
-				templateLoaderStateMachineContext.setNextStepToNotifyUser();
+				String message = "No template name found in file: " + String.join(Strings.COMMA, fileNames);
+				handleError(templateLoaderStateMachineContext, message);
 			} else {
 				templateLoaderStateMachineContext.getMessage().setFileNames(templateNames);
 				long batchId = templateLoaderStateMachineContext
 						.getPersistentServcies().getNextBatchId(templateNames, fileNames);
 				if (SAVING_FAILED == batchId) {
 					String message = "Unable to create session!";
-					templateLoaderStateMachineContext.getMessage().setDirectErrorMessage(message);
-					templateLoaderStateMachineContext.setNextStepToNotifyUser();
+					handleError(templateLoaderStateMachineContext, message);
 				} else {
 					List<Map<String, Object>> templateOwnerEmails = new TemplateOwnerEmailHelper(templateLoaderStateMachineContext
 							.getPersistentServcies())
@@ -51,4 +50,15 @@ public class ExtractTemplateNameState implements LoaderState {
 			}
 		}
 	}
+	
+	protected final void handleError(final TemplateLoaderStateMachineContext templateLoaderStateMachineContext, 
+			final String errorMessage) {
+		templateLoaderStateMachineContext.getMessage()
+			.setDirectErrorMessage(errorMessage);
+		List<File> files = new StringListToFileListConvertor()
+				.convertToFile(templateLoaderStateMachineContext.getMessage().getAbsoluteFileNames());
+		templateLoaderStateMachineContext.getMessage().setFailedFiles(files);
+		templateLoaderStateMachineContext.setNextStepToMoveFileToNextStage();
+	}
+	
 }
