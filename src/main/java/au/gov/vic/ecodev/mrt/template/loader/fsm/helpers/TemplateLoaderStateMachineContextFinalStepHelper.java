@@ -27,18 +27,21 @@ public class TemplateLoaderStateMachineContextFinalStepHelper {
 		SessionHeaderDaoImpl sessionHeaderDaoImpl = new SessionHeaderDaoImpl();
 		sessionHeaderDaoImpl.setJdbcTemplate(templateLoaderStateMachineContext.getJdbcTemplate());
 		SessionHeader session = (SessionHeader) sessionHeaderDaoImpl.get(batchId);
-		Message message = templateLoaderStateMachineContext.getMessage();
-		if (CollectionUtils.isEmpty(message.getFailedFiles())) {
-			session.setStatus(SessionStatus.COMPLETED.name());
-		} else {
-			session.setStatus(SessionStatus.FAILED.name());
+		if (null != session) {
+			Message message = templateLoaderStateMachineContext.getMessage();
+			if (CollectionUtils.isEmpty(message.getFailedFiles())) {
+				session.setStatus(SessionStatus.COMPLETED.name());
+			} else {
+				session.setStatus(SessionStatus.FAILED.name());
+			}
+			if (emailSent) {
+				session.setEmailSent("Y");
+			} else {
+				session.setEmailSent("N");
+			}
+			sessionHeaderDaoImpl.updateOrSave(session);
 		}
-		if (emailSent) {
-			session.setEmailSent("Y");
-		} else {
-			session.setEmailSent("N");
-		}
-		sessionHeaderDaoImpl.updateOrSave(session);
+		
 	}
 
 	public void doFinalCleanUp() {

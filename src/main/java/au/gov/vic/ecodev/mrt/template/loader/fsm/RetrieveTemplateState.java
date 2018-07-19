@@ -35,9 +35,11 @@ public class RetrieveTemplateState implements LoaderState {
 			int index) {
 		Message message = templateLoaderStateMachineContext.getMessage();
 		long batchId = message.getBatchId();
-		String errorMessage = "Not template class found for file: " + message.getFileList().get(index).getAbsolutePath();
+		String fileName = message.getFileList().get(index).getAbsolutePath();
+		String errorMessage = "Not template class found for file: " + fileName;
 		templateLoaderStateMachineContext.getPersistentServcies().saveStatusLog(batchId, 
 				LogSeverity.ERROR, errorMessage);
 		message.getFileList().remove(index);
+		templateLoaderStateMachineContext.addFailedFiles(fileName);
 	}
 }

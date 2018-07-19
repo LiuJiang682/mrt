@@ -16,21 +16,19 @@ public class MoveFileToNextStageState implements LoaderState {
 		List<File> passedFiles = templateLoaderStateMachineContext.getMessage().getPassedFiles();
 		MrtConfigProperties mrtConfigProperties = templateLoaderStateMachineContext.getMrtConfigProperties();
 		String destination = mrtConfigProperties.getPassedFileDirectory();
-		boolean passedFileOverwritten = mrtConfigProperties.getPassedFileOverwritten();
-		moveFile(passedFiles, destination, passedFileOverwritten, templateLoaderStateMachineContext);
+		moveFile(passedFiles, destination, templateLoaderStateMachineContext);
 		
 		List<File> failedFiles = templateLoaderStateMachineContext.getMessage().getFailedFiles();
 		String failedFileDestination = mrtConfigProperties.getFailedFileDirectory();
-		boolean failedFileOverwritten = mrtConfigProperties.getFailedFileOverwritten();
-		moveFile(failedFiles, failedFileDestination, failedFileOverwritten, templateLoaderStateMachineContext);
+		moveFile(failedFiles, failedFileDestination, templateLoaderStateMachineContext);
 	}
 
-	protected final void moveFile(final List<File> files, 
-			final String destination, boolean overwritten, 
+	protected final void moveFile(final List<File> files, final String destination, 
 			final TemplateLoaderStateMachineContext templateLoaderStateMachineContext) {
 		if (!CollectionUtils.isEmpty(files)) {
 			FileMover fileMover = new FileMover(files);
-			List<File> newFiles = fileMover.moveFile(destination, overwritten);
+			String exactDestination = destination + File.separator + templateLoaderStateMachineContext.getBatchId();
+			List<File> newFiles = fileMover.moveFile(exactDestination);
 			if (newFiles.size() != files.size()) {
 				StringBuilder messageBuilder = new StringBuilder("Failed move file to: ")
 						.append(destination)

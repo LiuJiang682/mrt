@@ -54,7 +54,8 @@ public class TemplateLoaderStateMachineContext implements TemplateProcessorConte
 		if (null == currentStep) {
 			return null;
 		}
- 		LoaderState LoaderState = currentStep.getState();
+ 		
+		LoaderState LoaderState = currentStep.getState();
 		currentStep = currentStep.getNextStep();
 		return LoaderState;
 	}
@@ -109,11 +110,15 @@ public class TemplateLoaderStateMachineContext implements TemplateProcessorConte
 	}
 	
 	public void setNextStepToNotifyUser() {
-		currentStep = LoadingStep.MOVE_FILE_TO_NEXT_STAGE;
+		currentStep = LoadingStep.NOTIFY_USER;
 	}
 	
 	public void setNextStepToGenerateStatusLogState() {
-		currentStep = LoadingStep.PROCESS_TEMPLATE_FILE;	
+		currentStep = LoadingStep.GENERATE_STATUS_LOG;	
+	}
+	
+	public void setNextStepToMoveFileToNextStage() {
+		currentStep = LoadingStep.MOVE_FILE_TO_NEXT_STAGE;
 	}
 	
 	public void setNextStepToEnd() {

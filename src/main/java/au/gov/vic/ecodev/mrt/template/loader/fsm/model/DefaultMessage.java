@@ -10,6 +10,7 @@ public class DefaultMessage implements Message, Serializable {
 
 	private List<File> fileList;
 	private List<String> fileNames;
+	private List<String> absoluteFileNames;
 	private List<String> templateClasses;
 	private long batchId;
 	private List<File> passedFiles;
@@ -161,5 +162,15 @@ public class DefaultMessage implements Message, Serializable {
 	@Override
 	public void setFailedFileDirectory(String directoryName) {
 		this.failedFileDirectory = directoryName;
+	}
+
+	@Override
+	public List<String> getAbsoluteFileNames() {
+		return absoluteFileNames;
+	}
+
+	@Override
+	public void setAbsoluteFileNames(List<String> absolutionFileNames) {
+		this.absoluteFileNames = absolutionFileNames;
 	}
 }
