@@ -19,9 +19,9 @@ import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.fixture.TestFixture;
 
-public class TemplateFileSelectorTest {
+public class H0202HeaderTemplateFileSelectorTest {
 
-	private TemplateFileSelector testInstance;
+	private H0202HeaderTemplateFileSelector testInstance;
 	private String directory;
 	
 	@Test
@@ -34,20 +34,24 @@ public class TemplateFileSelectorTest {
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void shouldRaiseExceptionWhenDirectoryIsNull() {
+	public void shouldRaiseExceptionWhenDirectoryIsNull() throws Exception {
 		//Given
+		givenTestInstance();
 		String directory = null;
+		testInstance.setSelectionFileDirectory(directory);
+		List<String> templates = Arrays.asList(H0202HeaderTemplateFileSelector.DATA_FORMAT_SL4);
 		//When
-		testInstance = new TemplateFileSelector(directory);
+		testInstance.getTemplateFileInDirectory(templates);
 		fail("Program reached unexpected point!");
 	}
 	
 	@Test
-	public void shouldReturnSL4TemplateFile() throws IOException {
+	public void shouldReturnSL4TemplateFile() throws Exception {
 		//Given
 		givenTestInstance();
+		testInstance.setSelectionFileDirectory(directory);
 		//When
-		Optional<List<String>> sl4TemplateFile = testInstance.getTemplateFileInDirectory(Arrays.asList(TemplateFileSelector.DATA_FORMAT_SL4));
+		Optional<List<String>> sl4TemplateFile = testInstance.getTemplateFileInDirectory(Arrays.asList(H0202HeaderTemplateFileSelector.DATA_FORMAT_SL4));
 		//Then
 //		assertThat(sl4TemplateFile.get(), is(equalTo("SL4 EL5478_201702_01_Collar.txt")));
 		List<String> sl4TemplateFileStrings = sl4TemplateFile.get();
@@ -61,7 +65,7 @@ public class TemplateFileSelectorTest {
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void shouldRaiseExceptionWhenTemplateListIsNull() throws IOException {
+	public void shouldRaiseExceptionWhenTemplateListIsNull() throws Exception {
 		//Given
 		givenTestInstance();
 		//When
@@ -83,7 +87,7 @@ public class TemplateFileSelectorTest {
 	}
 	
 	@Test
-	public void shouldReturnEmptyOptionWhenDataTemplateIsNull() throws IOException {
+	public void shouldReturnEmptyOptionWhenDataTemplateIsNull() throws Exception {
 		//Given
 		givenTestInstance();
 		List<File> files = TestFixture.getListOfFiles(directory);
@@ -95,7 +99,7 @@ public class TemplateFileSelectorTest {
 	}
 	
 	@Test
-	public void shouldReturnOptionWhenDataTemplateProvided() throws IOException {
+	public void shouldReturnOptionWhenDataTemplateProvided() throws Exception {
 		//Given
 		givenTestInstance();
 		List<File> files = TestFixture.getListOfFiles(directory);
@@ -108,6 +112,6 @@ public class TemplateFileSelectorTest {
 
 	private void givenTestInstance() {
 		directory = "src/test/resources/template";
-		testInstance = new TemplateFileSelector(directory);
+		testInstance = new H0202HeaderTemplateFileSelector();
 	}
  }

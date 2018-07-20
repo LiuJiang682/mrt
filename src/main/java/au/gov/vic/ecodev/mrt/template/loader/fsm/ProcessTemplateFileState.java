@@ -11,7 +11,8 @@ import org.apache.log4j.Logger;
 import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.constants.LogSeverity;
-import au.gov.vic.ecodev.mrt.template.files.TemplateFileSelector;
+import au.gov.vic.ecodev.mrt.template.file.TemplateFileSelector;
+import au.gov.vic.ecodev.mrt.template.files.TemplateFileSelectorFactory;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.helpers.ProcessorContextExceptionHelper;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.model.Message;
 import au.gov.vic.ecodev.mrt.template.processor.TemplateProcessor;
@@ -51,19 +52,15 @@ public class ProcessTemplateFileState implements LoaderState {
 		
 		for (String template : templateList) {
 			String[] templateClass = template.split(Strings.COLON);
-			if (au.gov.vic.ecodev.mrt.constants.Constants.Numeral.TWO == templateClass.length) {
+			if (Numeral.THREE == templateClass.length) {
 				TemplateProcessor templateProcessor = TemplateProcessorFactory
 						.getProcessor(templateClass[Numeral.ONE]);
 				if (null == templateProcessor) {
 					handleNoTemplateProcessor(file, templateLoaderStateMachineContext, templateClass);
 					break;
 				} else {
-					TemplateFileSelector templateFileSelector = 
-							new TemplateFileSelector(file.getAbsolutePath());
-					List<String> templateNames = new ArrayList<>();
-					templateNames.add(templateClass[Numeral.ZERO]);
-					Optional<List<String>> templateAndFileName = templateFileSelector
-							.getTemplateFileInDirectory(templateNames);
+					Optional<List<String>> templateAndFileName = findTemplateFile(templateClass[Numeral.ZERO],
+							templateClass[Numeral.TWO], file.getAbsolutePath());
 					if (templateAndFileName.isPresent()) {
 						doTemplateFileProcessing(templateLoaderStateMachineContext, 
 								templateProcessor,
@@ -78,6 +75,17 @@ public class ProcessTemplateFileState implements LoaderState {
 				break;
 			}
 		}
+	}
+	
+	protected final Optional<List<String>> findTemplateFile(final String templateName, final String fileSelectorClass,
+			final String fileName) throws Exception {
+		TemplateFileSelector templateFileSelector = TemplateFileSelectorFactory.getTemplateFileSelector(fileSelectorClass);
+		templateFileSelector.setSelectionFileDirectory(fileName);
+		List<String> templateNames = new ArrayList<>();
+		templateNames.add(templateName);
+		Optional<List<String>> templateAndFileName = templateFileSelector
+				.getTemplateFileInDirectory(templateNames);
+		return templateAndFileName;
 	}
 	
 	protected final void handleTemplateMetaDataError(final File file,

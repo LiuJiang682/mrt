@@ -31,7 +31,8 @@ import au.gov.vic.ecodev.mrt.constants.LogSeverity;
 import au.gov.vic.ecodev.mrt.fixture.TestFixture;
 import au.gov.vic.ecodev.mrt.map.services.VictoriaMapServices;
 import au.gov.vic.ecodev.mrt.template.context.properties.DefaultStringTemplateProperties;
-import au.gov.vic.ecodev.mrt.template.files.TemplateFileSelector;
+import au.gov.vic.ecodev.mrt.template.files.H0202HeaderTemplateFileSelector;
+import au.gov.vic.ecodev.mrt.template.files.TemplateFileSelectorFactory;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.model.DefaultMessage;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.model.Message;
 import au.gov.vic.ecodev.mrt.template.processor.TemplateProcessor;
@@ -45,8 +46,12 @@ import au.gov.vic.ecodev.mrt.template.processor.services.PersistentServices;
 import au.gov.vic.ecodev.utils.file.finder.DirectoryTreeReverseTraversalZipFileFinder;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({TemplateProcessorFactory.class, ProcessTemplateFileState.class, Sl4TemplateFileParser.class})
+@PrepareForTest({TemplateProcessorFactory.class, ProcessTemplateFileState.class, Sl4TemplateFileParser.class, TemplateFileSelectorFactory.class})
 public class ProcessTemplateFileStateTest {
+
+	private static final String SL4_TEMPLATE_CONFIG = "SL4:au.gov.vic.ecodev.mrt.template.processor.sl4.Sl4TemplateProcessor:au.gov.vic.ecodev.mrt.template.files.H0202HeaderTemplateFileSelector";
+
+	private static final List<String> TEMPLATE_LIST = Arrays.asList(SL4_TEMPLATE_CONFIG);
 
 	private static final String NOT_TEMPLATE_FILE = "File: C:\\Data\\eclipse-workspace\\mrt\\src\\test\\resources\\template is not a SL4 template file.";
 
@@ -77,7 +82,7 @@ public class ProcessTemplateFileStateTest {
 		TestFixture.givenSl4TemplateProperties(mockTemplateLoaderStateMachineContext);
 		// TODO -- Use all templates
 		// String className = "SL4,DS4,DL4,DG4";
-		String className = "SL4:au.gov.vic.ecodev.mrt.template.processor.sl4.Sl4TemplateProcessor";
+		String className = SL4_TEMPLATE_CONFIG;
 		File file = new File(TEST_FILE_DIRECTORY);
 		// When
 		processTemplateFileState.processingTemplate(className, file, mockTemplateLoaderStateMachineContext);
@@ -96,8 +101,7 @@ public class ProcessTemplateFileStateTest {
 		Message mockMessage = Mockito.mock(Message.class);
 		// TODO -- Use all templates
 		// when(mockMessage.getTemplateClasses()).thenReturn(Arrays.asList("SL4,DS4,DL4,DG4"));
-		when(mockMessage.getTemplateClasses())
-				.thenReturn(Arrays.asList("SL4:au.gov.vic.ecodev.mrt.template.processor.sl4.Sl4TemplateProcessor"));
+		when(mockMessage.getTemplateClasses()).thenReturn(TEMPLATE_LIST);
 		List<File> extractedDirs = new ArrayList<>();
 		File extractedDir = new File(TEST_FILE_DIRECTORY);
 		extractedDirs.add(extractedDir);
@@ -130,7 +134,7 @@ public class ProcessTemplateFileStateTest {
 		givenTestInstance();
 
 		Message mockMessage = new DefaultMessage();
-		mockMessage.setTemplateClasses(Arrays.asList("SL4:au.gov.vic.ecodev.mrt.template.processor.sl4.Sl4TemplateProcessor"));
+		mockMessage.setTemplateClasses(TEMPLATE_LIST);
 		List<File> extractedDirs = new ArrayList<>();
 		File extractedDir = new File(TEST_FILE_DIRECTORY);
 		extractedDirs.add(extractedDir);
@@ -139,9 +143,12 @@ public class ProcessTemplateFileStateTest {
 		PowerMockito.mockStatic(TemplateProcessorFactory.class);
 		TemplateProcessor mockProcessor = Mockito.mock(TemplateProcessor.class);
 		PowerMockito.doReturn(mockProcessor).when(TemplateProcessorFactory.class, "getProcessor", Matchers.anyString());
-		TemplateFileSelector mockTemplateFileSelector = Mockito.mock(TemplateFileSelector.class);
-		PowerMockito.whenNew(TemplateFileSelector.class).withArguments(Matchers.anyString())
-			.thenReturn(mockTemplateFileSelector);
+		H0202HeaderTemplateFileSelector mockTemplateFileSelector = Mockito.mock(H0202HeaderTemplateFileSelector.class);
+//		PowerMockito.whenNew(H0202HeaderTemplateFileSelector.class).withArguments(Matchers.anyString())
+//			.thenReturn(mockTemplateFileSelector);
+		PowerMockito.mockStatic(TemplateFileSelectorFactory.class);
+		PowerMockito.doReturn(mockTemplateFileSelector).when(TemplateFileSelectorFactory.class, 
+				"getTemplateFileSelector", Matchers.anyString());
 		when(mockTemplateFileSelector.getTemplateFileInDirectory(Matchers.anyListOf(String.class)))
 			.thenReturn(Optional.empty());
 		// When
@@ -167,8 +174,7 @@ public class ProcessTemplateFileStateTest {
 		givenTestInstance();
 
 		Message message = new DefaultMessage();
-		message.setTemplateClasses(Arrays
-				.asList("SL4:au.gov.vic.ecodev.mrt.template.processor.sl4.Sl4TemplateProcessor"));
+		message.setTemplateClasses(TEMPLATE_LIST);
 		List<File> extractedDirs = new ArrayList<>();
 		File extractedDir = new File(TEST_FILE_DIRECTORY);
 		extractedDirs.add(extractedDir);
@@ -228,8 +234,10 @@ public class ProcessTemplateFileStateTest {
 		givenTestInstance();
 
 		Message mockMessage = new DefaultMessage();
-		mockMessage.setTemplateClasses(Arrays
-				.asList("SL4:au.gov.vic.ecodev.mrt.template.processor.sl4.Sl4TemplateProcessor", "abc"));
+		ArrayList<String> templateList = new ArrayList<>();
+		templateList.addAll(TEMPLATE_LIST);
+		templateList.add("abc");
+		mockMessage.setTemplateClasses(templateList);
 		List<File> extractedDirs = new ArrayList<>();
 		File extractedDir = new File(TEST_FILE_DIRECTORY);
 		extractedDirs.add(extractedDir);
@@ -265,8 +273,7 @@ public class ProcessTemplateFileStateTest {
 		// Given
 		givenTestInstance();
 		Message mockMessage = new DefaultMessage();
-		mockMessage.setTemplateClasses(Arrays
-				.asList("SL4:au.gov.vic.ecodev.mrt.template.processor.sl4.Sl4TemplateProcessor"));
+		mockMessage.setTemplateClasses(TEMPLATE_LIST);
 		List<File> extractedDirs = new ArrayList<>();
 		File extractedDir = new File(TEST_FILE_DIRECTORY);
 		extractedDirs.add(extractedDir);
@@ -310,10 +317,10 @@ public class ProcessTemplateFileStateTest {
 	}
 
 	@Test(expected = ClassNotFoundException.class)
-	public void shouldNotRaiseExceptionWhenClassNameIsIncorrect() throws Exception {
+	public void shouldRaiseExceptionWhenClassNameIsIncorrect() throws Exception {
 		// Given
 		givenTestInstance();
-		String className = "SL4:asb";
+		String className = "SL4:asb:ddd";
 		File file = new File(TEST_FILE_DIRECTORY);
 		// When
 		processTemplateFileState.processingTemplate(className, file, mockTemplateLoaderStateMachineContext);

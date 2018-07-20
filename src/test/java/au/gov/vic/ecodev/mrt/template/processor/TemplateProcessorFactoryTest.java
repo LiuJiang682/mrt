@@ -11,8 +11,8 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import au.gov.vic.ecodev.mrt.template.processor.sl4.Sl4TemplateProcessor;
 
-@RunWith(PowerMockRunner.class)
-@SuppressStaticInitializationFor("au.gov.vic.ecodev.mrt.template.TemplateProcessorFactory")
+//@RunWith(PowerMockRunner.class)
+//@SuppressStaticInitializationFor("au.gov.vic.ecodev.mrt.template.TemplateProcessorFactory")
 public class TemplateProcessorFactoryTest {
 
 	@Test

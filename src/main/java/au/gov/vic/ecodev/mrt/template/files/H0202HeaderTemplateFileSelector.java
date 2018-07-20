@@ -14,28 +14,32 @@ import org.springframework.util.CollectionUtils;
 
 import au.gov.vic.ecodev.mrt.common.db.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
+import au.gov.vic.ecodev.mrt.template.file.TemplateFileSelector;
 
-public class TemplateFileSelector {
+public class H0202HeaderTemplateFileSelector implements TemplateFileSelector {
 
-	private static final Logger LOGGER = Logger.getLogger(TemplateFileSelector.class);
+	private static final Logger LOGGER = Logger.getLogger(H0202HeaderTemplateFileSelector.class);
 	
 	private static final String DATA_FORMAT_HEADER = "H0202";
 	private static final String DATA_FORMAT = "Data_format";
 	public static final String DATA_FORMAT_SL4 = "SL4";
 	
-	private final String directory;
+	private String directory;
 	
-	public TemplateFileSelector(String directory) {
-		if (StringUtils.isBlank(directory)) {
-			throw new IllegalArgumentException("Parameter directory cannot be null or empty!");
-		}
-		this.directory = directory;
-		
-	}
+//	public H0202HeaderTemplateFileSelector(String directory) {
+//		if (StringUtils.isBlank(directory)) {
+//			throw new IllegalArgumentException("Parameter directory cannot be null or empty!");
+//		}
+//		this.directory = directory;
+//		
+//	}
 
-	public Optional<List<String>> getTemplateFileInDirectory(final List<String> dataTemplate) throws IOException {
+	public Optional<List<String>> getTemplateFileInDirectory(final List<String> dataTemplate) throws Exception {
 		if (CollectionUtils.isEmpty(dataTemplate)) {
 			throw new IllegalArgumentException("Parameter dataTemplate cannot be null!");
+		}
+		if (StringUtils.isBlank(directory)) {
+			throw new IllegalArgumentException("Parameter directory cannot be null or empty!");
 		}
 		List<File> files = new DirectoryFilesScanner(directory).scan();
 		return findTemplateFileName(files, dataTemplate);
@@ -72,6 +76,11 @@ public class TemplateFileSelector {
 		}
 		
 		return slTemplateFileName;
+	}
+
+	@Override
+	public void setSelectionFileDirectory(String directory) {
+		this.directory = directory;
 	}
 	
 }
