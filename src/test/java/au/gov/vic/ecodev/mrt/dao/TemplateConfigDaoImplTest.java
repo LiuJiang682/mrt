@@ -41,7 +41,7 @@ public class TemplateConfigDaoImplTest {
 		// Then
 		// assertThat(classes,
 		// is(equalTo("SL4:au.gov.vic.ecodev.mrt.template.processor.sl4.Sl4TemplateProcessor,DS4,DL4,DG4")));
-		assertThat(classes, is(equalTo("SL4:au.gov.vic.ecodev.mrt.template.processor.sl4.Sl4TemplateProcessor,DS4:au.gov.vic.ecodev.mrt.template.processor.ds4.Ds4TemplateProcessor,DL4:au.gov.vic.ecodev.mrt.template.processor.dl4.Dl4TemplateProcessor,DG4:au.gov.vic.ecodev.mrt.template.processor.dg4.Dg4TemplateProcessor,SG4:au.gov.vic.ecodev.mrt.template.processor.sg4.Sg4TemplateProcessor")));
+		assertThat(classes, is(equalTo("SL4:au.gov.vic.ecodev.mrt.template.processor.sl4.Sl4TemplateProcessor:au.gov.vic.ecodev.mrt.template.files.H0202HeaderTemplateFileSelector,DS4:au.gov.vic.ecodev.mrt.template.processor.ds4.Ds4TemplateProcessor:au.gov.vic.ecodev.mrt.template.files.H0202HeaderTemplateFileSelector,DL4:au.gov.vic.ecodev.mrt.template.processor.dl4.Dl4TemplateProcessor:au.gov.vic.ecodev.mrt.template.files.H0202HeaderTemplateFileSelector,DG4:au.gov.vic.ecodev.mrt.template.processor.dg4.Dg4TemplateProcessor:au.gov.vic.ecodev.mrt.template.files.H0202HeaderTemplateFileSelector,SG4:au.gov.vic.ecodev.mrt.template.processor.sg4.Sg4TemplateProcessor:au.gov.vic.ecodev.mrt.template.files.H0202HeaderTemplateFileSelector")));
 	}
 	
 	@Test
