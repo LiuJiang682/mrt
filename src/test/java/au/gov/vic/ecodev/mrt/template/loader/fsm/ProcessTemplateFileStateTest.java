@@ -26,6 +26,7 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.util.CollectionUtils;
 
 import au.gov.vic.ecodev.mrt.constants.LogSeverity;
 import au.gov.vic.ecodev.mrt.fixture.TestFixture;
@@ -46,7 +47,8 @@ import au.gov.vic.ecodev.mrt.template.processor.services.PersistentServices;
 import au.gov.vic.ecodev.utils.file.finder.DirectoryTreeReverseTraversalZipFileFinder;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({TemplateProcessorFactory.class, ProcessTemplateFileState.class, Sl4TemplateFileParser.class, TemplateFileSelectorFactory.class})
+@PrepareForTest({TemplateProcessorFactory.class, ProcessTemplateFileState.class, Sl4TemplateFileParser.class, 
+	TemplateFileSelectorFactory.class})
 public class ProcessTemplateFileStateTest {
 
 	private static final String SL4_TEMPLATE_CONFIG = "SL4:au.gov.vic.ecodev.mrt.template.processor.sl4.Sl4TemplateProcessor:au.gov.vic.ecodev.mrt.template.files.H0202HeaderTemplateFileSelector";
@@ -398,6 +400,37 @@ public class ProcessTemplateFileStateTest {
 		assertThat(severityCaptor.getValue(), is(equalTo(LogSeverity.WARNING)));
 		String message = stringCaptor.getValue();
 		assertThat(message.contains("abc is not a DL4 template file"), is(true));
+	}
+	
+	@Test
+	public void shouldFindTemplateFileWhenSL4ClassProvided() throws Exception {
+		// Given
+		givenTestInstance();
+		String templateName = "SL4";
+		String fileSelectorClass = "au.gov.vic.ecodev.mrt.template.files.H0202HeaderTemplateFileSelector";
+		String fileName = TEST_FILE_DIRECTORY;
+		// When
+		Optional<List<String>> fileNames = processTemplateFileState.findTemplateFile(templateName, fileSelectorClass, fileName);
+		// Then
+		assertThat(fileNames.isPresent(), is(true));
+		List<String> fileNameList = fileNames.get();
+		assertThat(CollectionUtils.isEmpty(fileNameList), is(false));
+		assertThat(fileNameList.size(), is(equalTo(1)));
+		String retrievedFileName = fileNameList.get(0);
+		assertThat(retrievedFileName.contains("SL4"), is(true));
+		assertThat(retrievedFileName.contains("EL5478_201702_01_Collar.txt"), is(true));
+	}
+	
+	@Test(expected = ClassNotFoundException.class)
+	public void shouldRaiseExceptionWhenUnknownClassProvided() throws Exception {
+		// Given
+		givenTestInstance();
+		String templateName = "SL4";
+		String fileSelectorClass = "au.gov.vic.ecodev.mrt.template.files.Abc";
+		String fileName = TEST_FILE_DIRECTORY;
+		// When
+		processTemplateFileState.findTemplateFile(templateName, fileSelectorClass, fileName);
+		fail("Program reached unexpected point!");
 	}
 
 	private void givenTestInstance() {
