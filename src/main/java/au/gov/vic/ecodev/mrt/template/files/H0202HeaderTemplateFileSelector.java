@@ -25,14 +25,6 @@ public class H0202HeaderTemplateFileSelector implements TemplateFileSelector {
 	public static final String DATA_FORMAT_SL4 = "SL4";
 	
 	private String directory;
-	
-//	public H0202HeaderTemplateFileSelector(String directory) {
-//		if (StringUtils.isBlank(directory)) {
-//			throw new IllegalArgumentException("Parameter directory cannot be null or empty!");
-//		}
-//		this.directory = directory;
-//		
-//	}
 
 	public Optional<List<String>> getTemplateFileInDirectory(final List<String> dataTemplate) throws Exception {
 		if (CollectionUtils.isEmpty(dataTemplate)) {
