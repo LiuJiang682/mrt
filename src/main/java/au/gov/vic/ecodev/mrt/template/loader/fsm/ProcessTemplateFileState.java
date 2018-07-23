@@ -23,6 +23,8 @@ public class ProcessTemplateFileState implements LoaderState {
 
 	private static final Logger LOGGER = Logger.getLogger(ProcessTemplateFileState.class);
 	
+	private static final String REPORT_LABEL_MANDATORY = "mandatory";
+	
 	@Override
 	public void on(final TemplateLoaderStateMachineContext templateLoaderStateMachineContext) {
 		Message message = templateLoaderStateMachineContext.getMessage();
@@ -52,7 +54,8 @@ public class ProcessTemplateFileState implements LoaderState {
 		
 		for (String template : templateList) {
 			String[] templateClass = template.split(Strings.COLON);
-			if (Numeral.THREE == templateClass.length) {
+			if ((Numeral.THREE == templateClass.length) 
+					|| (Numeral.FOUR == templateClass.length)) {
 				TemplateProcessor templateProcessor = TemplateProcessorFactory
 						.getProcessor(templateClass[Numeral.ONE]);
 				if (null == templateProcessor) {
@@ -67,7 +70,7 @@ public class ProcessTemplateFileState implements LoaderState {
 								templateAndFileName.get());
 					} else {
 						handleNoTemplateFound(file, templateLoaderStateMachineContext, 
-								templateClass[Numeral.ZERO]);
+								templateClass[Numeral.ZERO], isMandatoryReport(templateClass));
 					}
 				}
 			} else {
@@ -77,6 +80,15 @@ public class ProcessTemplateFileState implements LoaderState {
 		}
 	}
 	
+	protected final boolean isMandatoryReport(String[] templateClass) {
+		boolean isMandatoryReport = false;
+		if ((Numeral.FOUR == templateClass.length) 
+				&& (REPORT_LABEL_MANDATORY.equalsIgnoreCase(templateClass[Numeral.THREE]))) {
+			isMandatoryReport = true;
+		}
+		return isMandatoryReport;
+	}
+
 	protected final Optional<List<String>> findTemplateFile(final String templateName, final String fileSelectorClass,
 			final String fileName) throws Exception {
 		TemplateFileSelector templateFileSelector = TemplateFileSelectorFactory.getTemplateFileSelector(fileSelectorClass);
@@ -149,14 +161,14 @@ public class ProcessTemplateFileState implements LoaderState {
 
 	protected final void handleNoTemplateFound(final File file,
 			final TemplateLoaderStateMachineContext templateLoaderStateMachineContext, 
-			final String templateClass) {
+			final String templateClass, final boolean isMandatoryReport) {
 		String message = new StringBuilder("File: ")
 				.append(file.getAbsolutePath())
 				.append(" is not a ")
 				.append(templateClass)
 				.append(" template file.")
 				.toString();
-		if (Strings.TEMPLATE_NAME_SL4.equalsIgnoreCase(templateClass)) {
+		if (isMandatoryReport) {
 			handleProcessorException(templateLoaderStateMachineContext, 
 					file, message);
 		} else {
