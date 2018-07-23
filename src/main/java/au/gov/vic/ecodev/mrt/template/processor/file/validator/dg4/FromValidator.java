@@ -11,7 +11,7 @@ import au.gov.vic.ecodev.mrt.common.db.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.template.fields.Dg4ColumnHeaders;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.NumberStringValidator;
-import au.gov.vic.ecodev.mrt.template.processor.validator.helper.ErrorMessageChecker;
+import au.gov.vic.ecodev.utils.validator.helper.ErrorMessageChecker;
 
 public class FromValidator {
 
