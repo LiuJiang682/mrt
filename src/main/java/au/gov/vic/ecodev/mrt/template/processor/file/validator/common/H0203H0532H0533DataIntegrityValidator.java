@@ -11,9 +11,9 @@ import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.sl4.DataRecordNumberValidator;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
-import au.gov.vic.ecodev.mrt.template.processor.validator.helper.ErrorMessageChecker;
 import au.gov.vic.ecodev.mrt.template.processor.validator.helper.MandatoryRowChecker;
 import au.gov.vic.ecodev.utils.file.helper.MessageHandler;
+import au.gov.vic.ecodev.utils.validator.helper.ErrorMessageChecker;
 
 public class H0203H0532H0533DataIntegrityValidator {
 
