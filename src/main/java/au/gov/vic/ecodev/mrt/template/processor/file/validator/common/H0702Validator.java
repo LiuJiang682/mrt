@@ -10,8 +10,8 @@ import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.param.helper.sl4.ParamHelper;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.validator.Validator;
-import au.gov.vic.ecodev.mrt.template.processor.validator.helper.ErrorMessageChecker;
 import au.gov.vic.ecodev.mrt.template.processor.validator.helper.ValidatorHelper;
+import au.gov.vic.ecodev.utils.validator.helper.ErrorMessageChecker;
 
 public class H0702Validator implements Validator {
 
