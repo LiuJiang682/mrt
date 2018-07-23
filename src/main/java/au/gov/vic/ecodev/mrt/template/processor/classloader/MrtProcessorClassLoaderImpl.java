@@ -12,10 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import au.gov.vic.ecodev.mrt.config.MrtConfigProperties;
-import au.gov.vic.ecodev.mrt.template.files.DirectoryFilesScanner;
 import au.gov.vic.ecodev.mrt.template.processor.TemplateProcessor;
 import au.gov.vic.ecodev.mrt.template.processor.persistent.Dao;
 import au.gov.vic.ecodev.mrt.template.processor.update.TemplateUpdater;
+import au.gov.vic.ecodev.utils.file.DirectoryFilesScanner;
 
 @Service("mrtProcessorClassLoader")
 public class MrtProcessorClassLoaderImpl implements MrtProcessorClassLoader {

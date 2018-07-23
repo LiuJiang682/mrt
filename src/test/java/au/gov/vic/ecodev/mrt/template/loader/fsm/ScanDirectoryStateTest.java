@@ -25,8 +25,8 @@ import org.springframework.util.CollectionUtils;
 
 import au.gov.vic.ecodev.mrt.config.MrtConfigProperties;
 import au.gov.vic.ecodev.mrt.fixture.TestFixture;
-import au.gov.vic.ecodev.mrt.template.files.DirectoryFilesScanner;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.model.Message;
+import au.gov.vic.ecodev.utils.file.DirectoryFilesScanner;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(ScanDirectoryState.class)
