@@ -15,6 +15,7 @@ import org.springframework.util.CollectionUtils;
 import au.gov.vic.ecodev.mrt.common.db.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.template.file.TemplateFileSelector;
+import au.gov.vic.ecodev.utils.file.DirectoryFilesScanner;
 
 public class H0202HeaderTemplateFileSelector implements TemplateFileSelector {
 
