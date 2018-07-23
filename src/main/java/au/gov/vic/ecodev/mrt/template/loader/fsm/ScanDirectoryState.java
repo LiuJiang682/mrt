@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 import org.apache.log4j.Logger;
 import org.springframework.util.CollectionUtils;
 
-import au.gov.vic.ecodev.mrt.template.files.DirectoryFilesScanner;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.model.DefaultMessage;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.model.Message;
+import au.gov.vic.ecodev.utils.file.DirectoryFilesScanner;
 
 public class ScanDirectoryState implements LoaderState {
 
