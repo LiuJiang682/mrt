@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -77,24 +76,6 @@ public class FileMoverTest {
 		//When
 		//Then
 		movedFile.delete();
-	}
-	
-	@Ignore
-	@Test
-	public void shouldReturnFalseWhenTheFileExistedInDestination() throws IOException {
-		//Given
-		File movedFile = givenMovingFile();
-		fileMover = new FileMover(givenFiles());
-		String destination = "src/test/resources/testData/extract";
-		//When
-		List<File> newFiles = fileMover.moveFile(destination);
-		//Then
-		assertThat(newFiles.isEmpty(), is(true));
-		movedFile.delete();
-		if ((null != file) 
-				&& (file.exists())) {
-			file.delete();
-		}
 	}
 
 	private File givenMovingFile() throws IOException {
