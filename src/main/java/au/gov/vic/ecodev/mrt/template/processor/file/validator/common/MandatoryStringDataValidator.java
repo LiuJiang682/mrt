@@ -1,6 +1,7 @@
 package au.gov.vic.ecodev.mrt.template.processor.file.validator.common;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.util.StringUtils;
 
@@ -25,7 +26,10 @@ public class MandatoryStringDataValidator {
 	}
 
 	public void validate(List<String> messages) {
-		int index = columnHeaders.indexOf(code);
+		int index = columnHeaders.stream()
+				.map(String::toUpperCase)
+				.collect(Collectors.toList())
+				.indexOf(code.toUpperCase());
 		if (Numeral.NOT_FOUND == index) {
 			messages.add(constructMissingHoleIdMessage(lineNumber));
 			return;
