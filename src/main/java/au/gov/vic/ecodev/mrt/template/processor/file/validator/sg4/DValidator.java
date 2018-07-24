@@ -11,13 +11,13 @@ import au.gov.vic.ecodev.mrt.template.fields.Sg4ColumnHeaders;
 import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.EastingValidator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.LineNumberValidator;
-import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.ListSizeValidator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.NorthingValidator;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.validator.Validator;
 import au.gov.vic.ecodev.mrt.template.processor.validator.helper.IssueColumnIndexHelper;
 import au.gov.vic.ecodev.mrt.template.processor.validator.helper.RecordCounter;
 import au.gov.vic.ecodev.mrt.template.processor.validator.helper.ValidatorHelper;
+import au.gov.vic.ecodev.utils.validator.common.ListSizeValidator;
 import au.gov.vic.ecodev.utils.validator.helper.ErrorMessageChecker;
 
 public class DValidator implements Validator {
