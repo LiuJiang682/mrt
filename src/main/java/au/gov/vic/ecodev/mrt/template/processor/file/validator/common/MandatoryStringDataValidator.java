@@ -36,7 +36,10 @@ public class MandatoryStringDataValidator {
 		}
 	
 		++index;
-		String string = strs[index];
+		String string = null;
+		if (index < strs.length) {
+			string = strs[index];
+		}
 		if (StringUtils.isEmpty(string)) {
 			String message = new StringBuilder(Strings.LOG_ERROR_HEADER)
 					.append("Line ")
