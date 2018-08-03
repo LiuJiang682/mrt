@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.apache.log4j.Logger;
 import org.springframework.util.CollectionUtils;
@@ -12,6 +13,7 @@ import org.springframework.util.StringUtils;
 import au.gov.vic.ecodev.common.util.NullSafeCollections;
 import au.gov.vic.ecodev.common.util.StringToDateConventor;
 import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
+import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
 
 public class DataExtractionHelper {
@@ -43,7 +45,14 @@ public class DataExtractionHelper {
 		}
 		int index = data.indexOf(code);
 		if (Numeral.NOT_FOUND == index) {
-			throw new TemplateProcessorException("No " + code + " index in the header!");
+			if (Stream.of(Strings.SPACE, Strings.UNDER_LINE, Strings.HYPHEN).anyMatch(code::contains)) {
+				index = new VariationHelper(data, code).findIndex();
+				if (Numeral.NOT_FOUND == index) {
+					throw new TemplateProcessorException("No " + code + " index in the header!");
+				}
+			} else {
+				throw new TemplateProcessorException("No " + code + " index in the header!");
+			}
 		}
 		return index;
 	}
