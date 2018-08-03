@@ -52,6 +52,7 @@ public interface Constants {
 		static final String ISSUE_COLUMN_INDEX = "issueColumnIndex";
 		static final String KEY_H0535 = "H0535";
 		static final String KEY_H0534 = "H0534";
+		static final String HYPHEN = "-";
 	}
 	
 	interface Numeral {
