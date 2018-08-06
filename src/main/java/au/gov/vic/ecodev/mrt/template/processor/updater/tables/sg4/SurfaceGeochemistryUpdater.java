@@ -15,6 +15,7 @@ import au.gov.vic.ecodev.mrt.template.processor.model.MrtTemplateValue;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.model.TemplateValue;
 import au.gov.vic.ecodev.mrt.template.processor.updater.helper.DataExtractionHelper;
+import au.gov.vic.ecodev.mrt.template.processor.updater.helper.FileNameExtractionHelper;
 import au.gov.vic.ecodev.mrt.template.processor.updater.helper.ProjectionZoneExtractionHelper;
 
 public class SurfaceGeochemistryUpdater {
@@ -28,6 +29,7 @@ public class SurfaceGeochemistryUpdater {
 	private int northingIndex;
 	private int sampleTypeIndex;
 	private BigDecimal amgZone;
+	private String fileName;
 	
 	public SurfaceGeochemistryUpdater(SurfaceGeochemistryDao surfaceGeochemistryDao, long sessionId,
 			Template template) {
@@ -51,6 +53,8 @@ public class SurfaceGeochemistryUpdater {
 				.extractMandatoryFieldIndex(sampleTypeName.get(Numeral.ZERO));
 		mandatoryFieldIndexList.add(sampleTypeIndex);
 		amgZone = new ProjectionZoneExtractionHelper(template).extractAmgZoneFromTemplate();
+		fileName = new FileNameExtractionHelper(template, Strings.CURRENT_FILE_NAME)
+				.doFileNameExtraction();
 	}
 
 	public void update(TemplateValue templateValue) {
@@ -61,6 +65,7 @@ public class SurfaceGeochemistryUpdater {
 		surfaceGeochemistry.setLoaderId(sessionId);
 		surfaceGeochemistry.setSampleId((String) new NullSafeCollections(dataRecordList)
 				.get(sampleIdIndex));
+		surfaceGeochemistry.setFileName(fileName);
 		surfaceGeochemistry.setEasting(new DataExtractionHelper(dataRecordList)
 				.extractBigDecimal(eastingIndex));
 		surfaceGeochemistry.setNorthing(new DataExtractionHelper(dataRecordList)
