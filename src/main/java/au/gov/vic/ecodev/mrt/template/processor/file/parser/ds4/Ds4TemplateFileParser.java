@@ -82,6 +82,7 @@ public class Ds4TemplateFileParser {
 
 	protected final void doTemplateSavingAndIntegrityCheck(Template template) throws TemplateProcessorException {
 		if (null != template) {
+			template.put(Strings.CURRENT_FILE_NAME, Arrays.asList(file.getName()));
 			if (context.saveDataBean(template)) {
 				String zipFile = new DirectoryTreeReverseTraversalZipFileFinder(file.getParent()).findZipFile();
 				if (doDs4ToSl4DataIntegrityCheck()) {

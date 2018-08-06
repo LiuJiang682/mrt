@@ -19,6 +19,7 @@ public class DownHole implements Entity, Serializable {
 	private long id;
 	private long loaderId;
 	private String holeId;
+	private String fileName;
 	private BigDecimal surveyedDepth;
 	private BigDecimal azimuthMag;
 	private BigDecimal dip;
@@ -41,6 +42,12 @@ public class DownHole implements Entity, Serializable {
 	}
 	public void setHoleId(String holeId) {
 		this.holeId = holeId;
+	}
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 	public BigDecimal getSurveyedDepth() {
 		return surveyedDepth;
