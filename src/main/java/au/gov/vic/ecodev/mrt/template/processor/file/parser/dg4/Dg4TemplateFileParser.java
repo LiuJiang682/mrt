@@ -89,6 +89,7 @@ public class Dg4TemplateFileParser {
 
 	protected void doTemplateSavingAndIntegrityCheck(Template template) throws TemplateProcessorException {
 		if (null != template) {
+			template.put(Strings.CURRENT_FILE_NAME, Arrays.asList(file.getName()));
 			if (context.saveDataBean(template)) {
 				String zipFile = new DirectoryTreeReverseTraversalZipFileFinder(file.getParent()).findZipFile();
 				if (doDg4ToSl4DataIntegrityCheck()) {
