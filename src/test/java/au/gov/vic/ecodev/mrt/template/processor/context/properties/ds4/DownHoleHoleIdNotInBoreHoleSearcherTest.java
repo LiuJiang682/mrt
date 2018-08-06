@@ -26,7 +26,7 @@ import au.gov.vic.ecodev.mrt.template.properties.TemplateProperties;
 @ActiveProfiles("test")
 public class DownHoleHoleIdNotInBoreHoleSearcherTest {
 
-	private static final String INSERT_DOWNHOLE_SQL = "INSERT INTO DH_DOWNHOLE(ID, LOADER_ID, HOLE_ID, SURVEYED_DEPTH, AZIMUTH_MAG, DIP, AZIMUTH_TRUE) VALUES (?, ?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_DOWNHOLE_SQL = "INSERT INTO DH_DOWNHOLE(ID, LOADER_ID, HOLE_ID, FILE_NAME, SURVEYED_DEPTH, AZIMUTH_MAG, DIP, AZIMUTH_TRUE) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String INSERT_BOREHOLE_SQL = "INSERT INTO DH_BOREHOLE(LOADER_ID, HOLE_ID, FILE_NAME, BH_AUTHORITY_CD, BH_REGULATION_CD, DILLING_DETAILS_ID, DRILLING_START_DT, DRILLING_COMPLETION_DT, DEPTH, ELEVATION_KB, AZIMUTH_MAG, BH_CONFIDENTIAL_FLG, DEPTH_UOM) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	
 	@Autowired
@@ -38,7 +38,7 @@ public class DownHoleHoleIdNotInBoreHoleSearcherTest {
 		long id = IDGenerator.getUID().longValue();
 		final long LOADER_ID = 102;
 		jdbcTemplate.update(INSERT_DOWNHOLE_SQL, new Object[] {id, 
-				LOADER_ID,  "STD003", 3, 0, 0, null});
+				LOADER_ID,  "STD003", "myTest.txt", 3, 0, 0, null});
 		DownHoleHoleIdNotInBoreHoleSearcher testInstance = new DownHoleHoleIdNotInBoreHoleSearcher();
 		testInstance.setJdbcTemplate(jdbcTemplate);
 		testInstance.setKey(LOADER_ID);
@@ -77,7 +77,7 @@ public class DownHoleHoleIdNotInBoreHoleSearcherTest {
 		long id = IDGenerator.getUID().longValue();
 		final long LOADER_ID = 100;
 		jdbcTemplate.update(INSERT_DOWNHOLE_SQL, new Object[] {id, 
-				LOADER_ID, "STD003", 3, 0, 0, null});
+				LOADER_ID, "STD003", "myTest.txt", 3, 0, 0, null});
 		jdbcTemplate.update(INSERT_BOREHOLE_SQL, new Object[] {LOADER_ID,
 				"STD003", "myTest.txt", "U", "N/A", 1, new Date(), new Date(), 210, 320, null, "Y", "MTR"});
 		

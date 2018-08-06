@@ -25,7 +25,7 @@ import au.gov.vic.ecodev.mrt.template.properties.TemplateProperties;
 @ActiveProfiles("test")
 public class DownHoleSurveyedDepthGtTotalDepthSearcherTest {
 
-	private static final String INSERT_SQL = "INSERT INTO DH_DOWNHOLE(ID, LOADER_ID, HOLE_ID, SURVEYED_DEPTH, AZIMUTH_MAG, DIP, AZIMUTH_TRUE) VALUES (?, ?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_SQL = "INSERT INTO DH_DOWNHOLE(ID, LOADER_ID, HOLE_ID, FILE_NAME, SURVEYED_DEPTH, AZIMUTH_MAG, DIP, AZIMUTH_TRUE) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -35,7 +35,7 @@ public class DownHoleSurveyedDepthGtTotalDepthSearcherTest {
 		//Given
 		long id = IDGenerator.getUID().longValue();
 		jdbcTemplate.update(INSERT_SQL, new Object[] {id, 
-				1, "KPDD001", 300, 0, 0, null});
+				1, "KPDD001", "myTest.txt", 300, 0, 0, null});
 		DownHoleSurveyedDepthGtTotalDepthSearcher testInstance = new DownHoleSurveyedDepthGtTotalDepthSearcher();
 		testInstance.setJdbcTemplate(jdbcTemplate);
 		testInstance.setKey(1l);
@@ -55,7 +55,7 @@ public class DownHoleSurveyedDepthGtTotalDepthSearcherTest {
 		//Given
 		long id = IDGenerator.getUID().longValue();
 		jdbcTemplate.update(INSERT_SQL, new Object[] {id, 
-				1, "KPDD001", 30, 0, 0, null});
+				1, "KPDD001", "myTest.txt", 30, 0, 0, null});
 		DownHoleSurveyedDepthGtTotalDepthSearcher testInstance = new DownHoleSurveyedDepthGtTotalDepthSearcher();
 		testInstance.setJdbcTemplate(jdbcTemplate);
 		testInstance.setKey(1l);

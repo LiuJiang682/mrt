@@ -14,6 +14,7 @@ import au.gov.vic.ecodev.mrt.template.fields.Ds4ColumnHeaders;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.updater.helper.DataExtractionHelper;
+import au.gov.vic.ecodev.mrt.template.processor.updater.helper.FileNameExtractionHelper;
 
 public class DownHoleUpdater {
 
@@ -26,6 +27,7 @@ public class DownHoleUpdater {
 	private int azimuthMagIndex = Numeral.NOT_FOUND;
 	private int dipIndex;
 	private int azimuthTrueIndex = Numeral.NOT_FOUND;
+	private String fileName;
 
 	public DownHoleUpdater(DownHoleDao downHoleDao, long sessionId, Template template) {
 		this.downHoleDao = downHoleDao;
@@ -38,6 +40,7 @@ public class DownHoleUpdater {
 		downHole.setId(IDGenerator.getUID().longValue());
 		downHole.setLoaderId(sessionId);
 		downHole.setHoleId((String) new NullSafeCollections(dataRecordList).get(holeIdIndex));
+		downHole.setFileName(fileName);
 		downHole.setSurveyedDepth(new DataExtractionHelper(dataRecordList)
 				.extractBigDecimal(surveyedDepthIndex));
 		if (Numeral.NOT_FOUND != azimuthMagIndex) {
@@ -81,6 +84,8 @@ public class DownHoleUpdater {
 		if ((Numeral.NOT_FOUND == azimuthMagIndex) && (Numeral.NOT_FOUND == azimuthTrueIndex)) {
 			throw new TemplateProcessorException("Missing Azimuth_MAG or Azimuth_TRUE");
 		}
+		fileName = new FileNameExtractionHelper(template, Strings.CURRENT_FILE_NAME)
+				.doFileNameExtraction();
 	}
 
 }
