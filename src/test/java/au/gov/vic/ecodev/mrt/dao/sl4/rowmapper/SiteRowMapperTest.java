@@ -41,6 +41,7 @@ public class SiteRowMapperTest {
 		when(mockResultSet.getString(eq("ELEV_DATUM_CD"))).thenReturn("AHD");
 		when(mockResultSet.getInt(eq("NUM_DATA_RECORDS"))).thenReturn(-1);
 		when(mockResultSet.getInt(eq("ISSUE_COLUMN_INDEX"))).thenReturn(-1);
+		when(mockResultSet.getString(eq("FILE_NAME"))).thenReturn("myTest.txt");
 		//When
 		Site site = testInstance.mapRow(mockResultSet, 1);
 		//Then
@@ -61,6 +62,7 @@ public class SiteRowMapperTest {
 		assertThat(site.getElevAcc(), is(equalTo(BigDecimal.ZERO)));
 		assertThat(site.getElevDatumCd(), is(equalTo("AHD")));
 		assertThat(site.getNumberOfDataRecord(), is(equalTo(-1)));
+		assertThat(site.getFileName(), is(equalTo("myTest.txt")));
 		assertThat(site.getIssueColumnIndex(), is(equalTo(-1)));
 	}
 }

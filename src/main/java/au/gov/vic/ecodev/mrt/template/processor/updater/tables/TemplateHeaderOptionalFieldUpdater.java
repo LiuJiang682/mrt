@@ -13,6 +13,7 @@ import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDao;
 import au.gov.vic.ecodev.mrt.model.TemplateOptionalField;
 import au.gov.vic.ecodev.mrt.template.processor.model.Entity;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
+import au.gov.vic.ecodev.mrt.template.processor.updater.helper.FileNameExtractionHelper;
 import au.gov.vic.ecodev.mrt.template.processor.updater.helper.LabelledColumnIndexListExtractor;
 
 public class TemplateHeaderOptionalFieldUpdater {
@@ -22,6 +23,7 @@ public class TemplateHeaderOptionalFieldUpdater {
 	private final TemplateOptionalFieldDao templateOptionalFieldDao;
 	private final List<String> keys;
 	
+	private String fileName;
 	private List<Entity> cache;
 	
 	public TemplateHeaderOptionalFieldUpdater(long sessionId, Template template,
@@ -43,6 +45,8 @@ public class TemplateHeaderOptionalFieldUpdater {
 	}
 
 	public void update() {
+		this.fileName = new FileNameExtractionHelper(template, Strings.CURRENT_FILE_NAME)
+				.doFileNameExtraction();
 		List<String> headers = template.get(Strings.KEY_H1000);
 		String templateName = getTemplateName(template.getClass().getSimpleName());
 		List<Integer> duplicatedKeyIndexList = 
@@ -59,6 +63,7 @@ public class TemplateHeaderOptionalFieldUpdater {
 							TemplateOptionalField templateOptionalField = new TemplateOptionalField();
 							templateOptionalField.setId(IDGenerator.getUID().longValue());
 							templateOptionalField.setSessionId(sessionId);
+							templateOptionalField.setFileName(fileName);
 							templateOptionalField.setTemplateName(templateName);
 							String header = headers.get(index);
 							if (duplicatedKeyIndexList.contains(index)) {

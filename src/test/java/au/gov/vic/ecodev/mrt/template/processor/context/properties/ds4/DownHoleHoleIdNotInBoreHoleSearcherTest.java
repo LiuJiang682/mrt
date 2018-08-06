@@ -27,7 +27,7 @@ import au.gov.vic.ecodev.mrt.template.properties.TemplateProperties;
 public class DownHoleHoleIdNotInBoreHoleSearcherTest {
 
 	private static final String INSERT_DOWNHOLE_SQL = "INSERT INTO DH_DOWNHOLE(ID, LOADER_ID, HOLE_ID, SURVEYED_DEPTH, AZIMUTH_MAG, DIP, AZIMUTH_TRUE) VALUES (?, ?, ?, ?, ?, ?, ?)";
-	private static final String INSERT_BOREHOLE_SQL = "INSERT INTO DH_BOREHOLE(LOADER_ID, HOLE_ID, BH_AUTHORITY_CD, BH_REGULATION_CD, DILLING_DETAILS_ID, DRILLING_START_DT, DRILLING_COMPLETION_DT, DEPTH, ELEVATION_KB, AZIMUTH_MAG, BH_CONFIDENTIAL_FLG, DEPTH_UOM) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_BOREHOLE_SQL = "INSERT INTO DH_BOREHOLE(LOADER_ID, HOLE_ID, FILE_NAME, BH_AUTHORITY_CD, BH_REGULATION_CD, DILLING_DETAILS_ID, DRILLING_START_DT, DRILLING_COMPLETION_DT, DEPTH, ELEVATION_KB, AZIMUTH_MAG, BH_CONFIDENTIAL_FLG, DEPTH_UOM) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -38,7 +38,7 @@ public class DownHoleHoleIdNotInBoreHoleSearcherTest {
 		long id = IDGenerator.getUID().longValue();
 		final long LOADER_ID = 102;
 		jdbcTemplate.update(INSERT_DOWNHOLE_SQL, new Object[] {id, 
-				LOADER_ID, "STD003", 3, 0, 0, null});
+				LOADER_ID,  "STD003", 3, 0, 0, null});
 		DownHoleHoleIdNotInBoreHoleSearcher testInstance = new DownHoleHoleIdNotInBoreHoleSearcher();
 		testInstance.setJdbcTemplate(jdbcTemplate);
 		testInstance.setKey(LOADER_ID);
@@ -58,7 +58,7 @@ public class DownHoleHoleIdNotInBoreHoleSearcherTest {
 		//Given
 		final long LOADER_ID = 101;
 		jdbcTemplate.update(INSERT_BOREHOLE_SQL, new Object[] {LOADER_ID,
-				"STD003", "U", "N/A", 1, new Date(), new Date(), 210, 320, null, "Y", "MTR"});
+				"STD003", "myTest.txt", "U", "N/A", 1, new Date(), new Date(), 210, 320, null, "Y", "MTR"});
 		DownHoleHoleIdNotInBoreHoleSearcher testInstance = new DownHoleHoleIdNotInBoreHoleSearcher();
 		testInstance.setJdbcTemplate(jdbcTemplate);
 		testInstance.setKey(LOADER_ID);
@@ -79,7 +79,7 @@ public class DownHoleHoleIdNotInBoreHoleSearcherTest {
 		jdbcTemplate.update(INSERT_DOWNHOLE_SQL, new Object[] {id, 
 				LOADER_ID, "STD003", 3, 0, 0, null});
 		jdbcTemplate.update(INSERT_BOREHOLE_SQL, new Object[] {LOADER_ID,
-				"STD003", "U", "N/A", 1, new Date(), new Date(), 210, 320, null, "Y", "MTR"});
+				"STD003", "myTest.txt", "U", "N/A", 1, new Date(), new Date(), 210, 320, null, "Y", "MTR"});
 		
 		DownHoleHoleIdNotInBoreHoleSearcher testInstance = new DownHoleHoleIdNotInBoreHoleSearcher();
 		testInstance.setJdbcTemplate(jdbcTemplate);
