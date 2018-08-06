@@ -8,6 +8,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.verify;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
@@ -19,6 +20,8 @@ import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDao;
 import au.gov.vic.ecodev.mrt.fixture.TestFixture;
 import au.gov.vic.ecodev.mrt.model.TemplateOptionalField;
 import au.gov.vic.ecodev.mrt.template.processor.model.Entity;
+import au.gov.vic.ecodev.mrt.template.processor.model.Template;
+import au.gov.vic.ecodev.mrt.template.processor.model.dg4.Dg4Template;
 
 public class TemplateHeaderH1000FieldUpdaterTest {
 
@@ -39,6 +42,7 @@ public class TemplateHeaderH1000FieldUpdaterTest {
 		assertThat(entity, is(instanceOf(TemplateOptionalField.class)));
 		TemplateOptionalField templateOptionalField = (TemplateOptionalField)entity;
 		assertThat(templateOptionalField.getSessionId(), is(equalTo(1l)));
+		assertThat(templateOptionalField.getFileName(), is(equalTo("myTest.txt")));
 		assertThat(templateOptionalField.getTemplateName(), is(equalTo(Strings.TEMPLATE_NAME_DG4)));
 		assertThat(templateOptionalField.getTemplateHeader(), is(equalTo(Strings.KEY_H1000)));
 		assertThat(templateOptionalField.getRowNumber(), is(equalTo(Strings.KEY_H1000)));
@@ -58,42 +62,50 @@ public class TemplateHeaderH1000FieldUpdaterTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void shouldRaiseExceptionWhenHeadersIsNull() {
 		//Given
-		List<String> headers = null;
+		Template template = null;
 		TemplateOptionalFieldDao mockTemplateOptionalFieldDao = null;
 		long sessionId = 1l;
 		//When
-		new TemplateHeaderH1000FieldUpdater(sessionId, headers, mockTemplateOptionalFieldDao, null);
+		new TemplateHeaderH1000FieldUpdater(sessionId, template, mockTemplateOptionalFieldDao, null);
 		fail("Program reached unexpected point!");
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void shouldRaiseExceptionWhenDaosIsNull() {
 		//Given
-		List<String> headers = TestFixture.getDg4ColumnHeaderList();
+		Template template = getTestTemplate();
 		TemplateOptionalFieldDao mockTemplateOptionalFieldDao = null;
 		long sessionId = 1l;
 		//When
-		new TemplateHeaderH1000FieldUpdater(sessionId, headers, mockTemplateOptionalFieldDao, null);
+		new TemplateHeaderH1000FieldUpdater(sessionId, template, mockTemplateOptionalFieldDao, null);
 		fail("Program reached unexpected point!");
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void shouldRaiseExceptionWhenTemplateNameIsNull() {
 		//Given
-		List<String> headers = TestFixture.getDg4ColumnHeaderList();
+		Template template = getTestTemplate();
 		TemplateOptionalFieldDao mockTemplateOptionalFieldDao = Mockito.mock(TemplateOptionalFieldDao.class);
 		long sessionId = 1l;
 		//When
-		new TemplateHeaderH1000FieldUpdater(sessionId, headers, mockTemplateOptionalFieldDao, null);
+		new TemplateHeaderH1000FieldUpdater(sessionId, template, mockTemplateOptionalFieldDao, null);
 		fail("Program reached unexpected point!");
 	}
 	
 	private void givenTestInstance() {
-		List<String> headers = TestFixture.getDg4ColumnHeaderList();
+		Template template = getTestTemplate();
 		mockTemplateOptionalFieldDao = Mockito.mock(TemplateOptionalFieldDao.class);
 		long sessionId = 1l;
 		
 		testInstance = 
-				new TemplateHeaderH1000FieldUpdater(sessionId, headers, mockTemplateOptionalFieldDao, "DG4");
+				new TemplateHeaderH1000FieldUpdater(sessionId, template, mockTemplateOptionalFieldDao, "DG4");
+	}
+	
+	private Template getTestTemplate() {
+		List<String> headers = TestFixture.getDg4ColumnHeaderList();
+		Template template = new Dg4Template();
+		template.put(Strings.KEY_H1000, headers);
+		template.put(Strings.CURRENT_FILE_NAME, Arrays.asList("myTest.txt"));
+		return template;
 	}
 }

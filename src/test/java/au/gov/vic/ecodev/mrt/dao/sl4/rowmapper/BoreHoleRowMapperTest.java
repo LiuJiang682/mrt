@@ -35,6 +35,7 @@ public class BoreHoleRowMapperTest {
 		when(mockResultSet.getBigDecimal(eq("ELEVATION_KB"))).thenReturn(BigDecimal.ZERO);
 		when(mockResultSet.getBigDecimal(eq("AZIMUTH_MAG"))).thenReturn(BigDecimal.TEN);
 		when(mockResultSet.getString(eq("BH_CONFIDENTIAL_FLG"))).thenReturn("Y");
+		when(mockResultSet.getString(eq("FILE_NAME"))).thenReturn("myTest.txt");
 		//When
 		BoreHole boreHole = testInstance.mapRow(mockResultSet, 1);
 		//Then
@@ -49,5 +50,6 @@ public class BoreHoleRowMapperTest {
 		assertThat(boreHole.getElevationKb(), is(equalTo(BigDecimal.ZERO)));
 		assertThat(boreHole.getAzimuthMag(), is(equalTo(BigDecimal.TEN)));
 		assertThat(boreHole.getBhConfidentialFlag(), is(equalTo("Y")));
+		assertThat(boreHole.getFileName(), is(equalTo("myTest.txt")));
 	}
 }

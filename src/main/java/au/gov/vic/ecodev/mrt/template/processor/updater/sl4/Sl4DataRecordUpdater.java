@@ -70,8 +70,7 @@ public class Sl4DataRecordUpdater {
 		
 		TemplateHeaderH1000FieldUpdater templateHeaderH1000Updater = 
 				new TemplateHeaderH1000FieldUpdater(sessionId, 
-						template.get(Strings.KEY_H1000), 
-						templateOptionalFieldDao, Strings.TEMPLATE_NAME_SL4);
+						template, templateOptionalFieldDao, Strings.TEMPLATE_NAME_SL4);
 		templateHeaderH1000Updater.update();
 		
 		TemplateHeaderOptionalFieldUpdater templateHeaderOptionalFieldUpdater = 

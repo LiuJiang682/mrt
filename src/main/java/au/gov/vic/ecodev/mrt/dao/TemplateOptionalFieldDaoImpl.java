@@ -20,13 +20,13 @@ public class TemplateOptionalFieldDaoImpl implements TemplateOptionalFieldDao {
 	
 	private static final Logger LOGGER = Logger.getLogger(TemplateOptionalFieldDaoImpl.class);
 
-	private static final String GET_SELECT_SQL = "SELECT ID, LOADER_ID, TEMPLATE_NAME, TEMPLATE_HEADER, ROW_NUMBER, FIELD_VALUE FROM DH_OPTIONAL_FIELDS WHERE ID = ?";
+	private static final String GET_SELECT_SQL = "SELECT ID, LOADER_ID, FILE_NAME, TEMPLATE_NAME, TEMPLATE_HEADER, ROW_NUMBER, FIELD_VALUE FROM DH_OPTIONAL_FIELDS WHERE ID = ?";
 
 	private static final String SELECT_SQL = "SELECT COUNT(ID) FROM DH_OPTIONAL_FIELDS WHERE ID = ?";
 
-	private static final String UPDATE_SQL = "UPDATE DH_OPTIONAL_FIELDS SET LOADER_ID = ?, TEMPLATE_NAME = ?, TEMPLATE_HEADER = ?, ROW_NUMBER = ?, FIELD_VALUE = ? WHERE ID = ?";
+	private static final String UPDATE_SQL = "UPDATE DH_OPTIONAL_FIELDS SET LOADER_ID = ?, FILE_NAME = ?, TEMPLATE_NAME = ?, TEMPLATE_HEADER = ?, ROW_NUMBER = ?, FIELD_VALUE = ? WHERE ID = ?";
 
-	private static final String INSERT_SQL = "INSERT INTO DH_OPTIONAL_FIELDS(ID, LOADER_ID, TEMPLATE_NAME, TEMPLATE_HEADER, ROW_NUMBER, FIELD_VALUE) VALUES (?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_SQL = "INSERT INTO DH_OPTIONAL_FIELDS(ID, LOADER_ID, FILE_NAME, TEMPLATE_NAME, TEMPLATE_HEADER, ROW_NUMBER, FIELD_VALUE) VALUES (?, ?, ?, ?, ?, ?, ?)";
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -39,15 +39,21 @@ public class TemplateOptionalFieldDaoImpl implements TemplateOptionalFieldDao {
 					new Object[] {templateOptionalField.getId()});
 			if (Numeral.ZERO == count) {
 				int row = jdbcTemplate.update(INSERT_SQL, templateOptionalField.getId(), 
-						templateOptionalField.getSessionId(), templateOptionalField.getTemplateName(),
-						templateOptionalField.getTemplateHeader(), templateOptionalField.getRowNumber(),
+						templateOptionalField.getSessionId(), templateOptionalField.getFileName(),
+						templateOptionalField.getTemplateName(), 
+						templateOptionalField.getTemplateHeader(), 
+						templateOptionalField.getRowNumber(),
 						templateOptionalField.getFieldValue());
 				return Numeral.ONE == row;
 			} else {
 				int row = jdbcTemplate.update(UPDATE_SQL, 
-						templateOptionalField.getSessionId(), templateOptionalField.getTemplateName(),
-						templateOptionalField.getTemplateHeader(), templateOptionalField.getRowNumber(),
-						templateOptionalField.getFieldValue(), templateOptionalField.getId());
+						templateOptionalField.getSessionId(),
+						templateOptionalField.getFileName(),
+						templateOptionalField.getTemplateName(),
+						templateOptionalField.getTemplateHeader(), 
+						templateOptionalField.getRowNumber(),
+						templateOptionalField.getFieldValue(), 
+						templateOptionalField.getId());
 				return Numeral.ONE == row;
 			}
 		} catch (DataAccessException e) {
@@ -82,8 +88,11 @@ public class TemplateOptionalFieldDaoImpl implements TemplateOptionalFieldDao {
 			TemplateOptionalField templateOptionalField = (TemplateOptionalField)entity;
 			Object[] arguments = new Object[] {
 					templateOptionalField.getId(), 
-					templateOptionalField.getSessionId(), templateOptionalField.getTemplateName(),
-					templateOptionalField.getTemplateHeader(), templateOptionalField.getRowNumber(),
+					templateOptionalField.getSessionId(),
+					templateOptionalField.getFileName(),
+					templateOptionalField.getTemplateName(),
+					templateOptionalField.getTemplateHeader(), 
+					templateOptionalField.getRowNumber(),
 					templateOptionalField.getFieldValue()
 			};
 			argumentList.add(arguments);

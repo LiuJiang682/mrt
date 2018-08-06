@@ -135,7 +135,8 @@ public class BoreHoleDaoImplTest {
 		boreHole.setElevationKb(new BigDecimal("320"));
 		boreHole.setAzimuthMag(null);
 		boreHole.setBhConfidentialFlag("Y");
-
+		boreHole.setFileName("myTest.txt");
+		
 		boolean flag = boreHoleDao.updateOrSave(boreHole);
 		return flag;
 	}

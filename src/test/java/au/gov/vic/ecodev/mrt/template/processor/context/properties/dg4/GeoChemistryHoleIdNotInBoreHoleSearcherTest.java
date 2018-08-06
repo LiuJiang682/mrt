@@ -27,7 +27,7 @@ import au.gov.vic.ecodev.mrt.template.properties.TemplateProperties;
 public class GeoChemistryHoleIdNotInBoreHoleSearcherTest {
 
 	private static final String INSERT_GEOCHEMISTRY_SQL = "INSERT INTO DH_GEOCHEMISTRY(ID, LOADER_ID, HOLE_ID, SAMPLE_ID, SAMPLE_FROM, SAMPLE_TO, DRILL_CODE) VALUES (?, ?, ?, ?, ?, ?, ?)";
-	private static final String INSERT_BOREHOLE_SQL = "INSERT INTO DH_BOREHOLE(LOADER_ID, HOLE_ID, BH_AUTHORITY_CD, BH_REGULATION_CD, DILLING_DETAILS_ID, DRILLING_START_DT, DRILLING_COMPLETION_DT, DEPTH, ELEVATION_KB, AZIMUTH_MAG, BH_CONFIDENTIAL_FLG, DEPTH_UOM) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_BOREHOLE_SQL = "INSERT INTO DH_BOREHOLE(LOADER_ID, HOLE_ID, FILE_NAME, BH_AUTHORITY_CD, BH_REGULATION_CD, DILLING_DETAILS_ID, DRILLING_START_DT, DRILLING_COMPLETION_DT, DEPTH, ELEVATION_KB, AZIMUTH_MAG, BH_CONFIDENTIAL_FLG, DEPTH_UOM) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -100,7 +100,7 @@ public class GeoChemistryHoleIdNotInBoreHoleSearcherTest {
 	
 	private void insertBoreHole(final long LOADER_ID) {
 		jdbcTemplate.update(INSERT_BOREHOLE_SQL, new Object[] {LOADER_ID,
-				"STD003", "U", "N/A", 1, new Date(), new Date(), 210, 320, null, "Y", "MTR"});
+				"STD003", "myTest.txt", "U", "N/A", 1, new Date(), new Date(), 210, 320, null, "Y", "MTR"});
 	}
 
 	private void insertGeoChemistry(long id, final long LOADER_ID) {

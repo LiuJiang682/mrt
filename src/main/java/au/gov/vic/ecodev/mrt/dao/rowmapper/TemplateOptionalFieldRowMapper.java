@@ -14,6 +14,7 @@ public class TemplateOptionalFieldRowMapper implements RowMapper<TemplateOptiona
 		TemplateOptionalField templateOptionalField = new TemplateOptionalField();
 		templateOptionalField.setId(rs.getLong("ID"));
 		templateOptionalField.setSessionId(rs.getLong("LOADER_ID"));
+		templateOptionalField.setFileName(rs.getString("FILE_NAME"));
 		templateOptionalField.setTemplateName(rs.getString("TEMPLATE_NAME"));
 		templateOptionalField.setTemplateHeader(rs.getString("TEMPLATE_HEADER"));
 		templateOptionalField.setRowNumber(rs.getString("ROW_NUMBER"));

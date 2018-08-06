@@ -41,7 +41,7 @@ public class Sg4TemplateUpdater implements TemplateUpdater {
 		
 		try {
 			TemplateHeaderH1000FieldUpdater templateHeaderH1000Updater = 
-					new TemplateHeaderH1000FieldUpdater(sessionId, template.get(Strings.KEY_H1000), 
+					new TemplateHeaderH1000FieldUpdater(sessionId, template, 
 							templateOptionalFieldDao, Strings.TEMPLATE_NAME_SG4);
 			templateHeaderH1000Updater.update();
 			TemplateHeaderOptionalFieldUpdater templateHeaderOptionalFieldUpdater = 
