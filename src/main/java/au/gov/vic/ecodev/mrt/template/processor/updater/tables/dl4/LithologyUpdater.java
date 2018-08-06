@@ -12,6 +12,7 @@ import au.gov.vic.ecodev.mrt.template.fields.Dl4ColumnHeaders;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.updater.helper.DataExtractionHelper;
+import au.gov.vic.ecodev.mrt.template.processor.updater.helper.FileNameExtractionHelper;
 
 public class LithologyUpdater {
 
@@ -21,6 +22,7 @@ public class LithologyUpdater {
 
 	private int holeIdIndex;
 	private int depthFromIndex;
+	private String fileName;
 
 	public LithologyUpdater(LithologyDao lithologyDao, long sessionId, Template template) {
 		this.lithologyDao = lithologyDao;
@@ -38,7 +40,8 @@ public class LithologyUpdater {
 		depthFromIndex = new DataExtractionHelper(headers)
 				.extractMandatoryFieldIndex(depthFromName.get(Numeral.ZERO));
 		mandatoryFieldIndexList.add(depthFromIndex);
-
+		this.fileName = new FileNameExtractionHelper(template, Strings.CURRENT_FILE_NAME)
+				.doFileNameExtraction();
 	}
 
 	public void update(List<String> dataRecordList) {
@@ -46,6 +49,7 @@ public class LithologyUpdater {
 		lithology.setId(IDGenerator.getUID().longValue());
 		lithology.setLoaderId(sessionId);
 		lithology.setHoleId((String) new NullSafeCollections(dataRecordList).get(holeIdIndex));
+		lithology.setFileName(fileName);
 		lithology.setDepthFrom(new DataExtractionHelper(dataRecordList)
 				.extractBigDecimal(depthFromIndex));
 		lithologyDao.updateOrSave(lithology);
