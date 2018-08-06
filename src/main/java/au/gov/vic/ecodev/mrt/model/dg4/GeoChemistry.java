@@ -23,6 +23,7 @@ public class GeoChemistry implements Entity, Serializable {
 	private BigDecimal from;
 	private BigDecimal to;
 	private String drillCode;
+	private String fileName;
 	
 	public long getId() {
 		return id;
@@ -47,6 +48,12 @@ public class GeoChemistry implements Entity, Serializable {
 	}
 	public void setSampleId(String sampleId) {
 		this.sampleId = sampleId;
+	}
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 	public BigDecimal getFrom() {
 		return from;
