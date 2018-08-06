@@ -15,6 +15,7 @@ import au.gov.vic.ecodev.mrt.model.TemplateOptionalField;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
 import au.gov.vic.ecodev.mrt.template.processor.model.Entity;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
+import au.gov.vic.ecodev.mrt.template.processor.updater.helper.FileNameExtractionHelper;
 import au.gov.vic.ecodev.mrt.template.processor.updater.helper.LabelledColumnIndexListExtractor;
 
 public class TemplateOptionalFieldUpdater {
@@ -27,6 +28,7 @@ public class TemplateOptionalFieldUpdater {
 	
 	private List<Integer> indexList;
 	private List<Entity> cache;
+	private String fileName;
 	
 	public TemplateOptionalFieldUpdater(long sessionId, Template template,
 			TemplateOptionalFieldDao templateOptionalFieldDao) {
@@ -57,6 +59,8 @@ public class TemplateOptionalFieldUpdater {
 				}
 			}
 		}
+		fileName = new FileNameExtractionHelper(template, Strings.CURRENT_FILE_NAME)
+				.doFileNameExtraction();
 	}
 
 	public List<Integer> getIndexList() {
@@ -75,6 +79,7 @@ public class TemplateOptionalFieldUpdater {
 					TemplateOptionalField templateOptionalField = new TemplateOptionalField();
 					templateOptionalField.setId(IDGenerator.getUID().longValue());
 					templateOptionalField.setSessionId(sessionId);
+					templateOptionalField.setFileName(fileName);
 					templateOptionalField.setTemplateName(templateName);
 					String header = headers.get(index);
 					if (duplicatedKeyIndexList.contains(index)) {

@@ -17,6 +17,7 @@ public class TemplateOptionalField implements Entity, Serializable {
 	
 	private long id;
 	private long sessionId;
+	private String fileName;
 	private String templateName;
 	private String templateHeader;
 	private String rowNumber;
@@ -33,6 +34,12 @@ public class TemplateOptionalField implements Entity, Serializable {
 	}
 	public void setSessionId(long sessionId) {
 		this.sessionId = sessionId;
+	}
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 	public String getTemplateName() {
 		return templateName;

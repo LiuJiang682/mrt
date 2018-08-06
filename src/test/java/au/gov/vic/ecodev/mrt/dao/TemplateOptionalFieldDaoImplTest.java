@@ -73,6 +73,7 @@ public class TemplateOptionalFieldDaoImplTest {
 		TemplateOptionalField entity = new TemplateOptionalField();
 		entity.setId(id);
 		entity.setSessionId(100l);
+		entity.setFileName("myTest.txt");
 		entity.setTemplateName("SL4");
 		entity.setTemplateHeader("Au");
 		entity.setRowNumber("1");
@@ -107,6 +108,7 @@ public class TemplateOptionalFieldDaoImplTest {
 		TemplateOptionalField entity = new TemplateOptionalField();
 		entity.setId(id);
 		entity.setSessionId(sessionId);
+		entity.setFileName("myTest.txt");
 		entity.setTemplateName(templateName);
 		entity.setTemplateHeader(templateHeader);
 		entity.setRowNumber(rowNumber);

@@ -16,6 +16,7 @@ import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorExcep
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.model.TemplateValue;
 import au.gov.vic.ecodev.mrt.template.processor.model.MrtTemplateValue;
+import au.gov.vic.ecodev.mrt.template.processor.updater.helper.FileNameExtractionHelper;
 import au.gov.vic.ecodev.mrt.template.processor.updater.helper.ProjectionZoneExtractionHelper;
 import au.gov.vic.ecodev.mrt.template.processor.updater.tables.index.finder.sl4.HoleIdIndexFinder;
 
@@ -41,6 +42,7 @@ public class SiteUpdater {
 	private BigDecimal locnAcc;
 	private String locnDatumCd;
 	private String elevDatumCd;
+	private String fileName;
 	
 	public SiteUpdater(final long sessionId, final Template template, final SiteDao siteDao) {
 		this.sessionId = sessionId;
@@ -69,6 +71,8 @@ public class SiteUpdater {
 		locnAcc = extractLocnAccFromTemplate(template);
 		locnDatumCd = extractLocnDatumCdFromTemplate(template);
 		elevDatumCd = extractElevDatumCdFromTemplate(template);
+		fileName = new FileNameExtractionHelper(template, Strings.CURRENT_FILE_NAME)
+				.doFileNameExtraction();
 	}
 	
 	public void update(TemplateValue templateValue) {
@@ -87,6 +91,7 @@ public class SiteUpdater {
 		site.setLocnAcc(locnAcc);
 		site.setLocnDatumCd(locnDatumCd);
 		site.setElevDatumCd(elevDatumCd);
+		site.setFileName(fileName);
 		site.setIssueColumnIndex(mrtTemplateValue.getIssueColumnIndex());
 		siteDao.updateOrSave(site);
 	}

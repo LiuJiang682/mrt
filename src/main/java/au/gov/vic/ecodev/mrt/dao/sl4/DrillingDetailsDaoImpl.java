@@ -16,15 +16,15 @@ public class DrillingDetailsDaoImpl implements DrillingDetailsDao {
 
 	private static final Logger LOGGER = Logger.getLogger(DrillingDetailsDaoImpl.class);
 
-	private static final String SELECT_WHERE_SQL = "SELECT ID, DRILL_TYPE, DRILL_COMPANY, DRILL_DESCRIPTION FROM DH_DRILLING_DETAILS WHERE DRILL_TYPE = ? AND DRILL_COMPANY = ?";
+	private static final String SELECT_WHERE_SQL = "SELECT ID, FILE_NAME, DRILL_TYPE, DRILL_COMPANY, DRILL_DESCRIPTION FROM DH_DRILLING_DETAILS WHERE DRILL_TYPE = ? AND DRILL_COMPANY = ?";
 
-	private static final String UPDATE_SQL = "UPDATE DH_DRILLING_DETAILS SET DRILL_TYPE = ?, DRILL_COMPANY = ?, DRILL_DESCRIPTION = ? where ID = ?";
+	private static final String UPDATE_SQL = "UPDATE DH_DRILLING_DETAILS SET FILE_NAME=?, DRILL_TYPE = ?, DRILL_COMPANY = ?, DRILL_DESCRIPTION = ? where ID = ?";
 
-	private static final String INSERT_SQL = "INSERT INTO DH_DRILLING_DETAILS(ID, DRILL_TYPE, DRILL_COMPANY, DRILL_DESCRIPTION) values (?, ?, ?, ?)";
+	private static final String INSERT_SQL = "INSERT INTO DH_DRILLING_DETAILS(ID, FILE_NAME, DRILL_TYPE, DRILL_COMPANY, DRILL_DESCRIPTION) values (?, ?, ?, ?, ?)";
 
 	private static final String COUNT_SQL = "SELECT COUNT(ID) FROM DH_DRILLING_DETAILS WHERE ID = ?";
 
-	private static final String SELECT_SQL = "SELECT ID, DRILL_TYPE, DRILL_COMPANY, DRILL_DESCRIPTION FROM DH_DRILLING_DETAILS WHERE ID = ?";;
+	private static final String SELECT_SQL = "SELECT ID, FILE_NAME, DRILL_TYPE, DRILL_COMPANY, DRILL_DESCRIPTION FROM DH_DRILLING_DETAILS WHERE ID = ?";;
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -35,13 +35,14 @@ public class DrillingDetailsDaoImpl implements DrillingDetailsDao {
 		int count = jdbcTemplate.queryForObject(COUNT_SQL, Integer.class, drillingDetails.getId());
 		if (Numeral.ZERO == count) {
 			int rows = jdbcTemplate.update(INSERT_SQL, new Object[] { drillingDetails.getId(),
-					drillingDetails.getDrillType(), drillingDetails.getDrillCompany(), 
-					drillingDetails.getDrillDescription() });
+					drillingDetails.getFileName(), drillingDetails.getDrillType(), 
+					drillingDetails.getDrillCompany(), drillingDetails.getDrillDescription() });
 			return Numeral.ONE == rows;
 		} else {
-			int rows = jdbcTemplate.update(UPDATE_SQL, new Object[] { drillingDetails.getDrillType(), 
-					drillingDetails.getDrillCompany(), 
-					drillingDetails.getDrillDescription(), drillingDetails.getId() });
+			int rows = jdbcTemplate.update(UPDATE_SQL, new Object[] { 
+					drillingDetails.getFileName(), drillingDetails.getDrillType(), 
+					drillingDetails.getDrillCompany(), drillingDetails.getDrillDescription(), 
+					drillingDetails.getId() });
 			return Numeral.ONE == rows;
 		}
 	}
