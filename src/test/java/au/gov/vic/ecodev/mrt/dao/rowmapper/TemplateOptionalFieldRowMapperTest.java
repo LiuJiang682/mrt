@@ -28,6 +28,7 @@ public class TemplateOptionalFieldRowMapperTest {
 		when(mockResultSet.getString("TEMPLATE_HEADER")).thenReturn("Au");
 		when(mockResultSet.getString("ROW_NUMBER")).thenReturn("6");
 		when(mockResultSet.getString("FIELD_VALUE")).thenReturn("FIELD_VALUE");
+		when(mockResultSet.getString("FILE_NAME")).thenReturn("FILE_NAME");
 		//When
 		TemplateOptionalField templateOptionalField = testInstance.mapRow(mockResultSet, 1);
 		//Then
@@ -38,5 +39,6 @@ public class TemplateOptionalFieldRowMapperTest {
 		assertThat(templateOptionalField.getTemplateHeader(), is(equalTo("Au")));
 		assertThat(templateOptionalField.getRowNumber(), is(equalTo("6")));
 		assertThat(templateOptionalField.getFieldValue(), is(equalTo("FIELD_VALUE")));
+		assertThat(templateOptionalField.getFileName(), is(equalTo("FILE_NAME")));
 	}
 }

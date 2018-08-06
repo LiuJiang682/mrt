@@ -80,6 +80,7 @@ public class SiteDaoImplTest {
 		assertThat(site.getElevationGl(), is(equalTo(BigDecimal.ZERO)));
 		assertThat(site.getElevAcc(), is(equalTo(BigDecimal.ZERO)));
 		assertThat(site.getElevDatumCd(), is(equalTo("AHD")));
+		assertThat(site.getFileName(), is(equalTo("myTest.txt")));
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
@@ -117,6 +118,7 @@ public class SiteDaoImplTest {
 		site.setElevDatumCd("AHD");
 		site.setNumberOfDataRecord(-1);
 		site.setIssueColumnIndex(-1);
+		site.setFileName("myTest.txt");
 		// When
 		return siteDao.updateOrSave(site);
 	}

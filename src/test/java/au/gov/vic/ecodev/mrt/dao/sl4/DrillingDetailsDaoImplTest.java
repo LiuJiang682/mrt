@@ -111,6 +111,7 @@ public class DrillingDetailsDaoImplTest {
 
 		DrillingDetails drillingDetails = new DrillingDetails();
 		drillingDetails.setId(id);
+		drillingDetails.setFileName("myTest.txt");
 		drillingDetails.setDrillType(drillingType);
 		drillingDetails.setDrillCompany(drillingCompany);
 		drillingDetails.setDrillDescription(drillingDescription);
@@ -148,6 +149,7 @@ public class DrillingDetailsDaoImplTest {
 
 		DrillingDetails drillingDetails = new DrillingDetails();
 		drillingDetails.setId(id);
+		drillingDetails.setFileName("myTest.txt");
 		drillingDetails.setDrillType(drillingType);
 		drillingDetails.setDrillCompany(drillingCompany);
 		drillingDetails.setDrillDescription(drillingDescription);

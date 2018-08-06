@@ -22,6 +22,7 @@ public class BoreHole implements Entity, Serializable {
 
 	private long loaderId;
 	private String holeId;
+	private String fileName;
 	private String bhAuthorityCd;
 	private String bhRegulationCd;
 	private long dillingDetailsId;
@@ -44,6 +45,12 @@ public class BoreHole implements Entity, Serializable {
 	}
 	public void setHoleId(String holeId) {
 		this.holeId = holeId;
+	}
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 	public String getBhAuthorityCd() {
 		return bhAuthorityCd;

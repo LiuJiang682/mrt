@@ -3,7 +3,6 @@ package au.gov.vic.ecodev.mrt.template.processor.file.parser.sl4;
 import java.io.File;
 import java.io.FileReader;
 import java.io.LineNumberReader;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +11,6 @@ import java.util.Optional;
 
 import org.apache.log4j.Logger;
 
-import au.gov.vic.ecodev.common.util.NullSafeCollectionsMapUtils;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext;
 import au.gov.vic.ecodev.mrt.template.processor.context.properties.utils.SingleStringValueToListConventor;
@@ -20,17 +18,14 @@ import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorExcep
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.H0203H0532H0533DataIntegrityValidator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.helper.FileNameHelper;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.sl4.DValidator;
-import au.gov.vic.ecodev.mrt.template.processor.file.validator.sl4.DataRecordNumberValidator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.sl4.Sl4ValidatorFactory;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.model.sl4.Sl4Template;
 import au.gov.vic.ecodev.mrt.template.processor.validator.Validator;
-import au.gov.vic.ecodev.mrt.template.processor.validator.helper.MandatoryRowChecker;
 import au.gov.vic.ecodev.mrt.template.properties.TemplateProperties;
 import au.gov.vic.ecodev.template.processor.context.properties.StringToListTemplatePropertiesParser;
 import au.gov.vic.ecodev.utils.file.finder.DirectoryTreeReverseTraversalZipFileFinder;
 import au.gov.vic.ecodev.utils.file.helper.MessageHandler;
-import au.gov.vic.ecodev.utils.validator.helper.ErrorMessageChecker;
 
 public class Sl4TemplateFileParser {
 
@@ -95,6 +90,7 @@ public class Sl4TemplateFileParser {
 				.doFileDataIntegrityCheck(templateParamMap, dataBean, context, file);
 		
 		if (null != dataBean) {
+			dataBean.put(Strings.CURRENT_FILE_NAME, Arrays.asList(file.getName()));
 			if (context.saveDataBean(dataBean)) {
 				context.addPassedFiles(zipFile);
 			} else {
@@ -102,30 +98,6 @@ public class Sl4TemplateFileParser {
 			}
 		}
 	}
-
-//	protected final Template doFileDataIntegrityCheck(final Map<String, List<String>> templateParamMap, 
-//			Template dataBean) {
-//		List<String> messages = new ArrayList<>();
-//		List<String> expectedRecordsList = templateParamMap.get(Strings.NUMBER_OF_DATA_RECORDS_TITLE);
-//		List<String> actualRecordsList = templateParamMap.get(Strings.NUMBER_OF_DATA_RECORDS_ADDED);
-//		int lineNumber = new NullSafeCollectionsMapUtils().parseInt(templateParamMap, Strings.CURRENT_LINE);
-//		
-//		new DataRecordNumberValidator(expectedRecordsList, 
-//				actualRecordsList).validate(messages);
-//		
-//		new MandatoryRowChecker(templateParamMap.get(Strings.KEY_H0532), 
-//				Strings.KEY_H0532).validate(messages);
-//
-//		new MandatoryRowChecker(templateParamMap.get(Strings.KEY_H0533), 
-//				Strings.KEY_H0533).validate(messages);
-//		boolean hasErrorMessage = new ErrorMessageChecker(messages).isContainsErrorMessages();
-//		if (hasErrorMessage) {
-//			dataBean = new MessageHandler(messages, context, dataBean, 
-//					file, lineNumber).doMessagesHandling();
-//		}
-//		
-//		return dataBean;
-//	}
 
 	private LineNumberReader getLineNumberReader() throws Exception {
 		return new LineNumberReader(new FileReader(file.getAbsolutePath()));

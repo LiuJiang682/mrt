@@ -13,6 +13,7 @@ import au.gov.vic.ecodev.mrt.template.fields.SL4ColumnHeaders;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.updater.helper.DataExtractionHelper;
+import au.gov.vic.ecodev.mrt.template.processor.updater.helper.FileNameExtractionHelper;
 import au.gov.vic.ecodev.mrt.template.processor.updater.tables.index.finder.sl4.HoleIdIndexFinder;
 
 public class BoreHoleUpdater {
@@ -39,6 +40,7 @@ public class BoreHoleUpdater {
 	private int azimuthMagIndex;
 	private Date drillingStartDate;
 	private Date drillingCompletionDate;
+	private String fileName;
 	
 	public BoreHoleUpdater(long sessionId, Template template, BoreHoleDao boreHoleDao,
 			Map<String, Long> drillingCodes) {
@@ -67,12 +69,15 @@ public class BoreHoleUpdater {
 				.extractDate(Numeral.ONE, DATE_FORMAT_DD_MMM_YY);
 		drillingCompletionDate = new DataExtractionHelper(template.get(KEY_H0201))
 				.extractDate(Numeral.ONE, DATE_FORMAT_DD_MMM_YY);
+		fileName = new FileNameExtractionHelper(template, Strings.CURRENT_FILE_NAME)
+				.doFileNameExtraction();
 	}
 
 	public void update(List<String> dataRecordList) throws TemplateProcessorException {
 		BoreHole boreHole = new BoreHole();
 		boreHole.setLoaderId(sessionId);
 		boreHole.setHoleId((String) new NullSafeCollections(dataRecordList).get(holeIdIndex));
+		boreHole.setFileName(fileName);
 		boreHole.setBhAuthorityCd(DEFAULT_BH_AUTHORITY_CD_U);
 		boreHole.setBhRegulationCd(DEFAULT_UNKNOWN);
 		boreHole.setDillingDetailsId(getDillingDetailsId(dataRecordList));

@@ -10,6 +10,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
@@ -18,6 +19,7 @@ import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.springframework.util.CollectionUtils;
 
+import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDao;
 import au.gov.vic.ecodev.mrt.fixture.TestFixture;
 import au.gov.vic.ecodev.mrt.model.TemplateOptionalField;
@@ -52,12 +54,14 @@ public class TemplateOptionalFieldUpdaterTest {
 		List<Entity> entities = entityList.get(0);
 		TemplateOptionalField templateOptionalField1 = (TemplateOptionalField) entities.get(0);
 		assertThat(templateOptionalField1.getSessionId(), is(equalTo(100l)));
+		assertThat(templateOptionalField1.getFileName(), is(equalTo("myTest.txt")));
 		assertThat(templateOptionalField1.getTemplateName(), is(equalTo("SL4")));
 		assertThat(templateOptionalField1.getTemplateHeader(), is(equalTo("Zn")));
 		assertThat(templateOptionalField1.getRowNumber(), is(equalTo("6")));
 		assertThat(templateOptionalField1.getFieldValue(), is(equalTo("0.01")));
 		TemplateOptionalField templateOptionalField2 = (TemplateOptionalField) entities.get(1);
 		assertThat(templateOptionalField2.getSessionId(), is(equalTo(100l)));
+		assertThat(templateOptionalField2.getFileName(), is(equalTo("myTest.txt")));
 		assertThat(templateOptionalField2.getTemplateName(), is(equalTo("SL4")));
 		assertThat(templateOptionalField2.getTemplateHeader(), is(equalTo("Au")));
 		assertThat(templateOptionalField2.getRowNumber(), is(equalTo("6")));
@@ -133,6 +137,7 @@ public class TemplateOptionalFieldUpdaterTest {
 		givenTestInstance();
 		List<String> headers = new ArrayList<>(TestFixture.getColumnHeaderListWithOptionalFields());
 		when(mockTemplate.get(eq("H1000"))).thenReturn(headers);
+		when(mockTemplate.get(eq(Strings.CURRENT_FILE_NAME))).thenReturn(Arrays.asList("myTest.txt"));
 		List<Integer> mandatoryFieldIndexList = new ArrayList<>();
 		for (int i = 0; i <= 8; i++) {
 			if (3 != i) {

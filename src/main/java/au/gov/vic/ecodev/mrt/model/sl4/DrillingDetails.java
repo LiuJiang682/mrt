@@ -14,6 +14,7 @@ public class DrillingDetails implements au.gov.vic.ecodev.mrt.template.processor
 	private static final long serialVersionUID = 6779368660745013588L;
 
 	private long id;
+	private String fileName;
 	private String drillType;
 	private String drillCompany;
 	private String drillDescription;
@@ -23,6 +24,12 @@ public class DrillingDetails implements au.gov.vic.ecodev.mrt.template.processor
 	}
 	public void setId(long id) {
 		this.id = id;
+	}
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 	public String getDrillType() {
 		return drillType;

@@ -8,11 +8,13 @@ import org.springframework.util.CollectionUtils;
 
 import au.gov.vic.ecodev.common.util.IDGenerator;
 import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
+import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.dao.sl4.DrillingDetailsDao;
 import au.gov.vic.ecodev.mrt.model.sl4.DrillingDetails;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.persistent.Dao;
+import au.gov.vic.ecodev.mrt.template.processor.updater.helper.FileNameExtractionHelper;
 
 public class DrillingDetailsUpdater {
 
@@ -51,6 +53,8 @@ public class DrillingDetailsUpdater {
 		List<String> drillingCodeList = template.get(KEY_H0400);
 		List<String> drillingCompanyList = template.get(KEY_H0401);
 		List<String> drillingDescriptionList = template.get(KEY_H0402);
+		String fileName = new FileNameExtractionHelper(template, Strings.CURRENT_FILE_NAME)
+				.doFileNameExtraction();
 		int drillingCodeListSize = (null == drillingCodeList) ? Numeral.ZERO : drillingCodeList.size();
 		
 		DrillingDetailsDao drillingDetailsDao = getDrillingDetailsDao();
@@ -62,6 +66,7 @@ public class DrillingDetailsUpdater {
 			if (null == drillingDetails) {
 				drillingDetails = new DrillingDetails();
 				drillingDetails.setId(IDGenerator.getUID().longValue());
+				drillingDetails.setFileName(fileName);
 				drillingDetails.setDrillType(drillingCode);
 				drillingDetails.setDrillCompany(drillingCompany);
 				drillingDetails.setDrillDescription(drillingDescription);
