@@ -35,6 +35,7 @@ public class SurfaceGeochemistryDaoImplTest {
 		surfaceGeochemistry.setId(id);
 		surfaceGeochemistry.setLoaderId(100l);
 		surfaceGeochemistry.setSampleId("abc123");
+		surfaceGeochemistry.setFileName("myTest.txt");
 		surfaceGeochemistry.setEasting(BigDecimal.TEN);
 		surfaceGeochemistry.setNorthing(BigDecimal.ONE);
 		surfaceGeochemistry.setAmgZone(new BigDecimal("54"));
@@ -69,6 +70,7 @@ public class SurfaceGeochemistryDaoImplTest {
 		surfaceGeochemistry.setId(id);
 		surfaceGeochemistry.setLoaderId(100l);
 		surfaceGeochemistry.setSampleId("abc123");
+		surfaceGeochemistry.setFileName("myTest.txt");
 		surfaceGeochemistry.setEasting(BigDecimal.TEN);
 		surfaceGeochemistry.setNorthing(BigDecimal.ONE);
 		surfaceGeochemistry.setAmgZone(new BigDecimal("54"));

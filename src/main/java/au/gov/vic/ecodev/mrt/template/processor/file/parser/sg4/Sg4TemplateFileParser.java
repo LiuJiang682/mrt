@@ -74,6 +74,7 @@ public class Sg4TemplateFileParser {
 				context, file);
 		
 		if (null != dataBean) {
+			dataBean.put(Strings.CURRENT_FILE_NAME, Arrays.asList(file.getName()));
 			if (context.saveDataBean(dataBean)) {
 				String zipFile = new DirectoryTreeReverseTraversalZipFileFinder(file.getParent()).findZipFile();
 				context.addPassedFiles(zipFile);
