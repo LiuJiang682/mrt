@@ -14,9 +14,9 @@ public class LithologyDaoImpl implements LithologyDao {
 
 	private static final Logger LOGGER = Logger.getLogger(LithologyDaoImpl.class);
 	
-	private static final String UPDATE_SQL = "UPDATE DH_LITHOLOGY SET LOADER_ID = ?, HOLE_ID = ?, DEPTH_FROM = ? WHERE ID = ?";
+	private static final String UPDATE_SQL = "UPDATE DH_LITHOLOGY SET LOADER_ID = ?, HOLE_ID = ?, FILE_NAME = ?, DEPTH_FROM = ? WHERE ID = ?";
 
-	private static final String INSERT_SQL = "INSERT INTO DH_LITHOLOGY(ID, LOADER_ID, HOLE_ID, DEPTH_FROM) VALUES (?, ?, ?, ?)";
+	private static final String INSERT_SQL = "INSERT INTO DH_LITHOLOGY(ID, LOADER_ID, HOLE_ID, FILE_NAME, DEPTH_FROM) VALUES (?, ?, ?, ?, ?)";
 
 	private static final String COUNT_SQL = "SELECT COUNT(ID) FROM DH_LITHOLOGY WHERE ID = ?";
 	
@@ -29,11 +29,11 @@ public class LithologyDaoImpl implements LithologyDao {
 		int count = jdbcTemplate.queryForObject(COUNT_SQL, Integer.class, new Object[] {lithology.getId()});
 		if (Numeral.ZERO == count) {
 			int row = jdbcTemplate.update(INSERT_SQL, lithology.getId(), lithology.getLoaderId(),
-					lithology.getHoleId(), lithology.getDepthFrom());
+					lithology.getHoleId(), lithology.getFileName(), lithology.getDepthFrom());
 			return Numeral.ONE == row;
 		} else {
 			int row = jdbcTemplate.update(UPDATE_SQL, lithology.getLoaderId(), lithology.getHoleId(),
-					lithology.getDepthFrom(), lithology.getId());
+					lithology.getFileName(), lithology.getDepthFrom(), lithology.getId());
 			return Numeral.ONE == row;
 		}
 	}
