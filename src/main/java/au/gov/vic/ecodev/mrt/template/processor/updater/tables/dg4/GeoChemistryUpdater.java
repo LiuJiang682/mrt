@@ -12,6 +12,7 @@ import au.gov.vic.ecodev.mrt.template.fields.Dg4ColumnHeaders;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.updater.helper.DataExtractionHelper;
+import au.gov.vic.ecodev.mrt.template.processor.updater.helper.FileNameExtractionHelper;
 
 public class GeoChemistryUpdater {
 
@@ -23,6 +24,7 @@ public class GeoChemistryUpdater {
 	private int sampleIdIndex;
 	private int fromIndex;
 	private int toIndex;
+	private String fileName;
 	
 	public GeoChemistryUpdater(final GeoChemistryDao geoChemistryDao, long sessionId, 
 			Template template) {
@@ -49,6 +51,8 @@ public class GeoChemistryUpdater {
 		toIndex = new DataExtractionHelper(headers)
 				.extractMandatoryFieldIndex(toName.get(Numeral.ZERO));
 		mandatoryFieldIndexList.add(toIndex);
+		fileName = new FileNameExtractionHelper(template, Strings.CURRENT_FILE_NAME)
+				.doFileNameExtraction();
 	}
 
 	public void update(List<String> dataRecordList) {
@@ -59,6 +63,7 @@ public class GeoChemistryUpdater {
 				.get(holeIdIndex));
 		geoChemistry.setSampleId((String) new NullSafeCollections(dataRecordList)
 				.get(sampleIdIndex));
+		geoChemistry.setFileName(fileName);
 		geoChemistry.setFrom(new DataExtractionHelper(dataRecordList)
 				.extractBigDecimal(fromIndex));
 		geoChemistry.setTo(new DataExtractionHelper(dataRecordList)
