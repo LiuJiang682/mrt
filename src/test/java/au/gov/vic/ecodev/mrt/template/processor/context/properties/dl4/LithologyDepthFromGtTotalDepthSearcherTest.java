@@ -25,7 +25,7 @@ import au.gov.vic.ecodev.mrt.template.properties.TemplateProperties;
 @ActiveProfiles("test")
 public class LithologyDepthFromGtTotalDepthSearcherTest {
 
-	private static final String INSERT_SQL = "INSERT INTO DH_LITHOLOGY(ID, LOADER_ID, HOLE_ID, FILE_NAME, DEPTH_FROM) VALUES (?, ?, ?, ?, ?)";   
+	private static final String INSERT_SQL = "INSERT INTO DH_LITHOLOGY(ID, LOADER_ID, HOLE_ID, FILE_NAME, ROW_NUMBER, DEPTH_FROM) VALUES (?, ?, ?, ?, ?, ?)";   
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
@@ -35,7 +35,7 @@ public class LithologyDepthFromGtTotalDepthSearcherTest {
 		long id = IDGenerator.getUID().longValue();
 		final long LOADER_ID = 1;
 		jdbcTemplate.update(INSERT_SQL, new Object[] {id, 
-				LOADER_ID, "KPDD001", "myTest.txt", 300});
+				LOADER_ID, "KPDD001", "myTest.txt", "1", 300});
 		LithologyDepthFromGtTotalDepthSearcher testInstance = new LithologyDepthFromGtTotalDepthSearcher();
 		testInstance.setJdbcTemplate(jdbcTemplate);
 		testInstance.setKey(LOADER_ID);
@@ -56,7 +56,7 @@ public class LithologyDepthFromGtTotalDepthSearcherTest {
 		long id = IDGenerator.getUID().longValue();
 		final long LOADER_ID = 1;
 		jdbcTemplate.update(INSERT_SQL, new Object[] {id, 
-				LOADER_ID, "KPDD001", "myTest.txt", 100});
+				LOADER_ID, "KPDD001", "myTest.txt", "1", 100});
 		LithologyDepthFromGtTotalDepthSearcher testInstance = new LithologyDepthFromGtTotalDepthSearcher();
 		testInstance.setJdbcTemplate(jdbcTemplate);
 		testInstance.setKey(LOADER_ID);

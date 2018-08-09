@@ -44,12 +44,13 @@ public class LithologyUpdater {
 				.doFileNameExtraction();
 	}
 
-	public void update(List<String> dataRecordList) {
+	public void update(final List<String> dataRecordList, final int index) {
 		Lithology lithology = new Lithology();
 		lithology.setId(IDGenerator.getUID().longValue());
 		lithology.setLoaderId(sessionId);
 		lithology.setHoleId((String) new NullSafeCollections(dataRecordList).get(holeIdIndex));
 		lithology.setFileName(fileName);
+		lithology.setRowNumber(String.valueOf(index));
 		lithology.setDepthFrom(new DataExtractionHelper(dataRecordList)
 				.extractBigDecimal(depthFromIndex));
 		lithologyDao.updateOrSave(lithology);
