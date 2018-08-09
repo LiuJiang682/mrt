@@ -59,7 +59,7 @@ public class Dg4TemplateUpdater implements TemplateUpdater {
 					.extractNumOfRecordsFromTemplate(template);
 			for(int index = Numeral.ONE; index <= numOfRecords; index++) {
 				List<String> dataRecordList = template.get(Strings.DATA_RECORD_PREFIX + index);
-				geoChemistryUpdater.update(dataRecordList);
+				geoChemistryUpdater.update(dataRecordList, index);
 				templateOptionalFiledUpdater.update(dataRecordList, index);
 			}
 			templateOptionalFiledUpdater.flush();

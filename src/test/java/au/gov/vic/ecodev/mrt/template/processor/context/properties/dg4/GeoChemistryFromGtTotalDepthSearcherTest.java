@@ -24,7 +24,7 @@ import au.gov.vic.ecodev.mrt.template.properties.TemplateProperties;
 @SpringBootTest
 @ActiveProfiles("test")
 public class GeoChemistryFromGtTotalDepthSearcherTest {
-	private static final String INSERT_GEOCHEMISTRY_SQL = "INSERT INTO DH_GEOCHEMISTRY(ID, LOADER_ID, HOLE_ID, SAMPLE_ID, FILE_NAME, SAMPLE_FROM, SAMPLE_TO, DRILL_CODE) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_GEOCHEMISTRY_SQL = "INSERT INTO DH_GEOCHEMISTRY(ID, LOADER_ID, HOLE_ID, SAMPLE_ID, FILE_NAME, ROW_NUMBER, SAMPLE_FROM, SAMPLE_TO, DRILL_CODE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -35,7 +35,7 @@ public class GeoChemistryFromGtTotalDepthSearcherTest {
 		long id = IDGenerator.getUID().longValue();
 		final long LOADER_ID = 1;
 		jdbcTemplate.update(INSERT_GEOCHEMISTRY_SQL, new Object[] {id, 
-				LOADER_ID, "KPDD001", "ABC123", "myTest.txt", 300, 1, "DD"});
+				LOADER_ID, "KPDD001", "ABC123", "myTest.txt", "1", 300, 1, "DD"});
 		GeoChemistryFromGtTotalDepthSearcher testInstance = new GeoChemistryFromGtTotalDepthSearcher();
 		testInstance.setJdbcTemplate(jdbcTemplate);
 		testInstance.setKey(LOADER_ID);
@@ -56,7 +56,7 @@ public class GeoChemistryFromGtTotalDepthSearcherTest {
 		long id = IDGenerator.getUID().longValue();
 		final long LOADER_ID = 1;
 		jdbcTemplate.update(INSERT_GEOCHEMISTRY_SQL, new Object[] {id, 
-				LOADER_ID, "KPDD001", "ABC123", "myTest.txt", 100, 1, "DD"});
+				LOADER_ID, "KPDD001", "ABC123", "myTest.txt", "1", 100, 1, "DD"});
 		GeoChemistryFromGtTotalDepthSearcher testInstance = new GeoChemistryFromGtTotalDepthSearcher();
 		testInstance.setJdbcTemplate(jdbcTemplate);
 		testInstance.setKey(LOADER_ID);
