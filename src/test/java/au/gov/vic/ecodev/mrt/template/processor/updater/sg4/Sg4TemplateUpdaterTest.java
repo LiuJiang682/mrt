@@ -76,11 +76,17 @@ public class Sg4TemplateUpdaterTest {
 		assertThat(capturedIndexList.size(), is(equalTo(1)));
 		
 		ArgumentCaptor<MrtTemplateValue> listCaptor = ArgumentCaptor.forClass(MrtTemplateValue.class);
-		verify(mockSurfaceGeochemistryUpdater, times(3)).update(listCaptor.capture());
+		ArgumentCaptor<Integer> myIndexCaptor = ArgumentCaptor.forClass(Integer.class);
+		verify(mockSurfaceGeochemistryUpdater, times(3)).update(listCaptor.capture(), myIndexCaptor.capture());
 		List capturedList = listCaptor.getAllValues();
 		assertThat(capturedList, is(notNullValue()));
 		assertThat(capturedList.size(), is(equalTo(3)));
-		
+		List indexList = myIndexCaptor.getAllValues();
+		assertThat(indexList, is(notNullValue()));
+		assertThat(indexList.size(), is(equalTo(3)));
+		for (int i = 0; i < 3; i++) {
+			assertThat(indexList.get(i), is(equalTo(i + 1)));
+		}
 		verifyNoMoreInteractions(mockSurfaceGeochemistryUpdater);
 		
 		ArgumentCaptor<List> optionalListCaptor = ArgumentCaptor.forClass(List.class);

@@ -61,7 +61,7 @@ public class Sg4TemplateUpdater implements TemplateUpdater {
 			for(int index = Numeral.ONE; index <= numOfRecords; index++) {
 				MrtTemplateValue mrtTemplateValue = (MrtTemplateValue) template
 						.getTemplateValue(Strings.DATA_RECORD_PREFIX + index);
-				surfaceGeochemistryUpdater.update(mrtTemplateValue);
+				surfaceGeochemistryUpdater.update(mrtTemplateValue, index);
 				templateOptionalFiledUpdater.update(mrtTemplateValue.getDatas(), index);
 			}
 			templateOptionalFiledUpdater.flush();
