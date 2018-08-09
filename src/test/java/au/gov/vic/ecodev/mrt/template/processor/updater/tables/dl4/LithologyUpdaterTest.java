@@ -40,7 +40,7 @@ public class LithologyUpdaterTest {
 		LithologyUpdater testInstance = new LithologyUpdater(mockLithologyDao, 1l, mockTemplate);
 		testInstance.init(mandatoryIndexList);
 		//When
-		testInstance.update(TestFixture.getDList());
+		testInstance.update(TestFixture.getDList(), 1);
 		//Then
 		ArgumentCaptor<Lithology> lithologyCaptor = ArgumentCaptor.forClass(Lithology.class);
 		verify(mockLithologyDao).updateOrSave(lithologyCaptor.capture());
