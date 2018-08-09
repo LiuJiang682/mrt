@@ -28,6 +28,7 @@ public class BoreHoleRowMapper implements RowMapper<BoreHole> {
 		boreHole.setLoaderId(rs.getLong(COLUMN_HEADER_LOADER_ID));
 		boreHole.setHoleId(rs.getString(COLUMN_HEADER_HOLE_ID));
 		boreHole.setFileName(rs.getString(COLUMN_HEADER_FILE_NAME));
+		boreHole.setRowNumber(rs.getString("ROW_NUMBER"));
 		boreHole.setBhAuthorityCd(rs.getString(COLUMN_HEADER_BH_AUTHORITY_CD));
 		boreHole.setBhRegulationCd(rs.getString(COLUMN_HEADER_BH_REGULATION_CD));
 		boreHole.setDillingDetailsId(rs.getLong(COLUMN_HEADER_DILLING_DETAILS_ID));

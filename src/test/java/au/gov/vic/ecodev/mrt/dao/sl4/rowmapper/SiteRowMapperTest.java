@@ -27,6 +27,7 @@ public class SiteRowMapperTest {
 		when(mockResultSet.getLong(eq("LOADER_ID"))).thenReturn(1l);
 		when(mockResultSet.getString(eq("SITE_ID"))).thenReturn("KPDD001");
 		when(mockResultSet.getLong(eq("GSV_SITE_ID"))).thenReturn(1l);
+		when(mockResultSet.getString(eq("ROW_NUMBER"))).thenReturn("1");
 		when(mockResultSet.getString(eq("PARISH"))).thenReturn("N/A");
 		when(mockResultSet.getString(eq("PROSPECT"))).thenReturn("Kryptonite");
 		when(mockResultSet.getBigDecimal(eq("AMG_ZONE"))).thenReturn(BigDecimal.ZERO);
@@ -49,6 +50,7 @@ public class SiteRowMapperTest {
 		assertThat(site.getLoaderId(), is(equalTo(1l)));
 		assertThat(site.getSiteId(), is(equalTo("KPDD001")));
 		assertThat(site.getGsvSiteId(), is(equalTo(1l)));
+		assertThat(site.getRowNumber(), is(equalTo("1")));
 		assertThat(site.getParish(), is(equalTo("N/A")));
 		assertThat(site.getProspect(), is(equalTo("Kryptonite")));
 		assertThat(site.getAmgZone(), is(equalTo(BigDecimal.ZERO)));

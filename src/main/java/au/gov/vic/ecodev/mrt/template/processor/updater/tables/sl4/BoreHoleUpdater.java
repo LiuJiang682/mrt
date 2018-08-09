@@ -73,11 +73,12 @@ public class BoreHoleUpdater {
 				.doFileNameExtraction();
 	}
 
-	public void update(List<String> dataRecordList) throws TemplateProcessorException {
+	public void update(final List<String> dataRecordList, final int index) throws TemplateProcessorException {
 		BoreHole boreHole = new BoreHole();
 		boreHole.setLoaderId(sessionId);
 		boreHole.setHoleId((String) new NullSafeCollections(dataRecordList).get(holeIdIndex));
 		boreHole.setFileName(fileName);
+		boreHole.setRowNumber(String.valueOf(index));
 		boreHole.setBhAuthorityCd(DEFAULT_BH_AUTHORITY_CD_U);
 		boreHole.setBhRegulationCd(DEFAULT_UNKNOWN);
 		boreHole.setDillingDetailsId(getDillingDetailsId(dataRecordList));
