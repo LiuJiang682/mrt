@@ -20,6 +20,7 @@ public class Lithology implements Entity, Serializable {
 	private long loaderId;
 	private String holeId;
 	private String fileName;
+	private String rowNumber;
 	private BigDecimal depthFrom;
 	
 	public long getId() {
@@ -45,6 +46,12 @@ public class Lithology implements Entity, Serializable {
 	}
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
+	}
+	public String getRowNumber() {
+		return rowNumber;
+	}
+	public void setRowNumber(String rowNumber) {
+		this.rowNumber = rowNumber;
 	}
 	public BigDecimal getDepthFrom() {
 		return depthFrom;

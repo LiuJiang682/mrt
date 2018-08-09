@@ -41,7 +41,7 @@ public class DownHoleUpdaterTest {
 		DownHoleUpdater testInstance = new DownHoleUpdater(mockDownHoleDao, 1l, mockTemplate);
 		testInstance.init(mandatoryIndexList);
 		//When
-		testInstance.update(TestFixture.getDList());
+		testInstance.update(TestFixture.getDList(), 1);
 		//Then
 		ArgumentCaptor<DownHole> downHoleCaptor = ArgumentCaptor.forClass(DownHole.class);
 		verify(mockDownHoleDao).updateOrSave(downHoleCaptor.capture());

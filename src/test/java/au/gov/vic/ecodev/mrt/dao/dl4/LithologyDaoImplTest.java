@@ -36,6 +36,7 @@ public class LithologyDaoImplTest {
 		lithology.setLoaderId(1l);
 		lithology.setHoleId("KPDD001");
 		lithology.setFileName("myTest.txt");
+		lithology.setRowNumber("1");
 		lithology.setDepthFrom(new BigDecimal("3"));
 		//When
 		boolean updateFlag = lithologyDao.updateOrSave(lithology);
@@ -68,6 +69,7 @@ public class LithologyDaoImplTest {
 		lithology.setLoaderId(1l);
 		lithology.setHoleId("KPDD001");
 		lithology.setFileName("myTest.txt");
+		lithology.setRowNumber("1");
 		lithology.setDepthFrom(BigDecimal.TEN);
 		//When
 		boolean flag = lithologyDao.updateOrSave(lithology);
