@@ -14,9 +14,9 @@ public class DownHoleDaoImpl implements DownHoleDao {
 	
 	private static final Logger LOGGER = Logger.getLogger(DownHoleDaoImpl.class);
 
-	private static final String UPDATE_SQL = "UPDATE DH_DOWNHOLE SET LOADER_ID = ?, HOLE_ID = ?, FILE_NAME = ?, SURVEYED_DEPTH = ?, AZIMUTH_MAG = ?, DIP = ?, AZIMUTH_TRUE = ? WHERE ID = ?";
+	private static final String UPDATE_SQL = "UPDATE DH_DOWNHOLE SET LOADER_ID = ?, HOLE_ID = ?, FILE_NAME = ?, ROW_NUMBER = ?, SURVEYED_DEPTH = ?, AZIMUTH_MAG = ?, DIP = ?, AZIMUTH_TRUE = ? WHERE ID = ?";
 
-	private static final String INSERT_SQL = "INSERT INTO DH_DOWNHOLE(ID, LOADER_ID, HOLE_ID, FILE_NAME, SURVEYED_DEPTH, AZIMUTH_MAG, DIP, AZIMUTH_TRUE) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_SQL = "INSERT INTO DH_DOWNHOLE(ID, LOADER_ID, HOLE_ID, FILE_NAME, ROW_NUMBER, SURVEYED_DEPTH, AZIMUTH_MAG, DIP, AZIMUTH_TRUE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 	private static final String COUNT_SQL = "SELECT COUNT(ID) FROM DH_DOWNHOLE WHERE ID = ? ";
 	
@@ -30,14 +30,15 @@ public class DownHoleDaoImpl implements DownHoleDao {
 				new Object[] {downHole.getId()});
 		if (Numeral.ZERO == count) {
 			int row = jdbcTemplate.update(INSERT_SQL, downHole.getId(), downHole.getLoaderId(),
-					downHole.getHoleId(), downHole.getFileName(),
+					downHole.getHoleId(), downHole.getFileName(), downHole.getRowNumber(),
 					downHole.getSurveyedDepth(), downHole.getAzimuthMag(),
 					downHole.getDip(), downHole.getAzimuthTrue());
 			return Numeral.ONE == row;
 		} else {
 			int row = jdbcTemplate.update(UPDATE_SQL,  downHole.getLoaderId(),
-					downHole.getHoleId(), downHole.getFileName(), downHole.getSurveyedDepth(), 
-					downHole.getAzimuthMag(), downHole.getDip(), downHole.getAzimuthTrue(), 
+					downHole.getHoleId(), downHole.getFileName(), downHole.getRowNumber(),
+					downHole.getSurveyedDepth(),  downHole.getAzimuthMag(), 
+					downHole.getDip(), downHole.getAzimuthTrue(), 
 					downHole.getId());
 			return Numeral.ONE == row;
 		}
