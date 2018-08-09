@@ -70,6 +70,6 @@ public class H1003ValidatorTest {
 		List<String> messages = resultOptional.get();
 		assertThat(messages, is(notNullValue()));
 		assertThat(messages.size(), is(equalTo(1)));
-		assertThat(messages.get(0), is(equalTo("ERROR: Au requires value in H1003")));
+		assertThat(messages.get(0), is(equalTo("ERROR: Column Au requires a value in H1003")));
 	}
 }

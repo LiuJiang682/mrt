@@ -55,7 +55,7 @@ public class GeoChemistryUpdater {
 				.doFileNameExtraction();
 	}
 
-	public void update(List<String> dataRecordList) {
+	public void update(final List<String> dataRecordList, final int index) {
 		GeoChemistry geoChemistry = new GeoChemistry();
 		geoChemistry.setId(IDGenerator.getUID().longValue());
 		geoChemistry.setLoaderId(sessionId);
@@ -64,6 +64,7 @@ public class GeoChemistryUpdater {
 		geoChemistry.setSampleId((String) new NullSafeCollections(dataRecordList)
 				.get(sampleIdIndex));
 		geoChemistry.setFileName(fileName);
+		geoChemistry.setRowNumber(String.valueOf(index));
 		geoChemistry.setFrom(new DataExtractionHelper(dataRecordList)
 				.extractBigDecimal(fromIndex));
 		geoChemistry.setTo(new DataExtractionHelper(dataRecordList)
