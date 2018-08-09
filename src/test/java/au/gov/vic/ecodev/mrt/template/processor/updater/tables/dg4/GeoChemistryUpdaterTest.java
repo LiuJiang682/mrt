@@ -49,12 +49,12 @@ public class GeoChemistryUpdaterTest {
 		List<Integer> managdatoryIndexList = new ArrayList<>();
 		testInstance.init(managdatoryIndexList);
 		// When
-		testInstance.update(TestFixture.getDg4DataList());
+		testInstance.update(TestFixture.getDg4DataList(), 1);
 		// Then
 		ArgumentCaptor<GeoChemistry> geoChemistryCaptor = ArgumentCaptor.forClass(GeoChemistry.class);
 		verify(mockGeoChemistryDao).updateOrSave(geoChemistryCaptor.capture());
-		List<GeoChemistry> lithologies = geoChemistryCaptor.getAllValues();
-		assertThat(lithologies.size(), is(equalTo(1)));
+		List<GeoChemistry> geoChemistries = geoChemistryCaptor.getAllValues();
+		assertThat(geoChemistries.size(), is(equalTo(1)));
 		assertMandatoryIndexList(managdatoryIndexList);
 	}
 

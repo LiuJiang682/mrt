@@ -2,11 +2,14 @@ package au.gov.vic.ecodev.mrt.template.processor.file.validator.common;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
+import au.gov.vic.ecodev.mrt.template.processor.updater.helper.VariationHelper;
 
 public class MandatoryStringDataValidator {
 
@@ -31,8 +34,18 @@ public class MandatoryStringDataValidator {
 				.collect(Collectors.toList())
 				.indexOf(code.toUpperCase());
 		if (Numeral.NOT_FOUND == index) {
-			messages.add(constructMissingHoleIdMessage(lineNumber));
-			return;
+			if ((Stream.of(Strings.SPACE, Strings.UNDER_LINE, Strings.HYPHEN)
+					.anyMatch(code::contains))
+					&& (CollectionUtils.isNotEmpty(columnHeaders))) {
+				index = new VariationHelper(columnHeaders, code).findIndex();
+				if (Numeral.NOT_FOUND == index)  {
+					messages.add(constructMissingHoleIdMessage(lineNumber));
+					return;
+				}
+			} else {
+				messages.add(constructMissingHoleIdMessage(lineNumber));
+				return;
+			}
 		}
 	
 		++index;

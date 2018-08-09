@@ -45,7 +45,7 @@ public class OptionalHeaderMandatoryFieldValidatorTest {
 		//Then
 		assertThat(CollectionUtils.isEmpty(messages), is(false));
 		assertThat(messages.size(), is(equalTo(1)));
-		assertThat(messages.get(0), is(equalTo("ERROR: Au requires value in H1001")));
+		assertThat(messages.get(0), is(equalTo("ERROR: Column Au requires a value in H1001")));
 	}
 	
 	@Test
@@ -70,7 +70,7 @@ public class OptionalHeaderMandatoryFieldValidatorTest {
 		//Then
 		assertThat(CollectionUtils.isEmpty(messages), is(false));
 		assertThat(messages.size(), is(equalTo(1)));
-		assertThat(messages.get(0), is(equalTo("ERROR: Au variance requires value in H1001")));
+		assertThat(messages.get(0), is(equalTo("ERROR: Column Au variance requires a value in H1001")));
 	}
 	
 	@Test
@@ -95,8 +95,8 @@ public class OptionalHeaderMandatoryFieldValidatorTest {
 		//Then
 		assertThat(CollectionUtils.isEmpty(messages), is(false));
 		assertThat(messages.size(), is(equalTo(2)));
-		assertThat(messages.get(0), is(equalTo("ERROR: O1 requires value in H1001")));
-		assertThat(messages.get(1), is(equalTo("ERROR: O2 requires value in H1001")));
+		assertThat(messages.get(0), is(equalTo("ERROR: Column O1 requires a value in H1001")));
+		assertThat(messages.get(1), is(equalTo("ERROR: Column O2 requires a value in H1001")));
 	}
 	
 	@Test
@@ -123,7 +123,7 @@ public class OptionalHeaderMandatoryFieldValidatorTest {
 		//Then
 		assertThat(CollectionUtils.isEmpty(messages), is(false));
 		assertThat(messages.size(), is(equalTo(1)));
-		assertThat(messages.get(0), is(equalTo("ERROR: My custom variance requires value in H1001")));
+		assertThat(messages.get(0), is(equalTo("ERROR: Column My custom variance requires a value in H1001")));
 	}
 	
 	@Test

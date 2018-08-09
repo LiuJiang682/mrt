@@ -26,7 +26,7 @@ import au.gov.vic.ecodev.mrt.template.properties.TemplateProperties;
 @ActiveProfiles("test")
 public class GeoChemistryHoleIdNotInBoreHoleSearcherTest {
 
-	private static final String INSERT_GEOCHEMISTRY_SQL = "INSERT INTO DH_GEOCHEMISTRY(ID, LOADER_ID, HOLE_ID, SAMPLE_ID, FILE_NAME, SAMPLE_FROM, SAMPLE_TO, DRILL_CODE) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_GEOCHEMISTRY_SQL = "INSERT INTO DH_GEOCHEMISTRY(ID, LOADER_ID, HOLE_ID, SAMPLE_ID, FILE_NAME, ROW_NUMBER, SAMPLE_FROM, SAMPLE_TO, DRILL_CODE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String INSERT_BOREHOLE_SQL = "INSERT INTO DH_BOREHOLE(LOADER_ID, HOLE_ID, FILE_NAME, ROW_NUMBER, BH_AUTHORITY_CD, BH_REGULATION_CD, DILLING_DETAILS_ID, DRILLING_START_DT, DRILLING_COMPLETION_DT, DEPTH, ELEVATION_KB, AZIMUTH_MAG, BH_CONFIDENTIAL_FLG, DEPTH_UOM) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 	@Autowired
@@ -105,6 +105,6 @@ public class GeoChemistryHoleIdNotInBoreHoleSearcherTest {
 
 	private void insertGeoChemistry(long id, final long LOADER_ID) {
 		jdbcTemplate.update(INSERT_GEOCHEMISTRY_SQL, new Object[] {id, 
-				LOADER_ID, "STD003", "ABC123", "myTest.txt", 0, 1, "DD"});
+				LOADER_ID, "STD003", "ABC123", "myTest.txt", "1", 0, 1, "DD"});
 	}
 }
