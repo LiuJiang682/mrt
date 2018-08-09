@@ -9,6 +9,7 @@ import au.gov.vic.ecodev.mrt.model.sl4.Site;
 
 public class SiteRowMapper implements RowMapper<Site> {
 
+	private static final String COLUMN_HEADER_ROW_NUMBER = "ROW_NUMBER";
 	private static final String COLUMN_HEADER_FILE_NAME = "FILE_NAME";
 	private static final String COLUMN_HEADER_ISSUE_COLUMN_INDEX = "ISSUE_COLUMN_INDEX";
 	private static final String COLUMN_HEADER_NUM_DATA_RECORDS = "NUM_DATA_RECORDS";
@@ -34,6 +35,7 @@ public class SiteRowMapper implements RowMapper<Site> {
 		site.setLoaderId(rs.getLong(COLUMN_HEADER_LOADER_ID));
 		site.setSiteId(rs.getString(COLUMN_HEADER_SITE_ID));
 		site.setGsvSiteId(rs.getLong(COLUMN_HEADER_GSV_SITE_ID));
+		site.setRowNumber(rs.getString(COLUMN_HEADER_ROW_NUMBER));
 		site.setParish(rs.getString(COLUMN_HEADER_PARISH));
 		site.setProspect(rs.getString(COLUMN_HEADER_PROSPECT));
 		site.setAmgZone(rs.getBigDecimal(COLUMN_HEADER_AMG_ZONE));

@@ -81,7 +81,7 @@ public class Sl4DataRecordUpdater {
 		for (int index = Numeral.ONE; index <= numOfRecords; index++) {
 			MrtTemplateValue mrtTemplateValue = (MrtTemplateValue) template
 					.getTemplateValue(Strings.DATA_RECORD_PREFIX + index);
-			siteUpdater.update(mrtTemplateValue);
+			siteUpdater.update(mrtTemplateValue, index);
 			List<String> dataRecordList = mrtTemplateValue.getDatas();
 			boreHoleUpdater.update(dataRecordList);
 			templateOptionalFiledUpdater.update(dataRecordList, index);
