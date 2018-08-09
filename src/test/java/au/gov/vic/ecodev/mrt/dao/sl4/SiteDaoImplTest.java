@@ -106,6 +106,7 @@ public class SiteDaoImplTest {
 		Site site = new Site();
 		site.setLoaderId(sessionId);
 		site.setSiteId(siteId);
+		site.setRowNumber("1");
 		site.setParish("N/A");
 		site.setProspect("Kryptonice");
 		site.setAmgZone(new BigDecimal("54"));

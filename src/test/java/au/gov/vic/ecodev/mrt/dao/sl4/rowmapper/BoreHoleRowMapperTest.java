@@ -26,6 +26,7 @@ public class BoreHoleRowMapperTest {
 		ResultSet mockResultSet = Mockito.mock(ResultSet.class);
 		when(mockResultSet.getLong(eq("LOADER_ID"))).thenReturn(1l);
 		when(mockResultSet.getString(eq("HOLE_ID"))).thenReturn("KPDD001");
+		when(mockResultSet.getString(eq("ROW_NUMBER"))).thenReturn("1");
 		when(mockResultSet.getString(eq("BH_AUTHORITY_CD"))).thenReturn("U");
 		when(mockResultSet.getString(eq("BH_REGULATION_CD"))).thenReturn("UNK");
 		Date date = new Date(System.currentTimeMillis());
@@ -42,6 +43,7 @@ public class BoreHoleRowMapperTest {
 		assertThat(boreHole, is(notNullValue()));
 		assertThat(boreHole.getLoaderId(), is(equalTo(1l)));
 		assertThat(boreHole.getHoleId(), is(equalTo("KPDD001")));
+		assertThat(boreHole.getRowNumber(), is(equalTo("1")));
 		assertThat(boreHole.getBhAuthorityCd(), is(equalTo("U")));
 		assertThat(boreHole.getBhRegulationCd(), is(equalTo("UNK")));
 		assertThat(boreHole.getDrillingStartDate(), is(equalTo(date)));
