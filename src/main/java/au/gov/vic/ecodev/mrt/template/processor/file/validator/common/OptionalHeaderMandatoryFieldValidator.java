@@ -81,8 +81,9 @@ public class OptionalHeaderMandatoryFieldValidator {
 	
 	private String constructMissingHeaderMessage(String header) {
 		String message = new StringBuilder(Strings.LOG_ERROR_HEADER)
+				.append("Column ")
 				.append(header)
-				.append(" requires value in ")
+				.append(" requires a value in ")
 				.append(headerKey)
 				.toString();
 		return message;
