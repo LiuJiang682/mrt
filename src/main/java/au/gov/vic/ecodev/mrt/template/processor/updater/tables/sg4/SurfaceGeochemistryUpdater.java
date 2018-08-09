@@ -57,7 +57,7 @@ public class SurfaceGeochemistryUpdater {
 				.doFileNameExtraction();
 	}
 
-	public void update(TemplateValue templateValue) {
+	public void update(final TemplateValue templateValue, final int index) {
 		MrtTemplateValue mrtTemplateValue = (MrtTemplateValue)templateValue;
 		List<String> dataRecordList = mrtTemplateValue.getDatas();
 		SurfaceGeochemistry surfaceGeochemistry = new SurfaceGeochemistry();
@@ -66,6 +66,7 @@ public class SurfaceGeochemistryUpdater {
 		surfaceGeochemistry.setSampleId((String) new NullSafeCollections(dataRecordList)
 				.get(sampleIdIndex));
 		surfaceGeochemistry.setFileName(fileName);
+		surfaceGeochemistry.setRowNumber(String.valueOf(index));
 		surfaceGeochemistry.setEasting(new DataExtractionHelper(dataRecordList)
 				.extractBigDecimal(eastingIndex));
 		surfaceGeochemistry.setNorthing(new DataExtractionHelper(dataRecordList)

@@ -18,6 +18,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.powermock.reflect.Whitebox;
 
+import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.dao.sg4.SurfaceGeochemistryDao;
 import au.gov.vic.ecodev.mrt.fixture.TestFixture;
 import au.gov.vic.ecodev.mrt.model.sg4.SurfaceGeochemistry;
@@ -44,7 +45,7 @@ public class SurfaceGeochemistryUpdaterTest {
 		testInstance.init(managdatoryIndexList);
 		MrtTemplateValue value = new MrtTemplateValue(TestFixture.getSg4DataList(), -1);
 		//When
-		testInstance.update(value);
+		testInstance.update(value, 1);
 		//Then
 		ArgumentCaptor<SurfaceGeochemistry> surfaceGeochemistryCaptor = ArgumentCaptor
 				.forClass(SurfaceGeochemistry.class);
@@ -57,6 +58,8 @@ public class SurfaceGeochemistryUpdaterTest {
 		assertThat(surfaceGeochemistry.getNorthing(), is(equalTo(new BigDecimal("6589600"))));
 		assertThat(surfaceGeochemistry.getSampleType(), is(equalTo("SOI")));
 		assertThat(surfaceGeochemistry.getIssueColumnIndex(), is(equalTo(-1)));
+		assertThat(surfaceGeochemistry.getFileName(), is(equalTo("myTest.txt")));
+		assertThat(surfaceGeochemistry.getRowNumber(), is(equalTo("1")));
 		assertThat(managdatoryIndexList.size(), is(equalTo(4)));
 		assertThat(managdatoryIndexList.contains(0), is(true));
 		assertThat(managdatoryIndexList.contains(1), is(true));
@@ -198,5 +201,7 @@ public class SurfaceGeochemistryUpdaterTest {
 			.thenReturn(Arrays.asList(Sg4ColumnHeaders.NORTHING_MGA.getCode()));
 		when(mockTemplate.get(Sg4ColumnHeaders.SAMPLE_TYPE.getCode()))
 			.thenReturn(Arrays.asList(Sg4ColumnHeaders.SAMPLE_TYPE.getCode()));
+		when(mockTemplate.get(Strings.CURRENT_FILE_NAME))
+			.thenReturn(Arrays.asList("myTest.txt"));
 	}
 }
