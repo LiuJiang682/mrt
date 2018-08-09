@@ -77,8 +77,9 @@ public class Ds4TemplateUpdaterTest {
 		// Then
 		ArgumentCaptor<List> mandatroyIndexListCaptor = ArgumentCaptor.forClass(List.class);
 		ArgumentCaptor<List> mandatoryListCaptor = ArgumentCaptor.forClass(List.class);
+		ArgumentCaptor<Integer> firstIndexCaptor = ArgumentCaptor.forClass(Integer.class);
 		verify(mockDownHoleUpdater).init(mandatroyIndexListCaptor.capture());
-		verify(mockDownHoleUpdater, times(3)).update(mandatoryListCaptor.capture());
+		verify(mockDownHoleUpdater, times(3)).update(mandatoryListCaptor.capture(), firstIndexCaptor.capture());
 		ArgumentCaptor<List> listIndexCaptor = ArgumentCaptor.forClass(List.class);
 		ArgumentCaptor<List> listCaptor = ArgumentCaptor.forClass(List.class);
 		ArgumentCaptor<Integer> intCaptor = ArgumentCaptor.forClass(Integer.class);

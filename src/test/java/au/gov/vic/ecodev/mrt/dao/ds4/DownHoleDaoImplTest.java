@@ -36,6 +36,7 @@ public class DownHoleDaoImplTest {
 		downHole.setLoaderId(2l);
 		downHole.setHoleId("KPDD001");
 		downHole.setFileName("myTest.txt");
+		downHole.setRowNumber("1");
 		downHole.setSurveyedDepth(BigDecimal.TEN);
 		downHole.setAzimuthMag(new BigDecimal("60"));
 		downHole.setDip(new BigDecimal("-62"));
@@ -69,6 +70,7 @@ public class DownHoleDaoImplTest {
 		downHole.setLoaderId(2l);
 		downHole.setHoleId("KPDD001");
 		downHole.setFileName("myTest.txt");
+		downHole.setRowNumber("1");
 		downHole.setSurveyedDepth(BigDecimal.TEN);
 		downHole.setAzimuthMag(new BigDecimal("60"));
 		downHole.setDip(new BigDecimal("-61"));
