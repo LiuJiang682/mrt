@@ -126,6 +126,7 @@ public class BoreHoleDaoImplTest {
 		BoreHole boreHole = new BoreHole();
 		boreHole.setLoaderId(loaderId);
 		boreHole.setHoleId(holeId);
+		boreHole.setRowNumber("1");
 		boreHole.setBhAuthorityCd("U");
 		boreHole.setBhRegulationCd("N/A");
 		boreHole.setDillingDetailsId(1l);

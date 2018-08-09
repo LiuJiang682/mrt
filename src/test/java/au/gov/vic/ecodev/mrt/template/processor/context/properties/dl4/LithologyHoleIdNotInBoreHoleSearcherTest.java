@@ -27,7 +27,7 @@ import au.gov.vic.ecodev.mrt.template.properties.TemplateProperties;
 public class LithologyHoleIdNotInBoreHoleSearcherTest {
 
 	private static final String INSERT_LITHOLOGY_SQL = "INSERT INTO DH_LITHOLOGY(ID, LOADER_ID, HOLE_ID, FILE_NAME, DEPTH_FROM) VALUES (?, ?, ?, ?, ?)";
-	private static final String INSERT_BOREHOLE_SQL = "INSERT INTO DH_BOREHOLE(LOADER_ID, HOLE_ID, FILE_NAME, BH_AUTHORITY_CD, BH_REGULATION_CD, DILLING_DETAILS_ID, DRILLING_START_DT, DRILLING_COMPLETION_DT, DEPTH, ELEVATION_KB, AZIMUTH_MAG, BH_CONFIDENTIAL_FLG, DEPTH_UOM) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_BOREHOLE_SQL = "INSERT INTO DH_BOREHOLE(LOADER_ID, HOLE_ID, FILE_NAME, ROW_NUMBER, BH_AUTHORITY_CD, BH_REGULATION_CD, DILLING_DETAILS_ID, DRILLING_START_DT, DRILLING_COMPLETION_DT, DEPTH, ELEVATION_KB, AZIMUTH_MAG, BH_CONFIDENTIAL_FLG, DEPTH_UOM) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -58,7 +58,7 @@ public class LithologyHoleIdNotInBoreHoleSearcherTest {
 		//Given
 		final long LOADER_ID = 101;
 		jdbcTemplate.update(INSERT_BOREHOLE_SQL, new Object[] {LOADER_ID,
-				"STD003", "myTest.txt", "U", "N/A", 1, new Date(), new Date(), 210, 320, null, "Y", "MTR"});
+				"STD003", "myTest.txt", "1", "U", "N/A", 1, new Date(), new Date(), 210, 320, null, "Y", "MTR"});
 		LithologyHoleIdNotInBoreHoleSearcher testInstance = new LithologyHoleIdNotInBoreHoleSearcher();
 		testInstance.setJdbcTemplate(jdbcTemplate);
 		testInstance.setKey(LOADER_ID);
@@ -79,7 +79,7 @@ public class LithologyHoleIdNotInBoreHoleSearcherTest {
 		jdbcTemplate.update(INSERT_LITHOLOGY_SQL, new Object[] {id, 
 				LOADER_ID, "STD003", "myTest.txt", 3});
 		jdbcTemplate.update(INSERT_BOREHOLE_SQL, new Object[] {LOADER_ID,
-				"STD003", "myTest.txt", "U", "N/A", 1, new Date(), new Date(), 210, 320, null, "Y", "MTR"});
+				"STD003", "myTest.txt", "1", "U", "N/A", 1, new Date(), new Date(), 210, 320, null, "Y", "MTR"});
 		
 		LithologyHoleIdNotInBoreHoleSearcher testInstance = new LithologyHoleIdNotInBoreHoleSearcher();
 		testInstance.setJdbcTemplate(jdbcTemplate);
