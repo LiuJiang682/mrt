@@ -37,6 +37,7 @@ public class GeoChemistryDaoImplTest {
 		geoChemistry.setHoleId("KPDD001");
 		geoChemistry.setSampleId("kkk");
 		geoChemistry.setFileName("myTest.txt");
+		geoChemistry.setRowNumber("1");
 		geoChemistry.setFrom(BigDecimal.ZERO);
 		geoChemistry.setTo(BigDecimal.TEN);
 		geoChemistry.setDrillCode("BD");
@@ -72,6 +73,7 @@ public class GeoChemistryDaoImplTest {
 		geoChemistry.setHoleId("KPDD001");
 		geoChemistry.setSampleId("kkk");
 		geoChemistry.setFileName("myTest.txt");
+		geoChemistry.setRowNumber("1");
 		geoChemistry.setFrom(BigDecimal.ZERO);
 		geoChemistry.setTo(BigDecimal.TEN);
 		geoChemistry.setDrillCode("DD");

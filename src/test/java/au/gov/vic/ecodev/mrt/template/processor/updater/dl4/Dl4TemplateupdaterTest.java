@@ -82,6 +82,12 @@ public class Dl4TemplateupdaterTest {
 		verify(mockLithologyUpdater, times(3)).update(listDataCaptor.capture(), indexCaptor.capture());
 		List capturedDataList = listDataCaptor.getAllValues();
 		assertThat(capturedDataList.size(), is(equalTo(3)));
+		List indexList = indexCaptor.getAllValues();
+		assertThat(indexList, is(notNullValue()));
+		assertThat(indexList.size(), is(equalTo(3)));
+		for (int i = 0; i < 3; i++) {
+			assertThat(indexList.get(i), is(equalTo(i + 1)));
+		}
 		verifyNoMoreInteractions(mockLithologyUpdater);
 		ArgumentCaptor<List> optionalListCaptor = ArgumentCaptor.forClass(List.class);
 		verify(mockTemplateOptionalFieldUpdater).init(optionalListCaptor.capture());

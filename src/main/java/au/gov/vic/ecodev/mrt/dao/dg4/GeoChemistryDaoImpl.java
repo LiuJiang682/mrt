@@ -14,9 +14,9 @@ public class GeoChemistryDaoImpl implements GeoChemistryDao {
 	
 	private static final Logger LOGGER = Logger.getLogger(GeoChemistryDaoImpl.class);
 
-	private static final String UPDATE_SQL = "UPDATE DH_GEOCHEMISTRY SET LOADER_ID = ?, HOLE_ID = ?, SAMPLE_ID = ?, FILE_NAME = ?, SAMPLE_FROM = ?, SAMPLE_TO = ?, DRILL_CODE = ? WHERE ID = ?";
+	private static final String UPDATE_SQL = "UPDATE DH_GEOCHEMISTRY SET LOADER_ID = ?, HOLE_ID = ?, SAMPLE_ID = ?, FILE_NAME = ?, ROW_NUMBER = ?, SAMPLE_FROM = ?, SAMPLE_TO = ?, DRILL_CODE = ? WHERE ID = ?";
 
-	private static final String INSERT_SQL = "INSERT INTO DH_GEOCHEMISTRY(ID, LOADER_ID, HOLE_ID, SAMPLE_ID, FILE_NAME, SAMPLE_FROM, SAMPLE_TO, DRILL_CODE) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ";
+	private static final String INSERT_SQL = "INSERT INTO DH_GEOCHEMISTRY(ID, LOADER_ID, HOLE_ID, SAMPLE_ID, FILE_NAME, ROW_NUMBER, SAMPLE_FROM, SAMPLE_TO, DRILL_CODE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 
 	private static final String COUNT_SQL = "SELECT COUNT(ID) FROM DH_GEOCHEMISTRY WHERE ID = ?";
 	
@@ -31,13 +31,15 @@ public class GeoChemistryDaoImpl implements GeoChemistryDao {
 			int row = jdbcTemplate.update(INSERT_SQL, geoChemistry.getId(), 
 					geoChemistry.getLoaderId(),
 					geoChemistry.getHoleId(), geoChemistry.getSampleId(), 
-					geoChemistry.getFileName(), geoChemistry.getFrom(),
-					geoChemistry.getTo(), geoChemistry.getDrillCode());
+					geoChemistry.getFileName(), geoChemistry.getRowNumber(), 
+					geoChemistry.getFrom(), geoChemistry.getTo(), 
+					geoChemistry.getDrillCode());
 			return Numeral.ONE == row;
 		} else {
 			int row = jdbcTemplate.update(UPDATE_SQL, geoChemistry.getLoaderId(), 
 					geoChemistry.getHoleId(), geoChemistry.getSampleId(), 
-					geoChemistry.getFileName(), geoChemistry.getFrom(), geoChemistry.getTo(),
+					geoChemistry.getFileName(), geoChemistry.getRowNumber(),
+					geoChemistry.getFrom(), geoChemistry.getTo(),
 					geoChemistry.getDrillCode(), geoChemistry.getId());
 			return Numeral.ONE == row;
 		}
