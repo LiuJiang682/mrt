@@ -75,12 +75,13 @@ public class SiteUpdater {
 				.doFileNameExtraction();
 	}
 	
-	public void update(TemplateValue templateValue) {
+	public void update(final TemplateValue templateValue, final int index) {
 		MrtTemplateValue mrtTemplateValue = (MrtTemplateValue)templateValue;
 		List<String> dataRecordList = mrtTemplateValue.getDatas();
 		Site site = new Site();
 		site.setLoaderId(sessionId);
 		site.setSiteId((String) new NullSafeCollections(dataRecordList).get(holeIdIndex));
+		site.setRowNumber(String.valueOf(index));
 		site.setParish(N_A);
 		site.setProspect(prospect);
 		site.setAmgZone(amgZone);
