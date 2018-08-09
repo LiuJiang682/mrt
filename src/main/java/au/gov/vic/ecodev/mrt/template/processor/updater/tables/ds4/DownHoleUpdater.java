@@ -35,12 +35,13 @@ public class DownHoleUpdater {
 		this.template = template;
 	}
 
-	public void update(List<String> dataRecordList) {
+	public void update(final List<String> dataRecordList, final int index) {
 		DownHole downHole = new DownHole();
 		downHole.setId(IDGenerator.getUID().longValue());
 		downHole.setLoaderId(sessionId);
 		downHole.setHoleId((String) new NullSafeCollections(dataRecordList).get(holeIdIndex));
 		downHole.setFileName(fileName);
+		downHole.setRowNumber(String.valueOf(index));
 		downHole.setSurveyedDepth(new DataExtractionHelper(dataRecordList)
 				.extractBigDecimal(surveyedDepthIndex));
 		if (Numeral.NOT_FOUND != azimuthMagIndex) {
