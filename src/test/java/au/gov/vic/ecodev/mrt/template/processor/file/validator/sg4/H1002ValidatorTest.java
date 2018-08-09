@@ -115,7 +115,7 @@ public class H1002ValidatorTest {
 		List<String> messages = errorMessages.get();
 		assertThat(CollectionUtils.isEmpty(messages), is(false));
 		assertThat(messages.size(), is(equalTo(1)));
-		assertThat(messages.get(0), is("ERROR: Au requires value in H1002"));
+		assertThat(messages.get(0), is("ERROR: Column Au requires a value in H1002"));
 	}
 
 	private H1002Validator givenTestInstance() {
