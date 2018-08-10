@@ -46,6 +46,7 @@ public class ExtractTemplateNameState implements LoaderState {
 					templateLoaderStateMachineContext.getMessage().setPassedFileDirectory(
 							templateLoaderStateMachineContext.getMrtConfigProperties().getPassedFileDirectory());
 					templateLoaderStateMachineContext.getMessage().setBatchId(batchId);
+					templateLoaderStateMachineContext.getMessage().setEmailSubject(String.join(Strings.COMMA, zipFileNames));
 				}
 			}
 		}

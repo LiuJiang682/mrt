@@ -6,6 +6,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
+import au.gov.vic.ecodev.mrt.template.loader.fsm.model.Message;
 import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext;
 
 public class MrtEmailBodyBuilder implements EmailBodyBuilder {
@@ -17,42 +18,75 @@ public class MrtEmailBodyBuilder implements EmailBodyBuilder {
 		if (null == templateLoaderStateMachineContext) {
 			throw new IllegalArgumentException("Parameter templateLoaderStateMachineContext cannot be null!");
 		}
-		String directErrorMessage = templateLoaderStateMachineContext.getMessage().getDirectErrorMessage();
+		
+		Message message = templateLoaderStateMachineContext.getMessage();
+		String directErrorMessage = message.getDirectErrorMessage();
 		if (StringUtils.isEmpty(directErrorMessage)) {
-			StringBuilder buf = new StringBuilder("Hi\n");
-			buf.append("\n");
+			StringBuilder buf = new StringBuilder(getHtmlPrefix(message.getEmailSubject()));
+			buf.append("Hi<br/>");
+			buf.append("<br/>");
 			buf.append("The log file for batch: ");
-			buf.append(templateLoaderStateMachineContext.getMessage().getBatchId());
+			buf.append(message.getBatchId());
 			buf.append(" is available at ");
-			buf.append(templateLoaderStateMachineContext.getMessage().getLogFileName());
-			buf.append("\n\n");
-			buf.append("The successfull processed files at ");
-			buf.append(templateLoaderStateMachineContext.getMessage().getPassedFileDirectory());
-			buf.append("\n\n");
+			buf.append(message.getLogFileName());
+			buf.append("<br/><br/>");
+			buf.append("The successful processed files at ");
+			buf.append(message.getPassedFileDirectory());
+			buf.append("<br/><br/>");
 			buf.append("The failed processed files at ");
-			buf.append(templateLoaderStateMachineContext.getMessage().getFailedFileDirectory());
+			buf.append(message.getFailedFileDirectory());
 			
-			List<String> boreHoleIds = templateLoaderStateMachineContext.getMessage().getBoreHoleIdsOutSideTenement();
+			List<String> boreHoleIds = message.getBoreHoleIdsOutSideTenement();
 			if (CollectionUtils.isNotEmpty(boreHoleIds)) {
-				buf.append("\n\n");
+				buf.append("<br/><br/>");
 				buf.append("The following bore Hole Ids are outside the tenement: ");
 				buf.append(String.join(Strings.COMMA, boreHoleIds));
 			}
 			
-			List<String> sampleIds = templateLoaderStateMachineContext.getMessage().getSampleIdsOutSideTenement();
+			List<String> sampleIds = message.getSampleIdsOutSideTenement();
 			if (CollectionUtils.isNotEmpty(sampleIds)) {
-				buf.append("\n\n");
+				buf.append("<br/><br/>");
 				buf.append("The following sample Ids are outside the tenement: ");
 				buf.append(String.join(Strings.COMMA, sampleIds));
 			}
+			buf.append("<br/><br/>");
+			String url = "http://wdaud7210fgy.internal.vic.gov.au:8090/";
+			buf.append("For more detail, please visit <a href=\"");
+			buf.append(url);
+			buf.append("\">MRT Loader</a>");
+			buf.append(getHtmlSuffix());
 			return buf.toString();
 		} else {
-			StringBuilder buf = new StringBuilder("Hi\n");
-			buf.append("\n");
+			StringBuilder buf = new StringBuilder(getHtmlPrefix(message.getEmailSubject()));
+			buf.append("Hi<br/>");
+			buf.append("<br/>");
 			buf.append("The template file process is failed due to: ");
 			buf.append(directErrorMessage);
+			buf.append(getHtmlSuffix());
 			return buf.toString();
 		}
+	}
+	
+	private String getHtmlPrefix(final String subject) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("<HTML>\n");
+		sb.append("<HEAD>\n");
+		sb.append("<TITLE>\n");
+		sb.append(subject + "\n");
+		sb.append("</TITLE>\n");
+		sb.append("</HEAD>\n");
+		
+		sb.append("<BODY>\n");
+		sb.append("<H1>" + subject + "</H1>" + "\n");
+		
+		return sb.toString();
+	}
+	
+	private String getHtmlSuffix() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("</BODY>\n");
+		sb.append("</HTML>\n");
+		return sb.toString();
 	}
 
 	@Override
