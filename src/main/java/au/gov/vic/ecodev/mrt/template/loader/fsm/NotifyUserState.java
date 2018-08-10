@@ -45,7 +45,9 @@ public class NotifyUserState implements LoaderState {
 		MrtConfigProperties mrtConfigProperties = templateLoaderStateMachineContext.getMrtConfigProperties();
 		Mailer mailer = new Mailer(mrtConfigProperties);
 		mailer.createSession();
-		AtomicInteger count = new AtomicInteger(0);
+		String subject = templateLoaderStateMachineContext.getMessage()
+				.getEmailSubject();
+		AtomicInteger count = new AtomicInteger(Numeral.ZERO);
 		emailBuildersMap.forEach((emailBuilderClass, emailList) -> {
 			try {
 				Class<?> cls = Class.forName(emailBuilderClass);
@@ -54,7 +56,7 @@ public class NotifyUserState implements LoaderState {
 				String body = emailBodyBuilder.build();
 				String toEmail = String.join(Strings.COMMA, emailList);
 			
-				mailer.send(toEmail, mrtConfigProperties.getEmailSubject(), body, mrtConfigProperties.getEmailUser(),
+				mailer.send(toEmail, subject, body, mrtConfigProperties.getEmailUser(),
 						mrtConfigProperties.getEmailUserPwd());
 			} catch (Exception e) {
 				LOGGER.error(e.getMessage(), e);
