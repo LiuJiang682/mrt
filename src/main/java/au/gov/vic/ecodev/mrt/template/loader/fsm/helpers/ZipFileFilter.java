@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 public class ZipFileFilter {
 
-	private static final String ZIP_FILE_NAME_PATTERN = "^\\p{Alnum}+[_\\p{Alnum}]+\\.zip$";
+	private static final String ZIP_FILE_NAME_PATTERN = "^\\p{Alnum}+[_]{1}[\\p{Alnum}]+([_|-]*[\\p{Alnum}]*)*\\.zip$";
 	
 	public final  List<String> filterZipFile(List<String> fileNames) {
 		return fileNames.stream()
