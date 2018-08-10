@@ -4,11 +4,13 @@ import java.util.Date;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
+import javax.activation.DataHandler;
 import javax.mail.Message;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.mail.util.ByteArrayDataSource;
 
 import org.apache.log4j.Logger;
 import org.springframework.util.StringUtils;
@@ -90,7 +92,9 @@ public class Mailer {
 
 		msg.setSubject(subject, CHARSET_UTF_8);
 
-		msg.setText(body, CHARSET_UTF_8);
+		// msg.setText(body, CHARSET_UTF_8);
+		msg.setDataHandler(new DataHandler(
+				new ByteArrayDataSource(body, "text/html")));
 
 		msg.setSentDate(new Date());
 

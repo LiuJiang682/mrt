@@ -19,11 +19,11 @@ import au.gov.vic.ecodev.mrt.template.loader.fsm.model.Message;
 
 public class MrtEmailBodyBuilderTest {
 
-	private static final String TEST_EMAIL_WITH_BORE_HOLE_AND_SAMPLE = "Hi\n\nThe log file for batch: 1 is available at src/test/resources/generated/log\n\nThe successfull processed files at src/test/resources/passed\n\nThe failed processed files at src/test/resources/failed\n\nThe following bore Hole Ids are outside the tenement: KPDD001\n\nThe following sample Ids are outside the tenement: KPDD001";
-	private static final String TEST_EMAIL_WITH_SAMPLE_ID = "Hi\n\nThe log file for batch: 1 is available at src/test/resources/generated/log\n\nThe successfull processed files at src/test/resources/passed\n\nThe failed processed files at src/test/resources/failed\n\nThe following sample Ids are outside the tenement: KPDD001";
-	private static final String TEST_EMAIL_WITH_BORE_HOLE_ID = "Hi\n\nThe log file for batch: 1 is available at src/test/resources/generated/log\n\nThe successfull processed files at src/test/resources/passed\n\nThe failed processed files at src/test/resources/failed\n\nThe following bore Hole Ids are outside the tenement: KPDD001";
-	private static final String TEST_DIRECT_ERROR_MESSAGE_EMAIL_BODY = "Hi\n\nThe template file process is failed due to: directErrorMessage";
-	private static final String TEST_NORMAL_EMAIL_BODY = "Hi\n\nThe log file for batch: 1 is available at src/test/resources/generated/log\n\nThe successfull processed files at src/test/resources/passed\n\nThe failed processed files at src/test/resources/failed";
+	private static final String TEST_EMAIL_WITH_BORE_HOLE_AND_SAMPLE = "<HTML>\n<HEAD>\n<TITLE>\nTemplate File\n</TITLE>\n</HEAD>\n<BODY>\n<H1>Template File</H1>\nHi<br/><br/>The log file for batch: 1 is available at src/test/resources/generated/log<br/><br/>The successful processed files at src/test/resources/passed<br/><br/>The failed processed files at src/test/resources/failed<br/><br/>The following bore Hole Ids are outside the tenement: KPDD001<br/><br/>The following sample Ids are outside the tenement: KPDD001<br/><br/>For more detail, please visit <a href=\"http://wdaud7210fgy.internal.vic.gov.au:8090/\">MRT Loader</a></BODY>\n</HTML>\n";
+	private static final String TEST_EMAIL_WITH_SAMPLE_ID = "<HTML>\n<HEAD>\n<TITLE>\nTemplate File\n</TITLE>\n</HEAD>\n<BODY>\n<H1>Template File</H1>\nHi<br/><br/>The log file for batch: 1 is available at src/test/resources/generated/log<br/><br/>The successful processed files at src/test/resources/passed<br/><br/>The failed processed files at src/test/resources/failed<br/><br/>The following sample Ids are outside the tenement: KPDD001<br/><br/>For more detail, please visit <a href=\"http://wdaud7210fgy.internal.vic.gov.au:8090/\">MRT Loader</a></BODY>\n</HTML>\n";
+	private static final String TEST_EMAIL_WITH_BORE_HOLE_ID = "<HTML>\n<HEAD>\n<TITLE>\nTemplate File\n</TITLE>\n</HEAD>\n<BODY>\n<H1>Template File</H1>\nHi<br/><br/>The log file for batch: 1 is available at src/test/resources/generated/log<br/><br/>The successful processed files at src/test/resources/passed<br/><br/>The failed processed files at src/test/resources/failed<br/><br/>The following bore Hole Ids are outside the tenement: KPDD001<br/><br/>For more detail, please visit <a href=\"http://wdaud7210fgy.internal.vic.gov.au:8090/\">MRT Loader</a></BODY>\n</HTML>\n";
+	private static final String TEST_DIRECT_ERROR_MESSAGE_EMAIL_BODY = "<HTML>\n<HEAD>\n<TITLE>\nTemplate File\n</TITLE>\n</HEAD>\n<BODY>\n<H1>Template File</H1>\nHi<br/><br/>The template file process is failed due to: directErrorMessage</BODY>\n</HTML>\n";
+	private static final String TEST_NORMAL_EMAIL_BODY = "<HTML>\n<HEAD>\n<TITLE>\nTemplate File\n</TITLE>\n</HEAD>\n<BODY>\n<H1>Template File</H1>\nHi<br/><br/>The log file for batch: 1 is available at src/test/resources/generated/log<br/><br/>The successful processed files at src/test/resources/passed<br/><br/>The failed processed files at src/test/resources/failed<br/><br/>For more detail, please visit <a href=\"http://wdaud7210fgy.internal.vic.gov.au:8090/\">MRT Loader</a></BODY>\n</HTML>\n";
 	
 	private MrtEmailBodyBuilder testInstance;
 	private TemplateLoaderStateMachineContext mockTemplateLoaderStateMachineContext;
@@ -35,6 +35,7 @@ public class MrtEmailBodyBuilderTest {
 		Message message = new DefaultMessage();
 		message.setBatchId(1l);
 		message.setDirectErrorMessage("directErrorMessage");
+		message.setEmailSubject("Template File");
 		when(mockTemplateLoaderStateMachineContext.getMessage()).thenReturn(message);
 		//When
 		String body = testInstance.build();
@@ -71,6 +72,7 @@ public class MrtEmailBodyBuilderTest {
 		message.setLogFileName("src/test/resources/generated/log");
 		message.setPassedFileDirectory("src/test/resources/passed");
 		message.setFailedFileDirectory("src/test/resources/failed");
+		message.setEmailSubject("Template File");
 		when(mockTemplateLoaderStateMachineContext.getMessage()).thenReturn(message);
 		// When
 		String body = testInstance.build();
@@ -85,6 +87,7 @@ public class MrtEmailBodyBuilderTest {
 		Message message = new DefaultMessage();
 		message.setBatchId(1);
 		message.setLogFileName("src/test/resources/generated/log");
+		message.setEmailSubject("Template File");
 		List<String> boreHoleIds = new ArrayList<>();
 		boreHoleIds.add("KPDD001");
 		message.setBoreHoleIdsOutSideTenement(boreHoleIds);
@@ -104,6 +107,7 @@ public class MrtEmailBodyBuilderTest {
 		Message message = new DefaultMessage();
 		message.setBatchId(1);
 		message.setLogFileName("src/test/resources/generated/log");
+		message.setEmailSubject("Template File");
 		List<String> boreHoleIds = new ArrayList<>();
 		boreHoleIds.add("KPDD001");
 		message.setSampleIdsOutSideTenement(boreHoleIds);
@@ -123,6 +127,7 @@ public class MrtEmailBodyBuilderTest {
 		Message message = new DefaultMessage();
 		message.setBatchId(1);
 		message.setLogFileName("src/test/resources/generated/log");
+		message.setEmailSubject("Template File");
 		List<String> boreHoleIds = new ArrayList<>();
 		boreHoleIds.add("KPDD001");
 		message.setBoreHoleIdsOutSideTenement(boreHoleIds);
