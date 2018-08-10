@@ -22,6 +22,7 @@ public class DefaultMessage implements Message, Serializable {
 	private List<String> outsideSampleIds = new ArrayList<>();
 	private String passedFileDirectory;
 	private String failedFileDirectory;
+	private String subject;
 	
 	/**
 	 * Generated serial version UID
@@ -172,5 +173,15 @@ public class DefaultMessage implements Message, Serializable {
 	@Override
 	public void setAbsoluteFileNames(List<String> absolutionFileNames) {
 		this.absoluteFileNames = absolutionFileNames;
+	}
+
+	@Override
+	public String getEmailSubject() {
+		return subject;
+	}
+
+	@Override
+	public void setEmailSubject(String subject) {
+		this.subject = subject;
 	}
 }
