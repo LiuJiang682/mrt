@@ -49,10 +49,11 @@ public abstract class PositionValidatorBase {
 	public void validate(List<String> messages) {
 		List<String> columnHeaders = templateParamMap.get(Strings.COLUMN_HEADERS);
 		if (CollectionUtils.isEmpty(columnHeaders)) {
-			String message = new StringBuilder(Strings.LOG_ERROR_HEADER)
-					.append("No column header has been passing down")
-					.toString();
-			messages.add(message);
+			// Remove this due to user request.
+			// String message = new StringBuilder(Strings.LOG_ERROR_HEADER)
+			//		.append("No column header has been passing down")
+			//		.toString();
+			// messages.add(message);
 		} else {
 			List<String> projectionZoneList = templateParamMap
 					.get(Strings.TITLE_PREFIX + H0531Validator.PROJECTION_ZONE_TITLE);
