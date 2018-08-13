@@ -6,10 +6,10 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
+import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.AssayCodeValidator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.H0800Validator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.OptionalHeaderMandatoryFieldValidator;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
@@ -47,18 +47,8 @@ public class H1002Validator implements Validator {
 						FIELD_NAME_H1002).validate(messages);
 				for (int index = Numeral.ONE; index < strs.length; index++) {
 					String assayCode = strs[index];
-					if (!StringUtils.isEmpty(assayCode)) {
-						Optional<String> assayCodeOptional = assayCodeList.stream()
-								.filter(code -> assayCode.equalsIgnoreCase(code))
-								.findFirst();
-						if (!assayCodeOptional.isPresent()) {
-							String message = new StringBuilder(Strings.LOG_ERROR_HEADER)
-									.append(assayCode)
-									.append(" is NOT included in H0800")
-									.toString();
-							messages.add(message);
-						}
-					}
+					new AssayCodeValidator(assayCode, assayCodeList)
+						.doAssayCodeLookUpValidation(messages);
 				}
 			}
 		}
