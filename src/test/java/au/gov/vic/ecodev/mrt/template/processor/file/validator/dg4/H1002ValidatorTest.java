@@ -42,6 +42,24 @@ public class H1002ValidatorTest {
 	}
 	
 	@Test
+	public void shouldReturnEmptyMessageWhenH1002ValueExistInH0800WithPrefix() {
+		//Given
+		H1002Validator testInstance = givenTestInstance();
+		Map<String, List<String>> templateParamMap = new HashMap<>();
+		templateParamMap.put(Strings.COLUMN_HEADERS, TestFixture.getDg4FullColumnHeaderList());
+		templateParamMap.put(Strings.TITLE_PREFIX + H0800Validator.ASSAY_CODE_TITLE,
+				Arrays.asList("LS:BLEG", "LS:ICP-OES", "LS:AR"));
+		Template dataBean = new Dg4Template();
+		//When
+		Optional<List<String>> errorMessages = testInstance.validate(templateParamMap, dataBean);
+		//Then
+		assertThat(errorMessages.isPresent(), is(false));
+		List<String> h1002List = dataBean.get("H1002");
+		assertThat(h1002List, is(notNullValue()));
+		assertThat(h1002List.size(), is(equalTo(17)));
+	}
+	
+	@Test
 	public void shouldReturnAssayCodeNotFoundMessageWhenH1002ValueNotExistInH0800() {
 		H1002Validator testInstance = givenTestInstance();
 		Map<String, List<String>> templateParamMap = new HashMap<>();

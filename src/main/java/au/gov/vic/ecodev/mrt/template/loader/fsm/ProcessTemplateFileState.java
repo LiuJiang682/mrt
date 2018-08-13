@@ -164,7 +164,7 @@ public class ProcessTemplateFileState implements LoaderState {
 			final String templateClass, final boolean isMandatoryReport) {
 		String message = new StringBuilder("File: ")
 				.append(file.getAbsolutePath())
-				.append(" is not a ")
+				.append(" does not contain a ")
 				.append(templateClass)
 				.append(" template file.")
 				.toString();
