@@ -23,6 +23,7 @@ public class DefaultMessage implements Message, Serializable {
 	private String passedFileDirectory;
 	private String failedFileDirectory;
 	private String subject;
+	private String webUrl;
 	
 	/**
 	 * Generated serial version UID
@@ -183,5 +184,15 @@ public class DefaultMessage implements Message, Serializable {
 	@Override
 	public void setEmailSubject(String subject) {
 		this.subject = subject;
+	}
+
+	@Override
+	public String getWebUrl() {
+		return webUrl;
+	}
+
+	@Override
+	public void setWebUrl(String webUrl) {
+		this.webUrl = webUrl;
 	}
 }

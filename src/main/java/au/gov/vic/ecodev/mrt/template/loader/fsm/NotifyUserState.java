@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.util.CollectionUtils;
 
@@ -20,10 +21,10 @@ import au.gov.vic.ecodev.mrt.template.loader.fsm.helpers.TemplateLoaderStateMach
 
 public class NotifyUserState implements LoaderState {
 
-	private static final String DEFAULT_EMAIL_BODY_BUILDER = "au.gov.vic.ecodev.mrt.mail.MrtEmailBodyBuilder";
-
 	private static final Logger LOGGER = Logger.getLogger(NotifyUserState.class);
 	
+	private static final String DEFAULT_EMAIL_BODY_BUILDER = "au.gov.vic.ecodev.mrt.mail.MrtEmailBodyBuilder";
+
 	private static final String EMAILS_BUILDER = "EMAILS_BUILDER";
 	private static final String OWNER_EMAILS = "OWNER_EMAILS";
 	
@@ -47,6 +48,8 @@ public class NotifyUserState implements LoaderState {
 		mailer.createSession();
 		String subject = templateLoaderStateMachineContext.getMessage()
 				.getEmailSubject();
+		String webUrl = getWebUrl(mrtConfigProperties);
+		templateLoaderStateMachineContext.getMessage().setWebUrl(webUrl);
 		AtomicInteger count = new AtomicInteger(Numeral.ZERO);
 		emailBuildersMap.forEach((emailBuilderClass, emailList) -> {
 			try {
@@ -68,6 +71,16 @@ public class NotifyUserState implements LoaderState {
 		return emailSent;
 	}
 	
+	protected final String getWebUrl(MrtConfigProperties mrtConfigProperties) {
+		String webUrl = mrtConfigProperties.getEmailWebUrl();
+		Map<String, String> env = System.getenv();
+		String envWebUrl = env.get(Strings.EMAIL_WEB_URL);
+		if (StringUtils.isNotBlank(envWebUrl)) {
+			webUrl = envWebUrl;
+		}
+		return webUrl;
+	}
+
 	protected final Map<String, Set<String>> getEmailBuilderMap(final List<Map<String, Object>> ownerEmails) {
 		Map<String, Set<String>> emailBuildersMap = new HashMap<>();
 		ownerEmails.stream()

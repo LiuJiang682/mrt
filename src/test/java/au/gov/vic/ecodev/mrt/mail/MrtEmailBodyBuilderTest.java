@@ -73,6 +73,7 @@ public class MrtEmailBodyBuilderTest {
 		message.setPassedFileDirectory("src/test/resources/passed");
 		message.setFailedFileDirectory("src/test/resources/failed");
 		message.setEmailSubject("Template File");
+		message.setWebUrl("http://wdaud7210fgy.internal.vic.gov.au:8090/");
 		when(mockTemplateLoaderStateMachineContext.getMessage()).thenReturn(message);
 		// When
 		String body = testInstance.build();
@@ -93,6 +94,7 @@ public class MrtEmailBodyBuilderTest {
 		message.setBoreHoleIdsOutSideTenement(boreHoleIds);
 		message.setPassedFileDirectory("src/test/resources/passed");
 		message.setFailedFileDirectory("src/test/resources/failed");
+		message.setWebUrl("http://wdaud7210fgy.internal.vic.gov.au:8090/");
 		when(mockTemplateLoaderStateMachineContext.getMessage()).thenReturn(message);
 		// When
 		String body = testInstance.build();
@@ -113,6 +115,7 @@ public class MrtEmailBodyBuilderTest {
 		message.setSampleIdsOutSideTenement(boreHoleIds);
 		message.setPassedFileDirectory("src/test/resources/passed");
 		message.setFailedFileDirectory("src/test/resources/failed");
+		message.setWebUrl("http://wdaud7210fgy.internal.vic.gov.au:8090/");
 		when(mockTemplateLoaderStateMachineContext.getMessage()).thenReturn(message);
 		// When
 		String body = testInstance.build();
@@ -134,6 +137,7 @@ public class MrtEmailBodyBuilderTest {
 		message.setSampleIdsOutSideTenement(boreHoleIds);
 		message.setPassedFileDirectory("src/test/resources/passed");
 		message.setFailedFileDirectory("src/test/resources/failed");
+		message.setWebUrl("http://wdaud7210fgy.internal.vic.gov.au:8090/");
 		when(mockTemplateLoaderStateMachineContext.getMessage()).thenReturn(message);
 		// When
 		String body = testInstance.build();
