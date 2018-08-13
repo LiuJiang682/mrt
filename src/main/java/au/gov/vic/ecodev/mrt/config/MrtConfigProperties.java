@@ -84,6 +84,8 @@ public class MrtConfigProperties implements TemplateProperties {
 	private String sdoDsUserName;
 	@Value("${mrt.map.ds.pwd}")
 	private String sdoDsPwd;
+	@Value("${email.web.url}")
+	private String emailWebUrl;
 
 	public String getDirectoryToScan() {
 		return directoryToScan;
@@ -236,4 +238,13 @@ public class MrtConfigProperties implements TemplateProperties {
 	public String getSdoDsPwd() {
 		return sdoDsPwd;
 	}
+
+	public String getEmailWebUrl() {
+		return emailWebUrl;
+	}
+
+	public void setEmailWebUrl(String emailWebUrl) {
+		this.emailWebUrl = emailWebUrl;
+	}
+
 }
