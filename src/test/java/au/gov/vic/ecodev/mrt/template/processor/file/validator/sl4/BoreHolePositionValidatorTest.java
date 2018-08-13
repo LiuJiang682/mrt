@@ -796,19 +796,6 @@ public class BoreHolePositionValidatorTest {
 	}
 	
 	@Test
-	public void shouldReturnErrorMessageWhenNoColumnHeaderProvided() {
-		//Given
-		givenTestInstance();
-		templateParamMap.remove(Strings.COLUMN_HEADERS);
-		List<String> messages = new ArrayList<>();
-		//When
-		testInstance.validate(messages);
-		//Then
-		assertThat(messages.size(), is(equalTo(1)));
-		assertThat(messages.get(0), is(equalTo("ERROR: No column header has been passing down")));
-	}
-	
-	@Test
 	public void shouldReturnErrorMessageWhenProjectZoneIsNotProvided() {
 		//Given
 		givenTestInstance();
