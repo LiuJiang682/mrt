@@ -16,6 +16,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.junit.contrib.java.lang.system.EnvironmentVariables;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Matchers;
@@ -25,6 +27,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import au.gov.vic.ecodev.mrt.config.MrtConfigProperties;
+import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.fixture.TestFixture;
 import au.gov.vic.ecodev.mrt.mail.Mailer;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.helpers.TemplateLoaderStateMachineContextFinalStepHelper;
@@ -35,9 +38,14 @@ import au.gov.vic.ecodev.mrt.template.loader.fsm.model.Message;
 @PrepareForTest(NotifyUserState.class)
 public class NotifyUserStateTest {
 
+	private static final String TEST_WEB_URL = "http://localhost:8090/";
 	private NotifyUserState testInstance;
 	private TemplateLoaderStateMachineContext mockTemplateLoaderStateMachineContext;
 	private Mailer mockMailer;
+	private MrtConfigProperties mockMrtConfigProperties;
+	
+	@Rule
+	private final EnvironmentVariables environmentVariables = new EnvironmentVariables();
 	
 	@Test
 	public void shouldSendUserEmail() throws Exception {
@@ -180,11 +188,35 @@ public class NotifyUserStateTest {
 		assertThat(retrievedEmailMap.get("EMAILS_BUILDER"), is(equalTo("au.gov.vic.ecodev.mrt.mail.MrtEmailBodyBuilder")));
 	}
 	
+	@Test
+	public void shouldReturnPropertyWebUrlWhenNoEnvVarProvided() throws Exception {
+		//Given
+		givenTestInstance();
+		//When
+		String webUrl = testInstance.getWebUrl(mockMrtConfigProperties);
+		//Then
+		assertThat(webUrl, is(notNullValue()));
+		assertThat(webUrl, is(equalTo(TEST_WEB_URL)));
+	}
+	
+	@Test
+	public void shouldReturnEnvWebUrlWhenEnvVarProvided() throws Exception {
+		//Given
+		givenTestInstance();
+		final String envUrl = "http://wdaud7210fgy.internal.vic.gov.au:8090/";
+		environmentVariables.set(Strings.EMAIL_WEB_URL, envUrl);
+		//When
+		String webUrl = testInstance.getWebUrl(mockMrtConfigProperties);
+		//Then
+		assertThat(webUrl, is(notNullValue()));
+		assertThat(webUrl, is(equalTo(envUrl)));
+	}
+	
 	private void givenTestInstance() throws Exception {
 		testInstance = new NotifyUserState();
 		mockTemplateLoaderStateMachineContext = Mockito
 				.mock(TemplateLoaderStateMachineContext.class);
-		MrtConfigProperties mockMrtConfigProperties = Mockito.mock(MrtConfigProperties.class);
+		mockMrtConfigProperties = Mockito.mock(MrtConfigProperties.class);
 		when(mockMrtConfigProperties.getMailSmtpAuth()).thenReturn("true");
 		when(mockMrtConfigProperties.getMailSmtpStartTlsEnable()).thenReturn("true");
 		when(mockMrtConfigProperties.getMailSmtpHost()).thenReturn("127.0.0.1");
@@ -192,6 +224,7 @@ public class NotifyUserStateTest {
 		when(mockMrtConfigProperties.getToEmail()).thenReturn("jiang.liu@ecodev.vic.gov.au");
 		when(mockMrtConfigProperties.getEmailUser()).thenReturn("");
 		when(mockMrtConfigProperties.getEmailUserPwd()).thenReturn("");
+		when(mockMrtConfigProperties.getEmailWebUrl()).thenReturn(TEST_WEB_URL);
 		when(mockTemplateLoaderStateMachineContext.getMrtConfigProperties()).thenReturn(mockMrtConfigProperties);
 		mockMailer = Mockito.mock(Mailer.class);
 		PowerMockito.whenNew(Mailer.class).withArguments(mockMrtConfigProperties).thenReturn(mockMailer);

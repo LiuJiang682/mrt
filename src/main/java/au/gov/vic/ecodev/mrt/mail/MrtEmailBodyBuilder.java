@@ -50,7 +50,7 @@ public class MrtEmailBodyBuilder implements EmailBodyBuilder {
 				buf.append(String.join(Strings.COMMA, sampleIds));
 			}
 			buf.append("<br/><br/>");
-			String url = "http://wdaud7210fgy.internal.vic.gov.au:8090/";
+			String url = message.getWebUrl();
 			buf.append("For more detail, please visit <a href=\"");
 			buf.append(url);
 			buf.append("\">MRT Loader</a>");

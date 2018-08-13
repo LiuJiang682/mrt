@@ -90,20 +90,20 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-            <groupId>au.gov.vic.ecodev</groupId>
-            <artifactId>utils</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>au.gov.vic.ecodev.sgv</groupId>
-            <artifactId>template_context</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>au.gov.vic.ecodev.mrt</groupId>
-            <artifactId>comm_db</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+			<groupId>au.gov.vic.ecodev</groupId>
+			<artifactId>utils</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>au.gov.vic.ecodev.sgv</groupId>
+			<artifactId>template_context</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>au.gov.vic.ecodev.mrt</groupId>
+			<artifactId>comm_db</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 		<dependency>
 			<groupId>org.locationtech.jts</groupId>
 			<artifactId>jts-core</artifactId>
@@ -151,6 +151,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.github.stefanbirkner</groupId>
+			<artifactId>system-rules</artifactId>
+			<version>1.18.0</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
