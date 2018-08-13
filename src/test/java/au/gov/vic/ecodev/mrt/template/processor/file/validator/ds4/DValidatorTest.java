@@ -147,25 +147,6 @@ public class DValidatorTest {
 	}
 	
 	@Test
-	public void shouldReturnIncorrectColumnHeaderCountMessage() {
-		// Given
-		params = new HashMap<>();
-		givenCurrentLineNumber(params);
-		givenMockTemplate();
-		String[] datas = { "D", "KPDD001", "60", "0", "0", "SS", "DD" };
-		DValidator dValidator = new DValidator();
-		dValidator.init(datas);
-		// When
-		Optional<List<String>> errorMessages = dValidator.validate(params, mockDataBean);
-		// Then
-		assertThat(errorMessages.isPresent(), is(true));
-		List<String> messages = errorMessages.get();
-		assertThat(messages.size(), is(equalTo(1)));
-		assertThat(messages.get(0), is(equalTo("No column header has been passing down")));
-		verify(mockDataBean, times(0)).put(Matchers.anyString(), Matchers.anyListOf(String.class));
-	}
-	
-	@Test
 	public void shouldReturnMissingAzimuthMagColumnMessage() {
 		givenTestConditions();
 		String[] datas = { "D", "KPDD001", "210",  "-90", "270" };
