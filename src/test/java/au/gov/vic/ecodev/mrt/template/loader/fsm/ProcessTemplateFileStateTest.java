@@ -55,7 +55,7 @@ public class ProcessTemplateFileStateTest {
 
 	private static final List<String> TEMPLATE_LIST = Arrays.asList(SL4_TEMPLATE_CONFIG);
 
-	private static final String NOT_TEMPLATE_FILE = "File: C:\\Data\\eclipse-workspace\\mrt\\src\\test\\resources\\template is not a SL4 template file.";
+	private static final String NOT_TEMPLATE_FILE = "File: C:\\Data\\eclipse-workspace\\mrt\\src\\test\\resources\\template does not contain a SL4 template file.";
 
 	private static final String NO_TEMPLATE_PROCESSOR_CLASS = "No template processor class name provided from au.gov.vic.ecodev.mrt.template.processor.sl4.Sl4TemplateProcessor when processing C:\\Data\\eclipse-workspace\\mrt\\src\\test\\resources\\template";
 
@@ -380,7 +380,7 @@ public class ProcessTemplateFileStateTest {
 		ArgumentCaptor<String> stringCaptor = ArgumentCaptor.forClass(String.class);
 		verify(testInstance).handleProcessorException(eq(localContext), eq(file), stringCaptor.capture());
 		String message = stringCaptor.getValue();
-		assertThat(message.contains("abc is not a SL4 template file"), is(true));
+		assertThat(message.contains("abc does not contain a SL4 template file"), is(true));
 	}
 
 	@Test
@@ -401,7 +401,7 @@ public class ProcessTemplateFileStateTest {
 		verify(localContext).saveStatusLog(severityCaptor.capture(), stringCaptor.capture());
 		assertThat(severityCaptor.getValue(), is(equalTo(LogSeverity.WARNING)));
 		String message = stringCaptor.getValue();
-		assertThat(message.contains("abc is not a DL4 template file"), is(true));
+		assertThat(message.contains("abc does not contain a DL4 template file"), is(true));
 	}
 
 	@Test
