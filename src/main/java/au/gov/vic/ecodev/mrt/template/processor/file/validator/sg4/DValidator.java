@@ -12,6 +12,7 @@ import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.EastingValidator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.LineNumberValidator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.NorthingValidator;
+import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.helper.H0100FieldHelper;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.validator.Validator;
 import au.gov.vic.ecodev.mrt.template.processor.validator.helper.IssueColumnIndexHelper;
@@ -86,7 +87,8 @@ public class DValidator implements Validator {
 	protected void doSamplePositionValidation(String[] strs, int lineNumber, Template dataBean, 
 			Map<String, List<String>> templateParamMap, TemplateProcessorContext context, List<String> messages) {
 		if (null != dataBean) {
-			templateParamMap.put(Strings.KEY_H0100, dataBean.get(Strings.KEY_H0100));
+			new H0100FieldHelper().doTenementNoSplit(dataBean, templateParamMap);
+//			templateParamMap.put(Strings.KEY_H0100, dataBean.get(Strings.KEY_H0100));
 			new SamplePositionValidator(strs, lineNumber, templateParamMap, context)
 				.validate(messages);
 		}

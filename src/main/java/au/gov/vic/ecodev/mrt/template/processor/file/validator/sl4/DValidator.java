@@ -14,6 +14,7 @@ import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.EastingVal
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.LineNumberValidator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.MandatoryStringDataValidator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.NorthingValidator;
+import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.helper.H0100FieldHelper;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.validator.Validator;
 import au.gov.vic.ecodev.mrt.template.processor.validator.helper.IssueColumnIndexHelper;
@@ -85,10 +86,19 @@ public class DValidator implements Validator {
 				.updateDataBeanOrCreateErrorOptional(strs, dataBean);
 	}
 
-	protected final void doBoreHolePositionValidation(Map<String, List<String>> templateParamMap, Template dataBean,
+	protected final void doBoreHolePositionValidation(
+			Map<String, List<String>> templateParamMap, 
+			Template dataBean,
 			List<String> messages, int lineNumber) {
 		if (null != dataBean) {
-			templateParamMap.put(Strings.KEY_H0100, dataBean.get(Strings.KEY_H0100));
+			new H0100FieldHelper().doTenementNoSplit(dataBean, templateParamMap);
+//			List<String> tenementList = dataBean.get(Strings.KEY_H0100);
+//			if (Numeral.TWO == tenementList.size()) {
+//				String tenements = tenementList.get(Numeral.ONE);
+//				String[] tenementArray = tenements.split(Strings.COMMA);
+//				tenementList = Arrays.asList(tenementArray);
+//			}
+//			templateParamMap.put(Strings.KEY_H0100, tenementList);
 			new BoreHolePositionValidator(strs, lineNumber, templateParamMap, context)
 				.validate(messages);
 		}
