@@ -17,7 +17,6 @@ import au.gov.vic.ecodev.mrt.template.fields.Sg4ColumnHeaders;
 import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.helper.MessageHelper;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.helper.PartialFileNameFlagHelper;
-import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.helper.StringListHelper;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.helper.TenementWarningMessageHelper;
 
 public abstract class PositionValidatorBase {
@@ -91,8 +90,9 @@ public abstract class PositionValidatorBase {
 				String id = getId(messages, columnHeaders, getIdCode());
 				MapServices mapServices = context.getMapServices();
 				VictoriaMapServices  victoriaMapServices = (VictoriaMapServices) mapServices;
-				List<String> tenmentNoList = new StringListHelper()
-						.trimOffTheTitle(templateParamMap.get(Strings.KEY_H0100));
+//				List<String> tenmentNoList = new StringListHelper()
+//						.trimOffTheTitle(templateParamMap.get(Strings.KEY_H0100));
+				List<String> tenmentNoList = templateParamMap.get(Strings.KEY_H0100);
 				if ((null == easting) 
 						&& (null == northing)) {
 					doLatitudeLongitudeCheck(messages, id, projectionZone, columnHeaders,
