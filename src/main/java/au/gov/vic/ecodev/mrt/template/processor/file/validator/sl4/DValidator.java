@@ -1,7 +1,6 @@
 package au.gov.vic.ecodev.mrt.template.processor.file.validator.sl4;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
