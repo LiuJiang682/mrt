@@ -47,8 +47,6 @@ public class SessionHeaderUpdater {
 		return	(SessionHeaderDao) sessionHeaderDaoOptional.orElseThrow(() -> new TemplateProcessorException("No SessionHeaderDao in the list"));
 	}
 
-
-
 	public void update() throws TemplateProcessorException {
 		SessionHeaderDao sessionHeaderDao = getSessionHeaderDao();
 		SessionHeader sessionHeader = (SessionHeader) sessionHeaderDao.get(sessionId);
