@@ -1,6 +1,7 @@
 package au.gov.vic.ecodev.mrt.template.processor.file.validator.sl4;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -88,7 +89,13 @@ public class DValidator implements Validator {
 	protected final void doBoreHolePositionValidation(Map<String, List<String>> templateParamMap, Template dataBean,
 			List<String> messages, int lineNumber) {
 		if (null != dataBean) {
-			templateParamMap.put(Strings.KEY_H0100, dataBean.get(Strings.KEY_H0100));
+			List<String> tenementList = dataBean.get(Strings.KEY_H0100);
+			if (Numeral.TWO == tenementList.size()) {
+				String tenements = tenementList.get(Numeral.ONE);
+				String[] tenementArray = tenements.split(Strings.COMMA);
+				tenementList = Arrays.asList(tenementArray);
+			}
+			templateParamMap.put(Strings.KEY_H0100, tenementList);
 			new BoreHolePositionValidator(strs, lineNumber, templateParamMap, context)
 				.validate(messages);
 		}

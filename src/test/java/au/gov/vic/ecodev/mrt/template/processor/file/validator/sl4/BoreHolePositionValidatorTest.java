@@ -371,7 +371,7 @@ public class BoreHolePositionValidatorTest {
 		templateParamMap.put(Strings.TITLE_PREFIX + H0531Validator.PROJECTION_ZONE_TITLE, 
 				Arrays.asList("55"));
 		templateParamMap.put(Strings.KEY_H0100, 
-				Arrays.asList("Tenement_no", "EL123"));
+				Arrays.asList("EL123"));
 		VictoriaMapServices mockVictoriaMapServices = Mockito.mock(VictoriaMapServices.class);
 		when(mockVictoriaMapServices.isWithinMga55NorthEast(Matchers.any(BigDecimal.class), 
 				Matchers.any(BigDecimal.class))).thenReturn(true);
@@ -472,7 +472,7 @@ public class BoreHolePositionValidatorTest {
 		templateParamMap.put(Strings.TITLE_PREFIX + H0531Validator.PROJECTION_ZONE_TITLE, 
 				Arrays.asList("55"));
 		templateParamMap.put(Strings.KEY_H0100, 
-				Arrays.asList("Tenement_no", "EL123"));
+				Arrays.asList("EL123"));
 		templateParamMap.put(Strings.COLUMN_HEADERS, TestFixture.getAMGColumnHeaderList());
 		VictoriaMapServices mockVictoriaMapServices = Mockito.mock(VictoriaMapServices.class);
 		when(mockVictoriaMapServices.isWithinAgd55NorthEast(Matchers.any(BigDecimal.class), 
@@ -688,7 +688,7 @@ public class BoreHolePositionValidatorTest {
 				Arrays.asList("55"));
 		templateParamMap.put(Strings.COLUMN_HEADERS, TestFixture.getAMGColumnHeaderList());
 		templateParamMap.put(Strings.KEY_H0100, 
-				Arrays.asList("Tenement_no", "EL123"));
+				Arrays.asList("EL123"));
 		testInstance = new BoreHolePositionValidator(strs, batchId, 
 				templateParamMap, mockContext);
 		List<String> messages = new ArrayList<>();
@@ -974,6 +974,6 @@ public class BoreHolePositionValidatorTest {
 		templateParamMap.put(Strings.TITLE_PREFIX + H0531Validator.PROJECTION_ZONE_TITLE, 
 				Arrays.asList("54"));
 		templateParamMap.put(Strings.KEY_H0100, 
-				Arrays.asList("Tenement_no", "EL123"));
+				Arrays.asList("EL123"));
 	}
 }
