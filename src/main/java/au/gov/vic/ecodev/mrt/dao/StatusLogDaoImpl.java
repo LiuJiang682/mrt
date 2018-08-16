@@ -27,7 +27,7 @@ public class StatusLogDaoImpl implements StatusLogDao {
 
 	@Override
 	public boolean saveStatusLog(long batchId, LogSeverity severity, String logMessage) {
-		int rows = jdbcTemplate.update(INSERT_SQL, new Object[] {IDGenerator.getUID().longValue(), 
+		int rows = jdbcTemplate.update(INSERT_SQL, new Object[] {IDGenerator.getUIDAsAbsLongValue(), 
 				batchId, severity.name(), logMessage});
 		return Numeral.ONE == rows;
 	}

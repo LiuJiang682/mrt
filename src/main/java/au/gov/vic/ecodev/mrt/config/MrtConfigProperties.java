@@ -1,11 +1,18 @@
 package au.gov.vic.ecodev.mrt.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.stereotype.Component;
 
 import au.gov.vic.ecodev.mrt.template.properties.TemplateProperties;
 
 @Component
+@PropertySources({
+	@PropertySource(value = "classpath:application.properties"),
+	@PropertySource(value = "classpath:db.properties"),
+	@PropertySource(value = "classpath:map.properties")
+})
 public class MrtConfigProperties implements TemplateProperties {
 
 	@Value("${mrt.upload.file.dir}")
