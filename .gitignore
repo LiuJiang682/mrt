@@ -26,3 +26,8 @@ src/test/resources/passed
 
 # MRT custom plugin directory
 src/main/resources/template/custom
+
+# MRT secrete file
+src/main/resources/db.properties
+src/main/resources/map.properties
+src/test/resources/map.properties
