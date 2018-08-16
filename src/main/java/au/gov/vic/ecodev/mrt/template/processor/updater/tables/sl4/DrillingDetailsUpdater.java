@@ -65,7 +65,7 @@ public class DrillingDetailsUpdater {
 			DrillingDetails drillingDetails = drillingDetailsDao.getByDrillingTypeAndCompany(drillingCode, drillingCompany);
 			if (null == drillingDetails) {
 				drillingDetails = new DrillingDetails();
-				drillingDetails.setId(IDGenerator.getUID().longValue());
+				drillingDetails.setId(IDGenerator.getUIDAsAbsLongValue());
 				drillingDetails.setFileName(fileName);
 				drillingDetails.setDrillType(drillingCode);
 				drillingDetails.setDrillCompany(drillingCompany);

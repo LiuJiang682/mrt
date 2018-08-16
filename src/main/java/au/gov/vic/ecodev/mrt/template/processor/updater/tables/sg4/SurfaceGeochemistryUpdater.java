@@ -61,7 +61,7 @@ public class SurfaceGeochemistryUpdater {
 		MrtTemplateValue mrtTemplateValue = (MrtTemplateValue)templateValue;
 		List<String> dataRecordList = mrtTemplateValue.getDatas();
 		SurfaceGeochemistry surfaceGeochemistry = new SurfaceGeochemistry();
-		surfaceGeochemistry.setId(IDGenerator.getUID().longValue());
+		surfaceGeochemistry.setId(IDGenerator.getUIDAsAbsLongValue());
 		surfaceGeochemistry.setLoaderId(sessionId);
 		surfaceGeochemistry.setSampleId((String) new NullSafeCollections(dataRecordList)
 				.get(sampleIdIndex));

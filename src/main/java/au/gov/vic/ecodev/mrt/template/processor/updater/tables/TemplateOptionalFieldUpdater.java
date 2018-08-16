@@ -77,7 +77,7 @@ public class TemplateOptionalFieldUpdater {
 			indexList.stream()
 				.forEach(index -> {
 					TemplateOptionalField templateOptionalField = new TemplateOptionalField();
-					templateOptionalField.setId(IDGenerator.getUID().longValue());
+					templateOptionalField.setId(IDGenerator.getUIDAsAbsLongValue());
 					templateOptionalField.setSessionId(sessionId);
 					templateOptionalField.setFileName(fileName);
 					templateOptionalField.setTemplateName(templateName);

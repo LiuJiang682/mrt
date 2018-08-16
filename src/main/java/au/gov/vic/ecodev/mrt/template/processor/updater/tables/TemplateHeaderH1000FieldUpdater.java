@@ -46,7 +46,7 @@ public class TemplateHeaderH1000FieldUpdater {
 		String fileName = new FileNameExtractionHelper(template, Strings.CURRENT_FILE_NAME)
 				.doFileNameExtraction();
 		TemplateOptionalField templateOptionalField = new TemplateOptionalField();
-		templateOptionalField.setId(IDGenerator.getUID().longValue());
+		templateOptionalField.setId(IDGenerator.getUIDAsAbsLongValue());
 		templateOptionalField.setSessionId(sessionId);
 		templateOptionalField.setFileName(fileName);
 		templateOptionalField.setTemplateName(templateName);

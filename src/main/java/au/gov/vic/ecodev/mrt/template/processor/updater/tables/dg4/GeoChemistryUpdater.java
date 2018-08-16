@@ -57,7 +57,7 @@ public class GeoChemistryUpdater {
 
 	public void update(final List<String> dataRecordList, final int index) {
 		GeoChemistry geoChemistry = new GeoChemistry();
-		geoChemistry.setId(IDGenerator.getUID().longValue());
+		geoChemistry.setId(IDGenerator.getUIDAsAbsLongValue());
 		geoChemistry.setLoaderId(sessionId);
 		geoChemistry.setHoleId((String) new NullSafeCollections(dataRecordList)
 				.get(holeIdIndex));

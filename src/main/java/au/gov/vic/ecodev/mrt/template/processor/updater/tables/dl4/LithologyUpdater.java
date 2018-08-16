@@ -46,7 +46,7 @@ public class LithologyUpdater {
 
 	public void update(final List<String> dataRecordList, final int index) {
 		Lithology lithology = new Lithology();
-		lithology.setId(IDGenerator.getUID().longValue());
+		lithology.setId(IDGenerator.getUIDAsAbsLongValue());
 		lithology.setLoaderId(sessionId);
 		lithology.setHoleId((String) new NullSafeCollections(dataRecordList).get(holeIdIndex));
 		lithology.setFileName(fileName);

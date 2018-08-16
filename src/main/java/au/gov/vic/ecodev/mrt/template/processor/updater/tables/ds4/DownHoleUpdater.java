@@ -37,7 +37,7 @@ public class DownHoleUpdater {
 
 	public void update(final List<String> dataRecordList, final int index) {
 		DownHole downHole = new DownHole();
-		downHole.setId(IDGenerator.getUID().longValue());
+		downHole.setId(IDGenerator.getUIDAsAbsLongValue());
 		downHole.setLoaderId(sessionId);
 		downHole.setHoleId((String) new NullSafeCollections(dataRecordList).get(holeIdIndex));
 		downHole.setFileName(fileName);

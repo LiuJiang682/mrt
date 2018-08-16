@@ -153,6 +153,10 @@ public class ProcessTemplateFileState implements LoaderState {
 				String str = templateAndFileName;
 				String[] strs = str.split(Strings.SPACE);
 				String fileName = strs[Numeral.ONE];
+				if (Numeral.TWO < strs.length) {
+					fileName = String.join(Strings.SPACE, Arrays.copyOfRange(strs, 
+							Numeral.ONE, strs.length));
+				}
 				File fileToProcess = new File(fileName);
 				files.add(fileToProcess);
 			});

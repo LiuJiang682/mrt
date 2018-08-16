@@ -71,7 +71,7 @@ public class DbPersistentServices implements PersistentServices {
 	@Override
 	public long getNextBatchId(List<String> templateNames, List<String> fileNames) {
 		Set<String> templateSet = new HashSet<>(templateNames);
-		long sessionId = IDGenerator.getUID().longValue();
+		long sessionId = IDGenerator.getUIDAsAbsLongValue();
 		SessionHeader sessionHeader = new SessionHeader(sessionId);
 		sessionHeader.setTemplate(String.join(Strings.COMMA, templateSet));
 		sessionHeader.setFileName(String.join(Strings.COMMA, fileNames));
