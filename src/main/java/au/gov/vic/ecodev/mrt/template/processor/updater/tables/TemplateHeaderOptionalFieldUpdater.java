@@ -9,6 +9,7 @@ import org.springframework.util.CollectionUtils;
 import au.gov.vic.ecodev.common.util.IDGenerator;
 import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
+import au.gov.vic.ecodev.mrt.dao.TemplateMandatoryHeaderFieldDao;
 import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDao;
 import au.gov.vic.ecodev.mrt.model.TemplateOptionalField;
 import au.gov.vic.ecodev.mrt.template.processor.model.Entity;
@@ -20,6 +21,7 @@ public class TemplateHeaderOptionalFieldUpdater {
 
 	private final long sessionId;
 	private final Template template;
+	private final TemplateMandatoryHeaderFieldDao templateMandatoryHeaderFieldDao;
 	private final TemplateOptionalFieldDao templateOptionalFieldDao;
 	private final List<String> keys;
 	
@@ -27,12 +29,17 @@ public class TemplateHeaderOptionalFieldUpdater {
 	private List<Entity> cache;
 	
 	public TemplateHeaderOptionalFieldUpdater(long sessionId, Template template,
+			TemplateMandatoryHeaderFieldDao templateMandatoryHeaderFieldDao, 
 			TemplateOptionalFieldDao templateOptionalFieldDao, List<String> keys) {
 		this.sessionId = sessionId;
 		if (null == template) {
 			throw new IllegalArgumentException("TemplateHeaderOptionalFieldUpdater:template cannot be null!");
 		}
 		this.template = template;
+		if (null == templateMandatoryHeaderFieldDao) {
+			throw new IllegalArgumentException("TemplateHeaderOptionalFieldUpdater:templateMandatoryHeaderFieldDao cannot be null!");
+		}
+		this.templateMandatoryHeaderFieldDao = templateMandatoryHeaderFieldDao;
 		if (null == templateOptionalFieldDao) {
 			throw new IllegalArgumentException("TemplateHeaderOptionalFieldUpdater:templateOptionalFieldDao cannot be null!");
 		}

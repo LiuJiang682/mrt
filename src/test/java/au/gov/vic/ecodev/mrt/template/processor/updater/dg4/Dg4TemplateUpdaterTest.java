@@ -23,6 +23,8 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import au.gov.vic.ecodev.mrt.dao.TemplateMandatoryHeaderFieldDao;
+import au.gov.vic.ecodev.mrt.dao.TemplateMandatoryHeaderFieldDaoImpl;
 import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDao;
 import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDaoImpl;
 import au.gov.vic.ecodev.mrt.dao.dg4.GeoChemistryDao;
@@ -51,9 +53,13 @@ public class Dg4TemplateUpdaterTest {
 		when(mockTemplate.get(eq("H0203"))).thenReturn(TestFixture.getNumList());
 		when(mockTemplate.get(eq("H1000"))).thenReturn(TestFixture.getDg4ColumnHeaderList());
 		GeoChemistryDao mockGeoChemistryDao = Mockito.mock(GeoChemistryDao.class);
+		TemplateMandatoryHeaderFieldDao mockTemplateMandatoryHeaderFieldDao =
+				Mockito.mock(TemplateMandatoryHeaderFieldDao.class);
 		TemplateOptionalFieldDao mockTemplateOptionalFieldDao = 
 				Mockito.mock(TemplateOptionalFieldDao.class);
-		testInstance.setDaos(Arrays.asList(mockGeoChemistryDao, mockTemplateOptionalFieldDao));
+		testInstance.setDaos(Arrays.asList(mockGeoChemistryDao, 
+				mockTemplateMandatoryHeaderFieldDao,
+				mockTemplateOptionalFieldDao));
 		GeoChemistryUpdater mockGeoChemistryUpdater = Mockito.mock(GeoChemistryUpdater.class);
 		PowerMockito.whenNew(GeoChemistryUpdater.class)
 			.withArguments(eq(mockGeoChemistryDao), eq(sessionId), eq(mockTemplate))
@@ -66,7 +72,9 @@ public class Dg4TemplateUpdaterTest {
 		TemplateHeaderOptionalFieldUpdater mockTemplateHeaderOptionalFieldUpdater = 
 				Mockito.mock(TemplateHeaderOptionalFieldUpdater.class);
 		PowerMockito.whenNew(TemplateHeaderOptionalFieldUpdater.class)
-			.withArguments(eq(sessionId), eq(mockTemplate), eq(mockTemplateOptionalFieldDao), Matchers.any(List.class))
+			.withArguments(eq(sessionId), eq(mockTemplate), 
+					eq(mockTemplateMandatoryHeaderFieldDao),
+					eq(mockTemplateOptionalFieldDao), Matchers.any(List.class))
 			.thenReturn(mockTemplateHeaderOptionalFieldUpdater);
 		// When
 		testInstance.update(sessionId, mockTemplate);
@@ -172,8 +180,9 @@ public class Dg4TemplateUpdaterTest {
 		List<Class<? extends Dao>> daos = testInstance.getDaoClasses();
 		// Then
 		assertThat(daos, is(notNullValue()));
-		assertThat(daos.size(), is(equalTo(2)));
+		assertThat(daos.size(), is(equalTo(3)));
 		assertThat(daos.get(0), is(equalTo(GeoChemistryDaoImpl.class)));
-		assertThat(daos.get(1), is(equalTo(TemplateOptionalFieldDaoImpl.class)));
+		assertThat(daos.get(1), is(equalTo(TemplateMandatoryHeaderFieldDaoImpl.class)));
+		assertThat(daos.get(2), is(equalTo(TemplateOptionalFieldDaoImpl.class)));
 	}
 }

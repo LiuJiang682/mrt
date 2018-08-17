@@ -23,6 +23,8 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import au.gov.vic.ecodev.mrt.dao.TemplateMandatoryHeaderFieldDao;
+import au.gov.vic.ecodev.mrt.dao.TemplateMandatoryHeaderFieldDaoImpl;
 import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDao;
 import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDaoImpl;
 import au.gov.vic.ecodev.mrt.dao.dl4.LithologyDao;
@@ -53,9 +55,13 @@ public class Dl4TemplateupdaterTest {
 		when(mockTemplate.get(eq("H1001"))).thenReturn(TestFixture.getDl4H1001List());
 		when(mockTemplate.get(eq("H1004"))).thenReturn(TestFixture.getDl4H1004List());
 		LithologyDao mockLithologyDao = Mockito.mock(LithologyDao.class);
+		TemplateMandatoryHeaderFieldDao mockTemplateMandatoryHeaderFieldDao =
+				Mockito.mock(TemplateMandatoryHeaderFieldDao.class);
 		TemplateOptionalFieldDao mockTemplateOptionalFieldDao = 
 				Mockito.mock(TemplateOptionalFieldDao.class);
-		testInstance.setDaos(Arrays.asList(mockLithologyDao, mockTemplateOptionalFieldDao));
+		testInstance.setDaos(Arrays.asList(mockLithologyDao,
+				mockTemplateMandatoryHeaderFieldDao,
+				mockTemplateOptionalFieldDao));
 		LithologyUpdater mockLithologyUpdater = Mockito.mock(LithologyUpdater.class);
 		PowerMockito.whenNew(LithologyUpdater.class)
 			.withArguments(eq(mockLithologyDao), eq(sessionId), eq(mockTemplate))
@@ -68,7 +74,9 @@ public class Dl4TemplateupdaterTest {
 		TemplateHeaderOptionalFieldUpdater mockTemplateHeaderOptionalFieldUpdater = 
 				Mockito.mock(TemplateHeaderOptionalFieldUpdater.class);
 		PowerMockito.whenNew(TemplateHeaderOptionalFieldUpdater.class)
-			.withArguments(eq(sessionId), eq(mockTemplate), eq(mockTemplateOptionalFieldDao), Matchers.any(List.class))
+			.withArguments(eq(sessionId), eq(mockTemplate), 
+					eq(mockTemplateMandatoryHeaderFieldDao),
+					eq(mockTemplateOptionalFieldDao), Matchers.any(List.class))
 			.thenReturn(mockTemplateHeaderOptionalFieldUpdater);
 		// When
 		testInstance.update(sessionId, mockTemplate);
@@ -108,7 +116,9 @@ public class Dl4TemplateupdaterTest {
 		PowerMockito.verifyNew(TemplateOptionalFieldUpdater.class)
 			.withArguments(eq(sessionId), eq(mockTemplate), eq(mockTemplateOptionalFieldDao));
 		PowerMockito.verifyNew(TemplateHeaderOptionalFieldUpdater.class)
-			.withArguments(eq(sessionId), eq(mockTemplate), eq(mockTemplateOptionalFieldDao), Matchers.any(List.class));
+			.withArguments(eq(sessionId), eq(mockTemplate), 
+					eq(mockTemplateMandatoryHeaderFieldDao),
+					eq(mockTemplateOptionalFieldDao), Matchers.any(List.class));
 		verify(mockTemplateHeaderOptionalFieldUpdater).update();
 		PowerMockito.verifyNoMoreInteractions();
 	}
@@ -147,9 +157,10 @@ public class Dl4TemplateupdaterTest {
 		List<Class<? extends Dao>> daos = testInstance.getDaoClasses();
 		// Then
 		assertThat(daos, is(notNullValue()));
-		assertThat(daos.size(), is(equalTo(2)));
+		assertThat(daos.size(), is(equalTo(3)));
 		assertThat(daos.get(0), is(equalTo(LithologyDaoImpl.class)));
-		assertThat(daos.get(1), is(equalTo(TemplateOptionalFieldDaoImpl.class)));
+		assertThat(daos.get(1), is(equalTo(TemplateMandatoryHeaderFieldDaoImpl.class)));
+		assertThat(daos.get(2), is(equalTo(TemplateOptionalFieldDaoImpl.class)));
 	}
 	
 	@Test(expected = TemplateProcessorException.class)

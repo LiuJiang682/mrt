@@ -24,6 +24,8 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import au.gov.vic.ecodev.mrt.dao.TemplateMandatoryHeaderFieldDao;
+import au.gov.vic.ecodev.mrt.dao.TemplateMandatoryHeaderFieldDaoImpl;
 import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDao;
 import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDaoImpl;
 import au.gov.vic.ecodev.mrt.dao.sg4.SurfaceGeochemistryDao;
@@ -54,9 +56,13 @@ public class Sg4TemplateUpdaterTest {
 		MrtTemplateValue value = new MrtTemplateValue(new ArrayList(), -1);
 		when(mockTemplate.getTemplateValue(Matchers.anyString())).thenReturn(value);
 		SurfaceGeochemistryDao mockSurfaceGeochemistryDao = Mockito.mock(SurfaceGeochemistryDao.class);
+		TemplateMandatoryHeaderFieldDao mockTemplateMandatoryHeaderFieldDao =
+				Mockito.mock(TemplateMandatoryHeaderFieldDao.class);
 		TemplateOptionalFieldDao mockTemplateOptionalFieldDao = 
 				Mockito.mock(TemplateOptionalFieldDao.class);
-		testInstance.setDaos(Arrays.asList(mockSurfaceGeochemistryDao, mockTemplateOptionalFieldDao));
+		testInstance.setDaos(Arrays.asList(mockSurfaceGeochemistryDao,
+				mockTemplateMandatoryHeaderFieldDao,
+				mockTemplateOptionalFieldDao));
 		SurfaceGeochemistryUpdater mockSurfaceGeochemistryUpdater = Mockito.mock(SurfaceGeochemistryUpdater.class);
 		PowerMockito.whenNew(SurfaceGeochemistryUpdater.class)
 				.withArguments(eq(mockSurfaceGeochemistryDao), eq(sessionId), eq(mockTemplate))
@@ -64,7 +70,8 @@ public class Sg4TemplateUpdaterTest {
 		TemplateOptionalFieldUpdater mockTemplateOptionalFieldUpdater = 
 				Mockito.mock(TemplateOptionalFieldUpdater.class);
 		PowerMockito.whenNew(TemplateOptionalFieldUpdater.class)
-			.withArguments(eq(sessionId), eq(mockTemplate), eq(mockTemplateOptionalFieldDao))
+			.withArguments(eq(sessionId), eq(mockTemplate), 
+					eq(mockTemplateOptionalFieldDao))
 			.thenReturn(mockTemplateOptionalFieldUpdater);
 		// When
 		testInstance.update(sessionId, mockTemplate);
@@ -146,9 +153,10 @@ public class Sg4TemplateUpdaterTest {
 		List<Class<? extends Dao>> clsList = testInstance.getDaoClasses();
 		// Then
 		assertThat(clsList, is(notNullValue()));
-		assertThat(clsList.size(), is(equalTo(2)));
+		assertThat(clsList.size(), is(equalTo(3)));
 		assertThat(clsList.get(0), is(equalTo(SurfaceGeochemistryDaoImpl.class)));
-		assertThat(clsList.get(1), is(equalTo(TemplateOptionalFieldDaoImpl.class)));
+		assertThat(clsList.get(1), is(equalTo(TemplateMandatoryHeaderFieldDaoImpl.class)));
+		assertThat(clsList.get(2), is(equalTo(TemplateOptionalFieldDaoImpl.class)));
 	}
 
 	private void givenTestInstance() {

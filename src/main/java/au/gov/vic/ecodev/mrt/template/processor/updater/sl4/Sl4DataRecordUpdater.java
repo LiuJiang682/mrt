@@ -10,6 +10,7 @@ import org.springframework.util.CollectionUtils;
 
 import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
+import au.gov.vic.ecodev.mrt.dao.TemplateMandatoryHeaderFieldDao;
 import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDao;
 import au.gov.vic.ecodev.mrt.dao.sl4.BoreHoleDao;
 import au.gov.vic.ecodev.mrt.dao.sl4.SiteDao;
@@ -63,6 +64,9 @@ public class Sl4DataRecordUpdater {
 		BoreHoleUpdater boreHoleUpdater = new BoreHoleUpdater(sessionId, template, boreHoleDao, drillingCodes);
 		boreHoleUpdater.init(mandatoryFieldIndexList);
 		
+		TemplateMandatoryHeaderFieldDao templateMandatoryHeaderFieldDao = 
+				getTemplateMandatoryHeaderFieldDao();
+		
 		TemplateOptionalFieldDao templateOptionalFieldDao = getTemplateOptionalFieldDao();
 		TemplateOptionalFieldUpdater templateOptionalFiledUpdater = new TemplateOptionalFieldUpdater(sessionId, template, 
 				templateOptionalFieldDao);
@@ -75,6 +79,7 @@ public class Sl4DataRecordUpdater {
 		
 		TemplateHeaderOptionalFieldUpdater templateHeaderOptionalFieldUpdater = 
 				new TemplateHeaderOptionalFieldUpdater(sessionId, template, 
+						templateMandatoryHeaderFieldDao,
 						templateOptionalFieldDao, TEMPLATE_PERSISTENT_KEY_LIST);
 		templateHeaderOptionalFieldUpdater.update();
 		
@@ -88,6 +93,15 @@ public class Sl4DataRecordUpdater {
 		}
 		
 		templateOptionalFiledUpdater.flush();
+	}
+
+	protected TemplateMandatoryHeaderFieldDao getTemplateMandatoryHeaderFieldDao() 
+			throws TemplateProcessorException {
+		Optional<Dao> templateMandatoryHeaderFieldDao = daos.stream()
+				.filter(dao -> dao instanceof TemplateMandatoryHeaderFieldDao)
+				.findFirst();
+		return (TemplateMandatoryHeaderFieldDao) templateMandatoryHeaderFieldDao
+				.orElseThrow(() ->  new TemplateProcessorException("No TemplateMandatoryHeaderFieldDao in the list"));
 	}
 
 	protected final TemplateOptionalFieldDao getTemplateOptionalFieldDao() throws TemplateProcessorException {

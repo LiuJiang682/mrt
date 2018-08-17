@@ -20,6 +20,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import au.gov.vic.ecodev.mrt.dao.SessionHeaderDaoImpl;
+import au.gov.vic.ecodev.mrt.dao.TemplateMandatoryHeaderFieldDaoImpl;
 import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDaoImpl;
 import au.gov.vic.ecodev.mrt.dao.sl4.BoreHoleDaoImpl;
 import au.gov.vic.ecodev.mrt.dao.sl4.DrillingDetailsDaoImpl;
@@ -79,12 +80,13 @@ public class Sl4TemplateUpdaterTest {
 		// When
 		List<Class<? extends Dao>> clsList = testInstance.getDaoClasses();
 		// Then
-		assertThat(clsList.size(), is(equalTo(5)));
+		assertThat(clsList.size(), is(equalTo(6)));
 		assertThat(clsList.get(0), is(equalTo(SessionHeaderDaoImpl.class)));
 		assertThat(clsList.get(1), is(equalTo(DrillingDetailsDaoImpl.class)));
 		assertThat(clsList.get(2), is(equalTo(SiteDaoImpl.class)));
 		assertThat(clsList.get(3), is(equalTo(BoreHoleDaoImpl.class)));
-		assertThat(clsList.get(4), is(equalTo(TemplateOptionalFieldDaoImpl.class)));
+		assertThat(clsList.get(4), is(equalTo(TemplateMandatoryHeaderFieldDaoImpl.class)));
+		assertThat(clsList.get(5), is(equalTo(TemplateOptionalFieldDaoImpl.class)));
 	}
 
 	@Test(expected = TemplateProcessorException.class)
