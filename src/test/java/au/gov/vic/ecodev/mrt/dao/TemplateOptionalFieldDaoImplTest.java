@@ -92,7 +92,7 @@ public class TemplateOptionalFieldDaoImplTest {
 	}
 	
 	private boolean givenNewRecord() {
-		id = IDGenerator.getUID().longValue();
+		id = IDGenerator.getUIDAsAbsLongValue();
 		TemplateOptionalField entity = buildOptionalDTO();
 		
 		boolean flag = templateOptionalFieldDao.updateOrSave(entity);
@@ -112,6 +112,7 @@ public class TemplateOptionalFieldDaoImplTest {
 		entity.setTemplateName(templateName);
 		entity.setTemplateHeader(templateHeader);
 		entity.setRowNumber(rowNumber);
+		entity.setColumnNumber(1);
 		entity.setFieldValue(fieldValue);
 		return entity;
 	}

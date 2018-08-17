@@ -24,9 +24,9 @@ public class TemplateOptionalFieldDaoImpl implements TemplateOptionalFieldDao {
 
 	private static final String SELECT_SQL = "SELECT COUNT(ID) FROM DH_OPTIONAL_FIELDS WHERE ID = ?";
 
-	private static final String UPDATE_SQL = "UPDATE DH_OPTIONAL_FIELDS SET LOADER_ID = ?, FILE_NAME = ?, TEMPLATE_NAME = ?, TEMPLATE_HEADER = ?, ROW_NUMBER = ?, FIELD_VALUE = ? WHERE ID = ?";
+	private static final String UPDATE_SQL = "UPDATE DH_OPTIONAL_FIELDS SET LOADER_ID = ?, FILE_NAME = ?, TEMPLATE_NAME = ?, TEMPLATE_HEADER = ?, ROW_NUMBER = ?, COLUMN_NUMBER = ?, FIELD_VALUE = ? WHERE ID = ?";
 
-	private static final String INSERT_SQL = "INSERT INTO DH_OPTIONAL_FIELDS(ID, LOADER_ID, FILE_NAME, TEMPLATE_NAME, TEMPLATE_HEADER, ROW_NUMBER, FIELD_VALUE) VALUES (?, ?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_SQL = "INSERT INTO DH_OPTIONAL_FIELDS(ID, LOADER_ID, FILE_NAME, TEMPLATE_NAME, TEMPLATE_HEADER, ROW_NUMBER, COLUMN_NUMBER, FIELD_VALUE) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -42,7 +42,8 @@ public class TemplateOptionalFieldDaoImpl implements TemplateOptionalFieldDao {
 						templateOptionalField.getSessionId(), templateOptionalField.getFileName(),
 						templateOptionalField.getTemplateName(), 
 						templateOptionalField.getTemplateHeader(), 
-						templateOptionalField.getRowNumber(),
+						templateOptionalField.getRowNumber(), 
+						templateOptionalField.getColumnNumber(),
 						templateOptionalField.getFieldValue());
 				return Numeral.ONE == row;
 			} else {
@@ -52,6 +53,7 @@ public class TemplateOptionalFieldDaoImpl implements TemplateOptionalFieldDao {
 						templateOptionalField.getTemplateName(),
 						templateOptionalField.getTemplateHeader(), 
 						templateOptionalField.getRowNumber(),
+						templateOptionalField.getColumnNumber(),
 						templateOptionalField.getFieldValue(), 
 						templateOptionalField.getId());
 				return Numeral.ONE == row;
@@ -93,6 +95,7 @@ public class TemplateOptionalFieldDaoImpl implements TemplateOptionalFieldDao {
 					templateOptionalField.getTemplateName(),
 					templateOptionalField.getTemplateHeader(), 
 					templateOptionalField.getRowNumber(),
+					templateOptionalField.getColumnNumber(),
 					templateOptionalField.getFieldValue()
 			};
 			argumentList.add(arguments);
