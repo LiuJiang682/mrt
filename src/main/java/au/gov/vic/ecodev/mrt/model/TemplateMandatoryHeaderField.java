@@ -8,20 +8,19 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import au.gov.vic.ecodev.mrt.template.processor.model.Entity;
 
-public class TemplateOptionalField implements Entity, Serializable {
+public class TemplateMandatoryHeaderField implements Entity, Serializable {
 
 	/**
-	 * Generated serial version UID.
+	 * Generated serial version UID
 	 */
-	private static final long serialVersionUID = 3699515472447341374L;
-	
+	private static final long serialVersionUID = 7873696553817257039L;
+
 	private long id;
 	private long sessionId;
-	private String fileName;
 	private String templateName;
-	private String templateHeader;
+	private String fileName;
 	private String rowNumber;
-	private int columnNumber;
+	private String columnHeader;
 	private String fieldValue;
 	
 	public long getId() {
@@ -36,29 +35,29 @@ public class TemplateOptionalField implements Entity, Serializable {
 	public void setSessionId(long sessionId) {
 		this.sessionId = sessionId;
 	}
-	public String getFileName() {
-		return fileName;
-	}
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
 	public String getTemplateName() {
 		return templateName;
 	}
 	public void setTemplateName(String templateName) {
 		this.templateName = templateName;
 	}
-	public String getTemplateHeader() {
-		return templateHeader;
+	public String getFileName() {
+		return fileName;
 	}
-	public void setTemplateHeader(String templateHeader) {
-		this.templateHeader = templateHeader;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 	public String getRowNumber() {
 		return rowNumber;
 	}
 	public void setRowNumber(String rowNumber) {
 		this.rowNumber = rowNumber;
+	}
+	public String getColumnHeader() {
+		return columnHeader;
+	}
+	public void setColumnHeader(String columnHeader) {
+		this.columnHeader = columnHeader;
 	}
 	public String getFieldValue() {
 		return fieldValue;
@@ -67,12 +66,6 @@ public class TemplateOptionalField implements Entity, Serializable {
 		this.fieldValue = fieldValue;
 	}
 	
-	public int getColumnNumber() {
-		return columnNumber;
-	}
-	public void setColumnNumber(int columnNumber) {
-		this.columnNumber = columnNumber;
-	}
 	@Override
 	public int hashCode() {
 		return HashCodeBuilder.reflectionHashCode(this);
