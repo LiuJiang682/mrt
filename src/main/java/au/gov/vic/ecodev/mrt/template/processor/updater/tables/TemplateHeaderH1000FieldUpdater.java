@@ -6,6 +6,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import au.gov.vic.ecodev.common.util.IDGenerator;
+import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDao;
 import au.gov.vic.ecodev.mrt.model.TemplateOptionalField;
@@ -51,7 +52,8 @@ public class TemplateHeaderH1000FieldUpdater {
 		templateOptionalField.setFileName(fileName);
 		templateOptionalField.setTemplateName(templateName);
 		templateOptionalField.setTemplateHeader(Strings.KEY_H1000);
-		templateOptionalField.setRowNumber(Strings.KEY_H1000);
+		templateOptionalField.setRowNumber(Strings.ZERO);
+		templateOptionalField.setColumnNumber(Numeral.ZERO);
 		String fieldValue = String.join(Strings.COMMA, headers);
 		templateOptionalField.setFieldValue(fieldValue);
 		templateOptionalFieldDao.updateOrSave(templateOptionalField);

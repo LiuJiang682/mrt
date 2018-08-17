@@ -54,7 +54,8 @@ public interface Constants {
 		static final String KEY_H0534 = "H0534";
 		static final String HYPHEN = "-";
 		static final String CURRENT_FILE_NAME = "currentFileName";
-		String EMAIL_WEB_URL = "EMAIL_WEB_URL";
+		static final String EMAIL_WEB_URL = "EMAIL_WEB_URL";
+		static final String ZERO = "0";
 	}
 	
 	interface Numeral {

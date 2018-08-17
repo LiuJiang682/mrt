@@ -21,6 +21,7 @@ import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 
 import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
+import au.gov.vic.ecodev.mrt.dao.TemplateMandatoryHeaderFieldDao;
 import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDao;
 import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDaoImpl;
 import au.gov.vic.ecodev.mrt.dao.sl4.BoreHoleDao;
@@ -36,7 +37,7 @@ import au.gov.vic.ecodev.mrt.template.processor.model.MrtTemplateValue;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.persistent.Dao;
 
-public class Sl4DateRecordUpdaterTest {
+public class Sl4DataRecordUpdaterTest {
 
 	private Sl4DataRecordUpdater testInstance;
 	private Template mockTemplate;
@@ -51,6 +52,7 @@ public class Sl4DateRecordUpdaterTest {
 		daos.add(mockSiteDao);
 		BoreHoleDao mockBoreHoleDao = Mockito.mock(BoreHoleDaoImpl.class);
 		daos.add(mockBoreHoleDao);
+		daos.add(Mockito.mock(TemplateMandatoryHeaderFieldDao.class));
 		TemplateOptionalFieldDao mockTemplateOptionalFieldDao = Mockito.mock(TemplateOptionalFieldDaoImpl.class);
 		daos.add(mockTemplateOptionalFieldDao);
 		givenTestInstance(daos);
@@ -100,6 +102,30 @@ public class Sl4DateRecordUpdaterTest {
 		SiteDao  siteDao = testInstance.getSiteDao();
 		//Then
 		assertThat(siteDao, is(notNullValue()));
+	}
+	
+	@Test
+	public void shouldReturnTemplateMandatoryHeaderFieldDao() 
+			throws TemplateProcessorException {
+		//Given
+		List<Dao> daos = getDaos();
+		daos.add(Mockito.mock(TemplateMandatoryHeaderFieldDao.class));
+		givenTestInstance(daos);
+		//When
+		TemplateMandatoryHeaderFieldDao  templateMandatoryHeaderFieldDao = testInstance
+				.getTemplateMandatoryHeaderFieldDao();
+		//Then
+		assertThat(templateMandatoryHeaderFieldDao, is(notNullValue()));
+	}
+	
+	@Test(expected = TemplateProcessorException.class)
+	public void shouldRaiseExceptionWhenNoTemplateMandatoryHeaderFieldDaoFound() 
+			throws TemplateProcessorException {
+		//Given
+		givenTestInstance(getDaos());
+		//When
+		testInstance.getTemplateMandatoryHeaderFieldDao();
+		fail("Program reached unexpected point!");
 	}
 
 	@Test

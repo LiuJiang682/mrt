@@ -7,6 +7,8 @@ import java.util.Optional;
 
 import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
+import au.gov.vic.ecodev.mrt.dao.TemplateMandatoryHeaderFieldDao;
+import au.gov.vic.ecodev.mrt.dao.TemplateMandatoryHeaderFieldDaoImpl;
 import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDao;
 import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDaoImpl;
 import au.gov.vic.ecodev.mrt.dao.sg4.SurfaceGeochemistryDao;
@@ -36,6 +38,8 @@ public class Sg4TemplateUpdater implements TemplateUpdater {
 	@Override
 	public void update(long sessionId, Template template) throws TemplateProcessorException {
 		SurfaceGeochemistryDao surfaceGeochemistryDao = getSurfaceGeochemistryDao();
+		TemplateMandatoryHeaderFieldDao templateMandatoryHeaderFieldDao = 
+				getTemplateMandatoryHeaderFieldDao();
 		TemplateOptionalFieldDao templateOptionalFieldDao = getTemplateOptionalFieldDao();
 		List<Integer> mandatoryFieldIndexList = new ArrayList<>();
 		
@@ -46,6 +50,7 @@ public class Sg4TemplateUpdater implements TemplateUpdater {
 			templateHeaderH1000Updater.update();
 			TemplateHeaderOptionalFieldUpdater templateHeaderOptionalFieldUpdater = 
 					new TemplateHeaderOptionalFieldUpdater(sessionId, template, 
+							templateMandatoryHeaderFieldDao,
 							templateOptionalFieldDao, TEMPLATE_PERSISTENT_KEY_LIST);
 			templateHeaderOptionalFieldUpdater.update();
 			
@@ -74,6 +79,7 @@ public class Sg4TemplateUpdater implements TemplateUpdater {
 	public List<Class<? extends Dao>> getDaoClasses() {
 		List<Class<? extends Dao>> daoClasses = new ArrayList<>();
 		daoClasses.add(SurfaceGeochemistryDaoImpl.class);
+		daoClasses.add(TemplateMandatoryHeaderFieldDaoImpl.class);
 		daoClasses.add(TemplateOptionalFieldDaoImpl.class);
 		return daoClasses;
 	}
@@ -84,6 +90,15 @@ public class Sg4TemplateUpdater implements TemplateUpdater {
 				.findFirst();
 		return (SurfaceGeochemistryDao) surfaceGeochemistryDaoOptional
 				.orElseThrow(() -> new TemplateProcessorException("No SurfaceGeochemistryDao in the list"));
+	}
+	
+	protected TemplateMandatoryHeaderFieldDao getTemplateMandatoryHeaderFieldDao() 
+			throws TemplateProcessorException {
+		Optional<Dao> templateMandatoryHeaderFieldDao = daos.stream()
+				.filter(dao -> dao instanceof TemplateMandatoryHeaderFieldDao)
+				.findFirst();
+		return (TemplateMandatoryHeaderFieldDao) templateMandatoryHeaderFieldDao
+				.orElseThrow(() ->  new TemplateProcessorException("No TemplateMandatoryHeaderFieldDao in the list"));
 	}
 
 	protected final TemplateOptionalFieldDao getTemplateOptionalFieldDao() throws TemplateProcessorException {

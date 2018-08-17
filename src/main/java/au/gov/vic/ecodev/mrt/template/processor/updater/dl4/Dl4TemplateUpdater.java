@@ -7,6 +7,8 @@ import java.util.Optional;
 
 import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
+import au.gov.vic.ecodev.mrt.dao.TemplateMandatoryHeaderFieldDao;
+import au.gov.vic.ecodev.mrt.dao.TemplateMandatoryHeaderFieldDaoImpl;
 import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDao;
 import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDaoImpl;
 import au.gov.vic.ecodev.mrt.dao.dl4.LithologyDao;
@@ -35,6 +37,8 @@ public class Dl4TemplateUpdater implements TemplateUpdater {
 	@Override
 	public void update(long sessionId, Template template) throws TemplateProcessorException {
 		LithologyDao lithologyDao = getLithologyDao();
+		TemplateMandatoryHeaderFieldDao templateMandatoryHeaderFieldDao = 
+				getTemplateMandatoryHeaderFieldDao();
 		TemplateOptionalFieldDao templateOptionalFieldDao = getTemplateOptionalFieldDao();
 		List<Integer> mandatoryFieldIndexList = new ArrayList<>();
 		
@@ -55,6 +59,7 @@ public class Dl4TemplateUpdater implements TemplateUpdater {
 			
 			TemplateHeaderOptionalFieldUpdater templateHeaderOptionalFieldUpdater = 
 					new TemplateHeaderOptionalFieldUpdater(sessionId, template, 
+							templateMandatoryHeaderFieldDao,
 							templateOptionalFieldDao, TEMPLATE_PERSISTENT_KEY_LIST);
 			templateHeaderOptionalFieldUpdater.update();
 			
@@ -73,6 +78,7 @@ public class Dl4TemplateUpdater implements TemplateUpdater {
 	public List<Class<? extends Dao>> getDaoClasses() {
 		List<Class<? extends Dao>> daoClasses = new ArrayList<>();
 		daoClasses.add(LithologyDaoImpl.class);
+		daoClasses.add(TemplateMandatoryHeaderFieldDaoImpl.class);
 		daoClasses.add(TemplateOptionalFieldDaoImpl.class);
 		return daoClasses;
 	}
@@ -90,6 +96,15 @@ public class Dl4TemplateUpdater implements TemplateUpdater {
 				.filter(dao -> dao instanceof TemplateOptionalFieldDao)
 				.findFirst();
 		return (TemplateOptionalFieldDao) templateOptionalFieldDao.orElseThrow(() -> new TemplateProcessorException("No TemplateOptionalFieldDao in the list"));
+	}
+	
+	protected TemplateMandatoryHeaderFieldDao getTemplateMandatoryHeaderFieldDao() 
+			throws TemplateProcessorException {
+		Optional<Dao> templateMandatoryHeaderFieldDao = daos.stream()
+				.filter(dao -> dao instanceof TemplateMandatoryHeaderFieldDao)
+				.findFirst();
+		return (TemplateMandatoryHeaderFieldDao) templateMandatoryHeaderFieldDao
+				.orElseThrow(() ->  new TemplateProcessorException("No TemplateMandatoryHeaderFieldDao in the list"));
 	}
 
 }

@@ -16,6 +16,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
+import au.gov.vic.ecodev.mrt.dao.TemplateMandatoryHeaderFieldDao;
 import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDao;
 import au.gov.vic.ecodev.mrt.fixture.TestFixture;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
@@ -24,6 +25,7 @@ import au.gov.vic.ecodev.mrt.template.processor.model.dg4.Dg4Template;
 public class TemplateHeaderOptionalFieldUpdaterTest {
 
 	private TemplateHeaderOptionalFieldUpdater testInstance;
+	private TemplateMandatoryHeaderFieldDao templateMandatoryHeaderFieldDao;
 	private TemplateOptionalFieldDao mockTemplateOptionalFieldDao;
 	private Template template;
 	
@@ -65,11 +67,26 @@ public class TemplateHeaderOptionalFieldUpdaterTest {
 		//Given
 		long sessionId = 100l;
 		Template template = null;
+		TemplateMandatoryHeaderFieldDao templateMandatoryHeaderFieldDao = null;
 		TemplateOptionalFieldDao templateOptionalFieldDao = null;
 		List<String> keys = null;
 		//When
 		new TemplateHeaderOptionalFieldUpdater(sessionId, template, 
-				templateOptionalFieldDao, keys);
+				templateMandatoryHeaderFieldDao, templateOptionalFieldDao, keys);
+		fail("Program reached unexpected point!");
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void shouldRaiseExceptionWhenTemplateMandatoryHeaderFieldDaoIsNull() {
+		//Given
+		long sessionId = 100l;
+		Template template = new Dg4Template();
+		templateMandatoryHeaderFieldDao = null;
+		TemplateOptionalFieldDao templateOptionalFieldDao = null;
+		List<String> keys = null;
+		//When
+		new TemplateHeaderOptionalFieldUpdater(sessionId, template, 
+				templateMandatoryHeaderFieldDao, templateOptionalFieldDao, keys);
 		fail("Program reached unexpected point!");
 	}
 	
@@ -78,11 +95,13 @@ public class TemplateHeaderOptionalFieldUpdaterTest {
 		//Given
 		long sessionId = 100l;
 		Template template = new Dg4Template();
+		templateMandatoryHeaderFieldDao = 
+				Mockito.mock(TemplateMandatoryHeaderFieldDao.class);
 		TemplateOptionalFieldDao templateOptionalFieldDao = null;
 		List<String> keys = null;
 		//When
 		new TemplateHeaderOptionalFieldUpdater(sessionId, template, 
-				templateOptionalFieldDao, keys);
+				templateMandatoryHeaderFieldDao, templateOptionalFieldDao, keys);
 		fail("Program reached unexpected point!");
 	}
 	
@@ -91,11 +110,14 @@ public class TemplateHeaderOptionalFieldUpdaterTest {
 		//Given
 		long sessionId = 100l;
 		Template template = new Dg4Template();
+		templateMandatoryHeaderFieldDao = 
+				Mockito.mock(TemplateMandatoryHeaderFieldDao.class);
 		TemplateOptionalFieldDao templateOptionalFieldDao = 
 				Mockito.mock(TemplateOptionalFieldDao.class);;
 		List<String> keys = null;
 		//When
-		new TemplateHeaderOptionalFieldUpdater(sessionId, template, 
+		new TemplateHeaderOptionalFieldUpdater(sessionId,  template, 
+				templateMandatoryHeaderFieldDao,
 				templateOptionalFieldDao, keys);
 		fail("Program reached unexpected point!");
 	}
@@ -103,6 +125,8 @@ public class TemplateHeaderOptionalFieldUpdaterTest {
 	private void givenTestInstance() {
 		long sessionId = 100l;
 		template = new Dg4Template();
+		templateMandatoryHeaderFieldDao = 
+				Mockito.mock(TemplateMandatoryHeaderFieldDao.class);
 		mockTemplateOptionalFieldDao = 
 				Mockito.mock(TemplateOptionalFieldDao.class);
 		List<String> keys = new ArrayList<>();
@@ -111,6 +135,6 @@ public class TemplateHeaderOptionalFieldUpdaterTest {
 		keys.add("H1003");
 		
 		testInstance = new TemplateHeaderOptionalFieldUpdater(sessionId, template, 
-						mockTemplateOptionalFieldDao, keys);
+				templateMandatoryHeaderFieldDao, mockTemplateOptionalFieldDao, keys);
 	}
 }

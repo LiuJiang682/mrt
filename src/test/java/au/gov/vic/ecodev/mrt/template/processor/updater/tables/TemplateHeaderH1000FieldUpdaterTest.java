@@ -45,7 +45,7 @@ public class TemplateHeaderH1000FieldUpdaterTest {
 		assertThat(templateOptionalField.getFileName(), is(equalTo("myTest.txt")));
 		assertThat(templateOptionalField.getTemplateName(), is(equalTo(Strings.TEMPLATE_NAME_DG4)));
 		assertThat(templateOptionalField.getTemplateHeader(), is(equalTo(Strings.KEY_H1000)));
-		assertThat(templateOptionalField.getRowNumber(), is(equalTo(Strings.KEY_H1000)));
+		assertThat(templateOptionalField.getRowNumber(), is(equalTo(Strings.ZERO)));
 		assertThat(templateOptionalField.getFieldValue(), 
 				is(equalTo(String.join(",", TestFixture.getDg4ColumnHeaderList()))));
 	}

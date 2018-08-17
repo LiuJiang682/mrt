@@ -12,6 +12,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
@@ -23,6 +24,8 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import au.gov.vic.ecodev.mrt.dao.TemplateMandatoryHeaderFieldDao;
+import au.gov.vic.ecodev.mrt.dao.TemplateMandatoryHeaderFieldDaoImpl;
 import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDao;
 import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDaoImpl;
 import au.gov.vic.ecodev.mrt.dao.ds4.DownHoleDao;
@@ -57,6 +60,8 @@ public class Ds4TemplateUpdaterTest {
 		when(mockTemplate.get(eq("D2"))).thenReturn(TestFixture.getDListWithOptionalFields());
 		when(mockTemplate.get(eq("D3"))).thenReturn(TestFixture.getDListWithOptionalFields());
 		DownHoleDao mockDownHoleDao = givenMockDownHoleDao();
+		TemplateMandatoryHeaderFieldDao mockTemplateMandatoryHeaderFieldDao =
+				Mockito.mock(TemplateMandatoryHeaderFieldDao.class);
 		TemplateOptionalFieldDao mockTemplateOptionalFieldDao = givenMockTemplateOptionalFieldDao();
 		DownHoleUpdater mockDownHoleUpdater = Mockito.mock(DownHoleUpdater.class);
 		PowerMockito.whenNew(DownHoleUpdater.class)
@@ -70,8 +75,13 @@ public class Ds4TemplateUpdaterTest {
 		TemplateHeaderOptionalFieldUpdater mockTemplateHeaderOptionalFieldUpdater = 
 				Mockito.mock(TemplateHeaderOptionalFieldUpdater.class);
 		PowerMockito.whenNew(TemplateHeaderOptionalFieldUpdater.class)
-			.withArguments(eq(sessionId), eq(mockTemplate), eq(mockTemplateOptionalFieldDao), Matchers.any(List.class))
+			.withArguments(eq(sessionId), eq(mockTemplate), 
+					eq(mockTemplateMandatoryHeaderFieldDao),
+					eq(mockTemplateOptionalFieldDao), Matchers.any(List.class))
 			.thenReturn(mockTemplateHeaderOptionalFieldUpdater);
+		testInstance.setDaos(Arrays.asList(mockDownHoleDao,
+				mockTemplateMandatoryHeaderFieldDao,
+				mockTemplateOptionalFieldDao));
 		// When
 		testInstance.update(sessionId, mockTemplate);
 		// Then
@@ -103,7 +113,9 @@ public class Ds4TemplateUpdaterTest {
 		verify(mockTemplateOptionalFieldUpdater).flush();
 		verifyNoMoreInteractions(mockTemplateOptionalFieldUpdater);
 		PowerMockito.verifyNew(TemplateHeaderOptionalFieldUpdater.class)
-			.withArguments(eq(sessionId), eq(mockTemplate), eq(mockTemplateOptionalFieldDao), Matchers.any(List.class));
+			.withArguments(eq(sessionId), eq(mockTemplate),
+					eq(mockTemplateMandatoryHeaderFieldDao),
+					eq(mockTemplateOptionalFieldDao), Matchers.any(List.class));
 		verify(mockTemplateHeaderOptionalFieldUpdater).update();
 		PowerMockito.verifyNoMoreInteractions();
 	}
@@ -140,9 +152,10 @@ public class Ds4TemplateUpdaterTest {
 		List<Class<? extends Dao>> daos = testInstance.getDaoClasses();
 		// Then
 		assertThat(daos, is(notNullValue()));
-		assertThat(daos.size(), is(equalTo(2)));
+		assertThat(daos.size(), is(equalTo(3)));
 		assertThat(daos.get(0), is(equalTo(DownHoleDaoImpl.class)));
-		assertThat(daos.get(1), is(equalTo(TemplateOptionalFieldDaoImpl.class)));
+		assertThat(daos.get(1), is(equalTo(TemplateMandatoryHeaderFieldDaoImpl.class)));
+		assertThat(daos.get(2), is(equalTo(TemplateOptionalFieldDaoImpl.class)));
 	}
 	
 	@Test(expected = TemplateProcessorException.class)

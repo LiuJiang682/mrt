@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import au.gov.vic.ecodev.mrt.dao.SessionHeaderDaoImpl;
+import au.gov.vic.ecodev.mrt.dao.TemplateMandatoryHeaderFieldDaoImpl;
 import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDaoImpl;
 import au.gov.vic.ecodev.mrt.dao.sl4.BoreHoleDaoImpl;
 import au.gov.vic.ecodev.mrt.dao.sl4.DrillingDetailsDaoImpl;
@@ -51,6 +52,7 @@ public class Sl4TemplateUpdater implements TemplateUpdater {
 		daoClasses.add(DrillingDetailsDaoImpl.class);
 		daoClasses.add(SiteDaoImpl.class);
 		daoClasses.add(BoreHoleDaoImpl.class);
+		daoClasses.add(TemplateMandatoryHeaderFieldDaoImpl.class);
 		daoClasses.add(TemplateOptionalFieldDaoImpl.class);
 		// This bit of code is attempted to verify the plugin jar is loaded.
 		//	try {
