@@ -20,12 +20,14 @@ import au.gov.vic.ecodev.mrt.template.processor.update.TemplateUpdater;
 import au.gov.vic.ecodev.mrt.template.processor.updater.NumberOfRecordsTemplateExtractor;
 import au.gov.vic.ecodev.mrt.template.processor.updater.tables.TemplateHeaderH1000FieldUpdater;
 import au.gov.vic.ecodev.mrt.template.processor.updater.tables.TemplateHeaderOptionalFieldUpdater;
+import au.gov.vic.ecodev.mrt.template.processor.updater.tables.TemplateMandatoryHeaderUpdater;
 import au.gov.vic.ecodev.mrt.template.processor.updater.tables.TemplateOptionalFieldUpdater;
 import au.gov.vic.ecodev.mrt.template.processor.updater.tables.dl4.LithologyUpdater;
 
 public class Dl4TemplateUpdater implements TemplateUpdater {
 
 	private static final List<String> TEMPLATE_PERSISTENT_KEY_LIST = Arrays.asList("H1001", "H1004");
+	private static final List<String> TEMPLATE_OPTIONAL_FIELDS_PERSISTEN_KEY_LIST = Arrays.asList("H1000", "H1001", "H1004");
 	
 	private List<Dao> daos;
 	
@@ -57,16 +59,25 @@ public class Dl4TemplateUpdater implements TemplateUpdater {
 							template, templateOptionalFieldDao, Strings.TEMPLATE_NAME_DL4);
 			templateHeaderH1000Updater.update();
 			
+			TemplateMandatoryHeaderUpdater templatemandatoryUpdater = 
+					new TemplateMandatoryHeaderUpdater(
+							sessionId,
+							templateMandatoryHeaderFieldDao, 
+							mandatoryFieldIndexList, TEMPLATE_PERSISTENT_KEY_LIST,
+							template);
+			templatemandatoryUpdater.update();
+			
 			TemplateHeaderOptionalFieldUpdater templateHeaderOptionalFieldUpdater = 
 					new TemplateHeaderOptionalFieldUpdater(sessionId, template, 
-							templateMandatoryHeaderFieldDao,
-							templateOptionalFieldDao, TEMPLATE_PERSISTENT_KEY_LIST);
+							mandatoryFieldIndexList,
+							templateOptionalFieldDao, TEMPLATE_OPTIONAL_FIELDS_PERSISTEN_KEY_LIST);
 			templateHeaderOptionalFieldUpdater.update();
+			int len = TEMPLATE_OPTIONAL_FIELDS_PERSISTEN_KEY_LIST.size();
 			
 			for(int index = Numeral.ONE; index <= numOfRecords; index++) {
 				List<String> dataRecordList = template.get(Strings.DATA_RECORD_PREFIX + index);
 				lithologyUpdater.update(dataRecordList, index);
-				templateOptionalFiledUpdater.update(dataRecordList, index);
+				templateOptionalFiledUpdater.update(dataRecordList, index + len);
 			}
 			templateOptionalFiledUpdater.flush();
 		} catch(Exception e) {

@@ -77,7 +77,7 @@ public class Sl4DataRecordUpdaterTest {
 		verify(mockSiteDao, times(3)).updateOrSave(siteCaptor.capture());
 		verify(mockBoreHoleDao, times(3)).updateOrSave(boreHoleCaptor.capture());
 		verify(mockTemplateOptionalFieldDao).updateOrSave(optionalFieldCaptor.capture());
-		verify(mockTemplateOptionalFieldDao).batchUpdate(cacheCaptor.capture());
+		verify(mockTemplateOptionalFieldDao, times(2)).batchUpdate(cacheCaptor.capture());
 		Site capturedSite = siteCaptor.getValue();
 		assertThat(capturedSite, is(notNullValue()));
 		BoreHole capturedBoreHole = boreHoleCaptor.getValue();
@@ -86,9 +86,9 @@ public class Sl4DataRecordUpdaterTest {
 		assertThat(capturedTemplateOptionalField, is(notNullValue()));
 		List<List> entityList = cacheCaptor.getAllValues();
 		assertThat(entityList, is(notNullValue()));
-		assertThat(entityList.size(), is(equalTo(1)));
-//		assertThat(entityList.get(0).size(), is(equalTo(14)));
+		assertThat(entityList.size(), is(equalTo(2)));
 		assertThat(entityList.get(0).size(), is(equalTo(9)));
+		assertThat(entityList.get(1).size(), is(equalTo(9)));
 		PowerMockito.verifyNoMoreInteractions();
 	}
 	

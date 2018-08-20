@@ -20,13 +20,15 @@ import au.gov.vic.ecodev.mrt.template.processor.update.TemplateUpdater;
 import au.gov.vic.ecodev.mrt.template.processor.updater.NumberOfRecordsTemplateExtractor;
 import au.gov.vic.ecodev.mrt.template.processor.updater.tables.TemplateHeaderH1000FieldUpdater;
 import au.gov.vic.ecodev.mrt.template.processor.updater.tables.TemplateHeaderOptionalFieldUpdater;
+import au.gov.vic.ecodev.mrt.template.processor.updater.tables.TemplateMandatoryHeaderUpdater;
 import au.gov.vic.ecodev.mrt.template.processor.updater.tables.TemplateOptionalFieldUpdater;
 import au.gov.vic.ecodev.mrt.template.processor.updater.tables.dg4.GeoChemistryUpdater;
 
 public class Dg4TemplateUpdater implements TemplateUpdater {
 
 	private static final List<String> TEMPLATE_PERSISTENT_KEY_LIST = Arrays.asList("H1001", "H1002", "H1003", "H1004", "H1005", "H1006", "H1007");
-			
+	private static final List<String> TEMPLATE_OPTIONAL_FIELDS_PERSISTEN_KEY_LIST = Arrays.asList("H1000", "H1001", "H1002", "H1003", "H1004", "H1005", "H1006", "H1007");
+	
 	private List<Dao> daos;
 	
 	@Override
@@ -47,25 +49,37 @@ public class Dg4TemplateUpdater implements TemplateUpdater {
 					new TemplateHeaderH1000FieldUpdater(sessionId, template, 
 							templateOptionalFieldDao, Strings.TEMPLATE_NAME_DG4);
 			templateHeaderH1000Updater.update();
-			TemplateHeaderOptionalFieldUpdater templateHeaderOptionalFieldUpdater = 
-					new TemplateHeaderOptionalFieldUpdater(sessionId, template, 
-							templateMandatoryHeaderFieldDao,
-							templateOptionalFieldDao, TEMPLATE_PERSISTENT_KEY_LIST);
-			templateHeaderOptionalFieldUpdater.update();
 			
 			GeoChemistryUpdater geoChemistryUpdater = new GeoChemistryUpdater(geoChemistryDao, 
 					sessionId, template);
 			geoChemistryUpdater.init(mandatoryFieldIndexList);
+			
 			TemplateOptionalFieldUpdater templateOptionalFiledUpdater = 
 					new TemplateOptionalFieldUpdater(sessionId, template, 
 					templateOptionalFieldDao);
 			templateOptionalFiledUpdater.init(mandatoryFieldIndexList);
+			
+			TemplateMandatoryHeaderUpdater templatemandatoryUpdater = 
+					new TemplateMandatoryHeaderUpdater(
+							sessionId,
+							templateMandatoryHeaderFieldDao, 
+							mandatoryFieldIndexList, TEMPLATE_PERSISTENT_KEY_LIST,
+							template);
+			templatemandatoryUpdater.update();
+			
+			TemplateHeaderOptionalFieldUpdater templateHeaderOptionalFieldUpdater = 
+					new TemplateHeaderOptionalFieldUpdater(sessionId, template, 
+							mandatoryFieldIndexList,
+							templateOptionalFieldDao, TEMPLATE_OPTIONAL_FIELDS_PERSISTEN_KEY_LIST);
+			templateHeaderOptionalFieldUpdater.update();
 			int numOfRecords = new NumberOfRecordsTemplateExtractor()
 					.extractNumOfRecordsFromTemplate(template);
+			int len = TEMPLATE_OPTIONAL_FIELDS_PERSISTEN_KEY_LIST.size();
+			
 			for(int index = Numeral.ONE; index <= numOfRecords; index++) {
 				List<String> dataRecordList = template.get(Strings.DATA_RECORD_PREFIX + index);
 				geoChemistryUpdater.update(dataRecordList, index);
-				templateOptionalFiledUpdater.update(dataRecordList, index);
+				templateOptionalFiledUpdater.update(dataRecordList, index + len);
 			}
 			templateOptionalFiledUpdater.flush();
 		} catch(Exception e) {

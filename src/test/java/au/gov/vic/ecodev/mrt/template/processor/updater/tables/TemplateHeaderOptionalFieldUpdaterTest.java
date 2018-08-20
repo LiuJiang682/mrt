@@ -16,7 +16,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
-import au.gov.vic.ecodev.mrt.dao.TemplateMandatoryHeaderFieldDao;
 import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDao;
 import au.gov.vic.ecodev.mrt.fixture.TestFixture;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
@@ -25,7 +24,7 @@ import au.gov.vic.ecodev.mrt.template.processor.model.dg4.Dg4Template;
 public class TemplateHeaderOptionalFieldUpdaterTest {
 
 	private TemplateHeaderOptionalFieldUpdater testInstance;
-	private TemplateMandatoryHeaderFieldDao templateMandatoryHeaderFieldDao;
+	private List<Integer> mandatoryFieldIndexList;
 	private TemplateOptionalFieldDao mockTemplateOptionalFieldDao;
 	private Template template;
 	
@@ -50,7 +49,7 @@ public class TemplateHeaderOptionalFieldUpdaterTest {
 		List<List> capturedList = entityCaptor.getAllValues();
 		assertThat(capturedList, is(notNullValue()));
 		assertThat(capturedList.size(), is(equalTo(1)));
-		assertThat(capturedList.get(0).size(), is(equalTo(7)));
+		assertThat(capturedList.get(0).size(), is(equalTo(24)));
 	}
 	
 	@Test
@@ -67,12 +66,12 @@ public class TemplateHeaderOptionalFieldUpdaterTest {
 		//Given
 		long sessionId = 100l;
 		Template template = null;
-		TemplateMandatoryHeaderFieldDao templateMandatoryHeaderFieldDao = null;
+		List<Integer> mandatoryFieldIndexList = null;
 		TemplateOptionalFieldDao templateOptionalFieldDao = null;
 		List<String> keys = null;
 		//When
 		new TemplateHeaderOptionalFieldUpdater(sessionId, template, 
-				templateMandatoryHeaderFieldDao, templateOptionalFieldDao, keys);
+				mandatoryFieldIndexList, templateOptionalFieldDao, keys);
 		fail("Program reached unexpected point!");
 	}
 	
@@ -81,12 +80,12 @@ public class TemplateHeaderOptionalFieldUpdaterTest {
 		//Given
 		long sessionId = 100l;
 		Template template = new Dg4Template();
-		templateMandatoryHeaderFieldDao = null;
+		mandatoryFieldIndexList = null;
 		TemplateOptionalFieldDao templateOptionalFieldDao = null;
 		List<String> keys = null;
 		//When
 		new TemplateHeaderOptionalFieldUpdater(sessionId, template, 
-				templateMandatoryHeaderFieldDao, templateOptionalFieldDao, keys);
+				mandatoryFieldIndexList, templateOptionalFieldDao, keys);
 		fail("Program reached unexpected point!");
 	}
 	
@@ -95,13 +94,12 @@ public class TemplateHeaderOptionalFieldUpdaterTest {
 		//Given
 		long sessionId = 100l;
 		Template template = new Dg4Template();
-		templateMandatoryHeaderFieldDao = 
-				Mockito.mock(TemplateMandatoryHeaderFieldDao.class);
+		mandatoryFieldIndexList = Arrays.asList(1, 2);
 		TemplateOptionalFieldDao templateOptionalFieldDao = null;
 		List<String> keys = null;
 		//When
 		new TemplateHeaderOptionalFieldUpdater(sessionId, template, 
-				templateMandatoryHeaderFieldDao, templateOptionalFieldDao, keys);
+				mandatoryFieldIndexList, templateOptionalFieldDao, keys);
 		fail("Program reached unexpected point!");
 	}
 	
@@ -110,14 +108,13 @@ public class TemplateHeaderOptionalFieldUpdaterTest {
 		//Given
 		long sessionId = 100l;
 		Template template = new Dg4Template();
-		templateMandatoryHeaderFieldDao = 
-				Mockito.mock(TemplateMandatoryHeaderFieldDao.class);
+		mandatoryFieldIndexList = Arrays.asList(1, 2);
 		TemplateOptionalFieldDao templateOptionalFieldDao = 
 				Mockito.mock(TemplateOptionalFieldDao.class);;
 		List<String> keys = null;
 		//When
 		new TemplateHeaderOptionalFieldUpdater(sessionId,  template, 
-				templateMandatoryHeaderFieldDao,
+				mandatoryFieldIndexList,
 				templateOptionalFieldDao, keys);
 		fail("Program reached unexpected point!");
 	}
@@ -125,8 +122,7 @@ public class TemplateHeaderOptionalFieldUpdaterTest {
 	private void givenTestInstance() {
 		long sessionId = 100l;
 		template = new Dg4Template();
-		templateMandatoryHeaderFieldDao = 
-				Mockito.mock(TemplateMandatoryHeaderFieldDao.class);
+		mandatoryFieldIndexList = Arrays.asList(1, 2);
 		mockTemplateOptionalFieldDao = 
 				Mockito.mock(TemplateOptionalFieldDao.class);
 		List<String> keys = new ArrayList<>();
@@ -135,6 +131,6 @@ public class TemplateHeaderOptionalFieldUpdaterTest {
 		keys.add("H1003");
 		
 		testInstance = new TemplateHeaderOptionalFieldUpdater(sessionId, template, 
-				templateMandatoryHeaderFieldDao, mockTemplateOptionalFieldDao, keys);
+				mandatoryFieldIndexList, mockTemplateOptionalFieldDao, keys);
 	}
 }
