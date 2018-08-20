@@ -23,6 +23,7 @@ import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.reflect.Whitebox;
 
 import au.gov.vic.ecodev.mrt.dao.TemplateMandatoryHeaderFieldDao;
 import au.gov.vic.ecodev.mrt.dao.TemplateMandatoryHeaderFieldDaoImpl;
@@ -31,6 +32,7 @@ import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDaoImpl;
 import au.gov.vic.ecodev.mrt.dao.sg4.SurfaceGeochemistryDao;
 import au.gov.vic.ecodev.mrt.dao.sg4.SurfaceGeochemistryDaoImpl;
 import au.gov.vic.ecodev.mrt.fixture.TestFixture;
+import au.gov.vic.ecodev.mrt.template.fields.Sg4ColumnHeaders;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
 import au.gov.vic.ecodev.mrt.template.processor.model.MrtTemplateValue;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
@@ -53,6 +55,14 @@ public class Sg4TemplateUpdaterTest {
 		Template mockTemplate = Mockito.mock(Template.class);
 		when(mockTemplate.get(eq("H0203"))).thenReturn(TestFixture.getNumList());
 		when(mockTemplate.get(eq("H1000"))).thenReturn(TestFixture.getSg4MandatoryColumnsList());
+		when(mockTemplate.get(eq(Sg4ColumnHeaders.SAMPLE_ID.getCode())))
+			.thenReturn(Arrays.asList("Sample ID"));
+		when(mockTemplate.get(eq(Sg4ColumnHeaders.EASTING_MGA.getCode())))
+			.thenReturn(Arrays.asList("Easting_MGA"));
+		when(mockTemplate.get(eq(Sg4ColumnHeaders.NORTHING_MGA.getCode())))
+			.thenReturn(Arrays.asList("Northing_MGA"));
+		when(mockTemplate.get(eq(Sg4ColumnHeaders.SAMPLE_TYPE.getCode())))
+			.thenReturn(Arrays.asList("Sample_type"));
 		MrtTemplateValue value = new MrtTemplateValue(new ArrayList(), -1);
 		when(mockTemplate.getTemplateValue(Matchers.anyString())).thenReturn(value);
 		SurfaceGeochemistryDao mockSurfaceGeochemistryDao = Mockito.mock(SurfaceGeochemistryDao.class);
@@ -67,6 +77,9 @@ public class Sg4TemplateUpdaterTest {
 		PowerMockito.whenNew(SurfaceGeochemistryUpdater.class)
 				.withArguments(eq(mockSurfaceGeochemistryDao), eq(sessionId), eq(mockTemplate))
 				.thenReturn(mockSurfaceGeochemistryUpdater);
+		PowerMockito.doCallRealMethod().when(mockSurfaceGeochemistryUpdater)
+			.init(Matchers.anyList());
+		Whitebox.setInternalState(mockSurfaceGeochemistryUpdater, "template", mockTemplate);
 		TemplateOptionalFieldUpdater mockTemplateOptionalFieldUpdater = 
 				Mockito.mock(TemplateOptionalFieldUpdater.class);
 		PowerMockito.whenNew(TemplateOptionalFieldUpdater.class)

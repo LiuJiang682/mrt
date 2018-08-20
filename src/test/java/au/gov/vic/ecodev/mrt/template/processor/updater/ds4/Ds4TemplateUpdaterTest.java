@@ -23,6 +23,7 @@ import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.reflect.Whitebox;
 
 import au.gov.vic.ecodev.mrt.dao.TemplateMandatoryHeaderFieldDao;
 import au.gov.vic.ecodev.mrt.dao.TemplateMandatoryHeaderFieldDaoImpl;
@@ -31,6 +32,7 @@ import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDaoImpl;
 import au.gov.vic.ecodev.mrt.dao.ds4.DownHoleDao;
 import au.gov.vic.ecodev.mrt.dao.ds4.DownHoleDaoImpl;
 import au.gov.vic.ecodev.mrt.fixture.TestFixture;
+import au.gov.vic.ecodev.mrt.template.fields.Ds4ColumnHeaders;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.persistent.Dao;
@@ -59,6 +61,10 @@ public class Ds4TemplateUpdaterTest {
 		when(mockTemplate.get(eq("D1"))).thenReturn(TestFixture.getDListWithOptionalFields());
 		when(mockTemplate.get(eq("D2"))).thenReturn(TestFixture.getDListWithOptionalFields());
 		when(mockTemplate.get(eq("D3"))).thenReturn(TestFixture.getDListWithOptionalFields());
+		when(mockTemplate.get(eq(Ds4ColumnHeaders.HOLE_ID.getCode()))).thenReturn(Arrays.asList("Hole_id"));
+		when(mockTemplate.get(eq(Ds4ColumnHeaders.SURVEYED_DEPTH.getCode()))).thenReturn(Arrays.asList("Surveyed_Depth"));
+		when(mockTemplate.get(eq(Ds4ColumnHeaders.AZIMUTH_MAG.getCode()))).thenReturn(Arrays.asList("Azimuth_MAG"));
+		when(mockTemplate.get(eq(Ds4ColumnHeaders.DIP.getCode()))).thenReturn(Arrays.asList("Dip"));
 		DownHoleDao mockDownHoleDao = givenMockDownHoleDao();
 		TemplateMandatoryHeaderFieldDao mockTemplateMandatoryHeaderFieldDao =
 				Mockito.mock(TemplateMandatoryHeaderFieldDao.class);
@@ -67,6 +73,8 @@ public class Ds4TemplateUpdaterTest {
 		PowerMockito.whenNew(DownHoleUpdater.class)
 			.withArguments(eq(mockDownHoleDao), eq(sessionId), eq(mockTemplate))
 			.thenReturn(mockDownHoleUpdater);
+		PowerMockito.doCallRealMethod().when(mockDownHoleUpdater).init(Matchers.anyList());
+		Whitebox.setInternalState(mockDownHoleUpdater, "template", mockTemplate);
 		TemplateOptionalFieldUpdater mockTemplateOptionalFieldUpdater = 
 				Mockito.mock(TemplateOptionalFieldUpdater.class);
 		PowerMockito.whenNew(TemplateOptionalFieldUpdater.class)
@@ -76,7 +84,7 @@ public class Ds4TemplateUpdaterTest {
 				Mockito.mock(TemplateHeaderOptionalFieldUpdater.class);
 		PowerMockito.whenNew(TemplateHeaderOptionalFieldUpdater.class)
 			.withArguments(eq(sessionId), eq(mockTemplate), 
-					eq(mockTemplateMandatoryHeaderFieldDao),
+					Matchers.any(List.class),
 					eq(mockTemplateOptionalFieldDao), Matchers.any(List.class))
 			.thenReturn(mockTemplateHeaderOptionalFieldUpdater);
 		testInstance.setDaos(Arrays.asList(mockDownHoleDao,
@@ -114,7 +122,7 @@ public class Ds4TemplateUpdaterTest {
 		verifyNoMoreInteractions(mockTemplateOptionalFieldUpdater);
 		PowerMockito.verifyNew(TemplateHeaderOptionalFieldUpdater.class)
 			.withArguments(eq(sessionId), eq(mockTemplate),
-					eq(mockTemplateMandatoryHeaderFieldDao),
+					Matchers.any(List.class),
 					eq(mockTemplateOptionalFieldDao), Matchers.any(List.class));
 		verify(mockTemplateHeaderOptionalFieldUpdater).update();
 		PowerMockito.verifyNoMoreInteractions();

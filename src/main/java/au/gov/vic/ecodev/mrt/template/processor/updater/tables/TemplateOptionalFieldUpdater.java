@@ -2,7 +2,9 @@ package au.gov.vic.ecodev.mrt.template.processor.updater.tables;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.util.CollectionUtils;
 
@@ -16,7 +18,6 @@ import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorExcep
 import au.gov.vic.ecodev.mrt.template.processor.model.Entity;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.updater.helper.FileNameExtractionHelper;
-import au.gov.vic.ecodev.mrt.template.processor.updater.helper.LabelledColumnIndexListExtractor;
 
 public class TemplateOptionalFieldUpdater {
 
@@ -71,27 +72,25 @@ public class TemplateOptionalFieldUpdater {
 		if (!CollectionUtils.isEmpty(indexList)) {
 			List<String> headers = template.get(Strings.KEY_H1000);
 			String templateName = getTemplateName(template.getClass().getSimpleName());
-			List<Integer> duplicatedKeyIndexList = 
-					new LabelledColumnIndexListExtractor(template)
-						.getColumnIndexListByStartWith(Strings.KEY_PREFIX_DUPLICATED);
+			AtomicInteger columnCounter = new AtomicInteger();
 			indexList.stream()
 				.forEach(index -> {
-					TemplateOptionalField templateOptionalField = new TemplateOptionalField();
-					templateOptionalField.setId(IDGenerator.getUIDAsAbsLongValue());
-					templateOptionalField.setSessionId(sessionId);
-					templateOptionalField.setFileName(fileName);
-					templateOptionalField.setTemplateName(templateName);
-					String header = headers.get(index);
-					if (duplicatedKeyIndexList.contains(index)) {
-						header += index;
+					String value = (String) new NullSafeCollections(dataRecordList).get(index);
+					if (StringUtils.isNotBlank(value)) {
+						TemplateOptionalField templateOptionalField = new TemplateOptionalField();
+						templateOptionalField.setId(IDGenerator.getUIDAsAbsLongValue());
+						templateOptionalField.setSessionId(sessionId);
+						templateOptionalField.setFileName(fileName);
+						templateOptionalField.setTemplateName(templateName);
+						String header = headers.get(index);
+						templateOptionalField.setTemplateHeader(header);
+						templateOptionalField.setRowNumber(String.valueOf(rowNumber));
+						templateOptionalField.setColumnNumber(columnCounter.incrementAndGet());
+						templateOptionalField.setFieldValue(value);
+						LOGGER.info("About to insert: " + templateOptionalField);
+//						templateOptionalFieldDao.updateOrSave(templateOptionalField);
+						cache.add(templateOptionalField);
 					}
-					templateOptionalField.setTemplateHeader(header);
-					templateOptionalField.setRowNumber(String.valueOf(rowNumber));
-					templateOptionalField.setFieldValue(
-							(String) new NullSafeCollections(dataRecordList).get(index));
-					LOGGER.info("About to insert: " + templateOptionalField);
-//					templateOptionalFieldDao.updateOrSave(templateOptionalField);
-					cache.add(templateOptionalField);
 				});
 		}
 	}

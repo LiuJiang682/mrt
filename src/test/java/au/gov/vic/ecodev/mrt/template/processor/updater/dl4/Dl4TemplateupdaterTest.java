@@ -6,10 +6,10 @@ import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.times;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +22,7 @@ import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.reflect.Whitebox;
 
 import au.gov.vic.ecodev.mrt.dao.TemplateMandatoryHeaderFieldDao;
 import au.gov.vic.ecodev.mrt.dao.TemplateMandatoryHeaderFieldDaoImpl;
@@ -30,6 +31,7 @@ import au.gov.vic.ecodev.mrt.dao.TemplateOptionalFieldDaoImpl;
 import au.gov.vic.ecodev.mrt.dao.dl4.LithologyDao;
 import au.gov.vic.ecodev.mrt.dao.dl4.LithologyDaoImpl;
 import au.gov.vic.ecodev.mrt.fixture.TestFixture;
+import au.gov.vic.ecodev.mrt.template.fields.Dl4ColumnHeaders;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.persistent.Dao;
@@ -54,6 +56,10 @@ public class Dl4TemplateupdaterTest {
 		when(mockTemplate.get(eq("H1000"))).thenReturn(TestFixture.getDl4ColumnHeaderList());
 		when(mockTemplate.get(eq("H1001"))).thenReturn(TestFixture.getDl4H1001List());
 		when(mockTemplate.get(eq("H1004"))).thenReturn(TestFixture.getDl4H1004List());
+		when(mockTemplate.get(eq(Dl4ColumnHeaders.HOLE_ID.getCode())))
+			.thenReturn(Arrays.asList("Hole_id"));
+		when(mockTemplate.get(eq(Dl4ColumnHeaders.DEPTH_FROM.getCode())))
+		.thenReturn(Arrays.asList("Depth_from"));
 		LithologyDao mockLithologyDao = Mockito.mock(LithologyDao.class);
 		TemplateMandatoryHeaderFieldDao mockTemplateMandatoryHeaderFieldDao =
 				Mockito.mock(TemplateMandatoryHeaderFieldDao.class);
@@ -66,6 +72,8 @@ public class Dl4TemplateupdaterTest {
 		PowerMockito.whenNew(LithologyUpdater.class)
 			.withArguments(eq(mockLithologyDao), eq(sessionId), eq(mockTemplate))
 			.thenReturn(mockLithologyUpdater);
+		PowerMockito.doCallRealMethod().when(mockLithologyUpdater).init(Matchers.anyList());
+		Whitebox.setInternalState(mockLithologyUpdater, "template", mockTemplate);
 		TemplateOptionalFieldUpdater mockTemplateOptionalFieldUpdater = 
 				Mockito.mock(TemplateOptionalFieldUpdater.class);
 		PowerMockito.whenNew(TemplateOptionalFieldUpdater.class)
@@ -75,7 +83,7 @@ public class Dl4TemplateupdaterTest {
 				Mockito.mock(TemplateHeaderOptionalFieldUpdater.class);
 		PowerMockito.whenNew(TemplateHeaderOptionalFieldUpdater.class)
 			.withArguments(eq(sessionId), eq(mockTemplate), 
-					eq(mockTemplateMandatoryHeaderFieldDao),
+					Matchers.any(List.class),
 					eq(mockTemplateOptionalFieldDao), Matchers.any(List.class))
 			.thenReturn(mockTemplateHeaderOptionalFieldUpdater);
 		// When
@@ -117,7 +125,7 @@ public class Dl4TemplateupdaterTest {
 			.withArguments(eq(sessionId), eq(mockTemplate), eq(mockTemplateOptionalFieldDao));
 		PowerMockito.verifyNew(TemplateHeaderOptionalFieldUpdater.class)
 			.withArguments(eq(sessionId), eq(mockTemplate), 
-					eq(mockTemplateMandatoryHeaderFieldDao),
+					Matchers.any(List.class),
 					eq(mockTemplateOptionalFieldDao), Matchers.any(List.class));
 		verify(mockTemplateHeaderOptionalFieldUpdater).update();
 		PowerMockito.verifyNoMoreInteractions();

@@ -29,6 +29,7 @@ import au.gov.vic.ecodev.mrt.template.processor.updater.tables.sl4.SiteUpdater;
 public class Sl4DataRecordUpdater {
 
 	private static final List<String> TEMPLATE_PERSISTENT_KEY_LIST = Arrays.asList("H1001", "H1004");
+	private static final List<String> TEMPLATE_OPTIONAL_FIELDS_PERSISTEN_KEY_LIST = Arrays.asList("H1000", "H1001", "H1004");
 	
 	private final List<Dao> daos;
 	private final long sessionId;
@@ -86,11 +87,12 @@ public class Sl4DataRecordUpdater {
 						template);
 		templatemandatoryUpdater.update();
 		
-//		TemplateHeaderOptionalFieldUpdater templateHeaderOptionalFieldUpdater = 
-//				new TemplateHeaderOptionalFieldUpdater(sessionId, template, 
-//						templateMandatoryHeaderFieldDao,
-//						templateOptionalFieldDao, TEMPLATE_PERSISTENT_KEY_LIST);
-//		templateHeaderOptionalFieldUpdater.update();
+		TemplateHeaderOptionalFieldUpdater templateHeaderOptionalFieldUpdater = 
+				new TemplateHeaderOptionalFieldUpdater(sessionId, template, 
+						mandatoryFieldIndexList,
+						templateOptionalFieldDao, TEMPLATE_OPTIONAL_FIELDS_PERSISTEN_KEY_LIST);
+		templateHeaderOptionalFieldUpdater.update();
+		int len = TEMPLATE_OPTIONAL_FIELDS_PERSISTEN_KEY_LIST.size();
 		
 		for (int index = Numeral.ONE; index <= numOfRecords; index++) {
 			MrtTemplateValue mrtTemplateValue = (MrtTemplateValue) template
@@ -98,7 +100,7 @@ public class Sl4DataRecordUpdater {
 			siteUpdater.update(mrtTemplateValue, index);
 			List<String> dataRecordList = mrtTemplateValue.getDatas();
 			boreHoleUpdater.update(dataRecordList, index);
-			templateOptionalFiledUpdater.update(dataRecordList, index);
+			templateOptionalFiledUpdater.update(dataRecordList, index + len);
 		}
 		
 		templateOptionalFiledUpdater.flush();
