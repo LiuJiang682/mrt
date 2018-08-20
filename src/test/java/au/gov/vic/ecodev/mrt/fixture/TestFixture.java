@@ -805,12 +805,12 @@ public class TestFixture {
 	}
 
 	public static List<String> getSl4H1001List() {
-		String[] strs = {null, "metres", "metres", "metres", "metres", "N/A", "degrees", "degrees"};
+		String[] strs = {null, "metres", "metres", "ppm", "metres", "metres", "N/A", "degrees", "degrees"};
 		return Arrays.asList(strs);
 	}
 
 	public static List<String> getSl4H1004List() {
-		String[] strs = {null, "1", "1", "1", "1", "0", "1", "1"};
+		String[] strs = {null, "1", "1", "1", "1", "0", "1", "1", "1"};
 		return Arrays.asList(strs);
 	}
 

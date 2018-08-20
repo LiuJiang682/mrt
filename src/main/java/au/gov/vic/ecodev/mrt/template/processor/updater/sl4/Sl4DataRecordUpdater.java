@@ -21,6 +21,7 @@ import au.gov.vic.ecodev.mrt.template.processor.persistent.Dao;
 import au.gov.vic.ecodev.mrt.template.processor.updater.NumberOfRecordsTemplateExtractor;
 import au.gov.vic.ecodev.mrt.template.processor.updater.tables.TemplateHeaderH1000FieldUpdater;
 import au.gov.vic.ecodev.mrt.template.processor.updater.tables.TemplateHeaderOptionalFieldUpdater;
+import au.gov.vic.ecodev.mrt.template.processor.updater.tables.TemplateMandatoryHeaderUpdater;
 import au.gov.vic.ecodev.mrt.template.processor.updater.tables.TemplateOptionalFieldUpdater;
 import au.gov.vic.ecodev.mrt.template.processor.updater.tables.sl4.BoreHoleUpdater;
 import au.gov.vic.ecodev.mrt.template.processor.updater.tables.sl4.SiteUpdater;
@@ -77,11 +78,19 @@ public class Sl4DataRecordUpdater {
 						template, templateOptionalFieldDao, Strings.TEMPLATE_NAME_SL4);
 		templateHeaderH1000Updater.update();
 		
-		TemplateHeaderOptionalFieldUpdater templateHeaderOptionalFieldUpdater = 
-				new TemplateHeaderOptionalFieldUpdater(sessionId, template, 
-						templateMandatoryHeaderFieldDao,
-						templateOptionalFieldDao, TEMPLATE_PERSISTENT_KEY_LIST);
-		templateHeaderOptionalFieldUpdater.update();
+		TemplateMandatoryHeaderUpdater templatemandatoryUpdater = 
+				new TemplateMandatoryHeaderUpdater(
+						sessionId,
+						templateMandatoryHeaderFieldDao, 
+						mandatoryFieldIndexList, TEMPLATE_PERSISTENT_KEY_LIST,
+						template);
+		templatemandatoryUpdater.update();
+		
+//		TemplateHeaderOptionalFieldUpdater templateHeaderOptionalFieldUpdater = 
+//				new TemplateHeaderOptionalFieldUpdater(sessionId, template, 
+//						templateMandatoryHeaderFieldDao,
+//						templateOptionalFieldDao, TEMPLATE_PERSISTENT_KEY_LIST);
+//		templateHeaderOptionalFieldUpdater.update();
 		
 		for (int index = Numeral.ONE; index <= numOfRecords; index++) {
 			MrtTemplateValue mrtTemplateValue = (MrtTemplateValue) template
