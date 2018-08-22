@@ -66,7 +66,7 @@ public class TemplateHeaderH1000FieldUpdaterTest {
 		TemplateOptionalFieldDao mockTemplateOptionalFieldDao = null;
 		long sessionId = 1l;
 		//When
-		new TemplateHeaderH1000FieldUpdater(sessionId, template, mockTemplateOptionalFieldDao, null);
+		new TemplateHeaderH1000FieldUpdater(sessionId, template, mockTemplateOptionalFieldDao, null, null);
 		fail("Program reached unexpected point!");
 	}
 	
@@ -77,7 +77,7 @@ public class TemplateHeaderH1000FieldUpdaterTest {
 		TemplateOptionalFieldDao mockTemplateOptionalFieldDao = null;
 		long sessionId = 1l;
 		//When
-		new TemplateHeaderH1000FieldUpdater(sessionId, template, mockTemplateOptionalFieldDao, null);
+		new TemplateHeaderH1000FieldUpdater(sessionId, template, mockTemplateOptionalFieldDao, null, null);
 		fail("Program reached unexpected point!");
 	}
 	
@@ -88,7 +88,7 @@ public class TemplateHeaderH1000FieldUpdaterTest {
 		TemplateOptionalFieldDao mockTemplateOptionalFieldDao = Mockito.mock(TemplateOptionalFieldDao.class);
 		long sessionId = 1l;
 		//When
-		new TemplateHeaderH1000FieldUpdater(sessionId, template, mockTemplateOptionalFieldDao, null);
+		new TemplateHeaderH1000FieldUpdater(sessionId, template, mockTemplateOptionalFieldDao, Arrays.asList(1),null);
 		fail("Program reached unexpected point!");
 	}
 	
@@ -96,9 +96,10 @@ public class TemplateHeaderH1000FieldUpdaterTest {
 		Template template = getTestTemplate();
 		mockTemplateOptionalFieldDao = Mockito.mock(TemplateOptionalFieldDao.class);
 		long sessionId = 1l;
-		
+		List<Integer> mandatoryIndexList = Arrays.asList(0, 1, 2, 3);
 		testInstance = 
-				new TemplateHeaderH1000FieldUpdater(sessionId, template, mockTemplateOptionalFieldDao, "DG4");
+				new TemplateHeaderH1000FieldUpdater(sessionId, template, mockTemplateOptionalFieldDao, 
+						mandatoryIndexList, "DG4");
 	}
 	
 	private Template getTestTemplate() {

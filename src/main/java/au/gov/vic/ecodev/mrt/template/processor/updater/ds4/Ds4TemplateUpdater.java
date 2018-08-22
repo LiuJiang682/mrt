@@ -56,7 +56,9 @@ public class Ds4TemplateUpdater implements TemplateUpdater {
 			
 			TemplateHeaderH1000FieldUpdater templateHeaderH1000Updater = 
 					new TemplateHeaderH1000FieldUpdater(sessionId, 
-							template, templateOptionalFieldDao, Strings.TEMPLATE_NAME_DS4);
+							template, templateOptionalFieldDao, 
+							mandatoryFieldIndexList,
+							Strings.TEMPLATE_NAME_DS4);
 			templateHeaderH1000Updater.update();
 			
 			TemplateMandatoryHeaderUpdater templatemandatoryUpdater = 

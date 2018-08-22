@@ -46,11 +46,6 @@ public class Sg4TemplateUpdater implements TemplateUpdater {
 		List<Integer> mandatoryFieldIndexList = new ArrayList<>();
 		
 		try {
-			TemplateHeaderH1000FieldUpdater templateHeaderH1000Updater = 
-					new TemplateHeaderH1000FieldUpdater(sessionId, template, 
-							templateOptionalFieldDao, Strings.TEMPLATE_NAME_SG4);
-			templateHeaderH1000Updater.update();
-			
 			SurfaceGeochemistryUpdater surfaceGeochemistryUpdater = new SurfaceGeochemistryUpdater(surfaceGeochemistryDao, 
 					sessionId, template);
 			surfaceGeochemistryUpdater.init(mandatoryFieldIndexList);
@@ -58,6 +53,12 @@ public class Sg4TemplateUpdater implements TemplateUpdater {
 					new TemplateOptionalFieldUpdater(sessionId, template, 
 					templateOptionalFieldDao);
 			templateOptionalFiledUpdater.init(mandatoryFieldIndexList);
+			
+			TemplateHeaderH1000FieldUpdater templateHeaderH1000Updater = 
+					new TemplateHeaderH1000FieldUpdater(sessionId, template, 
+							templateOptionalFieldDao, 
+							mandatoryFieldIndexList, Strings.TEMPLATE_NAME_SG4);
+			templateHeaderH1000Updater.update();
 			
 			TemplateMandatoryHeaderUpdater templatemandatoryUpdater = 
 					new TemplateMandatoryHeaderUpdater(

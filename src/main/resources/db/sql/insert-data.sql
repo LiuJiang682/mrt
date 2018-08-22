@@ -400,37 +400,37 @@ INSERT INTO DH_SURFACE_GEOCHEMISTRY(ID, LOADER_ID, SAMPLE_ID, FILE_NAME, ROW_NUM
     VALUES (1, 1, 'KPDD001', 'myTest.txt', '1', 0, 1, 'DD', 54, -1);    
     
 INSERT INTO DH_OPTIONAL_FIELDS(ID, LOADER_ID, FILE_NAME, TEMPLATE_NAME, TEMPLATE_HEADER, ROW_NUMBER, COLUMN_NUMBER, FIELD_VALUE) 
-    VALUES (1, 1, 'myTest.txt', 'SL4', 'Au', '1', 0, '0.01');    
+    VALUES (1, 1, 'myTest.txt', 'SL4', 'Au', 1, 0, '0.01');    
     
 INSERT INTO DH_OPTIONAL_FIELDS(ID, LOADER_ID, FILE_NAME, TEMPLATE_NAME, TEMPLATE_HEADER, ROW_NUMBER, COLUMN_NUMBER, FIELD_VALUE) 
-    VALUES (2, 1, 'myTest.txt', 'SL4', 'H1000', 'H1000', 0, 'Hole_id,NAT_Grid_ID,Easting_MGA,Northing_MGA,Elevation,Total Hole Depth,Drill Code,Nat_Survey_Method,Precollar_Depth,Dip,Azimuth_MAG,Lease_ID,Prospect,Date_Started,Date_Completed,Company,Comments');   
+    VALUES (2, 1, 'myTest.txt', 'SL4', 'H1000', 0, 0, 'Hole_id,NAT_Grid_ID,Easting_MGA,Northing_MGA,Elevation,Total Hole Depth,Drill Code,Nat_Survey_Method,Precollar_Depth,Dip,Azimuth_MAG,Lease_ID,Prospect,Date_Started,Date_Completed,Company,Comments');   
 
 INSERT INTO DH_OPTIONAL_FIELDS(ID, LOADER_ID, FILE_NAME, TEMPLATE_NAME, TEMPLATE_HEADER, ROW_NUMBER, COLUMN_NUMBER, FIELD_VALUE) 
-    VALUES (3, 12, 'myTest.txt', 'SL4', 'H1000', 'H1000', 0, 'Hole_id,NAT_Grid_ID,Easting_MGA,Northing_MGA,Elevation,Total Hole Depth,Drill Code,Nat_Survey_Method,Precollar_Depth,Dip,Azimuth_MAG,Lease_ID,Prospect,Date_Started,Date_Completed,Company,Comments');  
+    VALUES (3, 12, 'myTest.txt', 'SL4', 'H1000', 0, 0, 'Hole_id,NAT_Grid_ID,Easting_MGA,Northing_MGA,Elevation,Total Hole Depth,Drill Code,Nat_Survey_Method,Precollar_Depth,Dip,Azimuth_MAG,Lease_ID,Prospect,Date_Started,Date_Completed,Company,Comments');  
 
 INSERT INTO DH_OPTIONAL_FIELDS(ID, LOADER_ID, FILE_NAME, TEMPLATE_NAME, TEMPLATE_HEADER, ROW_NUMBER, COLUMN_NUMBER, FIELD_VALUE) 
-    VALUES (4, 100, 'myTest.txt', 'SL4', 'H1000', 'H1000', 0, 'Hole_id,NAT_Grid_ID,Easting_MGA,Northing_MGA,Elevation,Total Hole Depth,Drill Code,Nat_Survey_Method,Precollar_Depth,Dip,Azimuth_MAG,Lease_ID,Prospect,Date_Started,Date_Completed,Company,Comments');  
+    VALUES (4, 100, 'myTest.txt', 'SL4', 'H1000', 0, 0, 'Hole_id,NAT_Grid_ID,Easting_MGA,Northing_MGA,Elevation,Total Hole Depth,Drill Code,Nat_Survey_Method,Precollar_Depth,Dip,Azimuth_MAG,Lease_ID,Prospect,Date_Started,Date_Completed,Company,Comments');  
     
 INSERT INTO DH_OPTIONAL_FIELDS(ID, LOADER_ID, FILE_NAME, TEMPLATE_NAME, TEMPLATE_HEADER, ROW_NUMBER, COLUMN_NUMBER, FIELD_VALUE) 
-    VALUES (5, 1, 'myTest.txt', 'DS4', 'H1000', 'H1000', 0, 'Hole_id');  
+    VALUES (5, 1, 'myTest.txt', 'DS4', 'H1000', 0, 0, 'Hole_id');  
     
 INSERT INTO DH_OPTIONAL_FIELDS(ID, LOADER_ID, FILE_NAME, TEMPLATE_NAME, TEMPLATE_HEADER, ROW_NUMBER, COLUMN_NUMBER, FIELD_VALUE) 
-    VALUES (6, 12, 'myTest.txt', 'SL4', 'Au', '1', 0, '0.01');    
+    VALUES (6, 12, 'myTest.txt', 'SL4', 'Au', 1, 0, '0.01');    
     
 INSERT INTO DH_OPTIONAL_FIELDS(ID, LOADER_ID, FILE_NAME, TEMPLATE_NAME, TEMPLATE_HEADER, ROW_NUMBER, COLUMN_NUMBER, FIELD_VALUE) 
-    VALUES (7, 12, 'myTest.txt', 'SL4', 'Au', '2', 0, '0.01');     
+    VALUES (7, 12, 'myTest.txt', 'SL4', 'Au', 2, 0, '0.01');     
     
 INSERT INTO DH_OPTIONAL_FIELDS(ID, LOADER_ID, FILE_NAME, TEMPLATE_NAME, TEMPLATE_HEADER, ROW_NUMBER, COLUMN_NUMBER, FIELD_VALUE) 
-    VALUES (8, 100, 'myTest.txt', 'DS4', 'H1000', 'H1000', 0, 'Hole_id,Sureryed_Depth,Azimuth_Mag,Dip,Azimuth_True');  
+    VALUES (8, 100, 'myTest.txt', 'DS4', 'H1000', 0, 0, 'Hole_id,Sureryed_Depth,Azimuth_Mag,Dip,Azimuth_True');  
     
 INSERT INTO DH_OPTIONAL_FIELDS(ID, LOADER_ID, FILE_NAME, TEMPLATE_NAME, TEMPLATE_HEADER, ROW_NUMBER, COLUMN_NUMBER, FIELD_VALUE) 
-    VALUES (9, 100, 'myTest.txt', 'DL4', 'H1000', 'H1000', 0, 'Hole_id,Depth_from'); 
+    VALUES (9, 100, 'myTest.txt', 'DL4', 'H1000', 0, 0, 'Hole_id,Depth_from'); 
     
 INSERT INTO DH_OPTIONAL_FIELDS(ID, LOADER_ID, FILE_NAME, TEMPLATE_NAME, TEMPLATE_HEADER, ROW_NUMBER, COLUMN_NUMBER, FIELD_VALUE) 
-    VALUES (10, 100, 'myTest.txt', 'DG4', 'H1000', 'H1000', 0, 'Hole_id,Sample_id,Sample_from,Sample_to,Drill_code');  
+    VALUES (10, 100, 'myTest.txt', 'DG4', 'H1000', 0, 0, 'Hole_id,Sample_id,Sample_from,Sample_to,Drill_code');  
     
 INSERT INTO DH_OPTIONAL_FIELDS(ID, LOADER_ID, FILE_NAME, TEMPLATE_NAME, TEMPLATE_HEADER, ROW_NUMBER, COLUMN_NUMBER, FIELD_VALUE) 
-    VALUES (11, 100, 'myTest.txt', 'SG4', 'H1000', 'H1000', 0, 'Sample_id,Easting,Northing,Sample_type');    
+    VALUES (11, 100, 'myTest.txt', 'SG4', 'H1000', 0, 0, 'Sample_id,Easting,Northing,Sample_type');    
     
 INSERT INTO SESSION_HEADER(ID, TEMPLATE, FILE_NAME, PROCESS_DATE, TENEMENT, TENEMENT_HOLDER, REPORTING_DATE, PROJECT_NAME, STATUS, COMMENTS, EMAIL_SENT, APPROVED, REJECTED, CREATED) 
     values (100, 'MRT', 'MRT_EL123.zip', sysdate, 'abc', 'def', sysdate, 'ghi', 'running', '', 'N', 0, 0, sysdate);   
