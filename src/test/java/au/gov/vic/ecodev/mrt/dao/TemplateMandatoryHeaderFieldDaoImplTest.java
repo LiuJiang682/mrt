@@ -37,7 +37,8 @@ public class TemplateMandatoryHeaderFieldDaoImplTest {
 		assertThat(retrievedTemplateMandatoryHeaderField, is(notNullValue()));
 		assertThat(retrievedTemplateMandatoryHeaderField.getId(), is(equalTo(id)));
 		assertThat(retrievedTemplateMandatoryHeaderField.getSessionId(), is(equalTo(100l)));
-		assertThat(retrievedTemplateMandatoryHeaderField.getTemplateName(), is(equalTo("SL4.txt")));
+		assertThat(retrievedTemplateMandatoryHeaderField.getTemplateName(), is(equalTo("SL4")));
+		assertThat(retrievedTemplateMandatoryHeaderField.getFileName(), is(equalTo("SL4.txt")));
 		assertThat(retrievedTemplateMandatoryHeaderField.getColumnHeader(), is(equalTo("MGA_E")));
 		assertThat(retrievedTemplateMandatoryHeaderField.getRowNumber(), is(equalTo("H1001")));
 		assertThat(retrievedTemplateMandatoryHeaderField.getFieldValue(), is(equalTo("meters")));

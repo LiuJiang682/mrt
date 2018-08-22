@@ -37,8 +37,8 @@ public class TemplateMandatoryHeaderFieldDaoImpl implements TemplateMandatoryHea
 			if (Numeral.ZERO == count) {
 				int row = jdbcTemplate.update(INSERT_SQL, templateMandatoryHeaderField.getId(), 
 						templateMandatoryHeaderField.getSessionId(), 
-						templateMandatoryHeaderField.getFileName(),
 						templateMandatoryHeaderField.getTemplateName(), 
+						templateMandatoryHeaderField.getFileName(),
 						templateMandatoryHeaderField.getRowNumber(),
 						templateMandatoryHeaderField.getColumnHeader(),
 						templateMandatoryHeaderField.getFieldValue());
