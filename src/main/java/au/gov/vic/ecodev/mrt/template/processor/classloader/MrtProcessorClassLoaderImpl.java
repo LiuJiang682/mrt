@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import au.gov.vic.ecodev.mrt.common.db.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.config.MrtConfigProperties;
 import au.gov.vic.ecodev.mrt.template.processor.TemplateProcessor;
 import au.gov.vic.ecodev.mrt.template.processor.persistent.Dao;
@@ -60,7 +61,7 @@ public class MrtProcessorClassLoaderImpl implements MrtProcessorClassLoader {
 			Class<?> cls = Class.forName(testLoaded);
 			Object object = cls.newInstance();
 			TemplateProcessor p = (TemplateProcessor) object;
-			p.processFile();
+			p.setTemplateProcessorContent(null);
 		}
 		
 		String testLoadUpdater = mrtConfigProperties.getTestLoadTemplateUpdater();
@@ -76,7 +77,7 @@ public class MrtProcessorClassLoaderImpl implements MrtProcessorClassLoader {
 			Class<?> daoClass = Class.forName(testLoadDao, true, this.getClass().getClassLoader());
 			Object daoObject = daoClass.newInstance();
 			Dao dao = (Dao) daoObject;
-			dao.updateOrSave(null);
+			dao.setJdbcTemplate(null);
 		}
 		
 //		Reflections reflections = new Reflections("au.gov.vic.ecodev.mrt");
@@ -93,6 +94,7 @@ public class MrtProcessorClassLoaderImpl implements MrtProcessorClassLoader {
 
 	protected final List<File> getCustomTemplateJarFiles() throws Exception {
 		String customTemplateJarFileDir = mrtConfigProperties.getCustomTemplateJarFileDir();
+		System.err.println(customTemplateJarFileDir);
 		List<File> files = new DirectoryFilesScanner(customTemplateJarFileDir).scan();
 		List<File> jarFiles = files.stream().filter(file -> file.getName().endsWith(JAR_FILE_EXTENSION))
 				.collect(Collectors.toList());
