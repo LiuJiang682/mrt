@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import au.gov.vic.ecodev.mrt.common.db.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.config.MrtConfigProperties;
 import au.gov.vic.ecodev.mrt.template.processor.TemplateProcessor;
 import au.gov.vic.ecodev.mrt.template.processor.persistent.Dao;
@@ -21,6 +21,8 @@ import au.gov.vic.ecodev.utils.file.DirectoryFilesScanner;
 @Service("mrtProcessorClassLoader")
 public class MrtProcessorClassLoaderImpl implements MrtProcessorClassLoader {
 
+	private static final Logger LOGGER = Logger.getLogger(MrtProcessorClassLoaderImpl.class);
+	
 	private static final String JAR_FILE_EXTENSION = ".jar";
 	private static final String CLASS_NAME_TEMPLATE_API = "au.gov.vic.ecodev.mrt.template.processor.TemplateProcessor";
 	private static final String ADD_URL = "addURL";
@@ -94,7 +96,7 @@ public class MrtProcessorClassLoaderImpl implements MrtProcessorClassLoader {
 
 	protected final List<File> getCustomTemplateJarFiles() throws Exception {
 		String customTemplateJarFileDir = mrtConfigProperties.getCustomTemplateJarFileDir();
-		System.err.println(customTemplateJarFileDir);
+		LOGGER.info(customTemplateJarFileDir);
 		List<File> files = new DirectoryFilesScanner(customTemplateJarFileDir).scan();
 		List<File> jarFiles = files.stream().filter(file -> file.getName().endsWith(JAR_FILE_EXTENSION))
 				.collect(Collectors.toList());
