@@ -8,12 +8,13 @@ import java.util.Optional;
 
 import org.springframework.util.CollectionUtils;
 
-import au.gov.vic.ecodev.mrt.template.fields.SL4ColumnHeaders;
 import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.template.fields.GeodeticDatum;
+import au.gov.vic.ecodev.mrt.template.fields.SL4ColumnHeaders;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.AzimuthMagHeaderValidator;
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.H0501Validator;
+import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.helper.H0100FieldHelper;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.validator.Validator;
 import au.gov.vic.ecodev.mrt.template.processor.validator.helper.ValidatorHelper;
@@ -43,6 +44,7 @@ public class H1000Validator implements Validator {
 			String[] headersArray = Arrays.copyOfRange(strs, Numeral.ONE, strs.length);
 			headers = Arrays.asList(headersArray);
 			doStandardHeaderCheck(messages, headers);
+			doH0100RelateFieldsCheck(messages, templateParamMap, headers, dataBean);
 			doH0501RelatedFieldsCheck(messages, templateParamMap, headers);
 		}
 
@@ -52,6 +54,25 @@ public class H1000Validator implements Validator {
 		} 
 		return new ValidatorHelper(messages, hasErrorMessage)
 				.updateDataBeanOrCreateErrorOptional(strs, dataBean);
+	}
+
+	protected final void doH0100RelateFieldsCheck(List<String> messages, 
+			Map<String, List<String>> templateParamMap,
+			List<String> headers, Template dataBean) {
+		if (null != dataBean) {
+			H0100FieldHelper h0100FieldHelper = new H0100FieldHelper();
+			h0100FieldHelper.doTenementNoSplit(dataBean, templateParamMap);
+			List<String> tenmentNoList = templateParamMap.get(Strings.KEY_H0100);
+			if (Numeral.ONE < tenmentNoList.size()) {
+				Optional<String> headerOptional = headers.stream()
+					.filter(header -> h0100FieldHelper.isOneOfHeaders(header))
+					.findFirst();
+				if (!headerOptional.isPresent()) {
+					String message = "H1000 requires the Tenement_no column while H0100 has more then one tenement!";
+					messages.add(message);
+				}
+			}
+		}
 	}
 
 	protected final void doStandardHeaderCheck(List<String> messages, List<String> headers) {

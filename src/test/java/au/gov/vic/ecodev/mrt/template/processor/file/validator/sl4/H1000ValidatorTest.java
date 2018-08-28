@@ -27,6 +27,7 @@ import au.gov.vic.ecodev.mrt.template.processor.file.validator.common.H0501Valid
 import au.gov.vic.ecodev.mrt.template.processor.file.validator.sl4.H1000Validator;
 import au.gov.vic.ecodev.mrt.template.processor.model.MrtTemplateValue;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
+import au.gov.vic.ecodev.mrt.template.processor.model.sl4.Sl4Template;
 
 public class H1000ValidatorTest {
 
@@ -285,6 +286,56 @@ public class H1000ValidatorTest {
 		assertThat(messages.size(), is(equalTo(1)));
 		String message = messages.get(0);
 		assertThat(message, is(equalTo("No H0501 Geodetic_datum data!")));
+	}
+	
+	@Test
+	public void shouldReturnMissingH1000TenementMessage() {
+		// Given
+		String[] strs = null;
+		givenTestInstance(strs);
+		Map<String, List<String>> templateParamMap = new HashMap<>();
+		List<String> messages = new ArrayList<>();
+		List<String> headers =  Arrays.asList("H1000", "Hole_id", "Easting_MGA", "Northing_MGA", "Elevation", "Total Hole Depth", "Drill Code", "Dip", "Azimuth_MAG" );
+		Template dataBean = new Sl4Template();
+		dataBean.put(Strings.KEY_H0100, Arrays.asList("Tenement_no", "EL123, EL456"));
+		// When
+		testInstance.doH0100RelateFieldsCheck(messages, templateParamMap, headers, dataBean);
+		// Then
+		assertThat(messages.size(), is(equalTo(1)));
+		String message = messages.get(0);
+		assertThat(message, is(equalTo("H1000 requires the Tenement_no column while H0100 has more then one tenement!")));
+	}
+	
+	@Test
+	public void shouldReturnNoMissingH1000TenementMessageWithTenementNoHeader() {
+		// Given
+		String[] strs = null;
+		givenTestInstance(strs);
+		Map<String, List<String>> templateParamMap = new HashMap<>();
+		List<String> messages = new ArrayList<>();
+		List<String> headers =  Arrays.asList("H1000", "Hole_id", "Easting_MGA", "Northing_MGA", "Elevation", "Total Hole Depth", "Drill Code", "Dip", "Azimuth_MAG", "Tenement_no" );
+		Template dataBean = new Sl4Template();
+		dataBean.put(Strings.KEY_H0100, Arrays.asList("Tenement_no", "EL123, EL456"));
+		// When
+		testInstance.doH0100RelateFieldsCheck(messages, templateParamMap, headers, dataBean);
+		// Then
+		assertThat(messages.size(), is(equalTo(0)));
+	}
+	
+	@Test
+	public void shouldReturnNoMissingH1000TenementMessageWithSingleTenement() {
+		// Given
+		String[] strs = null;
+		givenTestInstance(strs);
+		Map<String, List<String>> templateParamMap = new HashMap<>();
+		List<String> messages = new ArrayList<>();
+		List<String> headers =  Arrays.asList("H1000", "Hole_id", "Easting_MGA", "Northing_MGA", "Elevation", "Total Hole Depth", "Drill Code", "Dip", "Azimuth_MAG" );
+		Template dataBean = new Sl4Template();
+		dataBean.put(Strings.KEY_H0100, Arrays.asList("Tenement_no", "EL123"));
+		// When
+		testInstance.doH0100RelateFieldsCheck(messages, templateParamMap, headers, dataBean);
+		// Then
+		assertThat(messages.size(), is(equalTo(0)));
 	}
 
 	@Test

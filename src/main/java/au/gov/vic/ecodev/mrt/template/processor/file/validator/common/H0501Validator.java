@@ -46,7 +46,7 @@ public class H0501Validator implements Validator {
 
 		boolean hasErrorMessage = new ErrorMessageChecker(messages).isContainsErrorMessages();
 		if (!hasErrorMessage) {
-			List<String> params = Arrays.asList(new String[] {strs[Numeral.TWO]});
+			List<String> params = Arrays.asList(strs[Numeral.TWO]);
 			templateParamMap.put(GEODETIC_DATUM_TITLE, params);
 		} 
 		return new ValidatorHelper(messages, hasErrorMessage)
