@@ -501,6 +501,7 @@ public class DValidatorTest {
 	@Test
 	public void shouldCallBoreHolePositionValidatorWhenDataBeanExist() throws Exception {
 		//Given
+		String[] datas = { "D", "", "392200", "6589600", "320", "210", "DD", "80", "310" };
 		params = new HashMap<>();
 		givenMockTemplate();
 		DValidator dValidator = new DValidator();
@@ -509,7 +510,7 @@ public class DValidatorTest {
 		PowerMockito.whenNew(BoreHolePositionValidator.class).withAnyArguments()
 			.thenReturn(mockBoreHolePositionValidator);
 		//When
-		dValidator.doBoreHolePositionValidation(params, mockDataBean, messages, 0);
+		dValidator.doH0100FieldValidation(datas, params, mockDataBean, messages, 0);
 		//Then
 		verify(mockBoreHolePositionValidator).validate(Matchers.anyList());
 	}
@@ -518,6 +519,7 @@ public class DValidatorTest {
 	@Test
 	public void shouldNotCallBoreHolePositionValidatorWhenDataBeanIsNull() throws Exception {
 		//Given
+		String[] datas = { "D", "", "392200", "6589600", "320", "210", "DD", "80", "310" };
 		params = new HashMap<>();
 		DValidator dValidator = new DValidator();
 		List<String> messages = new ArrayList<>();
@@ -525,7 +527,7 @@ public class DValidatorTest {
 		PowerMockito.whenNew(BoreHolePositionValidator.class).withAnyArguments()
 			.thenReturn(mockBoreHolePositionValidator);
 		//When
-		dValidator.doBoreHolePositionValidation(params, mockDataBean, messages, 0);
+		dValidator.doH0100FieldValidation(datas, params, mockDataBean, messages, 0);
 		//Then
 		verify(mockBoreHolePositionValidator, times(0)).validate(Matchers.anyList());
 	}

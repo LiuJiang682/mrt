@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.apache.commons.collections4.CollectionUtils;
+
 import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.template.fields.SL4ColumnHeaders;
@@ -70,7 +72,7 @@ public class DValidator implements Validator {
 					new DipValidator(strs, lineNumber, columnHeaders, templateParamMap).validate(messages);
 					new ElevationValidator(strs, lineNumber, columnHeaders).validate(messages);
 					new TotalDepthValidator(strs, lineNumber, columnHeaders).validate(messages);
-					doBoreHolePositionValidation(templateParamMap, dataBean, messages, lineNumber);
+					doH0100FieldValidation(strs, templateParamMap, dataBean, messages, lineNumber);
 				}
 			}
 		}
@@ -86,14 +88,20 @@ public class DValidator implements Validator {
 				.updateDataBeanOrCreateErrorOptional(strs, dataBean);
 	}
 
-	protected final void doBoreHolePositionValidation(
-			Map<String, List<String>> templateParamMap, 
-			Template dataBean,
+	protected void doH0100FieldValidation(String[] strs, 
+			Map<String, List<String>> templateParamMap, Template dataBean,
 			List<String> messages, int lineNumber) {
 		if (null != dataBean) {
-			new H0100FieldHelper().doTenementNoSplit(dataBean, templateParamMap);
+			List<String> h0100List = templateParamMap.get(Strings.KEY_H0100);
+			if (CollectionUtils.isEmpty(h0100List)) {
+				new H0100FieldHelper().doTenementNoSplit(dataBean, templateParamMap);
+			}
+			new H0100FieldLookupValidator(strs, lineNumber, templateParamMap)
+				.validate(messages);
 			new BoreHolePositionValidator(strs, lineNumber, templateParamMap, context)
 				.validate(messages);
 		}
+		
+		
 	}
 }
