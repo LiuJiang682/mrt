@@ -16,9 +16,9 @@ import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorExcep
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.model.TemplateValue;
 import au.gov.vic.ecodev.mrt.template.processor.model.MrtTemplateValue;
-import au.gov.vic.ecodev.mrt.template.processor.updater.helper.FileNameExtractionHelper;
 import au.gov.vic.ecodev.mrt.template.processor.updater.helper.ProjectionZoneExtractionHelper;
 import au.gov.vic.ecodev.mrt.template.processor.updater.tables.index.finder.sl4.HoleIdIndexFinder;
+import au.gov.vic.ecodev.utils.file.helper.FileNameExtractionHelper;
 
 public class SiteUpdater {
 

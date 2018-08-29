@@ -11,7 +11,7 @@ import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.dao.TemplateMandatoryHeaderFieldDao;
 import au.gov.vic.ecodev.mrt.model.TemplateMandatoryHeaderField;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
-import au.gov.vic.ecodev.mrt.template.processor.updater.helper.FileNameExtractionHelper;
+import au.gov.vic.ecodev.utils.file.helper.FileNameExtractionHelper;
 
 public class TemplateMandatoryHeaderUpdater {
 
