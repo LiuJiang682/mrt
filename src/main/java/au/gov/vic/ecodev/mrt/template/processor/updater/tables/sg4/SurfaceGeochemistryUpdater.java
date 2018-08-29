@@ -15,8 +15,8 @@ import au.gov.vic.ecodev.mrt.template.processor.model.MrtTemplateValue;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.model.TemplateValue;
 import au.gov.vic.ecodev.mrt.template.processor.updater.helper.DataExtractionHelper;
-import au.gov.vic.ecodev.mrt.template.processor.updater.helper.FileNameExtractionHelper;
 import au.gov.vic.ecodev.mrt.template.processor.updater.helper.ProjectionZoneExtractionHelper;
+import au.gov.vic.ecodev.utils.file.helper.FileNameExtractionHelper;
 
 public class SurfaceGeochemistryUpdater {
 

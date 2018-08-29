@@ -17,7 +17,7 @@ import au.gov.vic.ecodev.mrt.model.TemplateOptionalField;
 import au.gov.vic.ecodev.mrt.template.processor.exception.TemplateProcessorException;
 import au.gov.vic.ecodev.mrt.template.processor.model.Entity;
 import au.gov.vic.ecodev.mrt.template.processor.model.Template;
-import au.gov.vic.ecodev.mrt.template.processor.updater.helper.FileNameExtractionHelper;
+import au.gov.vic.ecodev.utils.file.helper.FileNameExtractionHelper;
 
 public class TemplateOptionalFieldUpdater {
 
