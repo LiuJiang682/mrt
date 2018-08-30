@@ -9,6 +9,7 @@ import static org.mockito.Mockito.when;
 import java.io.File;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.util.CollectionUtils;
@@ -51,6 +52,7 @@ public class MrtProcessorClassLoaderImplTest {
 		assertThat(true, is(true));
 	}
 	
+	@Ignore
 	@Test
 	public void shouldReturnListOfJarFiles() throws Exception {
 		//Given
