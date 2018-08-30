@@ -79,7 +79,7 @@ public class RetrieveTemplateStateTest {
 				logMessageCaptor.capture());
 		assertThat(batchIdCaptor.getValue(), is(equalTo(1L)));
 		assertThat(severityCaptor.getValue(), is(equalTo(LogSeverity.ERROR)));
-		assertThat(logMessageCaptor.getValue(), is(equalTo("Not template class found for file: C:\\Data\\eclipse-workspace\\mrt\\mrt_eco.zip")));
+		assertThat(logMessageCaptor.getValue().startsWith("Not template class found for file:"), is(true));
 		assertThat(templateLoaderStateMachineContext.getMessage().getFileList().size(), is(equalTo(0)));
 	}
 	
@@ -104,7 +104,7 @@ public class RetrieveTemplateStateTest {
 				logMessageCaptor.capture());
 		assertThat(batchIdCaptor.getValue(), is(equalTo(1L)));
 		assertThat(severityCaptor.getValue(), is(equalTo(LogSeverity.ERROR)));
-		assertThat(logMessageCaptor.getValue(), is(equalTo("Not template class found for file: C:\\Data\\eclipse-workspace\\mrt\\mrt_eco.zip")));
+		assertThat(logMessageCaptor.getValue().startsWith("Not template class found for file:"), is(true));
 		assertThat(templateLoaderStateMachineContext.getMessage().getFileList().size(), is(equalTo(0)));
 	}
 	
