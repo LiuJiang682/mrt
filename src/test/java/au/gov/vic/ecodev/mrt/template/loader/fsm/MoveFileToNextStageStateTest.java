@@ -77,7 +77,10 @@ public class MoveFileToNextStageStateTest {
 		//When
 		testInstance.moveFile(files, PASSED_DIRECTORY, mockTemplateLoaderStateMachineContext);
 		//Then
-		assertThat(message.getDirectErrorMessage(), is(equalTo("Failed move file to: src/test/resources/passed, expected move 3 but only moved: C:\\Data\\eclipse-workspace\\mrt\\abc, C:\\Data\\eclipse-workspace\\mrt\\def")));
+		assertThat(message.getDirectErrorMessage().startsWith("Failed move file to: src/test/resources/passed, expected move 3 but only moved:"), is(true));
+		assertThat(message.getDirectErrorMessage().contains("mrt"), is(true));
+		assertThat(message.getDirectErrorMessage().contains("abc,"), is(true));
+		assertThat(message.getDirectErrorMessage().contains("def"), is(true));
 	}
 	
 	@Test
