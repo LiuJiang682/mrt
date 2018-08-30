@@ -55,11 +55,11 @@ public class ProcessTemplateFileStateTest {
 
 	private static final List<String> TEMPLATE_LIST = Arrays.asList(SL4_TEMPLATE_CONFIG);
 
-	private static final String NOT_TEMPLATE_FILE = "File: C:\\Data\\eclipse-workspace\\mrt\\src\\test\\resources\\template does not contain a SL4 template file.";
+	private static final String NOT_TEMPLATE_FILE = "does not contain a SL4 template file.";
 
-	private static final String NO_TEMPLATE_PROCESSOR_CLASS = "No template processor class name provided from au.gov.vic.ecodev.mrt.template.processor.sl4.Sl4TemplateProcessor when processing C:\\Data\\eclipse-workspace\\mrt\\src\\test\\resources\\template";
+	private static final String NO_TEMPLATE_PROCESSOR_CLASS = "No template processor class name provided from au.gov.vic.ecodev.mrt.template.processor.sl4.Sl4TemplateProcessor when processing ";
 
-	private static final String NO_TEMPLATE_PROCESSOR = "No template processor object created for au.gov.vic.ecodev.mrt.template.processor.sl4.Sl4TemplateProcessor when processing C:\\Data\\eclipse-workspace\\mrt\\src\\test\\resources\\template";
+	private static final String NO_TEMPLATE_PROCESSOR = "No template processor object created for au.gov.vic.ecodev.mrt.template.processor.sl4.Sl4TemplateProcessor when processing ";
 
 	private static final String TEST_FILE_DIRECTORY = "src/test/resources/template";
 
@@ -159,7 +159,7 @@ public class ProcessTemplateFileStateTest {
 		verify(mockTemplateLoaderStateMachineContext).saveStatusLog(severityCaptor.capture(),
 				logMessageCaptor.capture());
 		assertThat(severityCaptor.getValue(), is(equalTo(LogSeverity.ERROR)));
-		assertThat(logMessageCaptor.getValue(), is(equalTo(NOT_TEMPLATE_FILE)));
+		assertThat(logMessageCaptor.getValue().contains(NOT_TEMPLATE_FILE), is(true));
 		ArgumentCaptor<String> fileCaptor = ArgumentCaptor.forClass(String.class);
 		verify(mockTemplateLoaderStateMachineContext).addFailedFiles(fileCaptor.capture());
 		List<String> fileNames = fileCaptor.getAllValues();
@@ -190,7 +190,7 @@ public class ProcessTemplateFileStateTest {
 		verify(mockTemplateLoaderStateMachineContext).saveStatusLog(severityCaptor.capture(),
 				logMessageCaptor.capture());
 		assertThat(severityCaptor.getValue(), is(equalTo(LogSeverity.ERROR)));
-		assertThat(logMessageCaptor.getValue(), is(equalTo(NO_TEMPLATE_PROCESSOR)));
+		assertThat(logMessageCaptor.getValue().startsWith(NO_TEMPLATE_PROCESSOR), is(true));
 		ArgumentCaptor<String> fileCaptor = ArgumentCaptor.forClass(String.class);
 		verify(mockTemplateLoaderStateMachineContext).addFailedFiles(fileCaptor.capture());
 		List<String> fileNames = fileCaptor.getAllValues();
@@ -219,7 +219,7 @@ public class ProcessTemplateFileStateTest {
 		verify(mockTemplateLoaderStateMachineContext).saveStatusLog(severityCaptor.capture(),
 				logMessageCaptor.capture());
 		assertThat(severityCaptor.getValue(), is(equalTo(LogSeverity.ERROR)));
-		assertThat(logMessageCaptor.getValue(), is(equalTo(NO_TEMPLATE_PROCESSOR_CLASS)));
+		assertThat(logMessageCaptor.getValue().startsWith(NO_TEMPLATE_PROCESSOR_CLASS), is(true));
 		ArgumentCaptor<String> fileCaptor = ArgumentCaptor.forClass(String.class);
 		verify(mockTemplateLoaderStateMachineContext).addFailedFiles(fileCaptor.capture());
 		List<String> fileNames = fileCaptor.getAllValues();
@@ -313,8 +313,8 @@ public class ProcessTemplateFileStateTest {
 		verify(mockTemplateLoaderStateMachineContext).saveStatusLog(severityCaptor.capture(),
 				logMessageCaptor.capture());
 		assertThat(severityCaptor.getValue(), is(equalTo(LogSeverity.ERROR)));
-		assertThat(logMessageCaptor.getValue(), is(equalTo(
-				"No template processor class name provided from  when processing C:\\Data\\eclipse-workspace\\mrt\\src\\test\\resources\\template")));
+		assertThat(logMessageCaptor.getValue()
+				.startsWith("No template processor class name provided from  when processing "), is(true));
 	}
 
 	@Test(expected = ClassNotFoundException.class)
