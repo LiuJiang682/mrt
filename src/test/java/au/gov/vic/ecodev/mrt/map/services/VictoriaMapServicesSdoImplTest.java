@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import au.gov.vic.ecodev.mrt.config.MrtConfig;
 import au.gov.vic.ecodev.mrt.config.MrtConfigProperties;
+import au.gov.vic.ecodev.mrt.fixture.TestFixture;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
@@ -406,5 +408,10 @@ public class VictoriaMapServicesSdoImplTest {
 		MrtConfigProperties mrtConfigProperties = mrtConfig.mrtConfigProperties();
 		
 		testInstance = new VictoriaMapServicesSdoImpl(mrtConfigProperties);
+	}
+	
+	@BeforeClass
+	public static void setUp() {
+		TestFixture.initSetup();
 	}
 }

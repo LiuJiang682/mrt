@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import au.gov.vic.ecodev.mrt.fixture.TestFixture;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.TemplateLoaderStateMachineContext;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -86,5 +88,10 @@ public class MrtConfigTest {
 					}
 			
 		});
+	}
+	
+	@BeforeClass
+	public static void setUp() {
+		TestFixture.initSetup();
 	}
 }

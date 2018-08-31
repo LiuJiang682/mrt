@@ -11,6 +11,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -121,5 +122,10 @@ public class RetrieveTemplateStateTest {
 //		message.setFileList(Arrays.asList(new File("mrt_eco.zip")));
 		message.setBatchId(1L);
 		Whitebox.setInternalState(templateLoaderStateMachineContext, "message", message);
+	}
+	
+	@BeforeClass
+	public static void setUp() {
+		TestFixture.initSetup();
 	}
 }
