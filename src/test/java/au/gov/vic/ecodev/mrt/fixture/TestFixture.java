@@ -844,7 +844,7 @@ public class TestFixture {
 	public static void initSetup() {
 		File file = new File("src/test/resources/zip");
 		if (!file.exists()) {
-			if (file.mkdirs()) {
+			if (!file.mkdirs()) {
 				System.exit(-1);
 			}
 		}
