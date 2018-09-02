@@ -25,7 +25,6 @@ import au.gov.vic.ecodev.mrt.template.processor.model.Template;
 import au.gov.vic.ecodev.mrt.template.processor.persistent.Dao;
 import au.gov.vic.ecodev.mrt.template.processor.update.TemplateUpdater;
 import au.gov.vic.ecodev.mrt.template.processor.updater.TemplateUpdaterFactory;
-import au.gov.vic.ecodev.mrt.template.utils.Utils;
 
 @Service
 public class DbPersistentServices implements PersistentServices {
@@ -100,16 +99,14 @@ public class DbPersistentServices implements PersistentServices {
 	@Override
 	public boolean saveDataBean(final JdbcTemplate jdbcTemplate, long sessionId, Template template) {
 		boolean successSaved = false;
-		//TODO -- Remove this
-		Utils.displayTemplateData(template);
 		TemplateUpdater updater = TemplateUpdaterFactory.getTemplateUpdater(template, this);
-		LOGGER.info(updater);
+		// LOGGER.info(updater);
 		if (null != updater) {
 			try {
 				List<Class<? extends Dao>> classList = updater.getDaoClasses(); 
-				LOGGER.info(classList);
+				// LOGGER.info(classList);
 				List<Dao> daos = new DaoFactory(jdbcTemplate, classList).getDaos();
-				LOGGER.info(daos);
+				// LOGGER.info(daos);
 				updater.setDaos(daos);
 				updater.update(sessionId, template);
 				successSaved = true;

@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.apache.log4j.Logger;
-
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext;
 import au.gov.vic.ecodev.mrt.template.processor.context.properties.dg4.Dg4ToSl4FromCrossChecker;
@@ -28,8 +26,6 @@ import au.gov.vic.ecodev.utils.file.helper.MessageHandler;
 
 public class Dg4TemplateFileParser {
 
-	private static final Logger LOGGER = Logger.getLogger(Dg4TemplateFileParser.class);
-	
 	private static final String TEMPLATE_PROP_DG4_MANDATORY_VALIDATE_FIELDS = "DG4:MANDATORY.VALIDATE.FIELDS";
 
 	private final File file;
@@ -58,7 +54,7 @@ public class Dg4TemplateFileParser {
 		String line;
 		
 		while(null != (line = lineNumberReader.readLine())) {
-			LOGGER.info(line);
+			// LOGGER.info(line);
 			int lineNumber = lineNumberReader.getLineNumber();
 			templateParamMap.put(Strings.CURRENT_LINE, Arrays.asList(String.valueOf(lineNumber)));
 			Validator validator = dg4ValidatorFactory.getLineValidator(line);

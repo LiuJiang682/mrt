@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.apache.log4j.Logger;
-
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
 import au.gov.vic.ecodev.mrt.template.processor.context.TemplateProcessorContext;
 import au.gov.vic.ecodev.mrt.template.processor.context.properties.ds4.Ds4ToSl4HoleIdCrossChecker;
@@ -28,8 +26,6 @@ import au.gov.vic.ecodev.utils.file.helper.MessageHandler;
 
 public class Ds4TemplateFileParser {
 
-	private static final Logger LOGGER = Logger.getLogger(Ds4TemplateFileParser.class);
-	
 	private static final String TEMPLATE_PROP_DS4_MANDATORY_VALIDATE_FIELDS = "DS4:MANDATORY.VALIDATE.FIELDS";
 	private static final String TEMPLATE_PROP_DS4_AZIMUTHMAG_PRECISION = "DS4:AZIMUTHMAG.PRECISION";
 	private static final String TEMPLATE_PROP_DS4_DIP_PRECISION = "DS4:DIP.PRECISION";
@@ -63,7 +59,7 @@ public class Ds4TemplateFileParser {
 		String line;
 		
 		while(null != (line = lineNumberReader.readLine())) {
-			LOGGER.info(line);
+			// LOGGER.info(line);
 			int lineNumber = lineNumberReader.getLineNumber();
 			templateParamMap.put(Strings.CURRENT_LINE, Arrays.asList(String.valueOf(lineNumber)));
 			Validator validator = ds4ValidatorFactory.getLineValidator(line);
