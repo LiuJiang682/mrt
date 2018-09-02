@@ -114,8 +114,6 @@
 			<artifactId>jts-app</artifactId>
 			<version>${jts.version}</version>
 		</dependency>
-		<!-- <dependency> <groupId>org.reflections</groupId> <artifactId>reflections</artifactId> 
-			<version>0.9.11</version> </dependency> -->
 
 		<!-- https://mvnrepository.com/artifact/junit/junit -->
 		<dependency>
@@ -166,7 +164,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<addResources>true</addResources>
+					<addResources>true</addResources> 
 				</configuration>
 			</plugin>
 		</plugins>

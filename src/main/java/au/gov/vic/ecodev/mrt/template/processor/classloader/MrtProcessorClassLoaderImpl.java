@@ -81,17 +81,6 @@ public class MrtProcessorClassLoaderImpl implements MrtProcessorClassLoader {
 			Dao dao = (Dao) daoObject;
 			dao.setJdbcTemplate(null);
 		}
-		
-//		Reflections reflections = new Reflections("au.gov.vic.ecodev.mrt");
-//		Set<Class<? extends Dao>> daos = reflections.getSubTypesOf(Dao.class);
-//		for (Class<? extends Dao> daoCls : daos) {
-//			if (!daoCls.isInterface()) {
-//				Object daoObject = daoCls.newInstance();
-//				Dao daoInstance = (Dao) daoObject;
-//				daoInstance.setEntityManager(entityManager);
-//				daoMap.put(daoInstance.getClass().getName(), daoInstance);
-//			}
-//		}
 	}
 
 	protected final List<File> getCustomTemplateJarFiles() throws Exception {
@@ -102,10 +91,4 @@ public class MrtProcessorClassLoaderImpl implements MrtProcessorClassLoader {
 				.collect(Collectors.toList());
 		return jarFiles;
 	}
-
-//	@Override
-//	public Map<String, Dao> getDaoMap() {
-//		return daoMap;
-//	}
-
 }
