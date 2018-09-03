@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import au.gov.vic.ecodev.mrt.data.record.cleaner.DataRecordCleaner;
 import au.gov.vic.ecodev.mrt.template.loader.TemplateLoader;
 import au.gov.vic.ecodev.mrt.template.processor.classloader.MrtProcessorClassLoader;
 
@@ -26,15 +27,23 @@ public class MrtScheduledTask {
 	@Autowired
 	private MrtProcessorClassLoader mrtProcessorClassLoader;
 	
+	@Autowired
+	private DataRecordCleaner dataRecordCleaner;
+	
 	@PostConstruct
 	private void init() throws Exception {
 		mrtProcessorClassLoader.load();
 	}
 	
-//	@Scheduled(fixedRate = 2000)
 	@Scheduled(fixedRateString = "${mrt.scan.dir.rate}")
-    public void scheduleTaskWithFixedRate() throws Exception {
+    public void scheduleScanDirectoryWithFixedRate() throws Exception {
         LOGGER.info("Fixed Rate Task :: Execution Time - " + dateTimeFormatter.format(LocalDateTime.now()) );
         templateLoader.load();
+	}
+	
+	@Scheduled(cron = "${mrt.data.clean.time}")
+	public void scheduleDeleteRejected() {
+		LOGGER.info("scheduled deleting rejected recode :: Execution Time - " + dateTimeFormatter.format(LocalDateTime.now()) );
+		dataRecordCleaner.clean();
 	}
 }

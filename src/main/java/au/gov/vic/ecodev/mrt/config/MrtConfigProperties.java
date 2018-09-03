@@ -93,6 +93,8 @@ public class MrtConfigProperties implements TemplateProperties {
 	private String sdoDsPwd;
 	@Value("${email.web.url}")
 	private String emailWebUrl;
+	@Value("${select.clean.session.sql}")
+	private String selectCleanSessionSql;
 
 	public String getDirectoryToScan() {
 		return directoryToScan;
@@ -254,4 +256,7 @@ public class MrtConfigProperties implements TemplateProperties {
 		this.emailWebUrl = emailWebUrl;
 	}
 
+	public String getSelectCleanSessionSql() {
+		return selectCleanSessionSql;
+	}
 }
