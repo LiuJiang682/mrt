@@ -26,6 +26,10 @@ public class DataRecordCleanerImpl implements DataRecordCleaner {
 
 		List<Map<String, Object>> result = persistenService.getSessions();
 		List<Session> sessionsToClean = new SessionHelper(result).getSession();
+		sessionsToClean.stream()
+			.forEach(session -> {
+				new DbSessionCleaner(session, persistenService).clean();
+			});
 	}
 
 }

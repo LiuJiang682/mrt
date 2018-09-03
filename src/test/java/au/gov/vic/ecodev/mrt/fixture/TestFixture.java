@@ -19,6 +19,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import au.gov.vic.ecodev.mrt.constants.Constants.Strings;
+import au.gov.vic.ecodev.mrt.data.record.cleaner.persistent.model.DefaultSession;
+import au.gov.vic.ecodev.mrt.data.record.cleaner.persistent.model.Session;
 import au.gov.vic.ecodev.mrt.template.context.properties.DefaultStringTemplateProperties;
 import au.gov.vic.ecodev.mrt.template.fields.Ds4ColumnHeaders;
 import au.gov.vic.ecodev.mrt.template.loader.fsm.model.DefaultMessage;
@@ -840,6 +842,14 @@ public class TestFixture {
 		emailProps.put("EMAILS_BUILDER", "au.gov.vic.ecodev.mrt.mail.MrtEmailBodyBuilder");
 		return emailProps;
 	}
+	
+	public static Session getMrtSession() {
+		long sessionId = 100l;
+		List<String> templateList = Arrays.asList("MRT");
+		return new DefaultSession(sessionId, templateList);
+	}
+	
+	public static String MRT_DISPLAY_PROPERTIES_JSON = "{\"SL4\":[{\"LOC_SITE\":\"SITE_ID,EASTING,NORTHING,LATITUDE,LONGITUDE,FILE_NAME,ROW_NUMBER,ISSUE_COLUMN_INDEX\"},{\"DH_BOREHOLE\":\"FILE_NAME,ROW_NUMBER,DRILL_TYPE,DEPTH,ELEVATION_KB,AZIMUTH_MAG-SQL:SELECT a.FILE_NAME, a.ROW_NUMBER, b.DRILL_TYPE, a.DEPTH, a.ELEVATION_KB, a.AZIMUTH_MAG FROM DH_BOREHOLE a, DH_DRILLING_DETAILS b where a.DILLING_DETAILS_ID = b.ID AND a.LOADER_ID = ?\"}],\"DS4\":[{\"DH_DOWNHOLE\":\"HOLE_ID,FILE_NAME,ROW_NUMBER,SURVEYED_DEPTH,AZIMUTH_MAG,DIP\"}],\"DL4\":[{\"DH_LITHOLOGY\":\"HOLE_ID,FILE_NAME,ROW_NUMBER,DEPTH_FROM\"}],\"DG4\":[{\"DH_GEOCHEMISTRY\":\"HOLE_ID,SAMPLE_ID,FILE_NAME,ROW_NUMBER,SAMPLE_FROM,SAMPLE_TO,DRILL_CODE\"}],\"SG4\":[{\"DH_SURFACE_GEOCHEMISTRY\":\"SAMPLE_ID,FILE_NAME,ROW_NUMBER,EASTING,NORTHING,SAMPLE_TYPE,ISSUE_COLUMN_INDEX\"}]}";
 
 	public static void initSetup() {
 		File file = new File("src/test/resources/zip");

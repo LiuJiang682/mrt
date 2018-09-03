@@ -10,17 +10,23 @@ import org.springframework.stereotype.Service;
 
 import au.gov.vic.ecodev.mrt.config.MrtConfigProperties;
 import au.gov.vic.ecodev.mrt.constants.Constants.Numeral;
+import au.gov.vic.ecodev.mrt.dao.TemplateDisplayPropertiesDao;
 import au.gov.vic.ecodev.utils.sql.helper.DbTableNameSqlInjectionFilter;
 
 @Service("persistentService")
 public class PersistentServiceImpl implements PersistentService {
 
+	private static final String SQL_DELETE_SUFFIX = " WHERE LOADER_ID = ?";
+	private static final String SQL_DELETE_PREFIX = "DELETE FROM ";
+	
 	private final JdbcTemplate jdbcTemplate;
 	private final MrtConfigProperties mrtConfigProperties;
+	private final TemplateDisplayPropertiesDao templateDisplayPropertiesDao;
 	
 	@Autowired
 	public PersistentServiceImpl(final JdbcTemplate jdbcTemplate, 
-			final MrtConfigProperties mrtConfigProperties) {
+			final MrtConfigProperties mrtConfigProperties,
+			final TemplateDisplayPropertiesDao templateDisplayPropertiesDao) {
 		if (null == jdbcTemplate) {
 			throw new IllegalArgumentException("PersistentServiceImpl:jdbcTemplate parameter cannot be null!");
 		}
@@ -29,6 +35,10 @@ public class PersistentServiceImpl implements PersistentService {
 			throw new IllegalArgumentException("PersistentServiceImpl:mrtConfigProperties parameter cannot be null!");
 		}
 		this.mrtConfigProperties = mrtConfigProperties;
+		if (null == templateDisplayPropertiesDao) {
+			throw new IllegalArgumentException("PersistentServiceImpl:templateDisplayPropertiesDao parameter cannot be null!");
+		}
+		this.templateDisplayPropertiesDao = templateDisplayPropertiesDao;
 	}
 	
 	@Override
@@ -47,6 +57,20 @@ public class PersistentServiceImpl implements PersistentService {
 			}
 		}
 		return results;
+	}
+
+	@Override
+	public String getDisplayProperties(String template) {
+		return templateDisplayPropertiesDao.getDisplayProperties(template);
+	}
+
+	@Override
+	public void deleteByTableNameAndSessionId(String table, long sessionId) {
+		String sql = new StringBuilder(SQL_DELETE_PREFIX)
+				.append(table)
+				.append(SQL_DELETE_SUFFIX)
+				.toString();
+		jdbcTemplate.update(sql, new Object[] {sessionId});
 	}
 
 }

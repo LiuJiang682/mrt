@@ -1,6 +1,7 @@
 package au.gov.vic.ecodev.mrt.data.record.cleaner;
 
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
@@ -27,5 +28,11 @@ public class DataRecordCleanerImplTest {
 		assertThat(true, is(true));
 	}
 	
-	
+	@Test
+	public void shouldReturnInstance() {
+		//Given
+		//When
+		//Then
+		assertThat(testInstance, is(notNullValue()));
+	}
 }
