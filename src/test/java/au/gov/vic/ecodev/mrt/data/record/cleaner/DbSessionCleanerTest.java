@@ -9,7 +9,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -25,6 +27,7 @@ public class DbSessionCleanerTest {
 	private DbSessionCleaner testInstance;
 	private Session session;
 	private PersistentService mockPersistentServices;
+	private Map<String, List<String>> templateClassListMap;
 	
 	@Test
 	public void shouldCleanTheSession() {
@@ -66,8 +69,9 @@ public class DbSessionCleanerTest {
 		//Given 
 		session = null;
 		mockPersistentServices = null;
+		templateClassListMap = null;
 		//When
-		new DbSessionCleaner(session, mockPersistentServices);
+		new DbSessionCleaner(session, mockPersistentServices, templateClassListMap);
 		fail("Program reached unexpected point!");
 	}
 	
@@ -76,14 +80,27 @@ public class DbSessionCleanerTest {
 		//Given 
 		session = TestFixture.getMrtSession();
 		mockPersistentServices = null;
+		templateClassListMap = null;
 		//When
-		new DbSessionCleaner(session, mockPersistentServices);
+		new DbSessionCleaner(session, mockPersistentServices, templateClassListMap);
+		fail("Program reached unexpected point!");
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void shouldRaiseExceptionWhenTemplateClassListMapIsNull() {
+		//Given 
+		session = TestFixture.getMrtSession();
+		mockPersistentServices = Mockito.mock(PersistentService.class);
+		templateClassListMap = null;
+		//When
+		new DbSessionCleaner(session, mockPersistentServices, templateClassListMap);
 		fail("Program reached unexpected point!");
 	}
 
 	private void givenTestInstance() {
 		session = TestFixture.getMrtSession();
 		mockPersistentServices = Mockito.mock(PersistentService.class);
-		testInstance = new DbSessionCleaner(session, mockPersistentServices);
+		templateClassListMap = new HashMap<>();
+		testInstance = new DbSessionCleaner(session, mockPersistentServices, templateClassListMap);
 	}
 }

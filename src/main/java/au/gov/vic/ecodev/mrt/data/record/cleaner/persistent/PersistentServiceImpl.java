@@ -16,6 +16,7 @@ import au.gov.vic.ecodev.utils.sql.helper.DbTableNameSqlInjectionFilter;
 @Service("persistentService")
 public class PersistentServiceImpl implements PersistentService {
 
+	private static final String DELETE_SESSION_HEADER_SQL = "DELETE FROM SESSION_HEADER WHERE ID = ?";
 	private static final String SQL_DELETE_SUFFIX = " WHERE LOADER_ID = ?";
 	private static final String SQL_DELETE_PREFIX = "DELETE FROM ";
 	
@@ -71,6 +72,12 @@ public class PersistentServiceImpl implements PersistentService {
 				.append(SQL_DELETE_SUFFIX)
 				.toString();
 		jdbcTemplate.update(sql, new Object[] {sessionId});
+	}
+
+	@Override
+	public boolean deleteSessionHeaderById(long sessionId) {
+		int row = jdbcTemplate.update(DELETE_SESSION_HEADER_SQL, new Object[] {sessionId});
+		return Numeral.ONE == row;
 	}
 
 }

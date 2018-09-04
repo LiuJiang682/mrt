@@ -1,5 +1,6 @@
 package au.gov.vic.ecodev.mrt.data.record.cleaner.helper;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,16 @@ public class SessionHelper {
 		List<Session> sessionsToClean = new ArrayList<>();
 		result.stream()
 		.forEach(map -> {
-			long sessionId = (long) map.get("ID");
+			Object object = map.get("ID");
+			long sessionId;
+			if (object instanceof BigDecimal) {
+				sessionId = ((BigDecimal)object).longValue();
+			} else if (object instanceof Long) {
+				sessionId = (long) object;
+			} else {
+				sessionId = Long.parseLong((String)object);
+			}
+			
 			String template = (String) map.get("TEMPLATE");
 			List<String> uniqueTemplateList = StringToUniqueListHelper
 					.extractUniqueTemplate(template);

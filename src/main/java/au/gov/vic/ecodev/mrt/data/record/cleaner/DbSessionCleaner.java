@@ -1,6 +1,9 @@
 package au.gov.vic.ecodev.mrt.data.record.cleaner;
 
 import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.collections4.CollectionUtils;
 
 import au.gov.vic.ecodev.mrt.data.record.cleaner.helper.TableNameHelper;
 import au.gov.vic.ecodev.mrt.data.record.cleaner.persistent.PersistentService;
@@ -11,8 +14,10 @@ public class DbSessionCleaner {
 
 	private final Session session;
 	private final PersistentService persistentService;
+	private final Map<String, List<String>> templateClassListMap;
 	
-	public DbSessionCleaner(Session session, PersistentService persistenService) {
+	public DbSessionCleaner(final Session session, final PersistentService persistenService, 
+			final Map<String, List<String>> templateClassListMap) {
 		if (null == session) {
 			throw new IllegalArgumentException("DbSessionCleaner:session parameter cannot be null!");
 		}
@@ -21,16 +26,23 @@ public class DbSessionCleaner {
 			throw new IllegalArgumentException("DbSessionCleaner:persistenService parameter cannot be null!");
 		}
 		this.persistentService = persistenService;
+		if (null == templateClassListMap) {
+			throw new IllegalArgumentException("DbSessionCleaner:templateClassListMap parameter cannot be null!");
+		}
+		this.templateClassListMap = templateClassListMap;
 	}
 
 	public void clean() {
 		session.getTemplateList().stream()
 			.forEach(template -> {
-				String displayProperties = persistentService
+				List<String> templatTableList = templateClassListMap.get(template);
+				if (CollectionUtils.isEmpty(templatTableList)) {
+					String displayProperties = persistentService
 						.getDisplayProperties(template);
-				List<String> templatTableList = new TableNameHelper(displayProperties)
+					templatTableList = new TableNameHelper(displayProperties)
 							.extractTableName();
-				
+					templateClassListMap.put(template, templatTableList);
+				}
 				templatTableList.stream()
 					.forEach(table -> {
 						if (DbTableNameSqlInjectionFilter.foundSqlInjectedTableName(table)) {

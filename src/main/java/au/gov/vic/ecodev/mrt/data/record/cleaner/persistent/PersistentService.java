@@ -10,4 +10,6 @@ public interface PersistentService {
 	public String getDisplayProperties(String template);
 
 	public void deleteByTableNameAndSessionId(String table, long sessionId);
+	
+	public boolean deleteSessionHeaderById(long sessionId);
 }
